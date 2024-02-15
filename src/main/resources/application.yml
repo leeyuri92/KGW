@@ -2,7 +2,7 @@ server:
   tomcat:
     additional-tld-skip-patterns: "*.jar" #orai18n??
   port: 9000
-  servlet:
+  servlet: 
     context-path: /
     encoding:
       charset: UTF-8
