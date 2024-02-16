@@ -91,7 +91,7 @@ pageEncoding="UTF-8"%>
 					<div class="box">
 						<div class="container">
 							<div class="box-header">
-								<h2 style="font-weight: bold; margin-left: 2rem" >게시판1</h2>
+								<h4 style="font-weight: bold; margin-left: 2rem" >게시판1</h4>
 								<hr />
 							</div>
 
@@ -191,7 +191,7 @@ pageEncoding="UTF-8"%>
 								<div class="col-md-8">
 									<div class="container">
 										<div class="box-header">
-											<h2 style="font-weight: bold; margin-left: 2rem">게시판2</h2>
+											<h4 style="font-weight: bold; margin-left: 2rem">게시판2</h4>
 											<hr />
 										</div>
 
@@ -283,7 +283,7 @@ pageEncoding="UTF-8"%>
 								<!-- /.col -->
 								<div class="col-md-4">
 									<div class="box-header">
-										<h2 style="font-weight: bold; margin-left: 2rem">게시판3</h2>
+										<h4 style="font-weight: bold; margin-left: 2rem">게시판3</h4>
 										<hr />
 									</div>
 								</div>
@@ -303,7 +303,7 @@ pageEncoding="UTF-8"%>
 					<div class="box">
 						<div class="container">
 							<div class="box-header">
-								<h2 style="font-weight: bold; margin-left: 2rem">게시판4 <small> 클릭기능 없는건 hover 뺏음</small></h2>
+								<h4 style="font-weight: bold; margin-left: 2rem">게시판4 <small> 클릭기능 없는건 hover 뺏음</small></h4>
 								<hr />
 							</div>
 
@@ -399,7 +399,7 @@ pageEncoding="UTF-8"%>
 					<div class="box">
 						<div class="container">
 							<div class="box-header">
-								<h2 style="font-weight: bold; margin-left: 2rem">게시판5</h2>
+								<h4 style="font-weight: bold; margin-left: 2rem">게시판5</h4>
 								<hr />
 							</div>
 							<div>
