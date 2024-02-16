@@ -24,7 +24,7 @@ spring:
       max-request-size: 50MB
   datasource:
     hikari:
-      jdbc-url: jdbc:oracle:thin:@127.0.0.1:1521/XE
+      jdbc-url: jdbc:oracle:thin:@127.0.0.1:1521/orcl11
       username: root
       password: 1234
       driver-class-name: oracle.jdbc.OracleDriver
