@@ -198,7 +198,7 @@ pageEncoding="UTF-8"%>
 										<!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
 										<div class="row">
 											<div class="col-2">
-												<select id="gubun" class="form-select" aria-label="분류선택">
+												<select id="gubun2" class="form-select" aria-label="분류선택">
 													<option value="none">분류선택</option>
 													<option value="b_title">제목</option>
 													<option value="b_writer">작성자</option>
@@ -206,11 +206,11 @@ pageEncoding="UTF-8"%>
 												</select>
 											</div>
 											<div class="col-3">
-												<input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
+												<input type="text" id="keyword2" class="form-control" placeholder="검색어를 입력하세요"
 													   aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
 											</div>
 											<div class="col-1 ">
-												<button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>
+												<button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">검색</button>
 											</div>
 											<div class="col-md-6 d-flex justify-content-end ">
 												<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">모달버튼</button>
@@ -310,7 +310,7 @@ pageEncoding="UTF-8"%>
 							<!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
 							<div class="row">
 								<div class="col-2">
-									<select id="gubun" class="form-select" aria-label="분류선택">
+									<select id="gubun3" class="form-select" aria-label="분류선택">
 										<option value="none">분류선택</option>
 										<option value="b_title">제목</option>
 										<option value="b_writer">작성자</option>
@@ -318,11 +318,11 @@ pageEncoding="UTF-8"%>
 									</select>
 								</div>
 								<div class="col-3">
-									<input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
+									<input type="text" id="keyword3" class="form-control" placeholder="검색어를 입력하세요"
 										   aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
 								</div>
 								<div class="col-1 ">
-									<button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>
+									<button id="btn_search3" class="btn btn-danger" onclick="boardSearch()">검색</button>
 								</div>
 								<div class="col-md-6 d-flex justify-content-end ">
 									<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">모달버튼</button>

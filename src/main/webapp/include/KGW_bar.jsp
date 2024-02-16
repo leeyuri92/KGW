@@ -99,51 +99,21 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../layout/top-nav.html" class="nav-link">
+                                <a href="/kiwoom/kiwoomNotice.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Top Navigation</p>
+                                    <p>우리구단소식</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../layout/top-nav-sidebar.html" class="nav-link">
+                                <a href="/kiwoom/kiwoomSearch.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Top Navigation + Sidebar</p>
+                                    <p>우리구단선수조회</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../layout/boxed.html" class="nav-link">
+                                <a href="/kiwoom/kiwoomChart.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Boxed</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../layout/fixed-sidebar.html" class="nav-link">
-                                    <i class="bi bi-record nav-icon"></i>
-                                    <p>Fixed Sidebar</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../layout/fixed-sidebar-custom.html" class="nav-link">
-                                    <i class="bi bi-record nav-icon"></i>
-                                    <p>Fixed Sidebar <small>+ Custom Area</small></p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../layout/fixed-topnav.html" class="nav-link">
-                                    <i class="bi bi-record nav-icon"></i>
-                                    <p>Fixed Navbar</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../layout/fixed-footer.html" class="nav-link">
-                                    <i class="bi bi-record nav-icon"></i>
-                                    <p>Fixed Footer</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../layout/collapsed-sidebar.html" class="nav-link active">
-                                    <i class="bi bi-record nav-icon"></i>
-                                    <p>Collapsed Sidebar</p>
+                                    <p>선수현황차트</p>
                                 </a>
                             </li>
                         </ul>
