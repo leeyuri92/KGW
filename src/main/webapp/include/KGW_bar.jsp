@@ -26,16 +26,11 @@
         </ul>
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-            <!-- Navbar Search -->
-            <%--            <li class="nav-item">--%>
-            <%--                <a class="nav-link" data-widget="navbar-search" href="#" role="button">--%>
-            <%--                    <i class="fas fa-search"></i>여기 아이디--%>
-            <%--                </a>            --%>
             <li class="nav-item">
                 <div class="user-panel d-flex" >
-                    <img src="/images/go.png" class="img-circle elevation-2" alt="User Image">
+                    <img src="/images/go.png" class="img-circle" alt="User Image">
                     <div class="info">
-                        <a href="#">LeeYuri</a>
+                        <a href="/auth/login.jsp">LeeYuri</a>
                     </div>
                 </div>
             </li>
@@ -69,7 +64,7 @@
                             <li class="nav-item">
                                 <a href="../board/boardList2.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Dashboard v1</p>
+                                    <p>게시판 예시</p>
                                 </a>
                             </li>
                             <li class="nav-item">
