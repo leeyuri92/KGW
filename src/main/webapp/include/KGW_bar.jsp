@@ -278,9 +278,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../tables/jsgrid.html" class="nav-link">
+                                <a href="/FAchart.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>jsGrid</p>
+                                    <p>FA선수현황</p>
                                 </a>
                             </li>
                         </ul>
@@ -293,7 +293,27 @@
                                 관리자메뉴
                                 <span class="badge badge-info right">2</span>
                             </p>
-                        </a>fdfdfd
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="../tables/simple.html" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>메뉴1</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../tables/data.html" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>메뉴2</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/empChart.jsp" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>입/퇴사자 현황</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                 </ul>

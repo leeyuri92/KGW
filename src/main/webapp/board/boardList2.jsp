@@ -59,7 +59,7 @@ pageEncoding="UTF-8"%>
 					<div class="text-dark fs-6">FA선수현황</div>
 				</div>
 			</div>
-			<div class="d-flex align-items-center mt-3">
+			<div class="d-flex align-items-center mt-2">
 				<div class="position-relative">
 					<div class="position-absolute top-0 start-0" ></div>
 				</div>
@@ -79,7 +79,7 @@ pageEncoding="UTF-8"%>
 					<div class="box">
 						<div class="container">
 							<div class="box-header">
-								<h4 style="font-weight: bold; margin-left: 2rem" >게시판1</h4>
+								<h4 style="font-weight: bold; margin-left: 1.5rem" >게시판1</h4>
 								<hr />
 							</div>
 
@@ -179,7 +179,7 @@ pageEncoding="UTF-8"%>
 								<div class="col-md-8">
 									<div class="container">
 										<div class="box-header">
-											<h4 style="font-weight: bold; margin-left: 2rem">게시판2</h4>
+											<h4 style="font-weight: bold; margin-left: 1.5rem">게시판2</h4>
 											<hr />
 										</div>
 
@@ -271,7 +271,7 @@ pageEncoding="UTF-8"%>
 								<!-- /.col -->
 								<div class="col-md-4">
 									<div class="box-header">
-										<h4 style="font-weight: bold; margin-left: 2rem">게시판3</h4>
+										<h4 style="font-weight: bold; margin-left: 1.5rem">게시판3</h4>
 										<hr />
 									</div>
 								</div>
@@ -291,7 +291,7 @@ pageEncoding="UTF-8"%>
 					<div class="box">
 						<div class="container">
 							<div class="box-header">
-								<h4 style="font-weight: bold; margin-left: 2rem">게시판4 <small> 클릭기능 없는건 hover 뺏음</small></h4>
+								<h4 style="font-weight: bold; margin-left: 1.5rem">게시판4 <small> 클릭기능 없는건 hover 뺏음</small></h4>
 								<hr />
 							</div>
 
@@ -387,7 +387,7 @@ pageEncoding="UTF-8"%>
 					<div class="box">
 						<div class="container">
 							<div class="box-header">
-								<h4 style="font-weight: bold; margin-left: 2rem">게시판5</h4>
+								<h4 style="font-weight: bold; margin-left: 1.5rem">게시판5</h4>
 								<hr />
 							</div>
 							<div>
