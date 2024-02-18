@@ -293,7 +293,7 @@
                                 관리자메뉴
                                 <span class="badge badge-info right">2</span>
                             </p>
-                        </a>
+                        </a>fdfdfd
                     </li>
 
                 </ul>
