@@ -443,10 +443,6 @@ pageEncoding="UTF-8"%>
 <%--		<input type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="boardInsert()"  value="저장">--%>
 <%--		<input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="닫기">--%>
 <%--	  </div>--%>
-
-	</div>
-  </div>
-	</div>
 	<!-- ========================== [[ 게시판 Modal ]] ========================== -->
 </body>
 </html>
