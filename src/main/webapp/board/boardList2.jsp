@@ -9,19 +9,7 @@ pageEncoding="UTF-8"%>
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>게시판 예시</title>
-	  <!-- Google Font: Source Sans Pro -->
-	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-	  <!-- Font Awesome -->
-	  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-	  <!-- Theme style -->
-	  <link rel="stylesheet" href="../../dist/css/adminlte.css">
-	  <%@ include file="/common/bootstrap_common.jsp" %>
-	  <link rel="stylesheet" href="/css/board.css">
-	  <!-- jQuery -->
-	  <script src="../../plugins/jquery/jquery.min.js"></script>
-	  <!-- AdminLTE App -->
-	  <script src="../../dist/js/adminlte.min.js"></script>
+
 
 <%--  <script type="text/javascript">--%>
 
@@ -51,7 +39,7 @@ pageEncoding="UTF-8"%>
 <%--  </script>--%>
   </head>
 
-  <body class="hold-transition sidebar-mini sidebar-collapse">
+  <body>
   <div class="wrapper">
 	<!-- header start -->
 	<%@include file="/include/KGW_bar.jsp"%>
