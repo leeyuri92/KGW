@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.EmpMapper">
+
+    <select id="empDetail" parameterType="com.best.kgw.vo.EmpVO" resultType="com.best.kgw.vo.EmpVO">
+        select emp_no, team_no, emp_access, emp_position, sign_no, dayoff_cnt, emp_year,hire_date, emp_state, reg_date, mod_date, password, name, email
+        from emp
+        where emp_no = 1004
+    </select>
+
+</mapper>
