@@ -1,8 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>우리구단소식</title>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>우리구단소식</title>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">

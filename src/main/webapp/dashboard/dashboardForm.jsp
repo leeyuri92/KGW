@@ -1,13 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: USER
-  Date: 2024-02-18
-  Time: 오후 12:43
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+
+<!DOCTYPE html>
+<html lang="ko">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>메인페이지</title>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
