@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="com.best.kgw.vo.EmpVO" %>
+<%
+  List<EmpVO> empDetail = (List) request.getAttribute("empDetail");
+  EmpVO empvo = empDetail.get(0);
+//  out.print(empDetail);
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,10 +38,10 @@
             <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
           </div>
           <div>
-            [운영팀] 사원
+            [<%=empvo.getEmp_position()%>] 사원
           </div>
           <div>
-            이여시
+            <%=empvo.getName()%>
           </div>
           <div>
             12:00:00 [날씨]
@@ -47,7 +53,7 @@
             퇴근시간 : 09:00:00
           </div>
           <hr class="m-5" style="height: 1px; background-color: #0e0e0e; border: 0">
-          <div class="mb-3">
+          <div class="mb-5">
             <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
             <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>
           </div>
@@ -55,17 +61,49 @@
         <div class="col">
           <div class="row mb-3 mainbox" >
             <div class="col ">
-              col12
+              <div class="mainbox-header">
+                <span style="font-weight: bold; margin-left: 1.5rem" >전자결재진행현황</span>
+                <hr/>
+                <div class="row">
+                  <div class="custom-col" style="background-color: #efc30f">
+                    <i class="bi bi-pause-fill custom-i"></i>
+                    <p class="main-p" >결재대기 [0]</p>
+                  </div>
+                  <div class="custom-col" style="background-color: #467ece">
+                    <i class="bi bi-play-fill custom-i"></i>
+                    <p class="main-p" >결재진행 [0]</p>
+                  </div>
+                  <div class="custom-col" style="background-color: #5eb900">
+                    <i class="bi bi-check-lg custom-i"></i>
+                    <p class="main-p" >결재완료 [0]</p>
+                  </div>
+                  <div class="custom-col" style="background-color: #cc201f">
+                    <i class="bi bi-repeat custom-i"></i>
+                    <p class="main-p" >결재반려 [0]</p>
+                  </div>
+                  <div class="custom-col-1">
+                    <button id="btn_approval" class="btn btn-danger" >기안하기</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row mb-3 mainbox" >
             <div class="col">
-              col13
+              <div class="mainbox-header">
+                <span style="font-weight: bold; margin-left: 1.5rem" >내 일정</span>
+                <hr/>
+
+              </div>
             </div>
           </div>
           <div class="row mainbox" >
             <div class="col">
-              col14
+              <div class="mainbox-header">
+                <span style="font-weight: bold; margin-left: 1.5rem" >공지사항게시판</span>
+                <hr/>
+
+              </div>
             </div>
           </div>
         </div>
