@@ -80,7 +80,7 @@ pageEncoding="UTF-8"%>
 						<div class="container">
 							<div class="box-header">
 								<h4 style="font-weight: bold; margin-left: 1.5rem" >게시판1</h4>
-								<hr />
+								<hr >
 							</div>
 
 					<!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->

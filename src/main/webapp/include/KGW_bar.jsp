@@ -277,7 +277,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/FAchart.jsp" class="nav-link">
+                                <a href="/strategy/FAchart.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>FA선수현황</p>
                                 </a>
@@ -307,7 +307,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/empChart.jsp" class="nav-link">
+                                <a href="/strategy/empChart.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>입/퇴사자 현황</p>
                                 </a>
