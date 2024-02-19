@@ -91,14 +91,14 @@ a:focus {
 }
 
 /* 버튼 */
-.box button {
+.box .btn {
   /*background-color: #a42633;*/
   background-color: #7c1512;
   border: none;
   font-weight: bold;
 }
 
-.box button:hover {
+.box .btn:hover {
   background-color: #494747;
   border: none;
 }

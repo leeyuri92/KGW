@@ -12,7 +12,6 @@
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 
-<body class="hold-transition sidebar-mini sidebar-collapse">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -322,4 +321,3 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-</body>

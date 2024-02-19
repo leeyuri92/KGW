@@ -10,9 +10,10 @@
 <head>
   <title>메인페이지</title>
 </head>
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse ">
 <div class="wrapper">
   <%@include file="/include/KGW_bar.jsp"%>
+  <link rel="stylesheet" href="/css/dashboard.css">
   <div class="content-wrapper">
     <!-- 페이지 path start    -->
     <%--		<div class="card" >--%>
@@ -25,16 +26,17 @@
     </div>
     <!-- 페이지 path end -->
     <section class="content">
+
       <div class="row" style="height: 90%;">
-        <div class="col-4 mr-3 text-center" style=" border: thin solid red">
+        <div class="col-4 mr-3 text-center mainbox" >
           <div class="user-panel">
-            <img src="/images/go.png" class="img-circle m-3 " alt="User Image" style=" width: 200px; height: 200px; border: thin solid red">
+            <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
           </div>
           <div>
             [운영팀] 사원
           </div>
           <div>
-            이류리
+            이여시
           </div>
           <div>
             12:00:00 [날씨]
@@ -47,23 +49,22 @@
           </div>
           <hr class="m-5" style="height: 1px; background-color: #0e0e0e; border: 0">
           <div class="mb-3">
-            <button>출근</button>
-            <button>퇴근</button>
+            <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
+            <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>
           </div>
-
         </div>
         <div class="col">
-          <div class="row mb-3" style="border: thin solid red">
-            <div class="col">
+          <div class="row mb-3 mainbox" >
+            <div class="col ">
               col12
             </div>
           </div>
-          <div class="row mb-3" style="border: thin solid red">
+          <div class="row mb-3 mainbox" >
             <div class="col">
               col13
             </div>
           </div>
-          <div class="row" style="border: thin solid red">
+          <div class="row mainbox" >
             <div class="col">
               col14
             </div>
