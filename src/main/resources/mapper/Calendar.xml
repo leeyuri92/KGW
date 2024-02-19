@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgw.ticket.dao.CalendarDao">
+
+    <select id= "cList" parameterType="map" resultType="com.best.kgw.vo.CalendarVO">
+        select * from calendar
+    </select>
+
+    <select id= "aList" parameterType="map" resultType="com.best.kgw.vo.CalendarVO">
+        select * from asset
+    </select>
+
+    <select id= "arList" parameterType="map" resultType="com.best.kgw.vo.CalendarVO">
+        SELECT a.reservation_no,
+        a.reservation_title,
+        a.reservation_start,
+        a.reservation_end,
+        b.asset_id,
+        b.asset_name,
+        b.team_no,
+        c.name
+        FROM asset_reservation a
+        INNER JOIN asset b ON a.asset_no = b.asset_no
+        INNER JOIN emp c ON a.emp_no = c.emp_no
+        <where>
+            AND a.asset_no = b.asset_no
+            AND a.emp_no = c.emp_no
+        </where>
+    </select>
+
+
+    <!--    <insert id="addList" parameterType="list">-->
+    <!--        INSERT INTO calendar (calendar_title, calendar_start, calendar_end, calendar_rid)-->
+    <!--        VALUES (#{title}, #{start}, #{end}, #{resourceId});-->
+    <!--    </insert>-->
+
+</mapper>
