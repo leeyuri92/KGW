@@ -7,6 +7,12 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 
+<%
+    List<Map<String, Object>> fList = (List)request.getAttribute("fList");
+//    String wChart = (String)request.getAttribute("wChart");
+    int size = fList.size();
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,26 +22,41 @@
     <title>FA선수현황차트</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+
+        // 첫번째 차트
         google.charts.load('current', {'packages':['bar']});
         google.charts.setOnLoadCallback(drawStuff);
 
+
+
+        // let name = [];
+        // let war = [];
+        //
+        // $.each(wChart, function () {
+        //     name.push(this["K_NAME"])
+        //     war.push(this["K_WAR"])
+        // });
+
         function drawStuff() {
-            const data = new google.visualization.arrayToDataTable([
-                ['Move', 'WAR'],
-                ["김선빈", 2.68],
-                ["임찬규", 2.15],
-                ["양석환", 1.76],
-                ["함덕주", 1.53],
-                ['홍건희', 1.12],
-                ['김민성', 0.96],
-                ['임창민', 0.94],
-                ['김민식', 0.69],
-                ['이지영', 0.11],
-                ['김대우', 0.04],
-                ['오승환', -0.07],
-                ['주권', -0.14],
-                ['강한울', -0.77]
-            ]);
+            const data = new google.visualization.arrayToDataTable(
+                ${wChart}
+                //[
+                // ['NAME', 'WAR'],
+                // ["김선빈", 2.68],
+                // ["임찬규", 2.15],
+                // ["양석환", 1.76],
+                // ["함덕주", 1.53],
+                // ['홍건희', 1.12],
+                // ['김민성', 0.96],
+                // ['임창민', 0.94],
+                // ['김민식', 0.69],
+                // ['이지영', 0.11],
+                // ['김대우', 0.04],
+                // ['오승환', -0.07],
+                // ['주권', -0.14],
+                // ['강한울', -0.77]
+                // ]
+            );
 
             const options = {
                 width: 900,
@@ -63,14 +84,15 @@
             }
         };
 
+        // 두번째 차트
         google.charts.load('current', {'packages':['bar']});//구글 지원하는 막대그래프 로딩
         google.charts.setOnLoadCallback(drawChart);//막대그래프 그리려면 데이터가 필요함 - 함수호출
         function drawChart() {//DataTable()
             var data = google.visualization.arrayToDataTable([
                 ['선수', 'WAR'],
                 [' ', null],
-                ['우리구단 WAR', 1000],
-                ['FA선수포함', 1170],
+                ['우리구단 WAR', 1],
+                ['FA선수포함', 1.17],
                 [' ', null]
             ]);
             var options = {
@@ -224,7 +246,7 @@
                                             <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">검색</button>
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end ">
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">모달버튼</button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">초기화</button>
                                         </div>
                                         <%-- 버튼 두 개 일 때 --%>
                                         <%--			<div class="col-md-6 d-flex justify-content-end gap-2">--%>
@@ -248,47 +270,38 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            <%
+                                                for (int i = 0; i < size; i++) {
+                                                    Map<String, Object> rmap = fList.get(i);
+                                            %>
                                             <tr>
-                                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                <td>FA자유계약</td>
-                                                <td>기아</td>
-                                                <td>김선빈</td>
-                                                <td>투수</td>
-                                                <td>등록</td>
+                                                <td><%=rmap.get("K_DATE") %>
+                                                </td>
+                                                <td><%=rmap.get("K_TEAM") %>
+                                                </td>
+                                                <td><%=rmap.get("K_TEAM") %>
+                                                </td>
+                                                <td><%=rmap.get("K_NAME") %>
+                                                </td>
+                                                <td><%=rmap.get("K_POS") %>
+                                                </td>
+                                                <td>
+                                                    <%
+                                                        if (rmap.get("K_TEAM").equals("키움")) {
+                                                    %>
+                                                    <button> 방출</button>
+                                                    <%
+                                                    } else {
+                                                    %>
+                                                    <button>등록</button>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                <td>FA자유계약</td>
-                                                <td>LG</td>
-                                                <td>임찬규</td>
-                                                <td>투수</td>
-                                                <td>등록</td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                <td>FA자유계약</td>
-                                                <td>두산</td>
-                                                <td>양석환</td>
-                                                <td>내야수</td>
-                                                <td>등록</td>
-                                            </tr>
-                                            <%--												<%--%>
-                                            <%--													for(int i=0;i<size;i++){--%>
-                                            <%--														Map<String,Object> rmap = bList.get(i);--%>
-                                            <%--												%>--%>
-                                            <%--												<tr>--%>
-                                            <%--													<td><%=rmap.get("B_NO") %></td>--%>
-                                            <%--													<td>--%>
-                                            <%--														<a href="javascript:boardDetail('<%=rmap.get("B_NO") %>')"> <%=rmap.get("B_TITLE") %></a>--%>
-                                            <%--													</td>--%>
-                                            <%--													<td><%=rmap.get("B_FILE") %>	</td>--%>
-                                            <%--													<td><%=rmap.get("B_WRITER") %></td>--%>
-                                            <%--													<td><%=rmap.get("B_HIT") %></td>--%>
-                                            <%--													<td><%=rmap.get("B_HIT") %></td>--%>
-                                            <%--												</tr>--%>
-                                            <%--												<%--%>
-                                            <%--													}--%>
-                                            <%--												%>--%>
+                                            <%
+                                                }
+                                            %>
                                             </tbody>
                                         </table>
                                         <hr />

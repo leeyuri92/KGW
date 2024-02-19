@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.ChartMapper">
+    <select id= "fList" parameterType="map" resultType="map">
+        select K_NAME, K_DATE, K_TEAM, K_POS, K_WAR
+        from KIWOOM
+        where K_STATE='FALSE'
+    </select>
+
+        <select id= "wList" parameterType="map" resultType="map">
+            select K_NAME, K_WAR
+            from KIWOOM
+            where K_STATE='FALSE'
+        </select>
+
+<!--    <select id= "fList" parameterType="map" resultType="map">-->
+<!--        select avg(K_WAR)-->
+<!--        from KIWOOM;-->
+<!--    </select>-->
+
+
+
+</mapper>

@@ -277,7 +277,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/strategy/FAchart.jsp" class="nav-link">
+                                <a href="/kList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>FA선수현황</p>
                                 </a>
