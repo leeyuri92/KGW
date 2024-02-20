@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**********************************************************************************
+ 작성자 : 박병현
+ 작성일자 : 24.02.19
+ 기능 : 메인페이지 Controller
+ **********************************************************************************/
 @Controller
 //@RequestMapping("/")
 public class DashboardController {
@@ -20,6 +25,11 @@ public class DashboardController {
     private DashboardService dashboardService;
 //    private
 
+    /**********************************************************************************
+     작성자 : 박병현
+     작성일자 : 24.02.19
+     기능 : 메인페이지
+     **********************************************************************************/
     @GetMapping("/")
     public String DashboardForm(EmpVO empVO, Model model) throws Exception{
         logger.info("Controller : DashboardForm");

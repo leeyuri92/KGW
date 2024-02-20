@@ -3,6 +3,11 @@ package com.best.kgw.vo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**********************************************************************************
+ 작성자 : 박병현
+ 작성일자 : 24.02.19
+ 기능 : EmpVO
+ **********************************************************************************/
 @Data
 @NoArgsConstructor
 public class EmpVO {

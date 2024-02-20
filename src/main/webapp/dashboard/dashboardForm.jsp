@@ -1,3 +1,8 @@
+<%----------------------------------------------------------
+  이름 : 박병현
+  날짜 : 2024-02-19
+  내용 : 메인페이지jsp
+----------------------------------------------------------%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
@@ -91,7 +96,7 @@
           <div class="row mb-3 mainbox" >
             <div class="col">
               <div class="mainbox-header">
-                <span style="font-weight: bold; margin-left: 1.5rem" >내 일정</span>
+                <span style="font-weight: bold; margin-left: 1.5rem" >근태관리</span>
                 <hr/>
 
               </div>
