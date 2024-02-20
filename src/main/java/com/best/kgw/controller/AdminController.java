@@ -47,4 +47,21 @@ public class AdminController {
 //    logger.info(ticketList.toString());
         return "forward:/admin/adminSearch.jsp";
     }
+
+    @GetMapping("empDetail")
+    public String empDetail(Model model, @RequestParam Map<String, Object> pmap) {
+        logger.info("empDetail");
+        List<Map<String, Object>> empList = null;// [ {},{},{} ]
+        empList = adminSevice.empList(pmap);
+        model.addAttribute("empList", empList);
+        return "forward:/admin/empDetail.jsp"; // webapp아래에서찾음
+    }
+    @GetMapping("empCertificate")
+    public String empCertificate(Model model, @RequestParam Map<String, Object> pmap) {
+        logger.info("empCertificate");
+        List<Map<String, Object>> empList = null;// [ {},{},{} ]
+        empList = adminSevice.empList(pmap);
+        model.addAttribute("empList", empList);
+        return "forward:/admin/empCertificate.jsp"; // webapp아래에서찾음
+    }
 }
