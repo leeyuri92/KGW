@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class AdminServiceImpl implements AdminSevice {
     Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
@@ -26,5 +30,14 @@ public class AdminServiceImpl implements AdminSevice {
         int result = 0;
         result = adminDao.regist(empVO);
         return result;
+    }
+
+    @Override
+    public List<Map<String, Object>> empList(Map<String, Object> pmap) {
+        List<Map<String, Object>> empList = new ArrayList<>();
+        logger.info("Service Detail");
+        empList = adminDao.empList(pmap);
+        logger.info(empList.toString());
+        return empList;
     }
 }

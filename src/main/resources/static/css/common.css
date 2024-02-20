@@ -4,6 +4,16 @@
 /*}*/
 
 /* General Links */
+/* **********************<< 공통 CSS >>*********************** */
+. {
+  font-family: "맑은 고딕";
+}
+
+html, body {
+  /*font-family: "맑은 고딕";*/
+  font-size: 14px;
+}
+
 a {
   color: #343a40;
   text-decoration: none;

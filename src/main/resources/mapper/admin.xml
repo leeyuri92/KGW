@@ -8,7 +8,10 @@
         insert into emp(emp_no,team_no,emp_access,emp_position,sign_no,dayoff_cnt,emp_year,hire_date,emp_state,reg_date,password,name,email,birthdate,phone_num,address,mod_date,retire_date)
         values(emp_pk_seq.nextval,#{team_no},'ROLE_USER',#{emp_position},0,0,0,#{hire_date},#{emp_state},#{reg_date},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},NULL,NULL)
     </insert>
-
+    <select id="empList" parameterType="map" resultType="map">
+        select emp_no, team_no, emp_access, emp_position, sign_no, dayoff_cnt, emp_year,hire_date, emp_state, reg_date, mod_date, password, name, email
+        from emp
+    </select>
 
 
 </mapper>

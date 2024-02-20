@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-
+<%
+    int size = 0;//전체 레코드 수
+    List<Map<String, Object>> empList = (List) request.getAttribute("empList");
+    if(empList !=null){
+        size = empList.size();
+    }
+    out.print(size);//3
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -92,23 +99,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <%--									<%--%>
-                                    <%--										for(int i=0;i<size;i++){--%>
-                                    <%--											Map<String,Object> rmap = bList.get(i);--%>
-                                    <%--									%>--%>
-                                    <%--									<tr>--%>
-                                    <%--										<td><%=rmap.get("B_NO") %></td>--%>
-                                    <%--										<td>--%>
-                                    <%--											<a href="javascript:boardDetail('<%=rmap.get("B_NO") %>')"> <%=rmap.get("B_TITLE") %></a>--%>
-                                    <%--										</td>--%>
-                                    <%--										<td><%=rmap.get("B_FILE") %>	</td>--%>
-                                    <%--										<td><%=rmap.get("B_WRITER") %></td>--%>
-                                    <%--										<td><%=rmap.get("B_HIT") %></td>--%>
-                                    <%--										<td><%=rmap.get("B_HIT") %></td>--%>
-                                    <%--									</tr>--%>
-                                    <%--									<%--%>
-                                    <%--										}--%>
-                                    <%--									%>--%>
+                                    									<%
+                                    										for(int i=0;i<size;i++){
+                                    											Map<String,Object> rmap = empList.get(i);
+                                    									%>
+                                    									<tr>
+
+                                    										<td type="radio"></td>
+                                    										<td><%=rmap.get("NAME") %></td>
+                                    										<td><%=rmap.get("EMP_NO") %></td>
+                                    										<td><%=rmap.get("TEAM_NO") %></td>
+                                    										<td><%=rmap.get("EMP_POSITION") %></td>
+                                    										<td><%=rmap.get("EMAIL") %></td>
+                                    										<td><%=rmap.get("DAYOFF_CNT") %></td>
+                                    										<td>증명서</td>
+                                    									</tr>
+                                    									<%
+                                    										}
+                                    									%>
                                     </tbody>
                                 </table>
                                 <hr />

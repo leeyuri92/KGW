@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="../../dist/css/adminlte.css">
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/common.css">
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- AdminLTE App -->
@@ -295,7 +295,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/admin/adminSearch.jsp" class="nav-link">
+                                <a href="/admin/empList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>사원관리</p>
                                 </a>

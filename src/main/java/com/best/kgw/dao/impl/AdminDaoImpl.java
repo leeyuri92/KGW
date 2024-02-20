@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class AdminDaoImpl implements AdminDao {
     Logger logger = LoggerFactory.getLogger(AdminDaoImpl.class);
@@ -23,6 +26,14 @@ public class AdminDaoImpl implements AdminDao {
         return result;
     }
 
+    @Override
+    public List<Map<String, Object>> empList(Map<String, Object> pmap) {
+        logger.info("Repository : empList 호출" + pmap);
+        List<Map<String,Object>> empList = null;
+        empList = sqlSessionTemplate.selectList("empList",pmap);
+        logger.info(empList.toString());
+        return empList;
+    }
 
 
 }
