@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.MemberMapper">
+
+
+
+    <insert id="memberInsert" parameterType="map">
+        insert into emp(emp_no,team_no,emp_access,emp_position,sign_no,dayoff_cnt,emp_year,hire_date,emp_state,reg_date,password,name,email,birthdate,phone_num,address,mod_date,retire_date)
+        values(emp_pk_seq.nextval,#{team_no},'ROLE_USER',#{emp_position},0,0,0,#{hire_date},#{emp_state},#{reg_date},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},NULL,NULL)
+    </insert>
+
+
+
+</mapper>
