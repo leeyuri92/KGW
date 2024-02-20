@@ -108,7 +108,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/kiwoom/kiwoomNotice.jsp" class="nav-link">
+                                <a href="/kiwoom/kiwoomNotice" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>우리구단소식</p>
                                 </a>
