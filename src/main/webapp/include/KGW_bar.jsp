@@ -295,15 +295,15 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../tables/simple.html" class="nav-link">
+                                <a href="/admin/adminSearch.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>메뉴1</p>
+                                    <p>사원관리</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../tables/data.html" class="nav-link">
+                                <a href="/admin/regist.jsp" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>메뉴2</p>
+                                    <p>사원추가</p>
                                 </a>
                             </li>
                             <li class="nav-item">

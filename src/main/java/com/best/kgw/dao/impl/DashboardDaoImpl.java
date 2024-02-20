@@ -1,7 +1,6 @@
 package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.DashboardDao;
-import com.best.kgw.vo.EmpVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
