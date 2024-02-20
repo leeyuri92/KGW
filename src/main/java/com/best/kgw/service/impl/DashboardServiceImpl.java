@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**********************************************************************************
+ 작성자 : 박병현
+ 작성일자 : 24.02.19
+ 기능 : 메인페이지
+ **********************************************************************************/
 @Service
 public class DashboardServiceImpl implements DashboardService {
     Logger logger = LoggerFactory.getLogger(DashboardServiceImpl.class);
@@ -17,6 +22,11 @@ public class DashboardServiceImpl implements DashboardService {
     @Autowired
     private DashboardDao dashboardDao;
 
+    /**********************************************************************************
+     작성자 : 박병현
+     작성일자 : 24.02.19
+     기능 : 한명의 사원 정보 조회 (Service)
+     **********************************************************************************/
     @Override
     public List<EmpVO> empDetail(EmpVO empVO) throws Exception{
         logger.info("Service : empInfo");
