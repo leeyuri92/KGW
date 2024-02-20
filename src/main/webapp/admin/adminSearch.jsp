@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*,com.util.BSPageBar" %>
 <%
     int size = 0;//전체 레코드 수
     List<Map<String, Object>> empList = (List) request.getAttribute("empList");
@@ -8,13 +8,43 @@
         size = empList.size();
     }
     out.print(size);//3
+    //페이지처리
+    int numPerPage = 5;
+    int nowPage = 0;
+    if(request.getParameter("nowPage")!=null){
+        nowPage = Integer.parseInt(request.getParameter("nowPage"));
+    }
 %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우리구단 소식</title>
+    <title>사원관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/certificate.css" />
+    <script type="text/javascript">
+        function searchEnter(event){
+            console.log(window.event.keyCode)
+            if(window.event.keyCode == 13){
+                noticeSearch()
+            }
+            event.isComposing//검색후 잔여검색기록 없애는코드
+        }
+        function empSearch(){
+            console.log('empSearch');
+            const gubun = document.querySelector("#gubun").value;
+            const keyword = document.querySelector("#keyword").value;
+            console.log(`${gubun} , ${keyword}`);
+            location.href="/admin/empList?gubun="+gubun+"&keyword="+keyword;
+        }
+        const empDetail= (emp_no)=>{
+            location.href= "/admin/empDetail?emp_no="+emp_no;
+        }
+        const empCertificate= (emp_no)=>{
+            location.href= "/admin/empCertificate?emp_no="+emp_no;
+        }
+    </script>
     <!-- Google Font: Source Sans Pro -->
 </head>
 
@@ -74,12 +104,10 @@
                                            aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
                                 <div class="col-1">
-                                    <button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>
+                                    <button id="btn_search" class="btn btn-danger" onclick="empSearch()">검색</button>
                                 </div>
-                                <div class="col-md-3 d-flex justify-content-end">
+                                <div class="col-md-6 d-flex justify-content-end gap-2">
                                     <button type="button" class="btn btn-danger">선택사원 다운로드</button>
-                                </div>
-                                <div class="col-md-3 d-flex justify-content-end">
                                     <button type="button" class="btn btn-danger">전체사원 다운로드</button>
                                 </div>
                             </div>
@@ -100,19 +128,20 @@
                                     </thead>
                                     <tbody>
                                     									<%
-                                    										for(int i=0;i<size;i++){
+                                                                            for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
+                                                                                if (i == size) break;
                                     											Map<String,Object> rmap = empList.get(i);
                                     									%>
                                     									<tr>
 
-                                    										<td type="radio"></td>
-                                    										<td><%=rmap.get("NAME") %></td>
+                                    										<td><input type="checkbox" name="user_CheckBox" ></td>
+                                    										<td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
                                     										<td><%=rmap.get("EMP_NO") %></td>
-                                    										<td><%=rmap.get("TEAM_NO") %></td>
+                                    										<td><%=rmap.get("TEAM_NAME")%></td>
                                     										<td><%=rmap.get("EMP_POSITION") %></td>
                                     										<td><%=rmap.get("EMAIL") %></td>
                                     										<td><%=rmap.get("DAYOFF_CNT") %></td>
-                                    										<td>증명서</td>
+                                    										<td><a href="javascript:empCertificate('<%=rmap.get("EMP_NO")%>')">재직증명서</a></td>
                                     									</tr>
                                     									<%
                                     										}
@@ -122,22 +151,17 @@
                                 <hr />
 
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+                                <div style="display:flex; justify-content:center;">
                                 <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
+                                    <%
+                                        String pagePath = "empList";
+                                        BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
+                                        out.print(bspb.getPageBar());
+                                    %>
                                 </ul>
+                                </div>
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+
                             </div>
                             <!-- 회원목록   끝  -->
                         </div>

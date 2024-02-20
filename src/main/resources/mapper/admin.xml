@@ -9,8 +9,22 @@
         values(emp_pk_seq.nextval,#{team_no},'ROLE_USER',#{emp_position},0,0,0,#{hire_date},#{emp_state},#{reg_date},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},NULL,NULL)
     </insert>
     <select id="empList" parameterType="map" resultType="map">
-        select emp_no, team_no, emp_access, emp_position, sign_no, dayoff_cnt, emp_year,hire_date, emp_state, reg_date, mod_date, password, name, email
-        from emp
+        select e.emp_no, t.team_name, e.emp_access, e.emp_position, e.sign_no, e.dayoff_cnt, e.emp_year,e.hire_date, e.emp_state, e.reg_date, e.mod_date, e.password, e.name, e.email,e.phone_num,e.address
+        from emp e JOIN team t ON e.team_no = t.team_no
+        <where>
+            <if test="emp_no!=null">AND emp_no=#{emp_no}</if>
+            <if test="gubun!=null">
+                <choose>
+                    <when test='gubun.equals("name")'>
+                        AND name LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("emp_no")'>
+                        AND emp_no LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
+        </where>
+        order by emp_no desc
     </select>
 
 
