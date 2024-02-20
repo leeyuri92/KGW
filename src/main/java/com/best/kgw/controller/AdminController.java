@@ -64,4 +64,13 @@ public class AdminController {
         model.addAttribute("empList", empList);
         return "forward:/admin/empCertificate.jsp"; // webapp아래에서찾음
     }
+    @GetMapping("empInfo")
+    public String empInfo(@RequestParam Map<String, Object> pmap, Model model) throws Exception{
+        logger.info("Controller : empInfo 호출");
+        List<Map<String ,Object>> empList = null;
+        empList = adminSevice.empList(pmap);
+        model.addAttribute("empList", empList);
+//    logger.info(ticketList.toString());
+        return "forward:/empinfo/empInfo.jsp";
+    }
 }

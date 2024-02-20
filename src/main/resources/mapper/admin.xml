@@ -21,6 +21,9 @@
                     <when test='gubun.equals("emp_no")'>
                         AND emp_no LIKE '%'||#{keyword}||'%'
                     </when>
+                    <when test='gubun.equals("team_name")'>
+                        AND team_name LIKE '%'||#{keyword}||'%'
+                    </when>
                 </choose>
             </if>
         </where>
