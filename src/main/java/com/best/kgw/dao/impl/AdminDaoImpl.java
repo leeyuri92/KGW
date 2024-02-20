@@ -35,5 +35,19 @@ public class AdminDaoImpl implements AdminDao {
         return empList;
     }
 
+    @Override
+    public int empInfoUpdate(Map<String, Object> pmap) {
+        logger.info("Repository : empInfoUpdate");
+        int result = 0;
+        try {
+            result = sqlSessionTemplate.update("empInfoUpdate", pmap);
+
+        } catch (Exception e) {
+            logger.info(e.toString());
+        }
+        logger.info(String.valueOf(result));
+        return result;
+    }
+
 
 }

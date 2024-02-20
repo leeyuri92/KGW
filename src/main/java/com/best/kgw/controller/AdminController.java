@@ -73,4 +73,14 @@ public class AdminController {
 //    logger.info(ticketList.toString());
         return "forward:/empinfo/empInfo.jsp";
     }
+    @GetMapping("empInfoUpdate")
+    public String empInfoUpdate(@RequestParam Map<String,Object> pmap) {
+        logger.info("empInfoUpdate");
+        logger.info(pmap.toString());
+        int result = 0;
+        result = adminSevice.empInfoUpdate(pmap);
+        logger.info(String.valueOf(result));
+
+        return "redirect:/admin/empList";
+}
 }

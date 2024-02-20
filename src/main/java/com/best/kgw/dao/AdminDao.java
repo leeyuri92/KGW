@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdminDao {
-    int regist(EmpVO empVO) throws Exception;
+   public int regist(EmpVO empVO) throws Exception;
 
-    List<Map<String, Object>> empList(Map<String, Object> pmap);
+    public List<Map<String, Object>> empList(Map<String, Object> pmap);
+
+    public int empInfoUpdate(Map<String, Object> pmap);
 }

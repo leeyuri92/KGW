@@ -136,7 +136,7 @@
 
                                     										<td><input type="checkbox" name="user_CheckBox" ></td>
                                     										<td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
-                                    										<td><%=rmap.get("EMP_NO") %></td>
+                                    										<td><%=rmap.get("EMP_NO")%></td>
                                     										<td><%=rmap.get("TEAM_NAME")%></td>
                                     										<td><%=rmap.get("EMP_POSITION") %></td>
                                     										<td><%=rmap.get("EMAIL") %></td>

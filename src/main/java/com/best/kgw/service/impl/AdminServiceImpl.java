@@ -40,4 +40,12 @@ public class AdminServiceImpl implements AdminSevice {
         logger.info(empList.toString());
         return empList;
     }
+
+    @Override
+    public int empInfoUpdate(Map<String, Object> pmap) {
+        logger.info("Service empInfoUpdate");
+        int result = 0;
+        result = adminDao.empInfoUpdate(pmap);
+        return result;
+    }
 }
