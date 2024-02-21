@@ -30,7 +30,7 @@ html, body {
 
 /* 캘린더 전체 너비 */
 .fc {
-    width: 2050px;
+    width: auto;
 }
 
 .container-fluid {

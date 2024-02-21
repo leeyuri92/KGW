@@ -3,6 +3,51 @@
     font-family: "맑은 고딕";
 }
 
+.box {
+    position: relative;
+    border-radius: 5px;
+    background: #ffffff;
+    border-top: 4px solid #d2d6de;
+    /*margin-top: 10px;*/
+    /*margin-bottom: 20px;*/
+    margin: 0 5px 20px 5px;
+    width: calc(100% - 10px);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem 5px 2rem;
+
+}
+
+.box-header {
+    padding: 20px 0px;
+    background-color: white;
+}
+
+
+html, body {
+    font-family: "맑은 고딕";
+    font-size: 12px;
+}
+
+/* 캘린더 전체 너비 */
+.fc {
+    width: auto;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between; /* 요소를 컨테이너 양쪽 정렬 */
+    align-items: center; /* 요소를 수직 가운데 정렬 */
+    margin: 10px;
+}
+
+.container-fluid1 {
+    display: flex;
+    justify-content: space-between; /* 요소를 컨테이너 양쪽 정렬 */
+    align-items: center; /* 요소를 수직 가운데 정렬 */
+    margin: 30px 1px 10px 10px;
+}
+
+.form-control,
 .btn {
     flex: 1; /* 폼 컨트롤과 버튼 확장하여 가능한 공간채움 */
     min-width: 0; /* 최소 너비를 0으로 설정 컨테이너 크기에 따라 조절 */
@@ -108,5 +153,9 @@ a {
     text-align: right;
 }
 
-
+/* **********************<< 캘린더 CSS >>*********************** */
+#calendar {
+    max-width: 100%;
+    margin: 30px auto;
+}
 
