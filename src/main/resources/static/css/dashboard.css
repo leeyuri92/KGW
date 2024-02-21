@@ -24,6 +24,17 @@
     font-weight: bold;
 }
 
+.mainbox .approval {
+    /*background-color: #a42633;*/
+    background-color: #7c1512;
+    border: none;
+    font-weight: bold;
+    font-size: large;
+    width: 130px;
+    height: 60px;
+
+}
+
 .mainbox .btn:hover {
     background-color: #494747;
     border: none;
@@ -31,29 +42,18 @@
 
 .mainbox .custom-col{
     margin: auto;
-    width: 90px;
-    height : 80px;
-    line-height: 50px;
-    text-align: center;
+    width: auto;
+    height : auto;
     border-radius: 5px;
-    margin-left: 30px;
 }
 
-.mainbox .custom-col-1{
-    margin: auto;
-    width: 120px;
-    height : 30px;
-    line-height: 30px;
-    text-align: center;
-    margin-left: 10px;
-}
+/*.mainbox .custom-col-1{*/
+/*    margin: auto;*/
+/*    width: 120px;*/
+/*    height : 30px;*/
+/*    line-height: 30px;*/
+/*    text-align: center;*/
+/*    margin-left: 10px;*/
+/*}*/
 
-.custom-i{
-    font-size: x-large;
-    color: white;
-}
 
-.main-p{
-    font: normal bold 11px none;
-    color: white;
-}
