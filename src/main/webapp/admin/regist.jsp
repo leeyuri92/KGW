@@ -124,9 +124,9 @@
                 <span id="team_no_" class="text-danger" style="display:none">부서를 선택하세요.</span> </label>
             </label>
             <select class="form-control" id="team_no" name="team_no" onblur="validateTeam()">
-                <option value="0" selected>부서를 선택해주세요.</option>
+                <option value="none" selected>부서를 선택해주세요.</option>
                 <option value="1">운영팀</option>
-                <option value="2">경영지원팀</option>
+                <option value="2">지원팀</option>
                 <!-- Add more options as needed -->
             </select>
         </div>
@@ -149,9 +149,9 @@
                                 <span id="emp_state_" class="text-danger" style="display:none">상태을 선택하세요.</span>
                             </label>
                             <select class="form-control" id="emp_state" name="emp_state" onblur="validateState()" >
-                                <option value="0" selected>상태를 선택해주세요.</option>
-                                <option value="재직">재직</option>
-                                <option value="퇴직">퇴직</option>
+                                <option value="none" selected>상태를 선택해주세요.</option>
+                                <option value="1">재직</option>
+                                <option value="0">퇴직</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
@@ -353,7 +353,7 @@
         const validateState  = () => {
             const stateSpan = document.getElementById('emp_state_');
             const mbrNmInput = document.getElementById('emp_state');
-            const isValid = expNameText.test(mbrNmInput.value);
+            const isValid = expTeamText.test(mbrNmInput.value);
 
             if (isValid) {
                 stateSpan.style.display = 'none';

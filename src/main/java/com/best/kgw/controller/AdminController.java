@@ -50,11 +50,11 @@ public class AdminController {
      **********************************************************************************/
     @GetMapping("empList")
     public String empList(@RequestParam Map<String, Object> pmap, Model model) throws Exception{
-        logger.info("Controller : search 호출");
+        logger.info("Controller : empList 호출");
         List<Map<String ,Object>> empList = null;
         empList = adminSevice.empList(pmap);
         model.addAttribute("empList", empList);
-//    logger.info(ticketList.toString());
+        logger.info(empList.toString());
         return "forward:/admin/adminSearch.jsp";
     }
     /**********************************************************************************

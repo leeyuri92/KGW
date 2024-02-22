@@ -134,7 +134,7 @@
                             <option value="<%=rmap.get("TEAM_NO")%>" selected><%=rmap.get("TEAM_NAME")%></option>
                             <hr class="dropdown-divider">
                             <option value="1">운영팀</option>
-                            <option value="2">경영지원팀</option>
+                            <option value="2">지원팀</option>
                             <!-- Add more options as needed -->
                         </select>
                     </div>
@@ -173,10 +173,14 @@
                                 <span id="emp_state_" class="text-danger" style="display:none">형식이 아닙니다.</span>
                             </label>
                             <select class="form-control" id="emp_state" name="emp_state" >
-                                <option value="<%=rmap.get("EMP_STATE")%>" selected><%=rmap.get("EMP_STATE")%></option>
+                                    <% if (rmap.get("EMP_STATE").equals("0")){ %>
+                                <option value="<%=rmap.get("EMP_STATE")%>" selected>퇴직</option>
+                                    <% }else{ %>
+                                <option value="<%=rmap.get("EMP_STATE")%>" selected>재직</option>
+                                <%  } %>
                                 <hr class="dropdown-divider">
-                                <option value="퇴직">퇴직</option>
-                                <option value="재직">재직</option>
+                                <option value="0">퇴직</option>
+                                <option value="1">재직</option>
 
                                 <!-- Add more options as needed -->
                             </select>
@@ -340,7 +344,7 @@
         const validateState  = () => {
             const stateSpan = document.getElementById('emp_state_');
             const mbrNmInput = document.getElementById('emp_state');
-            const isValid = expNameText.test(mbrNmInput.value);
+            const isValid = expTeamText.test(mbrNmInput.value);
 
             if (isValid) {
                 stateSpan.style.display = 'none';
