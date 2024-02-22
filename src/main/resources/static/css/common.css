@@ -32,6 +32,12 @@ a:focus {
   /*box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);*/
   box-shadow: 0 0 0 0.25rem rgba(176, 42, 55, 0.73);
 }
+.content textarea:focus {
+  border-color: #b02a37;
+  outline: 0;
+  /*box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);*/
+  box-shadow: 0 0 0 0.25rem rgba(176, 42, 55, 0.73);
+}
 
 /* 페이지 path */
 .card {
@@ -123,4 +129,15 @@ hr{
   height: 1px;
   background-color: grey;
   border: 0;
+}
+
+.modal-body .btn{
+  background-color: #7c1512;
+  border: none;
+  font-weight: bold;
+}
+
+.modal-body .btn:hover {
+  background-color: #494747;
+  border: none;
 }
