@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.ChartMapper">
     <select id= "fList" parameterType="map" resultType="map">
-        select K_NAME, K_DATE, K_TEAM, K_POS, K_WAR
-        from KIWOOM
-        where K_STATE='FALSE'
+        select FA_NO, FA_NAME, FA_DATE, FA_TEAM, FA_POS, FA_WAR, FA_STATE, FA_AGENT
+        from FA
+        where FA_AGENT='FA자유계약'
     </select>
 
-        <select id= "wList" parameterType="map" resultType="map">
-            select K_NAME, K_WAR
-            from KIWOOM
-            where K_STATE='FALSE'
-        </select>
+    <select id= "wList" parameterType="map" resultType="map">
+        select FA_NAME, FA_WAR
+        from FA
+        where FA_AGENT='FA자유계약'
+    </select>
 
-<!--    <select id= "fList" parameterType="map" resultType="map">-->
-<!--        select avg(K_WAR)-->
-<!--        from KIWOOM;-->
-<!--    </select>-->
+    <select id= "kWar" parameterType="map" resultType="double">
+        select round(avg(FA_WAR),3)
+        from FA
+        where FA_STATE='TRUE'
+    </select>
 
-
+    <update id="faUpdate" parameterType="java.util.Map">
+        UPDATE FA
+        SET FA_STATE = CASE
+                           WHEN FA_STATE = 'FALSE' THEN 'TRUE'
+                           ELSE 'FALSE'
+            END
+        WHERE FA_NO = #{FA_NO}
+    </update>
 
 </mapper>

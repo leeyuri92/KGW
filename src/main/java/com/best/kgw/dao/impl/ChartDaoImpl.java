@@ -1,3 +1,8 @@
+/**********************************************************************************
+ 작성자 : 이유리
+ 작성일자 : 24.02.18
+ 기능 : FAchart 페이지 생성 및 리스트, chart 생성
+ **********************************************************************************/
 package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.ChartDao;
@@ -18,8 +23,17 @@ public class ChartDaoImpl implements ChartDao {
     private SqlSessionTemplate sqlSessionTemplate;
 
     @Override
-    public List<Map<String, Object>> faList(Map<String, Object> fmap) {
-        logger.info("FA : ");
+    public List<Map<String, Object>> wList(Map<String, Object> wmap) {
+        logger.info("wList");
+        List<Map<String, Object>> wList = null;
+        wList = sqlSessionTemplate.selectList("wList", wmap);
+        logger.info(wList.toString());
+        return wList;
+    }
+
+    @Override
+    public List<Map<String, Object>> fList(Map<String, Object> fmap) {
+        logger.info("fList");
         List<Map<String, Object>> fList = null;
         fList = sqlSessionTemplate.selectList("fList", fmap);
         logger.info(fList.toString());
@@ -27,13 +41,24 @@ public class ChartDaoImpl implements ChartDao {
     }
 
     @Override
-    public List<Map<String, Object>> warList(Map<String, Object> wmap) {
-        logger.info("WAR : ");
-        List<Map<String, Object>> wList = null;
-        wList = sqlSessionTemplate.selectList("wList", wmap);
-        logger.info(wList.toString());
-        return wList;
+    public double kWar(Map<String, Object> kmap) {
+        logger.info("kWar : ");
+        double kWar = sqlSessionTemplate.selectOne("kWar",kmap);
+        logger.info("kWar : " + kWar);
+        return kWar;
     }
 
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.21
+     기능 : 등록/방출에 따른 WAR값 업데이트
+     **********************************************************************************/
 
+    @Override
+    public  void faUpdate(Map<String, Object> umap) {
+        logger.info("faUpdate 입력값 : " + umap);
+        logger.info(umap.get("FA_NO").toString());
+        int result = sqlSessionTemplate.update("faUpdate",umap);
+        logger.info("업데이트 성공했니? result : " + result );
+    }
 }
