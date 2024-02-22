@@ -15,6 +15,7 @@ public class EmpVO {
 
     private int emp_no;
     private int team_no;
+    private String team_name;
     private String emp_access;
     private String emp_position;
     private int sign_no;
@@ -37,6 +38,7 @@ public class EmpVO {
         return "EmpVO{" +
                 "emp_no=" + emp_no +
                 ", team_no=" + team_no +
+                ", team_name='" + team_name + '\'' +
                 ", emp_access='" + emp_access + '\'' +
                 ", emp_position='" + emp_position + '\'' +
                 ", sign_no=" + sign_no +

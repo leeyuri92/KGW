@@ -25,7 +25,7 @@
   <!-- moment-timezone.js 라이브러리 -->
 <%--  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>--%>
   <!-- 부트스트랩 라이브러리 -->
-  <link rel="stylesheet" href="/css/calendar.css">
+  <link rel="stylesheet" href="/css/mainCalendar.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>메인페이지</title>
 
@@ -155,24 +155,54 @@
 
       <div class="row">
         <div class="col-2 mr-3 text-center mainbox" >
-          <div class="user-panel">
-            <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" margin: auto; width: 175px; height: 175px; ">
+          <div class="row">
+            <div class="user-panel">
+              <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" margin: auto; width: 175px; height: 175px; ">
+            </div>
           </div>
-          <div>
-            [<%=empvo.getEmp_position()%>] 사원
+          <div class="row">
+            <div class="text-bold text-lg">
+              [<%=empvo.getTeam_name()%>]
+            </div>
           </div>
-          <div>
-            <%=empvo.getName()%>
+          <div class="row mb-5">
+            <div class="text-bold text-lg">
+              <%=empvo.getName()%> 사원
+            </div>
           </div>
-          <div>
-            <div id="clock" ></div> <img class="icon"/>
+          <div class="row text-bold text-lg">
+            <div class="col-6 ">
+              <label>현재 시간 : </label>
+            </div>
+            <div class="col-6">
+              <div id="clock"></div>
+            </div>
           </div>
-          <div>
-            <label>출근시간 :</label><label id="workStart"></label>
+          <div class="row text-bold text-lg mt-2 mb-5">
+            <div class="col-6 " style="line-height: 50px">
+              <label>현재 날씨 : </label>
+            </div>
+            <div class="col-6">
+              <div><img class="icon"/></div>
+            </div>
           </div>
-          <div>
-            <label>퇴근시간 :</label><label id="workEnd"></label>
+          <div class="row text-bold text-lg">
+            <div class="col-6 ">
+              <label>출근시간 : </label>
+            </div>
+            <div class="col-6">
+              <label id="workStart"></label>
+            </div>
           </div>
+          <div class="row text-bold text-lg">
+            <div class="col-6 ">
+              <label>퇴근시간 : </label>
+            </div>
+            <div class="col-6">
+              <label id="workEnd"></label>
+            </div>
+          </div>
+
           <hr class="m-5" style="height: 1px; background-color: #0e0e0e; border: 0">
           <div class="mb-5">
             <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>

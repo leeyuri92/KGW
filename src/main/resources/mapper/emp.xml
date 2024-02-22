@@ -5,8 +5,8 @@
 <mapper namespace="com.mybatis.mapper.EmpMapper">
 
     <select id="empDetail" parameterType="com.vo.EmpVO" resultType="com.vo.EmpVO">
-        select emp_no, team_no, emp_access, emp_position,  dayoff_cnt, emp_year, hire_date, emp_state, password, name, email, birthdate, phone_num, address, reg_date, mod_date
-        from emp
+        select emp_no, team_no,team_name, emp_access, emp_position,  dayoff_cnt, emp_year, hire_date, emp_state, password, name, email, birthdate, phone_num, address, reg_date, mod_date
+        from emp natural join team
         where emp_no = 1004
     </select>
 
