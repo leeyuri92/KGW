@@ -171,6 +171,8 @@
                 dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                 height: '570px', // calendar 높이 설정
                 locale: 'ko', // 한국어 설정
+                // weekends: false, // 주말 표시 여부
+                // slotLabelFormat: { hour: 'numeric', minute: '2-digit', hour12: false }, // 시간을 24시간 형식으로 표시
                 eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
                     console.log(obj);
                 },

@@ -6,9 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +35,26 @@ public class ReservationController {
         model.addAttribute("calendarList", calendarList);
         model.addAttribute("assetList", assetList);
         model.addAttribute("assetReservationList", assetReservationList);
+        return "forward:/reservation/reservation.jsp";
+    }
+
+    @PostMapping("/addReservation")
+    public String addList(@RequestParam Map<String, Object> addMap, Model model){
+        List<Map<String, Object>> addList;
+        logger.info("calendarController: delList 호출");
+        addList = calendarService.addList(addMap);
+        logger.info(addList.toString());
+        model.addAttribute("addList", addList);
+        return "forward:/reservation/reservation.jsp";
+    }
+
+    @DeleteMapping("/delReservation")
+    public String delList(@RequestParam Map<String, Object> delMap, Model model){
+        List<Map<String, Object>> delList;
+        logger.info("calendarController: delList 호출");
+        delList = calendarService.delList(delMap);
+        logger.info(delList.toString());
+        model.addAttribute("delList", delList);
         return "forward:/reservation/reservation.jsp";
     }
 

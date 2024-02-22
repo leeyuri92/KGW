@@ -32,6 +32,15 @@
         </where>
     </select>
 
+    <delete id="delList" parameterType="map">
+        DELETE FROM asset_reservation
+        WHERE reservation_no = #{reservationNo}
+    </delete>
+
+    <insert id="addList" parameterType="map">
+        INSERT INTO ASSET_RESERVATION (RESERVATION_NO, EMP_NO, ASSET_NO, RESERVATION_TITLE, RESERVATION_CONTENT, RESERVATION_START, RESERVATION_END)
+        VALUES (reservation_pk_seq.nextval, 1003, #{id}, '#{title}', '예약', '#{start}', '#{end}')
+    </insert>
 
     <!--    <insert id="addList" parameterType="list">-->
     <!--        INSERT INTO calendar (calendar_title, calendar_start, calendar_end, calendar_rid)-->
