@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/calendar/*")
-public class CalendarController {
-    Logger logger = LoggerFactory.getLogger(CalendarController.class);
+@RequestMapping("/reservation/*")
+public class ReservationController {
+    Logger logger = LoggerFactory.getLogger(ReservationController.class);
     @Autowired
     private CalendarService calendarService;
 
-    @GetMapping("calendarList")
-    public String calendarList(@RequestParam Map<String, Object> cMap, @RequestParam Map<String, Object> aMap, @RequestParam Map<String, Object> arMap, Model model){
+    @GetMapping("reservationList")
+    public String reservationList(@RequestParam Map<String, Object> cMap, @RequestParam Map<String, Object> aMap, @RequestParam Map<String, Object> arMap, Model model){
         List<Map<String, Object>> calendarList;
         List<Map<String, Object>> assetList;
         List<Map<String, Object>> assetReservationList;
@@ -37,7 +37,7 @@ public class CalendarController {
         model.addAttribute("calendarList", calendarList);
         model.addAttribute("assetList", assetList);
         model.addAttribute("assetReservationList", assetReservationList);
-        return "forward:/calendar/calendar.jsp";
+        return "forward:/reservation/reservation.jsp";
     }
 
 }

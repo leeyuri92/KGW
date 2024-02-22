@@ -13,11 +13,13 @@
     </select>
 
     <select id= "arList" parameterType="map" resultType="com.vo.CalendarVO">
-        SELECT a.reservation_no,
+        SELECT
+        a.reservation_no,
         a.reservation_title,
         a.reservation_start,
         a.reservation_end,
         b.asset_id,
+        b.asset_no,
         b.asset_name,
         b.team_no,
         c.name
