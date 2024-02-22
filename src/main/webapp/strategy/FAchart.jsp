@@ -22,20 +22,48 @@
     <title>FA선수현황차트</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+        <%-----------------------------------------------------------------------------------
+          이름 : 이유리
+          날짜 : 2024-02-21
+          내용 : 등록/방출에 따른 WAR값 Ajax 처리
+        ---------------------------------------------------------------------------------------%>
+        function faUpdate(FA_NO) {
+            $.ajax({
+                url: '/faUpdate',
+                type: 'GET',
+                data: {FA_NO: FA_NO},
+                success: function(response) {
+                    console.log("response : " + response); // 넘어 오는 값은 없을 거임
+
+                    //faUpdate가 성공하면 /faWar 실행
+                    $.ajax({
+                        url: '/faWar',
+                        type: 'GET',
+                        success: function(data) {
+                            // id가 "chart"인 부분을 다시 그리기
+                            console.log("data : " + data + ", type : " + typeof (data));
+                            document.querySelector('#barchart_material').innerHTML = data;
+                            google.charts.setOnLoadCallback(drawChart(data));
+                        },
+                        error: function() {
+                            alert('Error occurred while loading new chart.');
+                        }
+                    });
+
+                    // 버튼 다시 그려주기
+                    console.log("FA_NO : "+FA_NO);
+                    let btn = document.querySelector('#btn_'+FA_NO);
+                    (btn.innerHTML === "방출" ) ? btn.innerHTML="등록" : btn.innerHTML="방출";
+                },
+                error: function() {
+                    alert('Error occurred while updating data.');
+                }
+            });
+        }
 
         // 첫번째 차트
         google.charts.load('current', {'packages':['bar']});
         google.charts.setOnLoadCallback(drawStuff);
-
-
-
-        // let name = [];
-        // let war = [];
-        //
-        // $.each(wChart, function () {
-        //     name.push(this["K_NAME"])
-        //     war.push(this["K_WAR"])
-        // });
 
         function drawStuff() {
             const data = new google.visualization.arrayToDataTable(
@@ -71,10 +99,7 @@
             };
 
             const chart = new google.charts.Bar(document.getElementById('top_x_div'));
-            // Convert the Classic options to Material options.
             chart.draw(data, google.charts.Bar.convertOptions(options));
-
-            // google.visualization.arrayToDataTable(twoDArray, opt_firstRowIsData);
 
             google.visualization.events.addListener(chart, 'select', selectHandler);
 
@@ -87,12 +112,13 @@
         // 두번째 차트
         google.charts.load('current', {'packages':['bar']});//구글 지원하는 막대그래프 로딩
         google.charts.setOnLoadCallback(drawChart);//막대그래프 그리려면 데이터가 필요함 - 함수호출
-        function drawChart() {//DataTable()
+
+        function drawChart(fWar) {
             var data = google.visualization.arrayToDataTable([
                 ['선수', 'WAR'],
                 [' ', null],
-                ['우리구단 WAR', 1],
-                ['FA선수포함', 1.17],
+                ['우리구단 WAR', ${kWar}],
+                ['FA선수포함', fWar],
                 [' ', null]
             ]);
             var options = {
@@ -109,6 +135,9 @@
             var chart = new google.charts.Bar(document.getElementById('barchart_material'));
             chart.draw(data, google.charts.Bar.convertOptions(options));
         }
+
+
+
     </script>
     <style>
         .chart {
@@ -275,25 +304,25 @@
                                                     Map<String, Object> rmap = fList.get(i);
                                             %>
                                             <tr>
-                                                <td><%=rmap.get("K_DATE") %>
+                                                <td><%=rmap.get("FA_DATE") %>
                                                 </td>
-                                                <td><%=rmap.get("K_TEAM") %>
+                                                <td><%=rmap.get("FA_AGENT") %>
                                                 </td>
-                                                <td><%=rmap.get("K_TEAM") %>
+                                                <td><%=rmap.get("FA_TEAM") %>
                                                 </td>
-                                                <td><%=rmap.get("K_NAME") %>
+                                                <td><%=rmap.get("FA_NAME") %>
                                                 </td>
-                                                <td><%=rmap.get("K_POS") %>
+                                                <td><%=rmap.get("FA_POS") %>
                                                 </td>
                                                 <td>
                                                     <%
-                                                        if (rmap.get("K_TEAM").equals("키움")) {
+                                                        if (rmap.get("FA_STATE").equals("TRUE")) {
                                                     %>
-                                                    <button> 방출</button>
+                                                    <button id="btn_<%=rmap.get("FA_NO")%>" class="btn btn-danger" type="submit" onclick="faUpdate('<%=rmap.get("FA_NO")%>')">방출</button>
                                                     <%
                                                     } else {
                                                     %>
-                                                    <button>등록</button>
+                                                    <button id="btn_<%=rmap.get("FA_NO")%>" class="btn btn-danger" type="submit" onclick="faUpdate('<%=rmap.get("FA_NO")%>')">등록</button>
                                                     <%
                                                         }
                                                     %>
