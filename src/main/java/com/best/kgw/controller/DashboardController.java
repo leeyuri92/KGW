@@ -1,7 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.DashboardService;
-import com.best.kgw.vo.EmpVO;
+import com.vo.EmpVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +34,7 @@ public class DashboardController {
         logger.info("Controller : DashboardForm");
         List<EmpVO> empList;
         empList = dashboardService.empDetail(empVO);
+        logger.info(empList.toString());
         model.addAttribute("empDetail", empList);
         return "forward:/dashboard/dashboardForm.jsp";
     }

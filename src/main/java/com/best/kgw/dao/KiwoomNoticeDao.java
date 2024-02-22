@@ -1,6 +1,6 @@
 package com.best.kgw.dao;
 
-import com.best.kgw.vo.KiwoomNoticeVO;
+import com.vo.KiwoomNoticeVO;
 
 import java.util.List;
 

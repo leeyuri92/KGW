@@ -1,4 +1,4 @@
-package com.best.kgw.vo;
+package com.vo;
 
 
 import lombok.Builder;

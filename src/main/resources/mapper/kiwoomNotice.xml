@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.mybatis.mapper.KiwoomNoticeMapper">
 
-<select id="kiwoomNoticeList" parameterType="com.best.kgw.vo.KiwoomNoticeVO" resultType="com.best.kgw.vo.KiwoomNoticeVO">
+<select id="kiwoomNoticeList" parameterType="com.vo.KiwoomNoticeVO" resultType="com.vo.KiwoomNoticeVO">
 SELECT board_no,
        emp_no,
        board_title,

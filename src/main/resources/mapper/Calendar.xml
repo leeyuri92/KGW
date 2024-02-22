@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgw.ticket.dao.CalendarDao">
 
-    <select id= "cList" parameterType="map" resultType="com.best.kgw.vo.CalendarVO">
+    <select id= "cList" parameterType="map" resultType="com.vo.CalendarVO">
         select * from calendar
     </select>
 
-    <select id= "aList" parameterType="map" resultType="com.best.kgw.vo.CalendarVO">
+    <select id= "aList" parameterType="map" resultType="com.vo.CalendarVO">
         select * from asset
     </select>
 
-    <select id= "arList" parameterType="map" resultType="com.best.kgw.vo.CalendarVO">
+    <select id= "arList" parameterType="map" resultType="com.vo.CalendarVO">
         SELECT a.reservation_no,
         a.reservation_title,
         a.reservation_start,

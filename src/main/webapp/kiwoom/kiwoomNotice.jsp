@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import="com.best.kgw.vo.KiwoomNoticeVO" %>
+<%@ page import="com.vo.KiwoomNoticeVO" %>
 <%
   int size=0;
   List<KiwoomNoticeVO> kiwoomNoticeList = (List)request.getAttribute("kiwoomNoticeList");

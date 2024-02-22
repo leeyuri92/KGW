@@ -1,7 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.AdminSevice;
-import com.best.kgw.vo.EmpVO;
+import com.vo.EmpVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

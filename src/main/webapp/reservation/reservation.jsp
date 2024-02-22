@@ -1,4 +1,4 @@
-<%@ page import="com.best.kgw.vo.CalendarVO" %>
+<%@ page import="com.vo.CalendarVO" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>

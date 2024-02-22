@@ -2,7 +2,7 @@ package com.best.kgw.service.impl;
 
 import com.best.kgw.dao.KiwoomNoticeDao;
 import com.best.kgw.service.KiwoomNoticeService;
-import com.best.kgw.vo.KiwoomNoticeVO;
+import com.vo.KiwoomNoticeVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

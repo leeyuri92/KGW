@@ -1,6 +1,6 @@
 package com.best.kgw.dao;
 
-import com.best.kgw.vo.EmpVO;
+import com.vo.EmpVO;
 
 import java.util.List;
 
