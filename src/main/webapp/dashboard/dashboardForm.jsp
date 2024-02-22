@@ -23,10 +23,106 @@
   <!-- fullcalendar 언어 CDN 라이선스 표시 없애기 위해 locale 사용 -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
   <!-- moment-timezone.js 라이브러리 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+<%--  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>--%>
   <!-- 부트스트랩 라이브러리 -->
   <link rel="stylesheet" href="/css/calendar.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>메인페이지</title>
+
+  <script>
+      const updateTime = () => {
+          let timeString = moment().format('HH:mm:ss');
+          document.querySelector("#clock").textContent = timeString;
+      }
+
+      // 매 초마다 시간을 업데이트
+      setInterval(updateTime, 1000);
+
+      const workStart = () =>{
+          let timeString = moment().format('HH:mm:ss');
+              Swal.fire({
+                  title: "출근하시겠습니까?",
+                  showCancelButton: true,
+                  confirmButtonColor: "#7c1512",
+                  cancelButtonColor: "#868686",
+                  confirmButtonText: "네",
+                  cancelButtonText: "아니요"
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      Swal.fire({
+                          title: "출근이 완료되었습니다.",
+                          text: "좋은 하루 되세요.",
+                          icon: "success"
+                      });
+                      document.querySelector("#workStart").textContent = timeString;
+                      const button = document.querySelector("#btn_start");
+                      // 버튼을 비활성화합니다.
+                      button.disabled = true;
+                  }
+              });
+      }
+      const workEnd = () =>{
+          let timeString = moment().format('HH:mm:ss');
+          Swal.fire({
+              title: "퇴근하시겠습니까?",
+              showCancelButton: true,
+              confirmButtonColor: "#7c1512",
+              cancelButtonColor: "#868686",
+              confirmButtonText: "네",
+              cancelButtonText: "아니요"
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  Swal.fire({
+                      title: "퇴근이 완료되었습니다.",
+                      text: "오늘 하루도 수고하셨습니다.",
+                      icon: "success"
+                  });
+                  document.querySelector("#workEnd").textContent = timeString;
+                  const button = document.querySelector("#btn_start");
+                  // 버튼을 비활성화합니다.
+                  button.disabled = false;
+              }
+          });
+      }
+
+
+
+      function success (position){
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          getWeather(latitude, longitude);
+      }
+
+
+
+      function getWeather (lat, lon) {
+          const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
+          fetch(
+              `https://api.openweathermap.org/data/2.5/weather?lat=`+lat+`&lon=`+lon+`&appid=`+API_KEY+`&units=metric&lang=kr`
+          )
+              .then((response) => {
+                  if (!response.ok) {
+                      throw new Error('날씨 정보를 가져오는 데 실패했습니다.');
+                  }
+                  return response.json();
+              })
+              .then((data) => {
+                  const iconSection = document.querySelector('.icon');
+                  const icon = data.weather[0].icon;
+                  console.log(icon)
+                  const iconURL = `http://openweathermap.org/img/wn/`+icon+`.png`;
+                  console.log(iconURL)
+                  iconSection.setAttribute('src', iconURL);
+                  iconSection.setAttribute('alt', data.weather[0].description);
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+              });
+      }
+
+      navigator.geolocation.getCurrentPosition(success);
+  </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
     <div class="wrapper">
@@ -69,13 +165,13 @@
             <%=empvo.getName()%>
           </div>
           <div>
-            12:00:00 [날씨]
+            <div id="clock" ></div> <img class="icon"/>
           </div>
           <div>
-            출근시간 : 09:00:00
+            <label>출근시간 :</label><label id="workStart"></label>
           </div>
           <div>
-            퇴근시간 : 09:00:00
+            <label>퇴근시간 :</label><label id="workEnd"></label>
           </div>
           <hr class="m-5" style="height: 1px; background-color: #0e0e0e; border: 0">
           <div class="mb-5">
@@ -114,7 +210,7 @@
                   </div>
 
                   <div class="custom-col">
-                    <button id="btn_approval" class="approval btn btn-danger" >기안작성 </button>
+                    <button id="btn_approval" class="approval btn btn-danger" >기안작성</button>
                   </div>
 
                 </div>

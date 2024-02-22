@@ -9,10 +9,17 @@
   <!-- fullcalendar 언어 CDN 라이선스 표시 없애기 위해 locale 사용 -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
   <!-- moment-timezone.js 라이브러리 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+<%--  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>--%>
   <!-- 부트스트랩 라이브러리 -->
   <link rel="stylesheet" href="/css/calendar.css">
   <title>메인페이지</title>
+
+  <script>
+      const mod_attendance = () => {
+          location.href = "/attendance/attendanceList.jsp";
+      }
+
+  </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
 <div class="wrapper">
@@ -44,9 +51,25 @@
         </div>
       </div>
     </div>
-    <div class="box mt-3">
-        <%@include file="/include/attendance.jsp"%>
-    </div>
+
+    <section class="content">
+      <div class="box mt-3">
+        <div class="box-header d-flex align-items-center pb-0">
+          <div class="d-flex align-items-center">
+            <h4 style="font-weight: bold; margin-left: 1.5rem">근태관리</h4>
+          </div>
+          <div style="margin-left: auto;">
+            <button id="bb" class="btn btn-danger" style="width: 100%;" onclick="mod_attendance()">근태수정요청</button>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <%@include file="/include/attendance.jsp"%>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 
 
 </body>
