@@ -9,11 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>우리구단소식</title>
 </head>
-<script>
-    function kiwoomNoticeList(){
-        location.href="/kiwoom/kiwoomNotice";
-    }
-</script>
+
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
@@ -55,14 +51,16 @@
                                 <hr />
                                 <div class="container">
                                     <%@include file="/common/summernote.jsp"%>
-                                    <div>
-                                        <input type="text" name="subject" class="form-control mb-3"  placeholder="제목을 입력해주세요." id="subject">
-                                    </div>
-                                    <div id="summernote"></div>
-                                    <div class="d-flex gap-2 justify-content-end mt-3">
-                                        <button type="submit" class="btn btn-primary" id="submit">작성</button>
-                                        <button type="submit" class="btn btn-primary" onclick="kiwoomNoticeList()">이전</button>
-                                    </div>
+                                    <form id="insert" method="post" action="/kiwoom/kiwoomInsert">
+                                        <div>
+                                            <input type="text" name="board_title" class="form-control mb-3"  placeholder="제목을 입력해주세요." id="subject">
+                                        </div>
+                                        <textarea id="summernote" name="board_content"></textarea>
+                                        <div class="d-flex gap-2 justify-content-end mt-3">
+                                            <button type="submit" class="btn btn-primary" id="submit" onclick="kiwoomNoticeInsert()">작성</button>
+                                            <button type="submit" class="btn btn-primary" onclick="kiwoomNoticeList()">이전</button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <script>
                                     $('#summernote').summernote({
@@ -104,6 +102,13 @@
                                         // const xhr =new XMLHttpRequest()
                                         // xhr.open("POST",)
                                     });
+                                    function kiwoomNoticeList(){
+                                        location.href="/kiwoom/kiwoomNotice";
+                                    }
+                                    const kiwoomNoticeInsert =()=> {
+                                        console.log("작성")
+                                        document.querySelector("#insert").submit();
+                                    };
                                 </script>
                             </div>
                         </div>

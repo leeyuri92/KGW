@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class KiwoomNoticeDaoImpl implements KiwoomNoticeDao {
@@ -22,7 +23,7 @@ public class KiwoomNoticeDaoImpl implements KiwoomNoticeDao {
         logger.info("kiwoomNoticeList");
         List<KiwoomNoticeVO> kiwoomNoticeList = sqlSessionTemplate.selectList("kiwoomNoticeList", kiwoomNoticeVO);
         logger.info(kiwoomNoticeList.toString());
-       return kiwoomNoticeList;
+        return kiwoomNoticeList;
 
     }
 
@@ -30,7 +31,23 @@ public class KiwoomNoticeDaoImpl implements KiwoomNoticeDao {
     public int kiwoomNoticeDelete(int board_no) throws Exception {
         logger.info("kiwoomNoticeDelete");
         int kiwoomNoticeDelete=0;
-        sqlSessionTemplate.delete("kiwoomNoticeDelete",board_no);
-    return kiwoomNoticeDelete;
+        kiwoomNoticeDelete = sqlSessionTemplate.delete("kiwoomNoticeDelete",board_no);
+        logger.info("kiwoomNoticeDelete : " + kiwoomNoticeDelete);
+        return kiwoomNoticeDelete;
     }
+
+
+
+    @Override
+    public int kiwoomNoticeInsert(Map<String, Object> pMap) throws Exception {
+        logger.info("kiwoomNoticeInset");
+        int kiwoomNoticeInsert=0;
+        kiwoomNoticeInsert=sqlSessionTemplate.insert("kiwoomNoticeInsert",pMap);
+        logger.info("kiwoomNoticeInsert" + kiwoomNoticeInsert);
+        return kiwoomNoticeInsert;
+    }
+//    @Override
+//    public List<KiwoomNoticeVO> kiwoomNoticeUpdate(KiwoomNoticeVO kiwoomNoticeVO) throws Exception {
+//        return null;
+//    }
 }

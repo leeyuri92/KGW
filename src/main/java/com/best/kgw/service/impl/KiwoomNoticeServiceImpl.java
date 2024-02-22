@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class KiwoomNoticeServiceImpl implements KiwoomNoticeService{
@@ -29,4 +30,18 @@ public class KiwoomNoticeServiceImpl implements KiwoomNoticeService{
         kiwoomNoticeDelete=kiwoomNoticeDao.kiwoomNoticeDelete(board_no);
         return kiwoomNoticeDelete;
     }
+
+
+    @Override
+    public int kiwoomNoticeInsert(Map<String, Object> pMap) throws Exception {
+        logger.info("kiwoomNoticeInsert");
+        int kiwoomNoticeInsert=0;
+        kiwoomNoticeInsert=kiwoomNoticeDao.kiwoomNoticeInsert(pMap);
+        return kiwoomNoticeInsert;
+    }
+
+//    @Override
+//    public List<KiwoomNoticeVO> kiwoomNoticeUpdate(KiwoomNoticeVO kiwoomNoticeVO) throws Exception {
+//        return null;
+//    }
 }

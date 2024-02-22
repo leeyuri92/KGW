@@ -1,6 +1,31 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="com.vo.KiwoomNoticeVO" %>
+
+<%
+    int size=0;
+    List<KiwoomNoticeVO> kiwoomNoticeList = (List)request.getAttribute("kiwoomNoticeList");
+    KiwoomNoticeVO noticeVO = kiwoomNoticeList.get(0);
+//    if(kiwoomNoticeList != null){
+//        size= kiwoomNoticeList.size();
+//    }
+//    out.print(kiwoomNoticeList);
+//
+//    int board_No=0;
+//    if (request.getParameter("board_no") != null) {
+//        board_No=Integer.parseInt(request.getParameter("board_no"));
+//    }
+//
+//    KiwoomNoticeVO kiwoomNoticeVO = null;
+//    // Board_id를 이용해 해당 데이터를 가져오기
+//    for(KiwoomNoticeVO kiwoomNotice:kiwoomNoticeList) {
+//        if (kiwoomNotice.getBoard_no() == board_No) {
+//            kiwoomNoticeVO = kiwoomNotice;
+//            break;
+//        }
+
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -8,7 +33,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>우리구단소식</title>
+    <script>
+        function kiwoomNoticeList(){
+            location.href='/kiwoom/kiwoomNotice';
+        }
+        const  kiwoomNoticeDelete =() => {
+            location.href = "/kiwoom/kiwoomDelete?board_no="+<%=noticeVO.getBoard_no()%>;
+        }
+    </script>
 </head>
+
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
@@ -48,64 +82,57 @@
                             <div class="box-header">
                                 <h4 style="font-weight: bold; margin-left: 2rem" >상세보기</h4>
                                 <hr />
-                                <div class="board_view_wrap">
-                                    <div class="board_view">
-                                        <div class="title">
-                                            제목
-                                        </div>
-                                        <div class="info">
-                                            <dl>
-                                                <dt>번호</dt>
-                                                <dd>1</dd>
-                                            </dl>
-                                            <dl>
-                                                <dt>작성자</dt>
-                                                <dd>작성자이름</dd>
-                                            </dl>
-                                            <dl>
-                                                <dt>작성일</dt>
-                                                <dd>2024-02-18</dd>
-                                            </dl>
-                                            <dl>
-                                                <dt>수정일</dt>
-                                                <dd>2024-02-18</dd>
-                                            </dl>
-                                            <dl>
-                                                <dt>조회</dt>
-                                                <dd>1</dd>
-                                            </dl>
-                                        </div>
-                                        <div class="cont">
-                                            글내용이 들어갑니다<br>
-                                            글내용이 들어갑니다<br>
-                                            글내용이 들어갑니다<br>
-                                            글내용이 들어갑니다<br>
-                                            글내용이 들어갑니다<br>
-                                            글내용이 들어갑니다<br>
-                                            글내용이 들어갑니다
-                                        </div>
+                                <div class="board_view">
+                                    <div class="title">
+                                        <dd><%=noticeVO.getBoard_title()%></dd>
                                     </div>
-                                    <div class="d-flex gap-2 justify-content-end mt-2">
-                                        <button type="submit" class="btn btn-primary">목록</button>
-                                        <button type="submit" class="btn btn-primary">수정</button>
-                                        <button type="submit" class="btn btn-primary">삭제</button>
+                                    <div class="info">
+                                        <dl>
+                                            <dt>번호</dt>
+                                            <dd><%=noticeVO.getBoard_no()%>
+                                        </dl>
+                                        <dl>
+                                            <dt>작성자</dt>
+                                            <dd><%=noticeVO.getEmp_no()%></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>작성일</dt>
+                                            <dd><%=noticeVO.getReg_date()%></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>수정일</dt>
+                                            <dd><%=noticeVO.getMod_date()%></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>조회</dt>
+                                            <dd><%=noticeVO.getBoard_hit()%></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="cont">
+                                        <%=noticeVO.getBoard_content()%>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 justify-content-end mt-2">
+                                    <button type="submit" class="btn btn-primary" onclick="kiwoomNoticeList()">목록</button>
+                                    <button type="submit" class="btn btn-primary">수정</button>
+                                    <button type="submit" class="btn btn-primary" onclick="kiwoomNoticeDelete()">삭제</button>
+                                </div>
+
+                                <div class="comment-section mt-4">
+                                    <div id="commentList" class="mt-3">
+                                        댓글내용
                                     </div>
 
-                                    <div class="comment-section mt-4">
-                                        <div id="commentList" class="mt-3">
-                                            댓글내용
+                                    <form id="commentForm">
+                                        <div class="mb-3">
+                                            <label for="commentContent" class="form-label">댓글</label>
+                                            <textarea class="form-control" id="commentContent" rows="3" placeholder='댓글을 입력해주세요.' required></textarea>
                                         </div>
-
-                                        <form id="commentForm">
-                                            <div class="mb-3">
-                                                <label for="commentContent" class="form-label">댓글</label>
-                                                <textarea class="form-control" id="commentContent" rows="3" required></textarea>
-                                            </div>
-                                            <div class="d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-primary">댓글 작성</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary" >댓글 작성</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

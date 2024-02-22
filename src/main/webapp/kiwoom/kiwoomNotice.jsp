@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.util.*,com.util.BSPageBar" %>
 <%@ page import="com.vo.KiwoomNoticeVO" %>
 <%
   int size=0;
@@ -9,6 +10,12 @@
     size=kiwoomNoticeList.size();
   }
   out.print(kiwoomNoticeList);
+  //페이징처리
+  int numPerPage = 5;
+  int nowPage = 0;
+  if(request.getParameter("nowPage")!=null){
+    nowPage = Integer.parseInt(request.getParameter("nowPage"));
+  }
 %>
 
 <!DOCTYPE html>
@@ -17,15 +24,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>우리구단 소식</title>
+
   <!-- Google Font: Source Sans Pro -->
 </head>
 <script type="text/javascript">
-  function kiwoomNoticeForm (){
-    location.href='/kiwoom/kiwoom.jsp';
-    function kiwoomNoticeSearch (){
-
+  function searchEnter(event){
+    console.log(window.event.keyCode)
+    if(window.event.keyCode == 13){
+      NoticeSearch()
     }
+    event.isComposing//검색후 잔여검색기록 없애는코드
   }
+  function kiwoomNoticeSearch(){
+    console.log('kiwoomNoticeSearch');
+    const gubun = document.querySelector("#gubun").value;
+    const keyword = document.querySelector("#keyword").value;
+    console.log(`${gubun} , ${keyword}`);
+    location.href="/kiwoom/kiwoomNotice?gubun="+gubun+"&keyword="+keyword;
+  }
+
+  function kiwoomNoticeForm () {
+    location.href = '/kiwoom/kiwoom.jsp';
+  }
+  const kiwoomDetail=(Board_no) => {
+    location.href = '/kiwoom/kiwoomDetail?Board_no='+Board_no;
+  }
+
+
 </script>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -33,6 +58,7 @@
   <!-- header start -->
   <%@include file="/include/KGW_bar.jsp"%>
   <link rel="stylesheet" href="/css/kiwoomNoticeCard.css">
+
   <!-- header end    -->
 
   <!-- body start    -->
@@ -75,9 +101,9 @@
                 <div class="col-2">
                   <select id="gubun" class="form-select" aria-label="분류선택">
                     <option value="none">분류선택</option>
-                    <option value="b_title">제목</option>
-                    <option value="b_writer">작성자</option>
-                    <option value="b_content">내용</option>
+                    <option value="board_title">제목</option>
+                    <option value="emp_no">작성자</option>
+                    <option value="board_content">내용</option>
                   </select>
                 </div>
                 <div class="col-3">
@@ -93,50 +119,59 @@
               </div>
               <!-- 회원목록 시작 -->
               <div class='board-list'>
+
+                <%  for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
+                  if (i == size) break;
+                  KiwoomNoticeVO kiwoomnoticeVO = kiwoomNoticeList.get(i);
+                %>
                 <div class="card mb-3 custom-card">
-                  <% for (int i = 0; i < size; i++) {
-                    KiwoomNoticeVO kiwoomnoticeVO = kiwoomNoticeList.get(i);
-                  %>
                   <div class="row g-0">
+
                     <div class="col-md-4">
                       <img src="..." class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
+
                       <div class="card-body">
-                        <p class="card-text"><%=kiwoomnoticeVO.getBoard_title()%></p>
+                        <p class="card-link">
+                          <a href="javascript:kiwoomDetail('<%=kiwoomnoticeVO.getBoard_no()%>')">
+                            <%=kiwoomnoticeVO.getBoard_title()%>
+                          </a>
+                        </p>
                         <p class="card-text"><%=kiwoomnoticeVO.getEmp_no()%></p>
                         <p class="card-text"><%=kiwoomnoticeVO.getMod_date()%></p>
-                        <p class="card-text"><small class="text-body-secondary"><%=kiwoomnoticeVO.getBoard_no()%></small></p>
+                        <p class="card-text">
+                          <small class="text-body-secondary"><%=kiwoomnoticeVO.getBoard_no()%></small>
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <%
-                    }
-                  %>
                 </div>
+                <% } %>
                 <hr/>
               </div>
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
+
+              <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+              <div style="display:flex; justify-content:center;">
+                <ul class="pagination">
+                  <%
+                    String pagePath = "kiwoomNoticeListPage";
+                    BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
+                    out.print(bspb.getPageBar());
+                  %>
+                </ul>
+              </div>
+              <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+
             </div>
+            <!-- 회원목록   끝  -->
           </div>
         </div>
       </div>
+
     </section>
   </div>
 </div>
+
 </body>
 </html>
