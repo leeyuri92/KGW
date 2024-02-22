@@ -24,6 +24,12 @@ public class AdminServiceImpl implements AdminSevice {
     기능 : 회원가입(RegistServiceImpl)
     */
 
+
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.19
+     기능 : 사원추가 서비스
+     **********************************************************************************/
     @Override
     public int regist(EmpVO empVO) throws Exception {
         logger.info("RegistServiceImpl : Regist 호출");
@@ -31,7 +37,11 @@ public class AdminServiceImpl implements AdminSevice {
         result = adminDao.regist(empVO);
         return result;
     }
-
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.19
+     기능 : 사원목록 서비스
+     **********************************************************************************/
     @Override
     public List<Map<String, Object>> empList(Map<String, Object> pmap) {
         List<Map<String, Object>> empList = new ArrayList<>();
@@ -41,6 +51,11 @@ public class AdminServiceImpl implements AdminSevice {
         return empList;
     }
 
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.21
+     기능 : 사원수정 서비스
+     **********************************************************************************/
     @Override
     public int empInfoUpdate(Map<String, Object> pmap) {
         logger.info("Service empInfoUpdate");

@@ -5,29 +5,29 @@
     <update id="empInfoUpdate" parameterType="Map">
         update emp
         set team_no = #{team_no}
-          ,emp_access = 'ROLE_USER'
+          ,emp_access = #{emp_access}
           ,emp_position = #{emp_position}
           ,sign_no = 0
           ,dayoff_cnt = 0
           ,emp_year = 0
           ,hire_date = #{hire_date}
           ,emp_state = #{emp_state}
-          ,reg_date = #{reg_date}
           ,password = #{password}
           ,name = #{name}
           ,email = #{email}
           ,birthdate = #{birthdate}
           ,phone_num = #{phone_num}
-          ,mod_date = #{mod_date}
+          ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
           ,address = #{address}
           ,retire_date = #{retire_date}
         where emp_no = #{emp_no}
     </update>
 
     <insert id="memberInsert" parameterType="map">
-        insert into emp(emp_no,team_no,emp_access,emp_position,sign_no,dayoff_cnt,emp_year,hire_date,emp_state,reg_date,password,name,email,birthdate,phone_num,address,mod_date,retire_date)
-        values(emp_pk_seq.nextval,#{team_no},'ROLE_USER',#{emp_position},0,0,0,#{hire_date},#{emp_state},#{reg_date},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},NULL,NULL)
+        insert into emp(emp_no,team_no,emp_access,emp_position,sign_no,dayoff_cnt,emp_year,hire_date,emp_state,password,name,email,birthdate,phone_num,address,mod_date,reg_date,retire_date)
+        values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),NULL)
     </insert>
+
     <select id="empList" parameterType="map" resultType="map">
         select e.emp_no,t.team_name,t.team_no, e.emp_access, e.emp_position, e.sign_no, e.dayoff_cnt, e.emp_year,e.hire_date, e.emp_state, e.reg_date, e.mod_date, e.password, e.name, e.email,e.phone_num,e.address,e.birthdate
         from emp e JOIN team t ON e.team_no = t.team_no
