@@ -10,6 +10,10 @@ public interface CalendarService {
 
     List<Map<String, Object>> assetReservationList(Map<String, Object> arMap);
 
+    List<Map<String, Object>> delList(Map<String, Object> delMap);
+
+    List<Map<String, Object>> addList(Map<String, Object> addMap);
+
 //    List<Map<String, Object>> addEventList(Map<String, Object> addMap);
 }
 

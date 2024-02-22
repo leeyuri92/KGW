@@ -52,6 +52,29 @@ public class CalendarServiceImpl implements CalendarService {
         return assetReservationList;
     }
 
+    @Override
+    public List<Map<String, Object>> addList(Map<String, Object> addMap) {
+        List<Map<String, Object>> addList = null;
+        logger.info("Service : delList 호출");
+        try {
+            addList = calendarDao.addList(addMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return addList;
+    }
+    @Override
+    public List<Map<String, Object>> delList(Map<String, Object> delMap) {
+        List<Map<String, Object>> delList = null;
+        logger.info("Service : delList 호출");
+        try {
+            delList = calendarDao.delList(delMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return delList;
+    }
+
 //    @Override
 //    public List<Map<String, Object>> addEventList(Map<String, Object> addMap) {
 //        List<Map<String, Object>> addEventList = null;
