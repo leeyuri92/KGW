@@ -1,36 +1,7 @@
 /* **********************<< 공통 CSS >>*********************** */
-. {
-    font-family: "맑은 고딕";
-}
-
-.box {
-    position: relative;
-    border-radius: 5px;
-    background: #ffffff;
-    border-top: 4px solid #d2d6de;
-    /*margin-top: 10px;*/
-    /*margin-bottom: 20px;*/
-    margin: 0 5px 20px 5px;
-    width: calc(100% - 10px);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    padding: 1rem 2rem 5px 2rem;
-
-}
-
-.box-header {
-    padding: 20px 0px;
-    background-color: white;
-}
-
-
-html, body {
-    font-family: "맑은 고딕";
-    font-size: 12px;
-}
-
 /* 캘린더 전체 너비 */
 .fc {
-    width: auto;
+    width: 2050px;
 }
 
 .container-fluid {
