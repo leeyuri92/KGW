@@ -12,8 +12,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript">
+
         const memberInsert = () => {
-            document.querySelector("#f_member").submit();
+            if (validateForm()) {
+                // 유효성 검사 성공 시, 폼을 제출합니다.
+                alert("사원추가 완료!");
+                document.querySelector("#f_member").submit();
+            } else {
+                // 유효성 검사 실패 시, 오류 메시지를 표시하거나 적절한 조치를 취합니다.
+                alert("사원추가 양식을 올바르게 입력해주세요.");
+            }
     };
 
     /* 자바 스크립트 부분 */
@@ -59,92 +67,120 @@
                         <hr />
                     </div>
                     <form  id="f_member" method="post" action="/admin/regist">
-                     <div class="form-group mb-3 mt-3">
-                      <label for="name">이름 <span class="text-danger">*</span>
-                      <span id="id" class="text-danger" style="display:none" > 2~5글자로 입력해주세요. </span>
-            </label>
-            <input type="text" class="form-control" id="name" name="name" onblur="validateId()"  placeholder="이름를 입력하세요.">
-        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3 mt-3">
+                            <label for="name">이름 <span class="text-danger">*</span>
+                             <span id="name_" class="text-danger" style="display:none" > 2~5글자로 입력해주세요. </span>
+                            </label>
+                                  <input type="text" class="form-control" id="name" name="name" onblur="validateName()"  placeholder="이름를 입력하세요.">
+                            </div>
+                                <div class="col-6 mb-3 mt-3">
+                                    <label for="password">비밀번호 <span class="text-danger">*</span>
+                                        <span id="password_" class="text-danger" style="display:none"> 대소문자나 숫자 4~12자리로 입력하세요.</span></label>
+                                    <input type="password" class="form-control" id="password" name="password"  onblur="validatePassword()"   placeholder="비밀번호를 입렵하세요.">
+                                </div>
+                             </div>
 
-        <div class="form-group mb-3 mt-3">
-            <label for="password">비밀번호 <span class="text-danger">*</span>
-                <span id="pw" class="text-danger" style="display:none"> 대소문자와 숫자 4~12자리로 입력하세요.</span></label>
-            <input type="password" class="form-control" id="password" name="password"  onblur="validatePassword()"   placeholder="비밀번호를 입렵하세요.">
-        </div>
 
 
-        <div class="form-group mb-3 mt-3">
+
+                            <div class="row">
+                                <div class="col-6 mb-3 mt-3">
             <label for="birthdate">생년월일 <span class="text-danger">*</span>
-                <span id="date" class="text-danger" style="display:none"  >생년월일 형식이 아닙니다.</span> </label>
+                <span id="birthdate_" class="text-danger" style="display:none"  >생년월일 형식이 아닙니다.</span> </label>
             <input type="date" class="form-control" id="birthdate"  name="birthdate" onblur="validateBirthdate()">
         </div>
 
-        <div class="form-group mb-3 mt-3">
+                                <div class="col-6 mb-3 mt-3">
             <label for="phone_num">전화번호 <span class="text-danger">*</span>
-                <span id="number" class="text-danger" style="display:none"  >전화번호 형식이 아닙니다.</span> </label>
+                <span id="phone_num_" class="text-danger" style="display:none"  >전화번호 형식이 아닙니다.</span> </label>
             <input type="tel" class="form-control" id="phone_num" name="phone_num" onblur="validatePhone()" placeholder="전화번호를 입력해주세요.">
         </div>
+        </div>
 
-        <div class="form-group mb-3 mt-3">
+                        <div class="row">
+                            <div class="col-6 mb-3 mt-3">
             <label for="email">이메일 <span class="text-danger">*</span>
-                <span id="email1" class="text-danger" style="display:none"  >이메일형식이 아닙니다.</span> </label>
+                <span id="email_" class="text-danger" style="display:none"  >이메일형식이 아닙니다.</span> </label>
             <input type="email" class="form-control" id="email" name="email" onblur="validateEmail()" placeholder="이메일을 입력해주세요.">
         </div>
 
-        <div class="form-group mb-3 mt-3">
-            <label for="address">주소</label>
+                            <div class="col-6 mb-3 mt-3">
+            <label for="address">주소 <span class="text-danger">*</span>
+                <span id="address_" class="text-danger" style="display:none">주소형식이 아닙니다.</span> </label>
+            </label>
             <div class="input-group">
-                <input type="text" class="form-control" id="address" name="address" placeholder="우편번호" aria-describedby="search-btn">
+                <input type="text" class="form-control" id="address" name="address" onblur="validateAddress()" placeholder="우편번호" aria-describedby="search-btn">
                 <div class="input-group-append">
                     <button class="btn btn-success" type="button" id="search-btn" onclick="openZipcode()">검색</button>
                 </div>
             </div>
+            </div>
         </div>
 
-
-        <div class="form-group mb-3 mt-3">
-            <label for="team_no">부서</label>
-            <select class="form-control" id="team_no" name="team_no">
+                        <div class="row">
+        <div class="col-6 mb-3 mt-3">
+            <label for="team_no">부서 <span class="text-danger">*</span>
+                <span id="team_no_" class="text-danger" style="display:none">부서를 선택하세요.</span> </label>
+            </label>
+            <select class="form-control" id="team_no" name="team_no" onblur="validateTeam()">
                 <option value="0" selected>부서를 선택해주세요.</option>
-                <option value="1">경영지원팀</option>
-                <option value="2">운영팀</option>
+                <option value="1">운영팀</option>
+                <option value="2">경영지원팀</option>
                 <!-- Add more options as needed -->
             </select>
         </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="emp_position">직급</label>
-                            <select class="form-control" id="emp_position" name="emp_position">
+                        <div class="col-6 mb-3 mt-3">
+                            <label for="emp_position">직급 <span class="text-danger">*</span>
+                                <span id="emp_position_" class="text-danger" style="display:none">직급을 선택하세요.</span>
+                            </label>
+                            <select class="form-control" id="emp_position" name="emp_position" onblur="validatePosition()">
                                 <option value="0" selected>직급을 선택해주세요.</option>
                                 <option value="사원">사원</option>
                                 <option value="팀장">팀장</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="emp_state">상태</label>
-                            <select class="form-control" id="emp_state" name="emp_state">
+                        </div>
+
+                        <div class="row">
+                        <div class="col-6 mb-3 mt-3">
+                            <label for="emp_state">상태 <span class="text-danger">*</span>
+                                <span id="emp_state_" class="text-danger" style="display:none">상태을 선택하세요.</span>
+                            </label>
+                            <select class="form-control" id="emp_state" name="emp_state" onblur="validateState()" >
                                 <option value="0" selected>상태를 선택해주세요.</option>
                                 <option value="재직">재직</option>
                                 <option value="퇴직">퇴직</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
-                        <div class="form-group mb-3 mt-3">
+                        <div class="col-6 mb-3 mt-3">
                             <label for="hire_date">입사일 <span class="text-danger">*</span>
-                                <span id="hdate" class="text-danger" style="display:none"  >형식이 아닙니다.</span> </label>
-                            <input type="date" class="form-control" id="hire_date" name="hire_date" onblur="validateEmail()" placeholder="입사일을 입력해주세요.">
+                                <span id="hire_date_" class="text-danger" style="display:none"  >날자형식이 아닙니다.</span> </label>
+                            <input type="date" class="form-control" id="hire_date" name="hire_date" onblur="validateHire()" placeholder="입사일을 입력해주세요.">
                         </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="reg_date">생성일 <span class="text-danger">*</span>
-                                <span id="rdate" class="text-danger" style="display:none"  >형식이 아닙니다.</span> </label>
-                            <input type="date" class="form-control" id="reg_date" name="reg_date" onblur="validateEmail()" placeholder="생성일을 입력해주세요.">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6 mb-3 mt-3">
+                                <label for="emp_access">권한 <span class="text-danger">*</span>
+                                    <span id="emp_access_" class="text-danger" style="display:none"  >권한을 선택해주세요.</span>
+                                </label>
+                                <select class="form-control" id="emp_access" name="emp_access" onblur="validateAccess()">
+                                    <option value="0" selected >권한을 선택해주세요.</option>
+                                    <option value="ROLE_USER">사원</option>
+                                    <option value="ROLE_READER">팀장</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group mb-10 mt-10 p-3">
                             <input
                                     type="button"
                                     class="btn btn-primary float-right"
                                     onclick="memberInsert()"
-                                    value="회원가입"
+                                    value="사원추가"
                             />
                         </div>
     </form>
@@ -175,6 +211,191 @@
                     //document.getElementById("postDetail").focus();
                 }
             }).open();
+        }
+
+
+        // 정규표현식 패턴 상수 선언
+        //아이디 정규식표현
+        const expIdText = /^[A-Za-z0-9]{4,12}$/;
+        //비밀번호 정규식표현
+        const expPwText = /^[A-Za-z0-9]{4,12}$/;
+        //이름 정규식표현
+        const expNameText = /^[가-힣]{2,5}$/;
+        //핸드폰 정규식표현
+        const expPhoneText = /^\d{3}-\d{3,4}-\d{4}$/;
+        //생년월일 정규식표현
+        const expDateText = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+        //이메일 정규실표현
+        const expEmailText = /^[a-zA-Z0-9._+=-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+        //부서 정규식표현
+        const expTeamText = /^[1-9]{1,2}$/;
+        //권한 정규식표현
+        const expRoleText = /ROLE/;
+        //주소 정규식표현
+        const expAddressText = /^[가-힣a-zA-Z0-9-.,\s]{1,60}$/;
+
+
+
+
+
+        const validateForm = () => {
+            // 각 입력 필드에 대한 개별 유효성 검사 함수를 호출합니다.
+            const isPasswordValid = validatePassword();
+            const isNameValid = validateName();
+            const isBirthdateValid = validateBirthdate();
+            const isPhoneValid = validatePhone();
+            const isEmailValid = validateEmail();
+            const idHireValid = validateHire();
+            const isAccessValid = validateAccess();
+            const isStateValid = validateState();
+            const isTeamValid = validateTeam();
+            const isAddressValid = validateAddress();
+            const isPositionValid = validatePosition();
+
+            // 모든 검사가 통과되면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+            return isPasswordValid && isNameValid && isBirthdateValid && isPhoneValid && isEmailValid &&idHireValid&& isAccessValid&&isStateValid && isTeamValid && isAddressValid && isPositionValid;
+        }
+
+
+
+        // 개별 유효성 검사 함수
+        const validateName = () => {
+            const nmSpan = document.getElementById('name_');
+            const mbrNmInput = document.getElementById('name');
+            const isValid = expNameText.test(mbrNmInput.value);
+
+            if (isValid) {
+                nmSpan.style.display = 'none';
+            } else {
+                nmSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+        const validatePassword = () => {
+            const pwSpan = document.getElementById('password_');
+            const mbrPwInput = document.getElementById('password');
+            const isValid = expPwText.test(mbrPwInput.value);
+
+            if (isValid) {
+                pwSpan.style.display = 'none';
+            } else {
+                pwSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+
+        const validateBirthdate = () => {
+            const dateSpan = document.getElementById('birthdate_');
+            const mbrBirthdateInput = document.getElementById('birthdate');
+            const isValid = expDateText.test(mbrBirthdateInput.value);
+
+            if (isValid) {
+                dateSpan.style.display = 'none';
+            } else {
+                dateSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+        const validatePhone = () => {
+            const numberSpan = document.getElementById('phone_num_');
+            const mbrPhoneInput = document.getElementById('phone_num');
+            const isValid = expPhoneText.test(mbrPhoneInput.value);
+
+            if (isValid) {
+                numberSpan.style.display = 'none';
+            } else {
+                numberSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+        const validateEmail = () => {
+            const emailSpan = document.getElementById('email_');
+            const mbrEmailInput = document.getElementById('email');
+            const isValid = expEmailText.test(mbrEmailInput.value);
+
+            if (isValid) {
+                emailSpan.style.display = 'none';
+            } else {
+                emailSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+        const validateTeam = () => {
+            const teamSpan = document.getElementById('team_no_');
+            const mbrNmInput = document.getElementById('team_no');
+            const isValid = expTeamText.test(mbrNmInput.value);
+
+            if (isValid) {
+                teamSpan.style.display = 'none';
+            } else {
+                teamSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+        const validatePosition = () => {
+            const positionSpan = document.getElementById('emp_position_');
+            const mbrNmInput = document.getElementById('emp_position');
+            const isValid = expNameText.test(mbrNmInput.value);
+
+            if (isValid) {
+                positionSpan.style.display = 'none';
+            } else {
+                positionSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+        const validateState  = () => {
+            const stateSpan = document.getElementById('emp_state_');
+            const mbrNmInput = document.getElementById('emp_state');
+            const isValid = expNameText.test(mbrNmInput.value);
+
+            if (isValid) {
+                stateSpan.style.display = 'none';
+            } else {
+                stateSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+        const validateAccess  = () => {
+            const acSpan = document.getElementById('emp_access_');
+            const mbrNmInput = document.getElementById('emp_access');
+            const isValid = expRoleText.test(mbrNmInput.value);
+            if (isValid) {
+                acSpan.style.display = 'none';
+            } else {
+                acSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+        const validateHire  = () => {
+            const hireSpan = document.getElementById('hire_date_');
+            const mbrNmInput = document.getElementById('hire_date');
+            const isValid = expDateText.test(mbrNmInput.value);
+            if (isValid) {
+                hireSpan.style.display = 'none';
+            } else {
+                hireSpan.style.display = 'inline';
+            }
+            return isValid;
+        }
+
+        const validateAddress  = () => {
+            const addressSpan = document.getElementById('address_');
+            const mbrNmInput = document.getElementById('address');
+            const isValid = expAddressText.test(mbrNmInput.value);
+            if (isValid) {
+                addressSpan.style.display = 'none';
+            } else {
+                addressSpan.style.display = 'inline';
+            }
+            return isValid;
         }
     </script>
 </body>

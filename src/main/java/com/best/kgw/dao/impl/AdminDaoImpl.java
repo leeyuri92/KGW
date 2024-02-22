@@ -18,6 +18,11 @@ public class AdminDaoImpl implements AdminDao {
     @Autowired
     SqlSessionTemplate sqlSessionTemplate;
 
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.19
+     기능 : 사원추가 레포지토리
+     **********************************************************************************/
     @Override
     public int regist(EmpVO empVO) throws Exception {
         logger.info("AdminDaoImpl 호출");
@@ -26,6 +31,11 @@ public class AdminDaoImpl implements AdminDao {
         return result;
     }
 
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.19
+     기능 : 사원목록 레포지토리
+     **********************************************************************************/
     @Override
     public List<Map<String, Object>> empList(Map<String, Object> pmap) {
         logger.info("Repository : empList 호출" + pmap);
@@ -35,6 +45,11 @@ public class AdminDaoImpl implements AdminDao {
         return empList;
     }
 
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.19
+     기능 : 사원수정 레포지토리
+     **********************************************************************************/
     @Override
     public int empInfoUpdate(Map<String, Object> pmap) {
         logger.info("Repository : empInfoUpdate");

@@ -45,7 +45,7 @@
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">성   명</td>
-            <td colspan="2"><%=rmap.get("EMP_NO") %></td>
+            <td colspan="2"><%=rmap.get("NAME") %></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">입 사 일 </td>
