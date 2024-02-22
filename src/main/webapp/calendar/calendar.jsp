@@ -16,111 +16,135 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <!-- moment-timezone.js 라이브러리 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+
     <!-- 부트스트랩 라이브러리 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/calendar.css" />
 </head>
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
+<div class="wrapper">
+    <%@include file="/include/KGW_bar.jsp"%>
+    <div class="content-wrapper">
 
-<%@include file="/include/KGW_bar.jsp"%>
+        <div style="width: 100%; height: 100px; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
+            <div style="justify-content: flex-start; align-items: center; display: inline-flex">
+                <div style="justify-content: flex-start; align-items: center; display: flex">
+                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정</div>
+                </div>
+                <div style="padding-left: 8px; padding-right: 8px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 10px; display: inline-flex">
+                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">></div>
+                </div>
+                <div style="justify-content: flex-start; align-items: center; display: flex">
+                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정현황</div>
+                </div>
+            </div>
+            <div style="padding-top: 14px; padding-bottom: 6px; justify-content: flex-start; align-items: center; gap: 16px; display: inline-flex">
+                <div style="width: 16.25px; height: 16px; position: relative">
+                    <div style="width: 13.35px; height: 12.71px; left: 1.45px; top: 1.64px; position: absolute; background: rgba(0, 0, 0, 0.85)"></div>
+                </div>
+                <div style="justify-content: flex-start; align-items: center; gap: 12px; display: flex">
+                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 20px; font-family: Roboto; font-weight: 700; line-height: 28px; word-wrap: break-word">일정현황</div>
+                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정현황을 조회할 수 있는 페이지입니다.</div>
+                </div>
+            </div>
+        </div>
 
-<div style="width: 100%; height: 100px; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; background: #F9FBFF; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-    <div style="justify-content: flex-start; align-items: center; display: inline-flex">
-        <div style="justify-content: flex-start; align-items: center; display: flex">
-            <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정</div>
-        </div>
-        <div style="padding-left: 8px; padding-right: 8px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 10px; display: inline-flex">
-            <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">></div>
-        </div>
-        <div style="justify-content: flex-start; align-items: center; display: flex">
-            <div style="color: rgba(0, 0, 0, 0.85); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정현황</div>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="container-fluid1">
+                            <h2 class="cal_title">일정 현황</h2>
+                            <button id="addEventBtn" class="btn btn-primary col-md-1">일정 등록</button>
+                        </div>
+                        <hr />
+
+                        <%-- 캘린더 태그 --%>
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <%-- 내 예약 현황 태그 --%>
+                        <div class="container-fluid1">
+                            <h2 class="cal_title">내 일정 현황</h2>
+                            <!-- 검색기 시작 -->
+                            <div class="row">
+                                <div class="col-3">
+                                    <select id="gubun" class="form-select" aria-label="분류선택">
+                                        <option value="none">분류선택</option>
+                                        <option value="b_title">제목</option>
+                                        <option value="b_writer">작성자</option>
+                                        <option value="b_content">내용</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
+                                           aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
+                                </div>
+                                <div class="col-3">
+                                    <button id="btn_search" class="btn btn-danger" style="background-color: #652C2C;" onclick="boardSearch()">검색</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">일정명</th>
+                                    <th scope="col">참여자</th>
+                                    <th scope="col">시간</th>
+                                    <th scope="col">수정</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- DB에서 가져온 정보를 동적으로 표시 -->
+                                <c:forEach var="vo" items="${assetList}">
+                                    <c:forEach var="vo1" items="${assetReservationList}">
+                                        <!-- 여기에서 필요한 정보를 가져와 사용 -->
+                                        <tr>
+                                            <th scope="row">#</th>
+                                            <td><c:out value="${vo.asset_name}"/></td>
+                                            <td><c:out value="${vo.emp_no}"/></td>
+                                            <td><c:out value="${vo1.reservation_start}~${vo1.reservation_end}"/></td>
+                                            <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- modal 태그 -->
+        <div id="eventModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <label for="eventTitle">일정명:</label>
+                <input type="text" id="eventTitle" name="eventTitle"><br>
+
+                <label for="eventStart">일정 시작:</label>
+                <input type="datetime-local" id="eventStart" name="eventStart"><br>
+
+                <label for="eventEnd">일정 종료:</label>
+                <input type="datetime-local" id="eventEnd" name="eventEnd"><br>
+
+                <button id="submitEvent">Add Event</button>
+            </div>
         </div>
     </div>
-    <div style="padding-top: 14px; padding-bottom: 6px; justify-content: flex-start; align-items: center; gap: 16px; display: inline-flex">
-        <div style="width: 16.25px; height: 16px; position: relative">
-            <div style="width: 13.35px; height: 12.71px; left: 1.45px; top: 1.64px; position: absolute; background: rgba(0, 0, 0, 0.85)"></div>
-        </div>
-        <div style="justify-content: flex-start; align-items: center; gap: 12px; display: flex">
-            <div style="color: rgba(0, 0, 0, 0.85); font-size: 20px; font-family: Roboto; font-weight: 700; line-height: 28px; word-wrap: break-word">일정현황</div>
-            <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정현황을 조회할 수 있는 페이지입니다.</div>
-        </div>
-    </div>
 </div>
-
-<!-- calendar 태그 -->
-<div id='calendar-container'>
-    <div id='calendar'></div>
-</div>
-
-<%-- 내 예약 현황 태그 --%>
-<div class="container-fluid1">
-    <h2 class="cal_title">내 일정 현황</h2>
-    <!-- 검색기 시작 -->
-    <div class="row">
-        <div class="col-3">
-            <select id="gubun" class="form-select" aria-label="분류선택">
-                <option value="none">분류선택</option>
-                <option value="b_title">제목</option>
-                <option value="b_writer">작성자</option>
-                <option value="b_content">내용</option>
-            </select>
-        </div>
-        <div class="col-6">
-            <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
-                   aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
-        </div>
-        <div class="col-3">
-            <button id="btn_search" class="btn btn-danger" style="background-color: #652C2C;" onclick="boardSearch()">검색</button>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">일정명</th>
-            <th scope="col">참여자</th>
-            <th scope="col">시간</th>
-            <th scope="col">수정</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- DB에서 가져온 정보를 동적으로 표시 -->
-        <c:forEach var="vo" items="${assetList}">
-            <c:forEach var="vo1" items="${assetReservationList}">
-                <!-- 여기에서 필요한 정보를 가져와 사용 -->
-                <tr>
-                    <th scope="row">#</th>
-                    <td><c:out value="${vo.asset_name}"/></td>
-                    <td><c:out value="${vo.emp_no}"/></td>
-                    <td><c:out value="${vo1.reservation_start}~${vo1.reservation_end}"/></td>
-                    <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
-                </tr>
-            </c:forEach>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
-
-<!-- modal 태그 -->
-<div id="eventModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <label for="eventTitle">일정명:</label>
-        <input type="text" id="eventTitle" name="eventTitle"><br>
-
-        <label for="eventStart">일정 시작:</label>
-        <input type="datetime-local" id="eventStart" name="eventStart"><br>
-
-        <label for="eventEnd">일정 종료:</label>
-        <input type="datetime-local" id="eventEnd" name="eventEnd"><br>
-
-        <button id="submitEvent">Add Event</button>
-    </div>
-</div>
-
 <script>
     (function(){
         $(function(){
@@ -156,6 +180,7 @@
                 eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
                     console.log(obj);
                 },
+
                 select: function(arg) {
                     let modal = document.getElementById('eventModal');
                     modal.style.display = 'block';
