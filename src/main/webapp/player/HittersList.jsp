@@ -23,18 +23,6 @@
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
     }
 %>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-
-<%--<%--%>
-<%--    List<Map<String, Object>> hitterList = (List<Map<String, Object>>)request.getAttribute("hitterList");--%>
-<%--    if (hitterList!=null){--%>
-<%--        out.print("hitterList 출력성공");--%>
-<%--    }--%>
-<%--    else {--%>
-<%--      out.print("null 타자출력실패");--%>
-<%--    }--%>
-<%--%>--%>
-
 
 
 <html>
@@ -145,14 +133,14 @@
                             <thead>
                             <tr>
                                 <th width="10%">#</th>
-                                <th width="10%">선수명</th> <!-- 球员名 -->
-                                <th width="10%">소속</th> <!-- 球队 -->
-                                <th width="10%">타율</th> <!-- 打击率 -->
-                                <th width="10%">타수</th> <!-- 打数 -->
-                                <th width="10%">안타</th> <!-- 安打 -->
-                                <th width="10%">홈런</th> <!-- 全垒打 -->
-                                <th width="10%">득점</th> <!-- 得分 -->
-                                <th width="10%">출루율</th> <!-- 上垒率 -->
+                                <th width="10%">선수명</th>
+                                <th width="10%">소속</th>
+                                <th width="10%">타율</th>
+                                <th width="10%">타수</th>
+                                <th width="10%">안타</th>
+                                <th width="10%">홈런</th>
+                                <th width="10%">득점</th>
+                                <th width="10%">출루율</th>
                                 <th width="10%">war</th>
                                 <th width="10%">ops</th>
                             </tr>
