@@ -139,7 +139,8 @@
                                         <th width="10%">사번</th>
                                         <th width="10%">부서</th>
                                         <th width="10%">직급</th>
-                                        <th width="15%">이메일</th>
+                                        <th width="10%">상태</th>
+                                        <th width="10%">이메일</th>
                                         <th width="15%">잔여연차</th>
                                         <th width="15%">증명서</th>
                                     </tr>
@@ -157,7 +158,12 @@
                                     										<td><%=rmap.get("EMP_NO")%></td>
                                     										<td><%=rmap.get("TEAM_NAME")%></td>
                                     										<td><%=rmap.get("EMP_POSITION") %></td>
-                                    										<td><%=rmap.get("EMAIL") %></td>
+                                                                            <% if (rmap.get("EMP_STATE").equals("0")){ %>
+                                                                            <td>퇴직</td>
+                                                                            <% }else{ %>
+                                                                            <td>재직</td>
+                                                                            <%  } %>
+                                                                            <td><%=rmap.get("EMAIL") %></td>
                                     										<td><%=rmap.get("DAYOFF_CNT") %></td>
                                     										<td><a href="javascript:empCertificate('<%=rmap.get("EMP_NO")%>')">재직증명서</a></td>
                                     									</tr>
