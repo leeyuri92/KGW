@@ -44,6 +44,24 @@
         const empCertificate= (emp_no)=>{
             location.href= "/admin/empCertificate?emp_no="+emp_no;
         }
+        var tdNo= "";
+        function check(){
+            const checkbox = $("input[name=checkboxName]:checked");
+            checkbox.each(function (i) {
+                var tr = checkbox.parent().parent().eq(i);
+                var td = tr.children();
+                tdNo = td.eq(2).text();
+            });
+            console.log(tdNo);
+        }
+        const empSelectDown= ()=>{
+            check();
+            location.href= "/admin/selectDownLoadExel?emp_no="+tdNo;
+        }
+        const empAllDown= ()=>{
+            check();
+            location.href= "/admin/allDownLoadExel";
+        }
     </script>
     <!-- Google Font: Source Sans Pro -->
 </head>
@@ -107,8 +125,8 @@
                                     <button id="btn_search" class="btn btn-danger" onclick="empSearch()">검색</button>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button" class="btn btn-danger">선택사원 다운로드</button>
-                                    <button type="button" class="btn btn-danger">전체사원 다운로드</button>
+                                    <button id="btn_selectDown" type="button" class="btn btn-danger" onclick="empSelectDown()">선택사원 다운로드</button>
+                                    <button id="btn_allDown" type="button" class="btn btn-danger" onclick="empAllDown()">전체사원 다운로드</button>
                                 </div>
                             </div>
                             <!-- 회원목록 시작 -->
@@ -134,7 +152,7 @@
                                     									%>
                                     									<tr>
 
-                                    										<td><input type="checkbox" name="user_CheckBox" ></td>
+                                    										<td> <input type="checkbox" id="check" name="checkboxName" onclick="check() "></td>
                                     										<td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
                                     										<td><%=rmap.get("EMP_NO")%></td>
                                     										<td><%=rmap.get("TEAM_NAME")%></td>
