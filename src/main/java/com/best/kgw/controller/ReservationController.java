@@ -58,5 +58,15 @@ public class ReservationController {
         return "forward:/reservation/reservation.jsp";
     }
 
+    @PutMapping("/updateReservation")
+    public String upList(@RequestParam Map<String, Object> upMap, Model model){
+        List<Map<String, Object>> upList;
+        logger.info("calendarController: delList 호출");
+        upList = calendarService.upList(upMap);
+        logger.info(upList.toString());
+        model.addAttribute("upList", upList);
+        return "forward:/reservation/reservation.jsp";
+    }
+
 }
 

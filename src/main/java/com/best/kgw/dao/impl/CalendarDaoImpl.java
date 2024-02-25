@@ -66,6 +66,16 @@ public class CalendarDaoImpl implements CalendarDao {
         logger.info(list.toString());
         return list;
     }
+
+    @Override
+    public List<Map<String, Object>> upList(@RequestParam Map<String, Object> upMap)throws Exception {
+        logger.info("Dao : upList 호출");
+        logger.info(upMap.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("upList", upMap);
+        logger.info(list.toString());
+        return list;
+    }
 //
 //    @Override
 //    public List<Map<String, Object>> addEventList(@RequestParam Map<String, Object> addMap)throws Exception {

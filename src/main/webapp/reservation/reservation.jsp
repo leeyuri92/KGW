@@ -244,7 +244,7 @@
 
                         // 타임라인 드래그 이벤트
                         select: function(arg) {
-                            if(detailStart && detailEnd == !null) {
+                            if (detailStart && detailEnd == !null) {
                                 let modal = document.getElementById('detailModal');
                                 modal.style.display = 'block';
 
@@ -260,7 +260,8 @@
                                 endInput.value = endTime;
                                 resourceIdInput.value = arg.resource.id;
                                 detailAssetNoInput.value = arg.id;
-                            } else{
+                                console.log(arg.id);
+                            } else {
                                 let modal = document.getElementById('insertModal');
                                 modal.style.display = 'block';
 
@@ -275,41 +276,75 @@
                                 startInput.value = startTime;
                                 endInput.value = endTime;
                                 resourceIdInput.value = arg.resource.id;
-                                insertAssetNoInput.value = arg.id;
+                                // insertAssetNoInput.value = arg.event.id;
                             }
                         },
 
+
                         eventClick: function(info) {
-                            let modal = document.getElementById('detailModal');
-                            modal.style.display = 'block';
+                            if(detailStart && detailEnd != null) {
+                                let modal = document.getElementById('detailModal');
+                                modal.style.display = 'block';
 
-                            let detailTitleInput = document.getElementById('detailTitle');
-                            let detailStartInput = document.getElementById('detailStart');
-                            let detailEndInput = document.getElementById('detailEnd');
-                            let detailResourceIdInput = document.getElementById('detailResourceId');
-                            let detailAssetNoInput = document.getElementById('detailAssetNo');
-                            let detailReservationNoInput = document.getElementById('detailReservationNo');
+                                let detailTitleInput = document.getElementById('detailTitle');
+                                let detailStartInput = document.getElementById('detailStart');
+                                let detailEndInput = document.getElementById('detailEnd');
+                                let detailResourceIdInput = document.getElementById('detailResourceId');
+                                let detailAssetNoInput = document.getElementById('detailAssetNo');
+                                let detailReservationNoInput = document.getElementById('detailReservationNo');
 
-                            // FullCalendar의 함수를 사용하여 정보 가져오기
-                            let event = info.event;
-                            detailTitleInput.value = event.title;
-                            detailAssetNoInput.value = event.id;
+                                // FullCalendar의 함수를 사용하여 정보 가져오기
+                                let event = info.event;
+                                detailTitleInput.value = event.title;
+                                detailAssetNoInput.value = event.id;
 
-                            detailReservationNoInput.value = event.extendedProps.reservationNo;
+                                detailReservationNoInput.value = event.extendedProps.reservationNo;
 
 
-                            // 이벤트의 리소스 가져오기
-                            let resource = event.getResources()[0]; // 이벤트가 하나의 리소스에만 할당되었다고 가정합니다.
+                                // 이벤트의 리소스 가져오기
+                                let resource = event.getResources()[0]; // 이벤트가 하나의 리소스에만 할당되었다고 가정합니다.
 
-                            if (resource) {
-                                detailResourceIdInput.value = resource.id;
-                            }  else{
-                                console.error('Resource not found.');
-                                detailResourceIdInput.value = '';
+                                if (resource) {
+                                    detailResourceIdInput.value = resource.id;
+                                } else {
+                                    console.error('Resource not found.');
+                                    detailResourceIdInput.value = '';
+                                }
+                                // moment.js를 사용하여 시간 형식 맞추기
+                                detailStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
+                                detailEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
+                            }else{
+                                let modal = document.getElementById('insertModal');
+                                modal.style.display = 'block';
+
+                                let insertTitleInput = document.getElementById('insertTitle');
+                                let insertStartInput = document.getElementById('insertStart');
+                                let insertEndInput = document.getElementById('insertEnd');
+                                let insertResourceIdInput = document.getElementById('insertResourceId');
+                                let insertAssetNoInput = document.getElementById('insertAssetNo');
+                                let insertReservationNoInput = document.getElementById('insertReservationNo');
+
+                                // FullCalendar의 함수를 사용하여 정보 가져오기
+                                let event = info.event;
+                                insertTitleInput.value = event.title;
+                                insertAssetNoInput.value = event.id;
+
+                                insertReservationNoInput.value = event.extendedProps.reservationNo;
+
+
+                                // 이벤트의 리소스 가져오기
+                                let resource = event.getResources()[0]; // 이벤트가 하나의 리소스에만 할당되었다고 가정합니다.
+
+                                if (resource) {
+                                    insertResourceIdInput.value = resource.id;
+                                } else {
+                                    console.error('Resource not found.');
+                                    insertResourceIdInput.value = '';
+                                }
+                                // moment.js를 사용하여 시간 형식 맞추기
+                                insertStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
+                                insertEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
                             }
-                            // moment.js를 사용하여 시간 형식 맞추기
-                            detailStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
-                            detailEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm')
                         },
 
                         resources: [
@@ -388,76 +423,73 @@
                     closeBtn.addEventListener('click', handleEventUpdate);
                 });
 
-                // 등록모달 입력값 등록 함수
                 function handleEventSubmit() {
                     let titleInput = document.getElementById('insertTitle');
                     let startInput = document.getElementById('insertStart');
                     let endInput = document.getElementById('insertEnd');
                     let resourceIdInput = document.getElementById('insertResourceId');
-                    let assetNoInput = document.getElementById('insertAssetNo');
+                    let assetNoInput = document.getElementById('insertAssetNo'); // 이 부분을 파싱하고 있는 부분입니다.
 
                     let title = titleInput.value;
                     let start = startInput.value;
                     let end = endInput.value;
                     let resourceId = resourceIdInput.value;
-                    let id = assetNoInput.value;
-                    let url = '/reservation/addReservation?asset_no='+ id; // 데이터베이스에 새 이벤트를 추가하는 엔드포인트
+                    let id = assetNoInput.value; // 여기서 값을 가져오고 있습니다.
+                    let url = '/reservation/addReservation';
 
                     if (title && start && end && id && resourceId) {
-                        // AJAX를 이용 서버에 등록
                         let xhr = new XMLHttpRequest();
-                        xhr.open('POST', url, true); // GET 대신 POST로 변경
-                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.open('POST', url, true);
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-                        console.log(id);
-
-                        // 요청이 완료되면 실행되는 함수를 정의합니다.
                         xhr.onreadystatechange = function() {
                             if (xhr.readyState === XMLHttpRequest.DONE) {
-                                console.log(xhr);
-                                // 성공적으로 이벤트가 추가되면 달력에도 추가합니다.
-                                calendar.addEvent({
-                                    title: title,
-                                    start: start,
-                                    end: end,
-                                    resourceId: resourceId,
-                                    id: id,
-                                    color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-                                });
-                                console.log(xhr);
+                                // console.log(xhr.responseText);
+                                console.log(addEventToCalendar.toString());
+                                addEventToCalendar(title, start, end, resourceId, id);
                                 console.log('새 이벤트가 성공적으로 등록되었습니다.');
                             }
                         };
-                        // 서버로 보낼 데이터를 준비합니다.
-                        let eventData = {
-                            title: title,
-                            start: start,
-                            end: end,
-                            resourceId: resourceId,
-                            id: id
-                        };
-                        // 데이터를 JSON 형식으로 변환하여 전송합니다.
-                        // 서버로 전송할 데이터 설정 (id와 함께 예약번호도 포함)
-                        xhr.send(JSON.stringify(eventData)); // JSON 문자열로 변환하여 데이터 전송
+
+                        let data = 'title=' + encodeURIComponent(title) +
+                            '&start=' + encodeURIComponent(start) +
+                            '&end=' + encodeURIComponent(end) +
+                            '&resourceId=' + encodeURIComponent(resourceId) +
+                            '&id=' + encodeURIComponent(id);
+
+                        xhr.send(data);
                     } else {
                         console.error('입력값이 유효하지 않습니다.');
                     }
-                    // 모달을 닫고 입력값 초기화
+                    closeModalAndClearInputs();
+                }
+
+
+                function addEventToCalendar(title, start, end, resourceId, id) {
+                    calendar.addEvent({
+                        title: title,
+                        start: start,
+                        end: end,
+                        resourceId: resourceId,
+                        id: id,
+                        color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+                    });
+                }
+
+                function closeModalAndClearInputs() {
                     let modal = document.getElementById('insertModal');
                     modal.style.display = 'none';
                     clearModalInputs();
                 }
 
 
-
-                // 예약 삭제 이벤트 및 DB 데이터 삭제
-                function handleEventDelete(id, reservationNo) {
+                function handleEventDelete() {
                     let assetNoInput = document.getElementById('detailAssetNo');
-                    id = assetNoInput.value;
+                    let id = assetNoInput.value;
                     let reservationNoInput = document.getElementById('detailReservationNo');
-                    reservationNo = reservationNoInput.value;
-                    let eventToDelete = calendar.getEventById(id);
-                    let url = '/reservation/delReservation?reservation_no=' + reservationNo;
+                    let reservationNo = reservationNoInput.value;
+                    let eventToDelete = calendar.getEventById(id); // calendar 객체를 통해 이벤트 가져옴
+                    let url = '/reservation/delReservation';
 
                     // AJAX를 이용하여 서버에 삭제 요청
                     let xhr = new XMLHttpRequest();
@@ -466,8 +498,8 @@
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === XMLHttpRequest.DONE) {
                             console.log(xhr);
-                            let response = xhr.responseText;
-                            eventToDelete.remove(); // 이벤트 삭제
+                            // 서버 응답 후 FullCalendar에서 이벤트 제거
+                            deleteToCalendar(eventToDelete); // deleteToCalendar 함수에 eventToDelete 전달
                             console.log('이벤트가 성공적으로 삭제되었습니다.');
                             let modal = document.getElementById('detailModal');
                             modal.style.display = 'none';
@@ -476,72 +508,101 @@
 
                     // 서버로 전송할 데이터 설정 (id와 함께 예약번호도 포함)
                     let data = 'id=' + encodeURIComponent(id) + '&reservationNo=' + encodeURIComponent(reservationNo);
+                    console.log(data);
                     xhr.send(data); // 데이터 전송
+                }
+
+                function deleteToCalendar(eventToDelete) {
+                    if (eventToDelete) {
+                        eventToDelete.remove(); // FullCalendar 객체의 remove() 메서드 호출
+                    }
                 }
 
                 let deleteBtn = document.getElementById('deleteEvent');
                 deleteBtn.addEventListener('click', handleEventDelete);
 
-
-                // // 등록모달 입력값 등록 함수
-                // function handleEventSubmit() {
-                //     let titleInput = document.getElementById('insertTitle');
-                //     let startInput = document.getElementById('insertStart');
-                //     let endInput = document.getElementById('insertEnd');
-                //     let assetNoInput = document.getElementById('insertResourceId');
-                //     let resourceIdInput = document.getElementById('insertResourceId');
-                //
-                //     let title = titleInput.value;
-                //     let start = startInput.value;
-                //     let end = endInput.value;
-                //     let id = assetNoInput.value;
-                //     let resourceId = resourceIdInput.value;
-                //
-                //     if (title && start && end && id && resourceId) {
-                //         calendar.addEvent({
-                //             title: title,
-                //             start: start,
-                //             end: end,
-                //             id: id,
-                //             resourceId: resourceId,
-                //             color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-                //         })
-                //     };
-                //     // 모달을 닫고 입력값 초기화
-                //     let modal = document.getElementById('insertModal');
-                //     modal.style.display = 'none';
-                //     clearModalInputs();
-                // }
-
-                // 수정/삭제모달 입력값 등록 함수
+                //업데이트
                 function handleEventUpdate() {
                     let titleInput = document.getElementById('detailTitle');
                     let startInput = document.getElementById('detailStart');
                     let endInput = document.getElementById('detailEnd');
                     let resourceIdInput = document.getElementById('detailResourceId');
                     let reservationNoInput = document.getElementById('detailReservationNo');
+                    let assetNoInput = document.getElementById('detailAssetNo');
 
                     let title = titleInput.value;
                     let start = startInput.value;
                     let end = endInput.value;
                     let resourceId = resourceIdInput.value;
-                    let extendedProps = reservationNoInput.value;
+                    let reservationNo = reservationNoInput.value; // 예약 번호 추가
+                    let id = assetNoInput.value;
 
-                    if (title && start && end && resourceId && extendedProps) {
-                        calendar.addEvent({
-                            extendedProps: extendedProps,
-                            title: title,
-                            start: start,
-                            end: end,
-                            resourceId: resourceId,
-                            color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-                        })
-                    };
-                    // 모달을 닫고 입력값 초기화
+                    if (title && start && end && resourceId && reservationNo && id) {
+                        let url = '/reservation/updateReservation';
+                        let xhr = new XMLHttpRequest();
+                        xhr.open('PUT', url, true);
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                console.log('이벤트가 성공적으로 업데이트되었습니다.');
+                                let updatedEvent = { // 업데이트된 이벤트 객체 생성
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    resourceId: resourceId,
+                                    id: id,
+                                    extendedProps: {
+                                        reservationNo: reservationNo
+                                    }
+                                };
+                                updateToCalendar(updatedEvent); // 캘린더에 바로 업데이트된 이벤트 추가
+                                // 성공 시 그려주는 코드를 여기에 추가해야 합니다.
+                            }
+                        };
+
+                        let eventData = 'id=' + encodeURIComponent(id) +
+                            '&reservationNo=' + encodeURIComponent(reservationNo) + // 예약 번호를 전송합니다.
+                            '&title=' + encodeURIComponent(title) +
+                            '&start=' + encodeURIComponent(start) +
+                            '&end=' + encodeURIComponent(end);
+
+                        xhr.send(eventData);
+                    } else {
+                        console.error('입력값이 유효하지 않습니다.');
+                    }
                     let modal = document.getElementById('detailModal');
                     modal.style.display = 'none';
-                    clearModalInputs();
+                    closeModalAndClearInputs();
                 }
+
+// 기존 이벤트를 업데이트하는 함수
+                function updateToCalendar(updatedEvent) {
+                    if (updatedEvent && updatedEvent.id) {
+                        let existingEvent = calendar.getEventById(updatedEvent.id); // 기존 이벤트 가져오기
+                        if (existingEvent) {
+                            existingEvent.remove(); // 기존 이벤트 삭제
+
+                            // 업데이트된 이벤트를 캘린더에 추가
+                            calendar.addEvent({
+                                title: updatedEvent.title,
+                                start: updatedEvent.start,
+                                end: updatedEvent.end,
+                                resourceId: updatedEvent.resourceId,
+                                id: updatedEvent.id,
+                                extendedProps: {
+                                    reservationNo: updatedEvent.extendedProps.reservationNo
+                                },
+                                color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+                            });
+                        }
+                    }
+                }
+
+
+
+
+
 
                 // 모달 닫기 처리 함수
                 function handleModalClose() {

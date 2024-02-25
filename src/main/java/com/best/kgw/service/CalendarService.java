@@ -14,6 +14,8 @@ public interface CalendarService {
 
     List<Map<String, Object>> addList(Map<String, Object> addMap);
 
+    List<Map<String, Object>> upList(Map<String, Object> upMap);
+
 //    List<Map<String, Object>> addEventList(Map<String, Object> addMap);
 }
 
