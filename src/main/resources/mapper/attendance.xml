@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.AttendanceMapper">
+
+    <insert id="insertData" parameterType="com.vo.AttendanceVO">
+        insert into attendance (attendance_no, emp_no, work_date, start_time, end_time, state, mod_content)
+        values (attendance_pk_seq.nextval, #{emp_no}, to_char(sysdate, 'YYYY-MM-DD'), #{start_time, jdbcType=VARCHAR}, #{end_time, jdbcType=VARCHAR}, #{state, jdbcType=VARCHAR}, #{mod_content, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateData" parameterType="com.vo.AttendanceVO">
+        update attendance set
+            end_time = #{end_time}
+        where attendance_no = #{attendance_no}
+    </update>
+
+    <select id="selectDate" parameterType="int" resultType="com.vo.AttendanceVO">
+        select attendance_no, emp_no, work_date, start_time, end_time, state, mod_content from attendance
+        where emp_no = #{emp_no}
+        and work_date = to_char(sysdate,'YYYY-MM-DD')
+    </select>
+
+    <select id="selectOne" parameterType="int" resultType="com.vo.AttendanceVO">
+        select attendance_no, emp_no, work_date, start_time, end_time, state, mod_content from attendance
+        where emp_no = #{emp_no}
+    </select>
+
+</mapper>

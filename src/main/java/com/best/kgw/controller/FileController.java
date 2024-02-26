@@ -1,6 +1,5 @@
 package com.best.kgw.controller;
 
-import com.vo.EmpVO;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +18,8 @@ import java.io.IOException;
 import java.util.Map;
 
 @Controller
-public class FillController extends HttpServlet {
-    Logger logger = LoggerFactory.getLogger(FillController.class);
+public class FileController extends HttpServlet {
+    Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @PostMapping("fileUpload")
     protected String doPost(@RequestParam Map<String, Object> formData, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

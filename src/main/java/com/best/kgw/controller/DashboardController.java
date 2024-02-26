@@ -1,6 +1,8 @@
 package com.best.kgw.controller;
 
+import com.best.kgw.service.AttendanceService;
 import com.best.kgw.service.DashboardService;
+import com.vo.AttendanceVO;
 import com.vo.EmpVO;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -39,6 +41,9 @@ public class DashboardController{
     Logger logger = LoggerFactory.getLogger(DashboardController.class);
     @Autowired
     private DashboardService dashboardService;
+
+    @Autowired
+    private AttendanceService attendanceService;
 //    private
 
     /**********************************************************************************
@@ -49,10 +54,13 @@ public class DashboardController{
     @GetMapping("/")
     public String DashboardForm(EmpVO empvo, Model model) throws Exception {
         logger.info("Controller : DashboardForm");
-        List<EmpVO> empList;
         EmpVO empDetail = dashboardService.empDetail(empvo);
         logger.info(empDetail.toString());
+        AttendanceVO attendance = attendanceService.attendance(empDetail.getEmp_no());
+        List<AttendanceVO> attendanceCalendar = attendanceService.attendanceData(empDetail.getEmp_no());
+        model.addAttribute("attendanceCalendar",attendanceCalendar);
         model.addAttribute("empDetail", empDetail);
+        model.addAttribute("attendance", attendance);
         return "forward:/dashboard/dashboardForm.jsp";
     }
 

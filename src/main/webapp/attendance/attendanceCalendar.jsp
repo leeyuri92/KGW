@@ -1,4 +1,11 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.vo.AttendanceVO" %>
+<%@ page import="java.util.List" %>
+<%
+  List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
+
+//  out.print(attendanceCalendar);
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,7 +19,7 @@
 <%--  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>--%>
   <!-- 부트스트랩 라이브러리 -->
   <link rel="stylesheet" href="/css/calendar.css">
-  <title>메인페이지</title>
+  <title>근태일정</title>
 
   <script>
       const mod_attendance = () => {
@@ -70,7 +77,5 @@
     </section>
   </div>
 </div>
-
-
 </body>
 </html>
