@@ -32,6 +32,7 @@ public class EmpVO {
     private String address;
     private String reg_date;
     private String mod_date;
+    private String profile_img;
 
     @Override
     public String toString() {
@@ -55,6 +56,7 @@ public class EmpVO {
                 ", address='" + address + '\'' +
                 ", reg_date='" + reg_date + '\'' +
                 ", mod_date='" + mod_date + '\'' +
+                ", profile_img='" + profile_img + '\'' +
                 '}';
     }
 }

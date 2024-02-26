@@ -64,5 +64,4 @@ public class AdminDaoImpl implements AdminDao {
         return result;
     }
 
-
 }

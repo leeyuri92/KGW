@@ -28,8 +28,17 @@ public class DashboardDaoImpl implements DashboardDao {
      기능 : 한명의 사원 정보 조회 (Dao)
      **********************************************************************************/
     @Override
-    public List<EmpVO> empDetail(EmpVO empVO) throws Exception{
-        logger.info("Repository : DashboardDaoImpl");
-        return sqlSessionTemplate.selectList("empDetail", empVO);
+    public EmpVO empDetail(EmpVO empvo) throws Exception {
+        logger.info("Repository : empDetail");
+        EmpVO empDetail = sqlSessionTemplate.selectOne("empDetail", empvo);
+        return empDetail;
+    }
+
+    @Override
+    public int empDetailUpdate(EmpVO empvo) throws Exception {
+        logger.info("DashboardDaoImpl : empDetailUpdate");
+        int result = 0;
+        result = sqlSessionTemplate.update("empDetailUpdate", empvo);
+        return result;
     }
 }

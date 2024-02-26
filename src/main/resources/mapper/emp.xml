@@ -5,9 +5,21 @@
 <mapper namespace="com.mybatis.mapper.EmpMapper">
 
     <select id="empDetail" parameterType="com.vo.EmpVO" resultType="com.vo.EmpVO">
-        select emp_no, team_no,team_name, emp_access, emp_position,  dayoff_cnt, emp_year, hire_date, emp_state, password, name, email, birthdate, phone_num, address, reg_date, mod_date
+        select emp_no, team_no,team_name, emp_access, emp_position,  dayoff_cnt, emp_year, hire_date, emp_state, password, name, email, birthdate, phone_num, address, reg_date, mod_date, profile_img
         from emp natural join team
         where emp_no = 1004
     </select>
+
+    <update id="empDetailUpdate" parameterType="com.vo.EmpVO">
+        update emp
+        set
+          sign_no = 0
+          ,password = #{password}
+          ,email = #{email}
+          ,phone_num = #{phone_num}
+          ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
+          ,address = #{address}
+        where emp_no = #{emp_no}
+    </update>
 
 </mapper>

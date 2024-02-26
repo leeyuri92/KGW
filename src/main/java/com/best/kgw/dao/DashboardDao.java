@@ -10,5 +10,7 @@ import java.util.List;
  기능 : DashboardDao Interface
  **********************************************************************************/
 public interface DashboardDao {
-    List<EmpVO>empDetail(EmpVO empVO) throws Exception;
+    public EmpVO empDetail(EmpVO empvo) throws Exception;
+
+    public int empDetailUpdate(EmpVO empvo) throws Exception;
 }

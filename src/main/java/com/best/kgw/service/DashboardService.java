@@ -11,5 +11,7 @@ import java.util.List;
  **********************************************************************************/
 public interface DashboardService {
 
-    List<EmpVO>empDetail(EmpVO empVO) throws Exception;
+    public EmpVO empDetail(EmpVO empvo) throws Exception;
+
+    public int empDetailUpdate(EmpVO empvo) throws Exception;
 }

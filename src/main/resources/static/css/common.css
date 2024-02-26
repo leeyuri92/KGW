@@ -39,6 +39,14 @@ a:focus {
   box-shadow: 0 0 0 0.25rem rgba(176, 42, 55, 0.73);
 }
 
+.signImg:hover {
+  border-color: #b02a37;
+  outline: 0;
+  /*box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);*/
+  box-shadow: 0 0 0 0.25rem rgba(176, 42, 55, 0.73);
+  cursor: pointer;
+}
+
 /* 페이지 path */
 .card {
   width: 100%;

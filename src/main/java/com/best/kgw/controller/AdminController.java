@@ -111,5 +111,5 @@ public class AdminController {
         logger.info(String.valueOf(result));
 
         return "redirect:/admin/empList";
-}
+    }
 }
