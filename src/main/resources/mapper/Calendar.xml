@@ -9,7 +9,7 @@
     </select>
 
     <select id= "aList" parameterType="map" resultType="com.vo.CalendarVO">
-        select * from asset
+        SELECT * FROM asset
     </select>
 
     <select id= "arList" parameterType="map" resultType="com.vo.CalendarVO">

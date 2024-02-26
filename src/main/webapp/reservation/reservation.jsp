@@ -58,7 +58,7 @@
                     <div class="box">
                         <div class="container-fluid1">
                             <h2 class="cal_title">자산 예약 현황</h2>
-                            <button id="addEventBtn" class="btn btn-primary col-md-1">일정 등록</button>
+                            <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-md-1" id="addEvent" name="addEvent" value="일정 등록"/>
                         </div>
                         <hr />
 
@@ -109,23 +109,20 @@
                                 </thead>
                                 <tbody id="reservationTableBody">
                                 <% List<CalendarVO> assetReservationList = (List<CalendarVO>) request.getAttribute("assetReservationList");
-                                    List<CalendarVO> assetList = (List<CalendarVO>) request.getAttribute("assetList");
-                                    if (assetReservationList != null && assetList != null ) {
-                                        for (CalendarVO vo : assetReservationList) {
-                                            for (CalendarVO vo1 : assetList) { %>
+                                    if (assetReservationList != null) {
+                                        for (CalendarVO vo : assetReservationList) { %>
                                 <tr>
                                     <th scope="row">#</th>
-                                    <td><% if(vo1.getAsset_name() != null) { %> <%= vo1.getAsset_name() %> <% } %></td>
-                                    <td><%= vo.getEmp_no() %></td>
+                                    <td><%= vo.getAsset_no() %></td>
+                                    <td><%= vo.getName() %></td>
                                     <td><%= vo.getReservation_start() + "~" + vo.getReservation_end() %></td>
                                     <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
                                 </tr>
-                                <%
-                                            }
-                                        }
-                                    }
+                                <%      }
+                                }
                                 %>
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -408,33 +405,39 @@
                 // 이벤트 핸들러 등록
                 let submitBtn = document.getElementById('submitEvent');
                 let exitBtn = document.getElementById('exitEvent');
-                // let deleteBtn = document.getElementById('deleteEvent');
+                let deleteBtn = document.getElementById('deleteEvent');
                 let updateBtn = document.getElementById('updateEvent');
+                let addEventBtn = document.getElementById('addEvent');
                 let closeBtnList = document.querySelectorAll('.modal-content .close');
 
                 submitBtn.addEventListener('click', handleEventSubmit);
                 submitBtn.addEventListener('click', handleEventUpdate);
                 exitBtn.addEventListener('click', handleEventSubmit);
                 exitBtn.addEventListener('click', handleEventUpdate);
-                // deleteBtn.addEventListener('click', handleEventDelete);
+                deleteBtn.addEventListener('click', handleEventDelete);
                 updateBtn.addEventListener('click', handleEventUpdate);
+                addEventBtn.addEventListener('click', function() {
+                    let insertModal = document.getElementById('insertModal');
+                    insertModal.style.display = 'block';
+                });
                 closeBtnList.forEach(function(closeBtn) {
                     closeBtn.addEventListener('click', handleModalClose);
                     closeBtn.addEventListener('click', handleEventUpdate);
                 });
+
 
                 function handleEventSubmit() {
                     let titleInput = document.getElementById('insertTitle');
                     let startInput = document.getElementById('insertStart');
                     let endInput = document.getElementById('insertEnd');
                     let resourceIdInput = document.getElementById('insertResourceId');
-                    let assetNoInput = document.getElementById('insertAssetNo'); // 이 부분을 파싱하고 있는 부분입니다.
+                    let assetNoInput = document.getElementById('insertAssetNo');
 
                     let title = titleInput.value;
                     let start = startInput.value;
                     let end = endInput.value;
                     let resourceId = resourceIdInput.value;
-                    let id = assetNoInput.value; // 여기서 값을 가져오고 있습니다.
+                    let id = assetNoInput.value;
                     let url = '/reservation/addReservation';
 
                     if (title && start && end && id && resourceId) {
@@ -482,29 +485,40 @@
                     clearModalInputs();
                 }
 
-
                 function handleEventDelete() {
                     let assetNoInput = document.getElementById('detailAssetNo');
                     let id = assetNoInput.value;
                     let reservationNoInput = document.getElementById('detailReservationNo');
                     let reservationNo = reservationNoInput.value;
-                    let eventToDelete = calendar.getEventById(id); // calendar 객체를 통해 이벤트 가져옴
+                    let eventToDelete = calendar.getEventById(id);
                     let url = '/reservation/delReservation';
 
                     // AJAX를 이용하여 서버에 삭제 요청
                     let xhr = new XMLHttpRequest();
                     xhr.open('DELETE', url, true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === XMLHttpRequest.DONE) {
-                            console.log(xhr);
-                            // 서버 응답 후 FullCalendar에서 이벤트 제거
-                            deleteToCalendar(eventToDelete); // deleteToCalendar 함수에 eventToDelete 전달
+
+                    // Promise를 이용한 비동기 처리
+                    let promise = new Promise(function(resolve, reject) {
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                console.log(xhr);
+                                resolve(); // 비동기 작업 완료를 알림
+                            }
+                        };
+                    });
+
+                    promise.then(function() {
+                        if (eventToDelete) {
+                            eventToDelete.remove(); // 이벤트 삭제
                             console.log('이벤트가 성공적으로 삭제되었습니다.');
-                            let modal = document.getElementById('detailModal');
-                            modal.style.display = 'none';
+                        } else {
+                            console.log('삭제할 이벤트를 찾을 수 없습니다.');
                         }
-                    };
+
+                        let modal = document.getElementById('detailModal');
+                        modal.style.display = 'none';
+                    });
 
                     // 서버로 전송할 데이터 설정 (id와 함께 예약번호도 포함)
                     let data = 'id=' + encodeURIComponent(id) + '&reservationNo=' + encodeURIComponent(reservationNo);
@@ -512,16 +526,8 @@
                     xhr.send(data); // 데이터 전송
                 }
 
-                function deleteToCalendar(eventToDelete) {
-                    if (eventToDelete) {
-                        eventToDelete.remove(); // FullCalendar 객체의 remove() 메서드 호출
-                    }
-                }
 
-                let deleteBtn = document.getElementById('deleteEvent');
-                deleteBtn.addEventListener('click', handleEventDelete);
-
-                //업데이트
+            //업데이트
                 function handleEventUpdate() {
                     let titleInput = document.getElementById('detailTitle');
                     let startInput = document.getElementById('detailStart');
@@ -576,7 +582,7 @@
                     closeModalAndClearInputs();
                 }
 
-// 기존 이벤트를 업데이트하는 함수
+                // 기존 이벤트를 업데이트 함수
                 function updateToCalendar(updatedEvent) {
                     if (updatedEvent && updatedEvent.id) {
                         let existingEvent = calendar.getEventById(updatedEvent.id); // 기존 이벤트 가져오기
@@ -598,11 +604,6 @@
                         }
                     }
                 }
-
-
-
-
-
 
                 // 모달 닫기 처리 함수
                 function handleModalClose() {

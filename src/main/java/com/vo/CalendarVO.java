@@ -23,6 +23,7 @@ public class CalendarVO {
     private String asset_color;
     private int reservation_no;
     private int emp_no;
+    private String name;
     private String reservation_title;
     private String reservation_id;
     private String reservation_content;
@@ -46,6 +47,7 @@ public class CalendarVO {
                 ", asset_color='" + asset_color + '\'' +
                 ", reservation_no=" + reservation_no +
                 ", emp_no=" + emp_no +
+                ", name=" + name +
                 ", reservation_title='" + reservation_title + '\'' +
                 ", reservation_id='" + reservation_id + '\'' +
                 ", reservation_content='" + reservation_content + '\'' +
