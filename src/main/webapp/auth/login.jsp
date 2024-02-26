@@ -12,19 +12,22 @@
     <link rel="stylesheet" href="/css/login.css">
 
     <script type="text/javascript">
-        /* 자바 스크립트 부분 */
+        const login = (event) => {
+            alert("로그인 호출");
+            document.getElementById("f_login").submit();  // form 에 있는 action="loginProcess"실행
+        }
 
     </script>
 </head>
 <body>
 <section>
     <div class="login-container">
-        <form class="login-form">
+        <form class="login-form"  id="f_login" action="/loginProcess" method="post">
             <h1 class="mb-4">로그인</h1>
             <p class="mb-4">KIWOOM 구단에 오신 것을 환영합니다.</p>
             <div class="mb-1">
                 <label for="employee-id" class="form-label">사원번호</label>
-                <input type="text" id="employee-id" class="form-control" placeholder="사원번호를 입력하세요.">
+                <input type="text" id="employee-id" name="emp_no" class="form-control" placeholder="사원번호를 입력하세요.">
             </div>
             <div class="mb-2 login-options">
                 <input type="checkbox" id="remember-me" class="form-check-input">
@@ -32,9 +35,9 @@
             </div>
             <div class="mb-2">
                 <label for="password" class="form-label">비밀번호</label>
-                <input type="password" id="password" class="form-control "  placeholder="비밀번호를 입력하세요.">
+                <input type="password" id="password" name="password" class="form-control "  placeholder="비밀번호를 입력하세요.">
             </div>
-            <button type="submit" class="btn btn-sm btn-outline-dark">LOGIN</button>
+            <button type="button" class="btn btn-sm btn-outline-dark" onclick="login()">LOGIN</button>
             <div class="d-flex justify-content-between mt-2 gap-2" >
                 <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#findID">아이디찾기</button>
                 <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#findPW">비밀번호찾기</button>
