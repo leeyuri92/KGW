@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,9 @@ public class AdminController {
     @Autowired
     private AdminSevice adminSevice;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     /**********************************************************************************
      작성자 : 이동건
      작성일자 : 24.02.19
@@ -50,6 +54,9 @@ public class AdminController {
 
         int result = 0;
         String path = "";
+        String rawPassword = empVO.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        empVO.setPassword(encPassword);//password변수 치환
 
         result = adminSevice.regist(empVO);
         if(result == 1){
@@ -122,7 +129,9 @@ public class AdminController {
     public String empInfoUpdate(EmpVO empVO) throws Exception{
         logger.info("empInfoUpdate");
         logger.info(empVO.toString());
-
+        String rawPassword = empVO.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        empVO.setPassword(encPassword);
         int result = 0;
         result = adminSevice.empInfoUpdate(empVO);
         logger.info(String.valueOf(result));

@@ -21,8 +21,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>사원관리</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/admin.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript">
         function searchEnter(event){
             console.log(window.event.keyCode)
@@ -145,43 +145,43 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    									<%
-                                                                            for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
-                                                                                if (i == size) break;
-                                    											Map<String,Object> rmap = empList.get(i);
-                                    									%>
-                                    									<tr>
+                                    <%
+                                        for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
+                                            if (i == size) break;
+                                            Map<String,Object> rmap = empList.get(i);
+                                    %>
+                                    <tr>
 
-                                    										<td> <input type="checkbox" class="form-check-input" id="check" name="checkboxName" onclick="check() "></td>
-                                    										<td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
-                                    										<td><%=rmap.get("EMP_NO")%></td>
-                                    										<td><%=rmap.get("TEAM_NAME")%></td>
-                                    										<td><%=rmap.get("EMP_POSITION") %></td>
-                                                                            <% if (rmap.get("EMP_STATE").equals("0")){ %>
-                                                                            <td>퇴직</td>
-                                                                            <% }else{ %>
-                                                                            <td>재직</td>
-                                                                            <%  } %>
-                                                                            <td><%=rmap.get("EMAIL") %></td>
-                                    										<td><%=rmap.get("DAYOFF_CNT") %></td>
-                                    										<td><a href="javascript:empCertificate('<%=rmap.get("EMP_NO")%>')">재직증명서</a></td>
-                                    									</tr>
-                                    									<%
-                                    										}
-                                    									%>
+                                        <td> <input type="checkbox" class="form-check-input" id="check" name="checkboxName" onclick="check() "></td>
+                                        <td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
+                                        <td><%=rmap.get("EMP_NO")%></td>
+                                        <td><%=rmap.get("TEAM_NAME")%></td>
+                                        <td><%=rmap.get("EMP_POSITION") %></td>
+                                        <% if (rmap.get("EMP_STATE").equals("0")){ %>
+                                        <td>퇴직</td>
+                                        <% }else{ %>
+                                        <td>재직</td>
+                                        <%  } %>
+                                        <td><%=rmap.get("EMAIL") %></td>
+                                        <td><%=rmap.get("DAYOFF_CNT") %></td>
+                                        <td><a href="javascript:empCertificate('<%=rmap.get("EMP_NO")%>')">재직증명서</a></td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
                                     </tbody>
                                 </table>
                                 <hr />
 
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                                 <div style="display:flex; justify-content:center;">
-                                <ul class="pagination">
-                                    <%
-                                        String pagePath = "empList";
-                                        BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
-                                        out.print(bspb.getPageBar());
-                                    %>
-                                </ul>
+                                    <ul class="pagination">
+                                        <%
+                                            String pagePath = "empList";
+                                            BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
+                                            out.print(bspb.getPageBar());
+                                        %>
+                                    </ul>
                                 </div>
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
