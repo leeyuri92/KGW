@@ -57,10 +57,10 @@ public class AdminServiceImpl implements AdminSevice {
      기능 : 사원수정 서비스
      **********************************************************************************/
     @Override
-    public int empInfoUpdate(Map<String, Object> pmap) {
+    public int empInfoUpdate(EmpVO empVO) {
         logger.info("Service empInfoUpdate");
         int result = 0;
-        result = adminDao.empInfoUpdate(pmap);
+        result = adminDao.empInfoUpdate(empVO);
         return result;
     }
 }

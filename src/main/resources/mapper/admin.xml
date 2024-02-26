@@ -2,24 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.MemberMapper">
 
-    <update id="empInfoUpdate" parameterType="Map">
+    <update id="empInfoUpdate" parameterType="map">
         update emp
-        set team_no = #{team_no}
-          ,emp_access = #{emp_access}
-          ,emp_position = #{emp_position}
+        set team_no = #{team_no  jdbcType = VARCHAR}
+          ,emp_access = #{emp_access jdbcType = VARCHAR}
+          ,emp_position = #{emp_position jdbcType = VARCHAR}
           ,sign_no = 0
           ,dayoff_cnt = 0
           ,emp_year = 0
-          ,hire_date = #{hire_date}
-          ,emp_state = #{emp_state}
-          ,password = #{password}
-          ,name = #{name}
-          ,email = #{email}
-          ,birthdate = #{birthdate}
-          ,phone_num = #{phone_num}
+          ,hire_date = #{hire_date  jdbcType = VARCHAR}
+          ,emp_state = #{emp_state jdbcType = VARCHAR}
+          ,password = #{password jdbcType = VARCHAR}
+          ,name = #{name jdbcType = VARCHAR}
+          ,email = #{email jdbcType = VARCHAR}
+          ,birthdate = #{birthdate jdbcType = VARCHAR}
+          ,phone_num = #{phone_num jdbcType = VARCHAR}
           ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
-          ,address = #{address}
-          ,retire_date = #{retire_date}
+          ,address = #{address jdbcType = VARCHAR}
+          ,retire_date = #{retire_date jdbcType = VARCHAR}
+        ,profile_img = #{profile_img jdbcType = VARCHAR}
         where emp_no = #{emp_no}
     </update>
 

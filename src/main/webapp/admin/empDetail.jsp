@@ -23,6 +23,20 @@
             location.href = "/admin/empList";
         }
 
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                document.getElementById('preview').src = "";
+            }
+        }
+        const preView = () => {
+            document.querySelector("#file").click();
+        }
     </script>
 
 </head>
@@ -73,11 +87,14 @@
                     <h3 style="display: flex; align-items: center; justify-content: center;" ><%=rmap.get("NAME")%>님 정보</h3>
                 </div>
 
-                <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                    <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
-                </div>
 
-                <form  id="f_member" method="get" action="/admin/empInfoUpdate">
+
+                <form  id="f_member" method="post" action="/admin/empInfoUpdate">
+                    <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
+                        <input class="img-circle m-5 " id="file" type="file" onchange="readURL(this);" name="profile_img" style="display:none; width: 200px; height: 200px; ">
+                        <img id="preview" src="/images/<%=rmap.get("PROFILE_IMG")%>" onclick="preView()"/>
+                    </div>
+
                     <input type="hidden" name="emp_no" value="<%=rmap.get("EMP_NO")%>">
                     <div class="row">
                     <div class="col-6 mb-3 mt-3">
@@ -193,7 +210,7 @@
                                 <option value="<%=rmap.get("EMP_ACCESS")%>" selected><%=rmap.get("EMP_POSITION")%></option>
                                 <hr class="dropdown-divider">
                                 <option value="ROLE_USER">사원</option>
-                                <option value="ROLE_READER">팀장</option>
+                                <option value="ROLE_LEADER">팀장</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </div>

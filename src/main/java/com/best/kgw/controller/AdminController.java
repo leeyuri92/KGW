@@ -2,7 +2,11 @@ package com.best.kgw.controller;
 
 import com.best.kgw.service.AdminSevice;
 import com.vo.EmpVO;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,7 +20,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
@@ -110,14 +118,14 @@ public class AdminController {
      작성일자 : 24.02.21
      기능 : 사원정보 수정
      **********************************************************************************/
-    @GetMapping("empInfoUpdate")
-    public String empInfoUpdate(@RequestParam Map<String,Object> pmap) {
+    @PostMapping("empInfoUpdate")
+    public String empInfoUpdate(EmpVO empVO) throws Exception{
         logger.info("empInfoUpdate");
-        logger.info(pmap.toString());
-        int result = 0;
-        result = adminSevice.empInfoUpdate(pmap);
-        logger.info(String.valueOf(result));
+        logger.info(empVO.toString());
 
+        int result = 0;
+        result = adminSevice.empInfoUpdate(empVO);
+        logger.info(String.valueOf(result));
         return "redirect:/admin/empList";
 }
 

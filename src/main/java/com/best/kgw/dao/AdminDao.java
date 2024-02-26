@@ -26,5 +26,5 @@ public interface AdminDao {
      작성일자 : 24.02.21
      기능 : 사원수정 인터페이스
      **********************************************************************************/
-    public int empInfoUpdate(Map<String, Object> pmap);
+    public int empInfoUpdate(EmpVO empVO);
 }

@@ -51,11 +51,11 @@ public class AdminDaoImpl implements AdminDao {
      기능 : 사원수정 레포지토리
      **********************************************************************************/
     @Override
-    public int empInfoUpdate(Map<String, Object> pmap) {
+    public int empInfoUpdate(EmpVO empVO) {
         logger.info("Repository : empInfoUpdate");
         int result = 0;
         try {
-            result = sqlSessionTemplate.update("empInfoUpdate", pmap);
+            result = sqlSessionTemplate.update("empInfoUpdate", empVO);
 
         } catch (Exception e) {
             logger.info(e.toString());
