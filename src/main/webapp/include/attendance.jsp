@@ -1,4 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+//    List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
+
+//  out.print(attendanceCalendar);
+%>
+
     <!-- calendar 태그 -->
     <div id='calendar-container'>
         <div id='calendar'></div>
@@ -30,31 +36,32 @@
                 height: '650px', // calendar 높이 설정
                 locale: 'ko', // 한국어 설정
 
-
                 events: [
-                    {
-                        title: '지각',
-                        start: '2024-02-01',
-                        color: '#ba1b39'
-                    },
-                    {
-                        title: '출근',
-                        start: '2024-02-07',
-                        end: '2024-02-10',
-                        color: '#045de5'
-                    },
+                    <%
+                      for(int i = 0; i < attendanceCalendar.size(); i++) {
 
+                    %>
                     {
-                        title: 'Birthday Party',
-                        start: '2024-02-13T07:00:00',
-                        color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+                        title: '<%=attendanceCalendar.get(i).getState()%>',
+                        start: '<%=attendanceCalendar.get(i).getWork_date()%>',
+                        color:
+                                `
+                            <% if (attendanceCalendar.get(i).getState().equals("지각")){ %>
+                             #ba1b39
+                            <%
+                            }else if(attendanceCalendar.get(i).getState().equals("조퇴")){
+                            %>
+                            #efc30f
+                            <%
+                            }
+                            %>
+                            `
                     },
-                    {
-                        title: '출근',
-                        start: '2024-02-28',
-                        color: '#045de5'
+                    <%
                     }
+                    %>
                 ]
+
             });
             // 캘린더 랜더링
             calendar.render();
