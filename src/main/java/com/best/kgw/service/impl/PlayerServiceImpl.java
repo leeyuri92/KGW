@@ -25,10 +25,9 @@ public class PlayerServiceImpl  implements PlayerService {
         return list;
     }
 @Override
-    public List<Map<String,Object>>pitcherList(Map<String ,Object>pMap){
-        List<Map<String,Object>>list2=new ArrayList<>();
+    public List<Map<String, Object>> pitcherList(Map<String ,Object>pMap){
+    List<Map<String,Object>>list2=new ArrayList<>();
         list2=playerDao.pitcherList(pMap);
         return list2;
-    }
-
+}
 }

@@ -5,7 +5,6 @@
   Time: 14:03
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*" %>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
 
 <%@ page import="com.vo.HittersVO" %>
@@ -31,7 +30,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>전략분석패이지</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
     <script type="text/javascript">
         // when onclick action to search different table
         $(document).ready(function() {
@@ -42,22 +45,40 @@
             $('#gubunPitcher').hide()
 
         });
-        function PlayersSearch() {
-            var selectList = $('#gubun').val();
 
-            if (selectList === 'hitterTable') {
-                $('#hitterTable').show();
-                $('#pitcherTable').hide();
-                $('#gubunHitters').show();
-                $('#gubunPitcher').hide()
-            } else if (selectList === 'pitcherTable') {
-                $('#pitcherTable').show();
-                $('#hitterTable').hide();
-                $('#gubunPitcher').show()
-                $('#gubunHitters').hide();
+
+        window.onload = function() {
+            // 행 태이블 선택
+            let rows = document.querySelectorAll("table tr");
+
+            for(let  i = 1; i < rows.length; i++) {
+                let firstCell = rows[i].cells[0];
+                // 첫 번째 셀에 인덱스(행 번호)를 삽입합니다.
+                firstCell.textContent = i;
+            }
+        };
+
+
+
+
+        function PlayersSearch() {
+            var gubunValue = document.getElementById('gubun').value;// select1 value option
+            var gubunHittersValue = document.getElementById('gubunHitters').value; // select2 value option
+
+            if (gubunValue === 'hitterTable') {
+                if (gubunHittersValue === 'hitterTable') {
+                    window.location.href = '/player/HittersList';
+                } else {
+                    // 이닝수 랑 타석 처리 부분
+                }
+            } else if (gubunValue === 'pitcherTable') {
+                if (gubunHittersValue === 'hitterTable') {
+                    window.location.href = '/player/PitchersList';
+                } else {
+                    // 이닝수 랑 타석 처리 부분
+                }
             }
         }
-
 
     </script>
 
@@ -108,12 +129,6 @@
                             </select>
                         </div>
                         <div class="col-2">
-                            <select id="gubunPitcher" class="form-select" aria-label="분류선택">
-                                <option value="pitcherTable">전체이닝</option>
-                                <option value="pitcherTable">이닝수 50이상</option>
-                            </select>
-                        </div>
-                        <div class="col-2">
                             <select id="gubunHitters" class="form-select" aria-label="분류선택">
                                 <option value="hitterTable">전체타석</option>
                                 <option value="hitterTable">100타석이상</option>
@@ -141,17 +156,19 @@
                                 <th width="10%">홈런</th>
                                 <th width="10%">득점</th>
                                 <th width="10%">출루율</th>
-                                <th width="10%">war</th>
-                                <th width="10%">ops</th>
+                                <th width="10%" id="war" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
+                특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">war</th>
+                                <th width="10%" id="ops" data-bs-toggle="tooltip" data-bs-placement="top" title="OPS(오피에스)는 On base Plus Slugging의 약자이며 말 그대로 출루율과 장타율의 합이다.">ops</th>
                             </tr>
                             </thead>
-                            <tbody><%
-                            for(int i=nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
-                            if(i == size) break;
+                            <tbody>
+                            <%
+                                for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
+                                    if (i == size) break;
                                 HittersVO hittersVO  = (HittersVO) list.get(i);
                             %>
                             <tr>
-                                <td>여기는 no index</td>
+                                <td></td>
                                 <td><%= hittersVO.getH_name()%></td>
                                 <td><%= hittersVO.getH_team()%></td>
                                 <td><%= hittersVO.getH_avg()%></td>
@@ -167,52 +184,27 @@
                             </tbody>
                         </table>
 
-                    <%--                        table  ----pitcherList  컬럼--%>
 
-                        <table class="table table-hover text-center " id="pitcherTable">
-                            <thead>
-                            <tr>
-                                <th width="10%" >선수명</th>
-                                <th width="10%">소속</th>
-                                <th width="10%">승</th>
-                                <th width="10%">페</th>
-                                <th width="10%">세이브</th>
-                                <th width="10%">피홈련</th>
-                                <th width="10%">피안타</th>
-                                <th width="10%">피출루</th>
-                                <th width="10%">war</th>
-                                <th width="10%">ops</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-<%--                                pitchers--%>
-                            </tbody>
-                        </table>
                         <hr />
-<%--paging errro--%>
                         <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
                         <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
+                           <%
+                            String pagePath="HittersList";
+                            BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
+                            out.print(bsbp.getPageBar());
+                           %>
                         </ul>
-                        <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <script>  <%-- toolTips function 사용--%>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    </script>
 </body>
 </html>
