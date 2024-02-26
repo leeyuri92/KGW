@@ -30,6 +30,7 @@
                     document.getElementById('preview').src = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);
+                console.log(reader);
             } else {
                 document.getElementById('preview').src = "";
             }

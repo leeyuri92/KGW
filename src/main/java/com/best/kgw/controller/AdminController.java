@@ -45,8 +45,8 @@ public class AdminController {
 
     /**********************************************************************************
      작성자 : 이동건
-     작성일자 : 24.02.19
-     기능 : 사원추가
+     작성일자 : 24.02.19 ,24,02.26
+     기능 : 사원추가,비밀번호 암호화적용
      **********************************************************************************/
     @PostMapping("regist")
     public String regist(EmpVO empVO) throws Exception{
@@ -96,15 +96,28 @@ public class AdminController {
     /**********************************************************************************
      작성자 : 이동건
      작성일자 : 24.02.19
-     기능 : 증명서 조회
+     기능 : 재직증명서 조회
      **********************************************************************************/
     @GetMapping("empCertificate")
     public String empCertificate(Model model, @RequestParam Map<String, Object> pmap) {
         logger.info("empCertificate");
-        List<Map<String, Object>> empList = null;// [ {},{},{} ]
+        List<Map<String, Object>> empList = null;
         empList = adminSevice.empList(pmap);
         model.addAttribute("empList", empList);
-        return "forward:/admin/empCertificate.jsp"; // webapp아래에서찾음
+        return "forward:/admin/empCertificate.jsp"; //
+    }
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.19
+     기능 : 퇴직증명서 조회
+     **********************************************************************************/
+    @GetMapping("retireCertificate")
+    public String retireCertificate(Model model, @RequestParam Map<String, Object> pmap) {
+        logger.info("retireCertificate");
+        List<Map<String, Object>> empList = null;
+        empList = adminSevice.empList(pmap);
+        model.addAttribute("empList", empList);
+        return "forward:/admin/retireCertificate.jsp"; //
     }
     /**********************************************************************************
      작성자 : 이동건
@@ -122,8 +135,8 @@ public class AdminController {
     }
     /**********************************************************************************
      작성자 : 이동건
-     작성일자 : 24.02.21
-     기능 : 사원정보 수정
+     작성일자 : 24.02.19 ,24,02.26
+     기능 : 사원수정,비밀번호암호화적용
      **********************************************************************************/
     @PostMapping("empInfoUpdate")
     public String empInfoUpdate(EmpVO empVO) throws Exception{

@@ -44,6 +44,12 @@
         const empCertificate= (emp_no)=>{
             location.href= "/admin/empCertificate?emp_no="+emp_no;
         }
+
+
+        const retireCertificate= (emp_no)=>{
+            location.href= "/admin/retireCertificate?emp_no="+emp_no;
+        }
+
         var tdNo= "";
         function check(){
             const checkbox = $("input[name=checkboxName]:checked");
@@ -134,8 +140,8 @@
                                     <thead>
                                     <tr>
                                         <th width="10%" >#</th>
-                                        <th width="10%">이름</th>
                                         <th width="10%">사번</th>
+                                        <th width="10%">이름</th>
                                         <th width="10%">부서</th>
                                         <th width="10%">직급</th>
                                         <th width="10%">상태</th>
@@ -153,8 +159,8 @@
                                     <tr>
 
                                         <td> <input type="checkbox" class="form-check-input" id="check" name="checkboxName" onclick="check() "></td>
-                                        <td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
                                         <td><%=rmap.get("EMP_NO")%></td>
+                                        <td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
                                         <td><%=rmap.get("TEAM_NAME")%></td>
                                         <td><%=rmap.get("EMP_POSITION") %></td>
                                         <% if (rmap.get("EMP_STATE").equals("0")){ %>
@@ -164,7 +170,11 @@
                                         <%  } %>
                                         <td><%=rmap.get("EMAIL") %></td>
                                         <td><%=rmap.get("DAYOFF_CNT") %></td>
+                                        <% if (rmap.get("EMP_STATE").equals("0")){ %>
+                                        <td><a href="javascript:retireCertificate('<%=rmap.get("EMP_NO")%>')">퇴직증명서</a></td>
+                                        <% }else{ %>
                                         <td><a href="javascript:empCertificate('<%=rmap.get("EMP_NO")%>')">재직증명서</a></td>
+                                        <%  } %>
                                     </tr>
                                     <%
                                         }
