@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>사원관리</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/certificate.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
     <script type="text/javascript">
         function searchEnter(event){
             console.log(window.event.keyCode)
@@ -70,7 +70,6 @@
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
-    <link rel="stylesheet" href="/css/kiwoomNoticeCard.css">
     <!-- header end    -->
 
     <!-- body start    -->
@@ -153,7 +152,7 @@
                                     									%>
                                     									<tr>
 
-                                    										<td> <input type="checkbox" id="check" name="checkboxName" onclick="check() "></td>
+                                    										<td> <input type="checkbox" class="form-check-input" id="check" name="checkboxName" onclick="check() "></td>
                                     										<td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
                                     										<td><%=rmap.get("EMP_NO")%></td>
                                     										<td><%=rmap.get("TEAM_NAME")%></td>

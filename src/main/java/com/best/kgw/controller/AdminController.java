@@ -120,6 +120,13 @@ public class AdminController {
 
         return "redirect:/admin/empList";
 }
+
+/**********************************************************************************
+ 작성자 : 이동건
+ 작성일자 : 24.02.24
+ 기능 : 전체사원정보 다운
+ **********************************************************************************/
+
     @GetMapping("/allDownLoadExel")
     public void downloadExel(@RequestParam Map<String, Object> pmap, HttpServletResponse response) throws IOException, SQLException {
 
@@ -179,6 +186,12 @@ public class AdminController {
         workbook.close();
         con.close();
     }
+
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.24
+     기능 : 선택사원정보 다운
+     **********************************************************************************/
     @GetMapping("/selectDownLoadExel")
     public void downloadExel(@RequestParam Map<String, Object> pmap, HttpServletResponse response,EmpVO empVO) throws IOException {
 
