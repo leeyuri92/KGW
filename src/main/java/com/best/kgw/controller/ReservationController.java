@@ -29,12 +29,12 @@ public class ReservationController {
         calendarList = calendarService.calendarList(cMap);
         assetList = calendarService.assetList(aMap);
         assetReservationList = calendarService.assetReservationList(arMap);
-        logger.info(calendarList.toString());
-        logger.info(assetList.toString());
-        logger.info(assetReservationList.toString());
         model.addAttribute("calendarList", calendarList);
         model.addAttribute("assetList", assetList);
         model.addAttribute("assetReservationList", assetReservationList);
+        logger.info(calendarList.toString());
+        logger.info(assetList.toString());
+        logger.info(assetReservationList.toString());
         return "forward:/reservation/reservation.jsp";
     }
 
@@ -43,8 +43,8 @@ public class ReservationController {
         List<Map<String, Object>> addList;
         logger.info("calendarController: delList 호출");
         addList = calendarService.addList(addMap);
-        logger.info(addList.toString());
         model.addAttribute("addList", addList);
+        logger.info(addList.toString());
         return "forward:/reservation/reservation.jsp";
     }
 
@@ -53,8 +53,8 @@ public class ReservationController {
         List<Map<String, Object>> delList;
         logger.info("calendarController: delList 호출");
         delList = calendarService.delList(delMap);
-        logger.info(delList.toString());
         model.addAttribute("delList", delList);
+        logger.info(delList.toString());
         return "forward:/reservation/reservation.jsp";
     }
 
@@ -63,8 +63,28 @@ public class ReservationController {
         List<Map<String, Object>> upList;
         logger.info("calendarController: delList 호출");
         upList = calendarService.upList(upMap);
-        logger.info(upList.toString());
         model.addAttribute("upList", upList);
+        logger.info(upList.toString());
+        return "forward:/reservation/reservation.jsp";
+    }
+
+    @GetMapping("reservList")
+    public String reservList(@RequestParam Map<String, Object> reservMap, Model model){
+        logger.info("calendarController : reservList 호출");
+        List<Map<String ,Object>> reservList = null;
+        reservList = calendarService.reservList(reservMap);
+        model.addAttribute("reservList", reservList);
+        logger.info(reservList.toString());
+        return "forward:/reservation/reservation.jsp";
+    }
+
+    @GetMapping("myReservList")
+    public String myReservList(@RequestParam Map<String, Object>myReservMap, Model model){
+        logger.info("calendarController : myReservList 호출");
+        List<Map<String ,Object>> myReservList = null;
+        myReservList = calendarService.myReservList(myReservMap);
+        model.addAttribute("myReservList", myReservList);
+        logger.info(myReservList.toString());
         return "forward:/reservation/reservation.jsp";
     }
 

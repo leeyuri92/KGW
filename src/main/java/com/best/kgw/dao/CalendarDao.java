@@ -18,5 +18,7 @@ public interface CalendarDao {
 
     List<Map<String, Object>> upList(Map<String, Object> upMap) throws Exception;
 
-//    List<Map<String, Object>> addEventList(Map<String, Object> addMap) throws Exception;
+    List<Map<String, Object>> reservList(Map<String, Object> upMap) throws Exception;
+
+    List<Map<String, Object>> myReservList(Map<String, Object> myReservMap) throws Exception;
 }

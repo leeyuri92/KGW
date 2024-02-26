@@ -76,15 +76,26 @@ public class CalendarDaoImpl implements CalendarDao {
         logger.info(list.toString());
         return list;
     }
-//
-//    @Override
-//    public List<Map<String, Object>> addEventList(@RequestParam Map<String, Object> addMap)throws Exception {
-//        logger.info("Dao : addEventList 호출");
-//        logger.info(addMap.toString());
-//        List<Map<String,Object>> list = null;
-//        list = sqlSessionTemplate.selectList("addList", addMap);
-//        logger.info(list.toString());
-//        return list;
-//    }
+
+    @Override
+    public List<Map<String, Object>> reservList(@RequestParam Map<String, Object> reservMap)throws Exception {
+        logger.info("Dao : reservList 호출");
+        logger.info(reservMap.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("reservList", reservMap);
+        logger.info(list.toString());
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> myReservList(@RequestParam Map<String, Object> myReservMap)throws Exception {
+        logger.info("Dao : myReservList 호출");
+        logger.info(myReservMap.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("myReservList", myReservMap);
+        logger.info(list.toString());
+        return list;
+    }
+
 }
 
