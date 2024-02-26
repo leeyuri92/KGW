@@ -1,4 +1,3 @@
-<%@ page import="com.vo.CalendarVO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.vo.CalendarVO" %>
 <%@ page import="java.util.Date" %>
@@ -92,7 +91,6 @@
                         startInput.value = startTime;
                         endInput.value = endTime;
                         resourceIdInput.value = arg.resource.id;
-                        // insertAssetNoInput.value = arg.event.id;
                     }
                 },
 
@@ -223,7 +221,7 @@
 
         // 이벤트 핸들러 등록
         let submitBtn = document.getElementById('submitEvent');
-        // let submitBtn = document.getElementById('submitEvent');
+        let searchBtn = document.getElementById('reservSearch');
         let exitBtn = document.getElementById('exitEvent');
         let deleteBtn = document.getElementById('deleteEvent');
         let updateBtn = document.getElementById('updateEvent');
@@ -232,6 +230,7 @@
 
         submitBtn.addEventListener('click', handleEventSubmit);
         submitBtn.addEventListener('click', handleEventUpdate);
+        searchBtn.addEventListener('click', handleEventUpdate);
         exitBtn.addEventListener('click', handleEventSubmit);
         exitBtn.addEventListener('click', handleEventUpdate);
         deleteBtn.addEventListener('click', handleEventDelete);
@@ -428,47 +427,6 @@
             }
         }
 
-// CRUD 작업 후 예약 목록 업데이트
-        function updateReservationList() {
-            let xhr = new XMLHttpRequest();
-            let url = '/reservation/reservationList';
-
-            xhr.open('GET', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        let responseText = xhr.responseText;
-                        renderReservationList(responseText);
-                    } else {
-                        console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
-                    }
-                }
-            };
-            xhr.send();
-        }
-
-// 예약 목록을 화면에 렌더링하는 함수
-        function renderReservationList(data) {
-            // 서버에서 받은 HTML 코드를 파싱하여 임시 요소에 넣습니다.
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = data;
-
-            // 'reservationTableBody' id를 가진 요소만을 선택하여 추출합니다.
-            const reservationTableBody = tempDiv.querySelector('#reservationTableBody');
-
-            // tbody가 존재하면 해당 내용을 표시합니다.
-            if (reservationTableBody) {
-                const tbody = document.getElementById('reservationTableBody');
-                tbody.innerHTML = reservationTableBody.innerHTML;
-            } else {
-                console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
-            }
-        }
-
-
-
         // 모달 닫기 처리 함수
         function handleModalClose() {
             let modal1 = document.getElementById('insertModal');
@@ -505,21 +463,91 @@
         }
     }
 
-    function searchEnter(event){
-        console.log(window.event.keyCode)
-        if(window.event.keyCode == 13){
-            noticeSearch()
+    function searchEnter(event) {
+        console.log(event.key);
+        if (event.key === 'Enter') {
+            noticeSearch();
         }
-        event.isComposing//검색후 잔여검색기록 없애는코드
+        event.isComposing; //검색후 잔여검색기록 없애는코드
     }
 
-    function reservSearch(){
-        console.log('empSearch');
+    // 검색된 값을 서버로 전송하고, 서버로부터 받은 데이터를 처리하여 예약 현황에 출력하는 함수
+    function reservSearch() {
+        // 검색어와 관련된 데이터를 가져오기 위해 검색어와 관련된 정보를 가져옵니다.
         const gubun = document.querySelector("#gubun").value;
         const keyword = document.querySelector("#keyword").value;
-        console.log(`${gubun} , ${keyword}`);
-        location.href="/reservation/reservationList?gubun="+gubun+"&keyword="+keyword;
+
+        // 서버로 전송할 데이터를 준비합니다.
+        const searchData = new URLSearchParams();
+        searchData.append('gubun', gubun);
+        searchData.append('keyword', keyword);
+
+        // Ajax를 사용하여 서버에 데이터를 전송합니다.
+        fetch('/reservation/reservList', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: searchData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버에서 받은 데이터를 처리하여 예약 현황에 출력하는 함수를 호출합니다.
+                renderSearchedReservationList(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
+
+    // 서버에서 받은 데이터를 처리하여 예약 현황에 출력하는 함수
+    function renderSearchedReservationList(data) {
+        // 받은 데이터를 예약 현황에 출력하는 코드를 작성합니다.
+        // 예를 들어, 받은 데이터를 HTML 형식으로 파싱하여 예약 현황에 추가합니다.
+        // 이 함수는 실제 예약 현황을 업데이트하는 데 필요한 로직을 구현해야 합니다.
+    }
+
+
+    // CRUD 작업 후 예약 목록 업데이트
+    function updateReservationList() {
+        let xhr = new XMLHttpRequest();
+        let url = '/reservation/reservationList';
+
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let responseText = xhr.responseText;
+                    renderReservationList(responseText);
+                } else {
+                    console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    // 예약 목록을 화면에 렌더링하는 함수
+    function renderReservationList(data) {
+        // 서버에서 받은 HTML 코드를 파싱하여 임시 요소에 넣습니다.
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = data;
+
+        // 'reservationTableBody' id를 가진 요소만을 선택하여 추출합니다.
+        const reservationTableBody = tempDiv.querySelector('#reservationTableBody');
+
+        // tbody가 존재하면 해당 내용을 표시합니다.
+        if (reservationTableBody) {
+            const tbody = document.getElementById('reservationTableBody');
+            tbody.innerHTML = reservationTableBody.innerHTML;
+        } else {
+            console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
+        }
+    }
+
+
 </script>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -596,7 +624,7 @@
                                            aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
                                 <div class="col-3">
-                                    <button id="btn_search" class="btn btn-danger" style="background-color: #652C2C;" onclick="reservSearch()">검색</button>
+                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchBtn" name="searchBtn" value="검색" onclick="reservSearch()"/>
                                 </div>
                             </div>
                         </div>
@@ -640,10 +668,6 @@
                 </div>
             </div>
         </section>
-
-
-
-
 
         <!-- 예약등록 모달 -->
         <div class="modal " id="insertModal">

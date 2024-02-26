@@ -5,7 +5,11 @@
 <mapper namespace="com.kgw.ticket.dao.CalendarDao">
 
     <select id= "cList" parameterType="map" resultType="com.vo.CalendarVO">
-        select * from calendar
+        select * from calendar a
+            INNER JOIN emp b ON a.emp_no = b.emp_no
+        <where>
+            AND a.emp_no = b.emp_no
+        </where>
     </select>
 
     <select id= "aList" parameterType="map" resultType="com.vo.CalendarVO">
@@ -57,7 +61,7 @@
         where reservation_no = ${reservationNo}
     </update>
 
-    <select id="rList" parameterType="map" resultType="map">
+    <select id="reservList" parameterType="map" resultType="map">
         SELECT
                 a.reservation_no,
                 a.reservation_title,
@@ -109,5 +113,7 @@
             AND a.emp_no = c.emp_no
         </where>
     </select>
+
+
 
 </mapper>
