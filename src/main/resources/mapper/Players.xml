@@ -26,7 +26,6 @@
 
     <select id="SelectPitchers" parameterType="map" resultType="com.vo.PitchersVO">
     SELECT
-        P_ID,
         P_NAME,
         P_TEAM,
         p_ERA,

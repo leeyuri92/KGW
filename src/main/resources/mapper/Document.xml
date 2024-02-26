@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.DocumentMapper">
+
+    <select id="selectDocument" parameterType="map" resultType="com.vo.DocumentVO">
+        SELECT
+            d.document_no,
+            d.emp_no,
+            d.document_title,
+            d.document_category,
+            d.submission_date,
+            d.state,
+            d.draftday,
+            d.start_date,
+            d.end_date,
+            d.dayoff_content,
+            d.k_id,
+            d.salary,
+            d.contract_term,
+            e.name AS empNameFor1002
+        FROM
+            document d
+                LEFT JOIN emp e ON e.emp_no = 1002
+    </select>
+</mapper>
