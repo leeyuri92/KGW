@@ -223,7 +223,7 @@
 
         // 이벤트 핸들러 등록
         let submitBtn = document.getElementById('submitEvent');
-        let submitBtn = document.getElementById('submitEvent');
+        // let submitBtn = document.getElementById('submitEvent');
         let exitBtn = document.getElementById('exitEvent');
         let deleteBtn = document.getElementById('deleteEvent');
         let updateBtn = document.getElementById('updateEvent');
