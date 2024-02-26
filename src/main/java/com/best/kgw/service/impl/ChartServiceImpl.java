@@ -31,6 +31,14 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
+    public List<Map<String, Object>> pList(Map<String, Object> pmap) {
+        logger.info("pList : ");
+        List<Map<String, Object>> pList = chartDao.pList(pmap);
+        logger.info(pList.toString());
+        return pList;
+    }
+
+    @Override
     public List<Map<String, Object>> fList(Map<String, Object> fmap) {
         logger.info("fList");
         List<Map<String, Object>> fList = chartDao.fList(fmap);
@@ -56,5 +64,27 @@ public class ChartServiceImpl implements ChartService {
     public void faUpdate(Map<String, Object> FA_NO) {
         logger.info("faUpdate : " + FA_NO);
         chartDao.faUpdate(FA_NO);
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.26
+     기능 : 입/퇴사자 차트
+     **********************************************************************************/
+
+    @Override
+    public List<Map<String, Object>> hList(Map<String, Object> hmap) {
+        logger.info("hList : ");
+        List<Map<String, Object>> hList = chartDao.hList(hmap);
+        logger.info(hList.toString());
+        return hList;
+    }
+
+    @Override
+    public List<Map<String, Object>> rList(Map<String, Object> rmap) {
+        logger.info("rList : ");
+        List<Map<String, Object>> rList = chartDao.rList(rmap);
+        logger.info(rList.toString());
+        return rList;
     }
 }

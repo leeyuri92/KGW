@@ -7,6 +7,16 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 
+<%
+    List<Map<String, Object>> hList = (List)request.getAttribute("hList");
+    int hsize = hList.size();
+    Map<String, Object> hmap = hList.get(hsize-1);
+
+    List<Map<String, Object>> rList = (List)request.getAttribute("rList");
+    int rsize = rList.size();
+    Map<String, Object> rmap = rList.get(rsize-1);
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,40 +25,49 @@
     <title>입/퇴사자 차트</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {'packages':['bar']}); //구글 지원하는 막대그래프 로딩
-        google.charts.setOnLoadCallback(drawChart); //막대그래프 그리려면 데이터가 필요함 - 함수호출
+        google.charts.load('current', {'packages': ['corechart']}); //구글 지원하는 라인차트 로딩
 
-        function drawChart() {//DataTable()
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses', 'Profit'],
-                ['2014', 1000, 400, 200],
-                ['2015', 1170, 460, 250],
-                ['2016', 660, 1120, 300],
-                ['2017', 1030, 540, 350]
-            ]);
+        const hireChart =() => {//DataTable()
+            const data = google.visualization.arrayToDataTable(
+                ${hChart}
+            );
 
-            var options = {
-                chart: {
-                    title: 'Company Performance',
-                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-                },
+            const options = {
+                lineWidth: 4 ,
+                colors: ['#a11a16'],
+                legend : {position: 'bottom'}
             };
 
-            var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-            var chart2 = new google.charts.Bar(document.getElementById('barchart_material2'));
+            const chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            chart.draw(data, options);
+        };
+        google.charts.setOnLoadCallback(hireChart); // 그래프 그리려면 데이터가 필요함 - 함수호출
 
-            chart.draw(data, google.charts.Bar.convertOptions(options));
-            chart2.draw(data, google.charts.Bar.convertOptions(options));
-        }
+        const retireChart = () => {
+            const data = google.visualization.arrayToDataTable(
+                ${rChart}
+            );
+
+            const options = {
+                lineWidth: 4 ,
+                colors: ['#d97d7a'],
+                legend : {position: 'bottom'}
+            };
+            const chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+            chart2.draw(data, options);
+        };
+        google.charts.setOnLoadCallback(retireChart); // 그래프 그리려면 데이터가 필요함 - 함수호출
+
     </script>
 
     <style>
         .content-box {
-            width: 100%;
+            width: 90%;
+            margin: 2rem 2.5rem 2rem 2.5rem;
             padding: 16px;
             border-radius: 6px;
             overflow: hidden;
-            border: 1px solid #989898;
+            border: 2px solid #c8c8c8;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -56,11 +75,11 @@
             gap: 4px;
         }
         .chart-box {
-            width: 100%;
-            padding: 16px;
+            width: 90%;
+            margin: 2rem 2.5rem 2rem 2.5rem;
             border-radius: 6px;
             overflow: hidden;
-            border: 1px solid #989898;
+            border: 2px solid #c8c8c8;
             align-self: stretch;
             display: flex;
             justify-content: center;
@@ -68,19 +87,16 @@
         }
         .chart {
             width: 100%;
-            height: 100%;
-            position: relative;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            display: flex;
+            margin-left: -8rem;
+            border-radius: 6px;
+            overflow: hidden;
+            align-self: stretch;
         }
-
         .subtitle {
             color: rgba(0, 0, 0, 0.50);
             font-size: 14px;
             font-family: Roboto;
-            font-weight: 400;
+            font-weight: 600;
             line-height: 24px;
             word-wrap: break-word;
         }
@@ -90,7 +106,7 @@
             color: black;
             font-size: 20px;
             font-family: Roboto;
-            font-weight: 500;
+            font-weight: 600;
             line-height: 36px;
             word-wrap: break-word;
         }
@@ -135,19 +151,18 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="row">
-
                             <div class="col-md-6">
                                 <div class="container">
                                     <div class="box-header">
                                         <h4 style="font-weight: bold; margin-left: 2rem">입사자</h4>
                                         <hr />
-                                        <div class="content-box mt-3">
+                                        <div class="content-box">
                                             <div class="subtitle">2024년 입사자</div>
-                                            <div class="count">10 명</div>
+                                            <div class="count"><%=hmap.get("COUNT")%> 명</div>
                                         </div>
-                                        <div class="chart-box mt-3">
+                                        <div class="chart-box">
                                             <div class="chart">
-                                                <div id="barchart_material" style="width: 100%; height: 420px;"></div>
+                                                <div id="curve_chart"  style="width: 120%; height: 440px;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -159,13 +174,13 @@
                                     <div class="box-header">
                                         <h4 style="font-weight: bold; margin-left: 2rem">퇴사자</h4>
                                         <hr />
-                                        <div class="content-box mt-3">
+                                        <div class="content-box">
                                             <div class="subtitle">2024년 퇴사자</div>
-                                            <div class="count">5 명</div>
+                                            <div class="count"><%=rmap.get("COUNT")%> 명</div>
                                         </div>
-                                        <div class="chart-box mt-3">
+                                        <div class="chart-box">
                                             <div class="chart ">
-                                                <div id="barchart_material2" style="width: 100%; height: 420px;"></div>
+                                                <div id="curve_chart2" style="width: 120%; height: 440px;"></div>
                                             </div>
                                         </div>
                                     </div>

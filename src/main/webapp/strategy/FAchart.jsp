@@ -27,42 +27,43 @@
           날짜 : 2024-02-21
           내용 : 등록/방출에 따른 WAR값 Ajax 처리
         ---------------------------------------------------------------------------------------%>
+
         function faUpdate(FA_NO) {
             $.ajax({
                 url: '/faUpdate',
                 type: 'GET',
                 data: {FA_NO: FA_NO},
-                success: function(response) {
+                success: function (response) {
                     console.log("response : " + response); // 넘어 오는 값은 없을 거임
 
                     //faUpdate가 성공하면 /faWar 실행
                     $.ajax({
                         url: '/faWar',
                         type: 'GET',
-                        success: function(data) {
+                        success: function (data) {
                             // id가 "chart"인 부분을 다시 그리기
                             console.log("data : " + data + ", type : " + typeof (data));
                             document.querySelector('#barchart_material').innerHTML = data;
                             google.charts.setOnLoadCallback(drawChart(data));
                         },
-                        error: function() {
+                        error: function () {
                             alert('Error occurred while loading new chart.');
                         }
                     });
 
                     // 버튼 다시 그려주기
-                    console.log("FA_NO : "+FA_NO);
-                    let btn = document.querySelector('#btn_'+FA_NO);
-                    (btn.innerHTML === "방출" ) ? btn.innerHTML="등록" : btn.innerHTML="방출";
+                    console.log("FA_NO : " + FA_NO);
+                    let btn = document.querySelector('#btn_' + FA_NO);
+                    (btn.innerHTML === "방출") ? btn.innerHTML = "등록" : btn.innerHTML = "방출";
                 },
-                error: function() {
+                error: function () {
                     alert('Error occurred while updating data.');
                 }
             });
         }
 
         // 첫번째 차트
-        google.charts.load('current', {'packages':['bar']});
+        google.charts.load('current', {'packages': ['bar']});
         google.charts.setOnLoadCallback(drawStuff);
 
         function drawStuff() {
@@ -88,13 +89,13 @@
 
             const options = {
                 width: 900,
-                legend: { position: 'none' },
+                legend: {position: 'none'},
                 axes: {
                     x: {
-                        0: { side: 'top', label: '선수명'} // Top x-axis.
+                        0: {side: 'top', label: '선수명'} // Top x-axis.
                     }
                 },
-                bar: { groupWidth: "60%" },
+                bar: {groupWidth: "60%"},
                 colors: ['#7c1512']
             };
 
@@ -105,12 +106,12 @@
 
             function selectHandler() {
                 const selection = chart.getSelection();
-                alert('That\'s column no. '+selection[0].row);
+                alert('That\'s column no. ' + selection[0].row);
             }
         };
 
         // 두번째 차트
-        google.charts.load('current', {'packages':['bar']});//구글 지원하는 막대그래프 로딩
+        google.charts.load('current', {'packages': ['bar']});//구글 지원하는 막대그래프 로딩
         google.charts.setOnLoadCallback(drawChart);//막대그래프 그리려면 데이터가 필요함 - 함수호출
 
         function drawChart(fWar) {
@@ -136,13 +137,33 @@
             chart.draw(data, google.charts.Bar.convertOptions(options));
         }
 
+        // 파이차트
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawChart2);
 
+        function drawChart2() {
+            var data2 = google.visualization.arrayToDataTable(
+                ${pChart}
+            );
+            var options2 = {
+                chartArea: {
+                    width: '90%', // 차트 영역의 너비
+                    height: '90%',// 차트 영역의 높이
+                    left: '22%'
+                },
+                "is3D": true,
+                colors: ['#7c1512', '#d77e7b', '#e7c0bd', '#f1e2e1'],
+                backgroundColor: 'transparent'
+            };
+            var chart2 = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart2.draw(data2, options2);
+        }
 
     </script>
     <style>
         .chart {
             width: 100%;
-            padding-bottom: 2rem;
+            padding-bottom: 15px;
             border-radius: 6px;
             overflow: hidden;
             align-self: stretch;
@@ -215,40 +236,36 @@
         <section class="content">
             <!-- Info boxes -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="box">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="container">
-                                    <div class="box-header">
-                                        <h4 style="font-weight: bold; margin-left: 1.5rem" >2024년도 FA 선수 현황</h4>
-                                    </div>
-                                    <div class="chart">
-                                        <!-- Sales Chart Canvas -->
-                                        <div id="top_x_div" style="width: 900px; height: 400px;"></div>
-                                    </div>
-                                    <!-- /.chart-responsive -->
-                                </div>
+                        <div class="container">
+                            <div class="box-header">
+                                <h4 style="font-weight: bold; margin-left: 1.5rem" >2024년도 FA 선수 현황</h4>
                             </div>
-                            <!-- /.col -->
-                            <div class="col-md-4">
-                                <div class="box-header">
-                                    <h4 style="font-weight: bold; margin-left: 1.5rem">게시판3</h4>
-                                    <hr />
-                                </div>
-
+                            <div class="chart">
+                                <div id="top_x_div" style="width: 900px; height: 400px;"></div>
                             </div>
-                            <!-- /.col -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="container">
+                            <div class="box-header">
+                                <h4 style="font-weight: bold; margin-left: 1.5rem">2024년도 FA선수 포지션별 현황</h4>
+                            </div>
+                            <div class="chart-pie">
+                                <div id="piechart" style="width: 100%; height: 415px;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
-                        <!-- /.box-header -->
-                        <%--					<div class="box-body">--%>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="container">
@@ -287,7 +304,7 @@
 
                                     <!-- 회원목록 시작 -->
                                     <div class='board-list'>
-                                        <table class="table text-center ">
+                                        <table class="table text-center align-content-center">
                                             <thead>
                                             <tr>
                                                 <th width="20%" >등록날짜</th>
@@ -333,7 +350,6 @@
                                             %>
                                             </tbody>
                                         </table>
-                                        <hr />
                                     </div>
                                     <!-- 회원목록   끝  -->
                                 </div>

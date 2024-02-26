@@ -3,14 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.ChartMapper">
-    <select id= "fList" parameterType="map" resultType="map">
-        select FA_NO, FA_NAME, FA_DATE, FA_TEAM, FA_POS, FA_WAR, FA_STATE, FA_AGENT
+
+    <select id= "wList" parameterType="map" resultType="map">
+        select FA_NAME, FA_WAR
         from FA
         where FA_AGENT='FA자유계약'
     </select>
 
-    <select id= "wList" parameterType="map" resultType="map">
-        select FA_NAME, FA_WAR
+    <select id= "pList" parameterType="map" resultType="map">
+        select FA_POS, count(*) COUNT
+        from FA
+        where FA_AGENT='FA자유계약'
+        group by FA_POS
+    </select>
+
+    <select id= "fList" parameterType="map" resultType="map">
+        select FA_NO, FA_NAME, FA_DATE, FA_TEAM, FA_POS, FA_WAR, FA_STATE, FA_AGENT
         from FA
         where FA_AGENT='FA자유계약'
     </select>
@@ -29,5 +37,31 @@
             END
         WHERE FA_NO = #{FA_NO}
     </update>
+
+    <select id= "hireList" parameterType="map" resultType="map">
+        select  YEAR as HIREYEAR,
+            count(to_char(to_date(HIRE_DATE,'YYYY-MM-DD'),'YYYY')) AS COUNT
+        from EMP RIGHT OUTER JOIN (
+                                                            SELECT TO_CHAR(SYSDATE, 'YYYY' ) - LEVEL + 1 AS YEAR
+                                                            FROM DUAL
+                                                            <![CDATA[ CONNECT BY LEVEL <= (TO_CHAR(SYSDATE,'YYYY')+1)-2015
+                                                             ) ]]>
+        ON TO_CHAR(TO_DATE(HIRE_DATE, 'YYYY-MM-DD'), 'YYYY') = YEAR
+        GROUP BY YEAR
+        ORDER BY YEAR
+    </select>
+
+    <select id= "retireList" parameterType="map" resultType="map">
+        select  YEAR as RETIREYEAR,
+            count(to_char(to_date(RETIRE_DATE,'YYYY-MM-DD'),'YYYY')) AS COUNT
+        from EMP RIGHT OUTER JOIN (
+                                                            SELECT TO_CHAR(SYSDATE, 'YYYY' ) - LEVEL + 1 AS YEAR
+                                                            FROM DUAL
+                                                            <![CDATA[ CONNECT BY LEVEL <= (TO_CHAR(SYSDATE,'YYYY')+1)-2015
+                                                             ) ]]>
+        ON TO_CHAR(TO_DATE(RETIRE_DATE, 'YYYY-MM-DD'), 'YYYY') = YEAR
+        GROUP BY YEAR
+        ORDER BY YEAR
+    </select>
 
 </mapper>

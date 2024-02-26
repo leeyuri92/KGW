@@ -30,10 +30,10 @@ public class ChartController {
     private ChartService chartService;
 
     @GetMapping("kList")
-    public String faPage(Map<String, Object> fmap, Map<String, Object> wmap, Map<String, Object> kmap, Model model) {
+    public String faPage(Map<String, Object> fmap, Map<String, Object> wmap, Map<String, Object> kmap, Map<String, Object> pmap, Model model) {
         logger.info("faPage 호출");
 
-        // FA 선수 현황 -  WAR차트
+        // 1. FA 선수 현황 -  WAR차트
         List<Map<String, Object>> wList = chartService.wList(wmap);
         logger.info("wList (받아온 DB data) : " + wList);
         // 1차 가공
@@ -50,12 +50,29 @@ public class ChartController {
         logger.info("wChart : " + wChart);
         model.addAttribute("wChart", wChart);
 
-        // FA 선수 명단
+        // 2. FA 선수 현황 -  포지션별 차트
+        List<Map<String, Object>> pList = chartService.pList(pmap);
+        logger.info("pList (받아온 DB data) : " + pList);
+        // 1차 가공
+        List<Object[]> pieList = new ArrayList<>();
+        String[] hs2 = {"FA_POS", "COUNT"};
+        pieList.add(hs2);
+        for (Map<String, Object> entry : pList) {
+            pieList.add(new Object[]{entry.get("FA_POS"), entry.get("COUNT")});
+        }
+        logger.info("pieList : " + pieList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
+        // 2차 가공
+        g = new Gson();
+        String pChart = g.toJson(pieList);
+        logger.info("pChart : " + pChart);
+        model.addAttribute("pChart", pChart);
+
+        // 3. FA 선수 명단
         List<Map<String, Object>> fList = chartService.fList(fmap);
         logger.info("fList : " + fList);
         model.addAttribute("fList", fList);
 
-        // FA 선수 명단 - WAR 비교차트_키움
+        // 4. FA 선수 명단 - WAR 비교차트_키움
         double kWar = chartService.kWar(kmap);
         logger.info("kWar : " + kWar);
         model.addAttribute("kWar", kWar);
@@ -85,12 +102,56 @@ public class ChartController {
         return faWar ;
     }
 
-//    @GetMapping("faWar")
-//    public void faWar(Map<String, Object> fmap, Model model) {
-//        double faWar = chartService.fWar(fmap);
-//        logger.info("faWar : " + faWar);
-//        model.addAttribute("faWar", faWar);
-//    }
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.26
+     기능 : 입/퇴사자 차트
+     **********************************************************************************/
 
+    @GetMapping("admin/empChart")
+    public String hnrPage(Map<String, Object> hmap, Map<String, Object> rmap, Model model) {
+        logger.info("hnrPage 호출");
 
+        // 1. 입사자 차트
+        List<Map<String, Object>> hList = chartService.hList(hmap);
+        logger.info("hList (받아온 DB data) : " + hList);
+        model.addAttribute("hList", hList);
+
+        // 1차 가공
+        List<Object[]> dataList = new ArrayList<>();
+        String[] hs = {"YEAR", "입사자 수"};
+        dataList.add(hs);
+        for (Map<String, Object> entry : hList) {
+            dataList.add(new Object[]{entry.get("HIREYEAR").toString(), entry.get("COUNT")});
+        }
+        logger.info("dataList : " + dataList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
+
+        // 2차 가공
+        Gson g = new Gson();
+        String hChart = g.toJson(dataList);
+        logger.info("hChart : " + hChart);
+        model.addAttribute("hChart", hChart);
+
+        // 2. 퇴사자 차트
+        List<Map<String, Object>> rList = chartService.rList(rmap);
+        logger.info("rList (받아온 DB data) : " + rList);
+        model.addAttribute("rList", rList);
+
+        // 1차 가공
+        List<Object[]> dataList2 = new ArrayList<>();
+        String[] hs2 = {"YEAR", "퇴사자 수"};
+        dataList2.add(hs2);
+        for (Map<String, Object> entry : rList) {
+            dataList2.add(new Object[]{entry.get("RETIREYEAR").toString(), entry.get("COUNT")});
+        }
+        logger.info("dataList2 : " + dataList2);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
+
+        // 2차 가공
+        g = new Gson();
+        String rChart = g.toJson(dataList2);
+        logger.info("rChart : " + rChart);
+        model.addAttribute("rChart", rChart);
+
+        return "forward:/admin/empChart.jsp";
+    }
 }

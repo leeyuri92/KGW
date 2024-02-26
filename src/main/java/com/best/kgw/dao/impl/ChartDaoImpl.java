@@ -32,6 +32,15 @@ public class ChartDaoImpl implements ChartDao {
     }
 
     @Override
+    public List<Map<String, Object>> pList(Map<String, Object> pmap) {
+        logger.info("pList");
+        List<Map<String, Object>> pList = null;
+        pList = sqlSessionTemplate.selectList("pList", pmap);
+        logger.info(pList.toString());
+        return pList;
+    }
+
+    @Override
     public List<Map<String, Object>> fList(Map<String, Object> fmap) {
         logger.info("fList");
         List<Map<String, Object>> fList = null;
@@ -60,5 +69,28 @@ public class ChartDaoImpl implements ChartDao {
         logger.info(umap.get("FA_NO").toString());
         int result = sqlSessionTemplate.update("faUpdate",umap);
         logger.info("업데이트 성공했니? result : " + result );
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.26
+     기능 : 입/퇴사자 차트
+     **********************************************************************************/
+    @Override
+    public List<Map<String, Object>> hList(Map<String, Object> hmap) {
+        logger.info("hireList");
+        List<Map<String, Object>> hList = null;
+        hList = sqlSessionTemplate.selectList("hireList", hmap);
+        logger.info(hList.toString());
+        return hList;
+    }
+
+    @Override
+    public List<Map<String, Object>> rList(Map<String, Object> rmap) {
+        logger.info("retireList");
+        List<Map<String, Object>> rList = null;
+        rList = sqlSessionTemplate.selectList("retireList", rmap);
+        logger.info(rList.toString());
+        return rList;
     }
 }
