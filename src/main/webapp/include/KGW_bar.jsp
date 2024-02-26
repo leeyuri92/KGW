@@ -28,9 +28,9 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <div class="user-panel d-flex" >
-                    <img src="/images/go.png" class="img-circle" alt="User Image">
+
                     <div class="info">
-                        <a href="/auth/login.jsp">LeeYuri</a>
+                        <a href="/mypage?emp_no=<%=1004%>"><img src="/images/<%="go.png"%>" class="img-circle" alt="User Image">  이유리</a>
                     </div>
                 </div>
             </li>

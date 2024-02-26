@@ -8,8 +8,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.vo.EmpVO" %>
 <%
-  List<EmpVO> empDetail = (List) request.getAttribute("empDetail");
-  EmpVO empvo = empDetail.get(0);
+  EmpVO empDetail = (EmpVO) request.getAttribute("empDetail");
 //  out.print(empDetail);
 %>
 
@@ -99,7 +98,7 @@
       function getWeather (lat, lon) {
           const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
           fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=`+lat+`&lon=`+lon+`&appid=`+API_KEY+`&units=metric&lang=kr`
+              `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${API_KEY}&units=metric&lang=kr`
           )
               .then((response) => {
                   if (!response.ok) {
@@ -111,7 +110,7 @@
                   const iconSection = document.querySelector('.icon');
                   const icon = data.weather[0].icon;
                   console.log(icon)
-                  const iconURL = `http://openweathermap.org/img/wn/`+icon+`.png`;
+                  const iconURL = `http://openweathermap.org/img/wn/\${icon}.png`;
                   console.log(iconURL)
                   iconSection.setAttribute('src', iconURL);
                   iconSection.setAttribute('alt', data.weather[0].description);
@@ -122,6 +121,10 @@
       }
 
       navigator.geolocation.getCurrentPosition(success);
+
+      const mypage = () =>{
+          location.href = "/mypage?emp_no=<%=1004%>";
+      }
   </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
@@ -154,59 +157,69 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-2 mr-3 text-center mainbox" >
+        <div class="col-2 mr-3 text-center mainbox" style="background-color: #dfded0";>
           <div class="row">
-            <div class="user-panel">
-              <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" margin: auto; width: 175px; height: 175px; ">
+            <div class="row">
+              <div class="user-panel">
+                <a href="/mypage?emp_no=<%=empDetail.getEmp_no()%>"><img src="/images/<%=empDetail.getProfile_img()%>" class="img-circle m-5 " alt="User Image" style=" margin: auto; width: 175px; height: 175px; "></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="text-bold text-lg">
+                [<%=empDetail.getTeam_name()%>]
+              </div>
+            </div>
+            <div class="row mb-5">
+              <div class="text-bold text-lg">
+                <%=empDetail.getName()%> 사원
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="text-bold text-lg">
-              [<%=empvo.getTeam_name()%>]
-            </div>
-          </div>
-          <div class="row mb-5">
-            <div class="text-bold text-lg">
-              <%=empvo.getName()%> 사원
-            </div>
-          </div>
-          <div class="row text-bold text-lg">
-            <div class="col-6 ">
-              <label>현재 시간 : </label>
-            </div>
-            <div class="col-6">
-              <div id="clock"></div>
-            </div>
-          </div>
-          <div class="row text-bold text-lg mt-2 mb-5">
-            <div class="col-6 " style="line-height: 50px">
-              <label>현재 날씨 : </label>
-            </div>
-            <div class="col-6">
-              <div><img class="icon"/></div>
-            </div>
-          </div>
-          <div class="row text-bold text-lg">
-            <div class="col-6 ">
-              <label>출근시간 : </label>
-            </div>
-            <div class="col-6">
-              <label id="workStart"></label>
-            </div>
-          </div>
-          <div class="row text-bold text-lg">
-            <div class="col-6 ">
-              <label>퇴근시간 : </label>
-            </div>
-            <div class="col-6">
-              <label id="workEnd"></label>
-            </div>
-          </div>
+          <hr class="m-3" style=" height: 1px; background-color: #0e0e0e; border: 0">
 
-          <hr class="m-5" style="height: 1px; background-color: #0e0e0e; border: 0">
-          <div class="mb-5">
-            <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
-            <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>
+          <div class="row mt-5 pt-5" style=" padding-bottom: 100%">
+              <div class="row text-bold text-lg">
+                <div class="col-6 ">
+                  <label>현재 시간 : </label>
+                </div>
+                <div class="col-6">
+                  <div id="clock"></div>
+                </div>
+              </div>
+              <div class="row text-bold text-lg mt-2 mb-5">
+                <div class="col-6 " style="line-height: 70px">
+                  <label>현재 날씨 : </label>
+                </div>
+                <div class="col-6">
+                  <div>
+                    <img class="icon " style="width: 70px; height: 70px; "/>
+                  </div>
+                </div>
+              </div>
+              <div class="row text-bold text-lg">
+                <div class="col-6 ">
+                  <label>출근시간 : </label>
+                </div>
+                <div class="col-6">
+                  <label id="workStart"></label>
+                </div>
+              </div>
+              <div class="row text-bold text-lg">
+                <div class="col-6 ">
+                  <label>퇴근시간 : </label>
+                </div>
+                <div class="col-6">
+                  <label id="workEnd"></label>
+                </div>
+              </div>
+
+            <div class="mt-5 mb-5">
+              <hr class="m-3" style=" height: 1px; background-color: #0e0e0e; border: 0">
+            </div>
+            <div class="mb-5">
+              <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
+              <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>
+            </div>
           </div>
         </div>
 

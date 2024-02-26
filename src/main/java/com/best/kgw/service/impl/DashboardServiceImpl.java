@@ -22,16 +22,24 @@ public class DashboardServiceImpl implements DashboardService {
     @Autowired
     private DashboardDao dashboardDao;
 
+
     /**********************************************************************************
      작성자 : 박병현
-     작성일자 : 24.02.19
-     기능 : 한명의 사원 정보 조회 (Service)
+     작성일자 : 24.02.24
+     기능 : 사원 상세조회
      **********************************************************************************/
     @Override
-    public List<EmpVO> empDetail(EmpVO empVO) throws Exception{
-        logger.info("Service : empInfo");
-        List<EmpVO> empList;
-        empList = dashboardDao.empDetail(empVO);
-        return empList;
+    public EmpVO empDetail(EmpVO empvo) throws Exception {
+        logger.info("DashboardServiceImpl : empDetail");
+        EmpVO empDetail = dashboardDao.empDetail(empvo);
+        return empDetail;
+    }
+
+    @Override
+    public int empDetailUpdate(EmpVO empvo) throws Exception {
+        logger.info("DashboardServiceImpl : empDetailUpdate");
+        int result = 0;
+        result = dashboardDao.empDetailUpdate(empvo);
+        return result;
     }
 }
