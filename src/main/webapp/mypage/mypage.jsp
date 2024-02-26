@@ -76,7 +76,7 @@
           <div class="row">
             <div class="col-2">
               <div class="signImg" style="border: 2px solid grey; width: 200px; height: 200px">
-                <img src="/sign/<%=empDetail.getEmp_no()%>.png" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
+                <img id="signImage" src="/fileUpload/sign/<%=empDetail.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
               </div>
             </div>
             <div class="col-8">
@@ -225,8 +225,6 @@
   </div>
   <script>
 
-
-
       //비밀번호 정규식표현
       const expPwText = /^[A-Za-z0-9]{4,12}$/;
       //핸드폰 정규식표현
@@ -297,8 +295,8 @@
         </div>
         <div class="modal-body p-5 pt-0">
           <form id="signInsert" method="post" action="/fileSave" enctype="multipart/form-data">
-            <canvas id="signature-pad" name="signFile"  width=400 height=200 style="margin-bottom: 20px; border: 2px solid black"></canvas>
-<%--            <input type="hidden" id="uploadFile" name="uploadFile" value="<%=empDetail.getEmp_no()%>"/>--%>
+            <canvas id="signature-pad" width=400 height=200 style="margin-bottom: 20px; border: 2px solid black"></canvas>
+            <input type="hidden" id="emp_no" name="emp_no" value="<%=empDetail.getEmp_no()%>">
             <div>
               <button type="button" id="clear" class="btn btn-danger">초기화</button>
               <button type="button" id="save" class="btn btn-danger">저장</button>
@@ -330,31 +328,54 @@
 
                 // button save
                 document.getElementById('save').addEventListener('click', function () {
-                    // 전자 서명 데이터를 가져옴
-                    let dataURL = signaturePad.toDataURL();
-
+                    let canvas = document.getElementById('signature-pad');
+                    let dataURL = canvas.toDataURL('image/png'); // 캔버스 내용을 데이터 URL로 가져옴
                     // 데이터 URL을 Blob 객체로 변환
-                    let blob = dataURLtoBlob(dataURL);
+                    let blob = dataURItoBlob(dataURL);
 
-                    // 서버로 전송할 FormData 객체 생성
+                    // FormData 객체 생성
                     let formData = new FormData();
-                    formData.append('signFile', blob); // 'file'이라는 이름으로 Blob 데이터를 추가
+                    formData.append('image', blob, '<%=empDetail.getEmp_no()%>.png');
 
-                    // Ajax 요청을 통해 서버로 전송
                     $.ajax({
                         type: 'POST',
-                        url: '/fileSave', // 파일을 저장하는 서블릿의 URL
-                        data: formData, // FormData 객체 전송
-                        processData: false, // 데이터 처리 방식을 설정 (필수)
-                        contentType: false, // 컨텐츠 타입을 설정 (필수)
+                        url: '/fileSave',
+                        data: formData,
+                        processData: false, // FormData를 처리하지 않도록 설정
+                        contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 컨텐츠 타입을 설정하지 않도록 함
                         success: function (response) {
-                            console.log('파일 업로드 성공');
+                            console.log('파일 전송 성공');
+                            let modal = document.querySelector(".modal")
+                            modal.style.display = "none";
+                            var backdrop = document.querySelector(".modal-backdrop");
+                            // 요소가 존재하는 경우에만 숨김 처리
+                            if (backdrop) {
+                                backdrop.classList.remove("show"); // modal-backdrop의 show 클래스 제거
+                                backdrop.style.display = "none"; // 요소를 화면에서 숨기기
+                            }
+                            document.querySelector("#signImage").src = "/fileUpload/sign/<%=empDetail.getEmp_no()%>.png";
+                            signaturePad.clear();
                         },
                         error: function (xhr, status, error) {
-                            console.error('파일 업로드 실패:', status, error);
+                            console.error('파일 전송 실패:', error);
+                            // 실패한 경우 처리할 내용 추가
                         }
                     });
-                });
+
+                    // 데이터 URL을 Blob 객체로 변환하는 함수
+                    function dataURItoBlob(dataURI) {
+                        // Base64 데이터 부분 분리
+                        let byteString = atob(dataURI.split(',')[1]);
+                        let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+                        // Blob 객체 생성
+                        let arrayBuffer = new ArrayBuffer(byteString.length);
+                        let intArray = new Uint8Array(arrayBuffer);
+                        for (let i = 0; i < byteString.length; i++) {
+                            intArray[i] = byteString.charCodeAt(i);
+                        }
+                        return new Blob([arrayBuffer], {type: mimeString});
+                    }
+                })
             </script>
           </form>
 
