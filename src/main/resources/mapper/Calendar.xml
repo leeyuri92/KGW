@@ -57,9 +57,57 @@
         where reservation_no = ${reservationNo}
     </update>
 
-    <!--    <insert id="addList" parameterType="list">-->
-    <!--        INSERT INTO calendar (calendar_title, calendar_start, calendar_end, calendar_rid)-->
-    <!--        VALUES (#{title}, #{start}, #{end}, #{resourceId});-->
-    <!--    </insert>-->
+    <select id="rList" parameterType="map" resultType="map">
+        SELECT
+                a.reservation_no,
+                a.reservation_title,
+                a.reservation_start,
+                a.reservation_end,
+                b.asset_id,
+                b.asset_no,
+                b.asset_name,
+                b.team_no,
+                c.name
+        FROM asset_reservation a
+                INNER JOIN asset b ON a.asset_no = b.asset_no
+                INNER JOIN emp c ON a.emp_name = c.emp_name
+        <where>
+            <if test="asset_no!=null">AND b.asset_no=#{asset_no}</if>
+            <if test="gubun!=null">
+                <choose>
+                    <when test='gubun.equals("name")'>
+                        AND c.name LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("reservation_title")'>
+                        AND a.reservation_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("reservation_start")'>
+                        AND a.reservation_start LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
+        </where>
+        order by a.reservation_no desc
+    </select>
+
+    <select id= "myReservList" parameterType="map" resultType="com.vo.CalendarVO">
+        SELECT
+        a.reservation_no,
+        a.reservation_title,
+        a.reservation_start,
+        a.reservation_end,
+        b.asset_id,
+        b.asset_no,
+        b.asset_name,
+        b.team_no,
+        c.name
+        FROM asset_reservation a
+        INNER JOIN asset b ON a.asset_no = b.asset_no
+        INNER JOIN emp c ON a.emp_no = c.emp_no
+        <where>
+            AND a.asset_no = b.asset_no
+            AND a.emp_no = c.emp_no
+        </where>
+    </select>
 
 </mapper>
