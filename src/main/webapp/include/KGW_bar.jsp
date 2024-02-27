@@ -88,7 +88,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/empInfo" class="nav-link">
+                        <a href="/empInfo" class="nav-link">
                             <i class="nav-icon bi bi-person-heart"></i>
                             <p>
                                 인사정보

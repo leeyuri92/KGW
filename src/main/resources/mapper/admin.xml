@@ -26,7 +26,7 @@
 
     <insert id="memberInsert" parameterType="map">
         insert into emp(emp_no,team_no,emp_access,emp_position,sign_no,dayoff_cnt,emp_year,hire_date,emp_state,password,name,email,birthdate,phone_num,address,mod_date,reg_date,retire_date)
-        values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),NULL)
+        values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD'),NULL)
     </insert>
 
     <select id="empList" parameterType="map" resultType="map">
@@ -37,13 +37,13 @@
             <if test="gubun!=null">
                 <choose>
                     <when test='gubun.equals("name")'>
-                        AND name LIKE '%'||#{keyword}||'%'
+                        AND e.name LIKE '%'||#{keyword}||'%'
                     </when>
                     <when test='gubun.equals("emp_no")'>
-                        AND emp_no LIKE '%'||#{keyword}||'%'
+                        AND e.emp_no LIKE '%'||#{keyword}||'%'
                     </when>
                     <when test='gubun.equals("team_name")'>
-                        AND team_name LIKE '%'||#{keyword}||'%'
+                        AND e.team_name LIKE '%'||#{keyword}||'%'
                     </when>
                 </choose>
             </if>

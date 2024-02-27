@@ -7,9 +7,8 @@
     if(empList !=null){
         size = empList.size();
     }
-    out.print(size);//3
     //페이지처리
-    int numPerPage = 5;
+    int numPerPage = 10;
     int nowPage = 0;
     if(request.getParameter("nowPage")!=null){
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
@@ -26,8 +25,8 @@
     <script type="text/javascript">
         function searchEnter(event){
             console.log(window.event.keyCode)
-            if(window.event.keyCode == 13){
-                noticeSearch()
+            if(window.event.keyCode === 13){
+                empSearch();
             }
             event.isComposing//검색후 잔여검색기록 없애는코드
         }
@@ -42,12 +41,12 @@
             location.href= "/admin/empDetail?emp_no="+emp_no;
         }
         const empCertificate= (emp_no)=>{
-            location.href= "/admin/empCertificate?emp_no="+emp_no;
+            location.href= "/empCertificate?emp_no="+emp_no;
         }
 
 
         const retireCertificate= (emp_no)=>{
-            location.href= "/admin/retireCertificate?emp_no="+emp_no;
+            location.href= "/retireCertificate?emp_no="+emp_no;
         }
 
         var tdNo= "";
@@ -56,17 +55,17 @@
             checkbox.each(function (i) {
                 var tr = checkbox.parent().parent().eq(i);
                 var td = tr.children();
-                tdNo = td.eq(2).text();
+                tdNo = td.eq(1).text();
             });
             console.log(tdNo);
         }
         const empSelectDown= ()=>{
             check();
-            location.href= "/admin/selectDownLoadExel?emp_no="+tdNo;
+            location.href= "/selectDownLoadExel?emp_no="+tdNo;
         }
         const empAllDown= ()=>{
             check();
-            location.href= "/admin/allDownLoadExel";
+            location.href= "/allDownLoadExel";
         }
     </script>
     <!-- Google Font: Source Sans Pro -->

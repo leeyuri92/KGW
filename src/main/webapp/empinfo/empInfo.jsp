@@ -7,9 +7,8 @@
     if(empList !=null){
         size = empList.size();
     }
-    out.print(size);//3
     //페이지처리
-    int numPerPage = 5;
+    int numPerPage = 10;
     int nowPage = 0;
     if(request.getParameter("nowPage")!=null){
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
@@ -26,8 +25,8 @@
     <script type="text/javascript">
         function searchEnter(event){
             console.log(window.event.keyCode)
-            if(window.event.keyCode == 13){
-                noticeSearch()
+            if(window.event.keyCode === 13){
+                empSearch();
             }
             event.isComposing//검색후 잔여검색기록 없애는코드
         }
@@ -36,7 +35,7 @@
             const gubun = document.querySelector("#gubun").value;
             const keyword = document.querySelector("#keyword").value;
             console.log(`${gubun} , ${keyword}`);
-            location.href="/admin/empInfo?gubun="+gubun+"&keyword="+keyword;
+            location.href="/empInfo?gubun="+gubun+"&keyword="+keyword;
         }
 
     </script>
