@@ -355,7 +355,6 @@
 
     // 검색된 값을 서버로 전송하고, 서버로부터 받은 데이터를 처리하여 예약 현황에 출력하는 함수
     function reservSearch() {
-        // 검색어와 관련된 데이터를 가져오기 위해 검색어와 관련된 정보를 가져옵니다.
         const gubun = document.querySelector("#gubun").value;
         const keyword = document.querySelector("#keyword").value;
 
@@ -364,7 +363,6 @@
         searchData.append('gubun', gubun);
         searchData.append('keyword', keyword);
 
-        // Ajax를 사용하여 서버에 데이터를 전송합니다.
         fetch('/calendar/calList', {
             method: 'GET',
             headers: {
@@ -374,7 +372,6 @@
         })
             .then(response => response.json())
             .then(data => {
-                // 서버에서 받은 데이터를 처리하여 예약 현황에 출력하는 함수를 호출합니다.
                 renderSearchedCalendarList(data);
             })
             .catch((error) => {

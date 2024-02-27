@@ -467,16 +467,13 @@
 
     // 검색된 값을 서버로 전송하고, 서버로부터 받은 데이터를 처리하여 예약 현황에 출력하는 함수
     function reservSearch() {
-        // 검색어와 관련된 데이터를 가져오기 위해 검색어와 관련된 정보를 가져옵니다.
         const gubun = document.querySelector("#gubun").value;
         const keyword = document.querySelector("#keyword").value;
 
-        // 서버로 전송할 데이터를 준비합니다.
         const searchData = new URLSearchParams();
         searchData.append('gubun', gubun);
         searchData.append('keyword', keyword);
 
-        // Ajax를 사용하여 서버에 데이터를 전송합니다.
         fetch('/reservation/reservList', {
             method: 'GET',
             headers: {
@@ -486,7 +483,6 @@
         })
             .then(response => response.json())
             .then(data => {
-                // 서버에서 받은 데이터를 처리하여 예약 현황에 출력하는 함수를 호출합니다.
                 renderSearchedReservationList(data);
             })
             .catch((error) => {
@@ -514,8 +510,6 @@
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let responseText = xhr.responseText;
                 renderReservationList(responseText);
-            } else {
-                console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
             }
         };
         xhr.send();
@@ -523,19 +517,14 @@
 
     // 예약 목록을 화면에 렌더링하는 함수
     function renderReservationList(data) {
-        // 서버에서 받은 HTML 코드를 파싱하여 임시 요소에 넣습니다.
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = data;
 
-        // 'reservationTableBody' id를 가진 요소만을 선택하여 추출합니다.
         const reservationTableBody = tempDiv.querySelector('#reservationTableBody');
 
-        // tbody가 존재하면 해당 내용을 표시합니다.
         if (reservationTableBody) {
             const tbody = document.getElementById('reservationTableBody');
             tbody.innerHTML = reservationTableBody.innerHTML;
-        } else {
-            console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
         }
     }
 </script>
