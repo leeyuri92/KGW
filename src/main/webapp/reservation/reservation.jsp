@@ -91,6 +91,7 @@
                         startInput.value = startTime;
                         endInput.value = endTime;
                         resourceIdInput.value = arg.resource.id;
+                        // insertAssetNoInput.value = arg.event.id;
                     }
                 },
 
@@ -221,29 +222,23 @@
 
         // 이벤트 핸들러 등록
         let submitBtn = document.getElementById('submitEvent');
-        let searchBtn = document.getElementById('reservSearch');
+        let searchBtn = document.getElementById('searchEvent');
         let exitBtn = document.getElementById('exitEvent');
         let deleteBtn = document.getElementById('deleteEvent');
         let updateBtn = document.getElementById('updateEvent');
-        let addEventBtn = document.getElementById('addEvent');
         let closeBtnList = document.querySelectorAll('.modal-content .close');
 
         submitBtn.addEventListener('click', handleEventSubmit);
         submitBtn.addEventListener('click', handleEventUpdate);
-        searchBtn.addEventListener('click', handleEventUpdate);
+        searchBtn.addEventListener('click', reservSearch);
         exitBtn.addEventListener('click', handleEventSubmit);
         exitBtn.addEventListener('click', handleEventUpdate);
         deleteBtn.addEventListener('click', handleEventDelete);
         updateBtn.addEventListener('click', handleEventUpdate);
-        addEventBtn.addEventListener('click', function() {
-            let insertModal = document.getElementById('insertModal');
-            insertModal.style.display = 'block';
-        });
         closeBtnList.forEach(function(closeBtn) {
             closeBtn.addEventListener('click', handleModalClose);
             closeBtn.addEventListener('click', handleEventUpdate);
         });
-
 
         function handleEventSubmit() {
             let titleInput = document.getElementById('insertTitle');
@@ -269,7 +264,6 @@
                         // console.log(xhr.responseText);
                         console.log(addEventToCalendar.toString());
                         addEventToCalendar(title, start, end, resourceId, id);
-                        updateReservationList(renderReservationList)
                         console.log('새 이벤트가 성공적으로 등록되었습니다.');
                     }
                 };
@@ -289,6 +283,7 @@
 
 
         function addEventToCalendar(title, start, end, resourceId, id) {
+            updateReservationList(renderReservationList);
             calendar.addEvent({
                 title: title,
                 start: start,
@@ -348,7 +343,7 @@
         }
 
 
-    //업데이트
+        //업데이트
         function handleEventUpdate() {
             let titleInput = document.getElementById('detailTitle');
             let startInput = document.getElementById('detailStart');
@@ -361,7 +356,7 @@
             let start = startInput.value;
             let end = endInput.value;
             let resourceId = resourceIdInput.value;
-            let reservationNo = reservationNoInput.value; // 예약 번호 추가
+            let reservationNo = reservationNoInput.value;
             let id = assetNoInput.value;
 
             if (title && start && end && resourceId && reservationNo && id) {
@@ -373,7 +368,7 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         console.log('이벤트가 성공적으로 업데이트되었습니다.');
-                        let updatedEvent = { // 업데이트된 이벤트 객체 생성
+                        let updatedEvent = {
                             title: title,
                             start: start,
                             end: end,
@@ -383,15 +378,12 @@
                                 reservationNo: reservationNo
                             }
                         };
-                        updateToCalendar(updatedEvent); // 캘린더에 바로 업데이트된 이벤트 추가
-                        // 예약 목록을 업데이트하는 함수 호출
-                        updateReservationList(renderReservationList);
-
+                        updateToCalendar(updatedEvent);
                     }
                 };
 
                 let eventData = 'id=' + encodeURIComponent(id) +
-                    '&reservationNo=' + encodeURIComponent(reservationNo) + // 예약 번호를 전송합니다.
+                    '&reservationNo=' + encodeURIComponent(reservationNo) +
                     '&title=' + encodeURIComponent(title) +
                     '&start=' + encodeURIComponent(start) +
                     '&end=' + encodeURIComponent(end);
@@ -405,12 +397,14 @@
             closeModalAndClearInputs();
         }
 
+
         // 기존 이벤트를 업데이트 함수
         function updateToCalendar(updatedEvent) {
             if (updatedEvent && updatedEvent.id) {
                 let existingEvent = calendar.getEventById(updatedEvent.id); // 기존 이벤트 가져오기
                 if (existingEvent) {
                     existingEvent.remove(); // 기존 이벤트 삭제
+                    updateReservationList(renderReservationList);
                     // 업데이트된 이벤트를 캘린더에 추가
                     calendar.addEvent({
                         title: updatedEvent.title,
@@ -502,9 +496,9 @@
 
     // 서버에서 받은 데이터를 처리하여 예약 현황에 출력하는 함수
     function renderSearchedReservationList(data) {
-        // 받은 데이터를 예약 현황에 출력하는 코드를 작성합니다.
-        // 예를 들어, 받은 데이터를 HTML 형식으로 파싱하여 예약 현황에 추가합니다.
-        // 이 함수는 실제 예약 현황을 업데이트하는 데 필요한 로직을 구현해야 합니다.
+        // 받은 데이터를 예약 현황에 출력하는 코드를 작성
+        // 예를 들어, 받은 데이터를 HTML 형식으로 파싱하여 예약 현황에 추가
+        // 이 함수는 실제 예약 현황을 업데이트하는 데 필요한 로직을 구현해야함
     }
 
 
@@ -518,12 +512,10 @@
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let responseText = xhr.responseText;
-                    renderReservationList(responseText);
-                } else {
-                    console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
-                }
+                let responseText = xhr.responseText;
+                renderReservationList(responseText);
+            } else {
+                console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
             }
         };
         xhr.send();
@@ -546,8 +538,6 @@
             console.error('서버에서 예약 데이터를 가져오는 데 실패했습니다.');
         }
     }
-
-
 </script>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -584,7 +574,7 @@
                     <div class="box">
                         <div class="container-fluid1">
                             <h2 class="cal_title">자산 예약 현황</h2>
-                            <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-md-1" id="addEvent" name="addEvent" value="일정 등록"/>
+                            <button id="addEventBtn" class="btn btn-primary col-md-1">일정 등록</button>
                         </div>
                         <hr />
 
@@ -614,9 +604,9 @@
                                 <div class="col-3">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
                                         <option value="none">분류선택</option>
-                                        <option value="b_title">예약자</option>
-                                        <option value="b_writer">예약명</option>
-                                        <option value="b_content">예약일</option>
+                                        <option value="b_title">제목</option>
+                                        <option value="b_writer">작성자</option>
+                                        <option value="b_content">내용</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
@@ -624,7 +614,7 @@
                                            aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
                                 <div class="col-3">
-                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchBtn" name="searchBtn" value="검색" onclick="reservSearch()"/>
+                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" onclick="reservSearch()"/>
                                 </div>
                             </div>
                         </div>
@@ -636,7 +626,6 @@
                                     <th scope="col">#</th>
                                     <th scope="col">예약장소</th>
                                     <th scope="col">예약자</th>
-                                    <th scope="col">예약명</th>
                                     <th scope="col">예약시간</th>
                                     <th scope="col">취소</th>
                                 </tr>

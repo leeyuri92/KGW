@@ -28,6 +28,24 @@
     border-radius: 5px;
 }
 
+#submitEvent,
+#exitEvent,
+#exitEvent2,
+#deleteEvent,
+#updateEvent{
+    font-family: Roboto !important;
+    background-color: #652C2C !important;
+    color: white;
+    font-weight: normal !important;
+    font-size: small !important;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.btn-primary{
+    border-color: black !important;
+}
+
 /* 모달 */
 .modal {
     display: none;
@@ -124,7 +142,19 @@ a {
     text-align: right;
 }
 
-/* **********************<< 캘린더 CSS >>*********************** */
+/* 일정 정보 타이틀 */
+.reservation-status{
+    margin-top: 40px;
+    font-size: large; /* 글자 크기 */
+    font-family: "맑은 고딕";
+}
+
+/* 라이선스 메세지 없애기 */
+.fc-license-message{
+    z-index: -1 !important;
+    visibility: hidden !important;
+}
+
 #calendar {
     max-width: 100%;
     margin: 30px auto;

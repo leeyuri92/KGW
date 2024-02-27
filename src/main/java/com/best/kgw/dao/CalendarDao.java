@@ -8,17 +8,14 @@ import java.util.Map;
 public interface CalendarDao {
     public List<Map<String, Object>> calendarList(Map<String, Object> cmap) throws Exception;
 
-    List<Map<String, Object>> assetList(@RequestParam Map<String, Object> aMap) throws Exception;
 
-    List<Map<String, Object>> assetReservationList(Map<String, Object> arMap) throws Exception;
+    List<Map<String, Object>> delCalList(Map<String, Object> delMap) throws Exception;
 
-    List<Map<String, Object>> delList(Map<String, Object> delMap) throws Exception;
+    List<Map<String, Object>> addCalList(Map<String, Object> addMap) throws Exception;
 
-    List<Map<String, Object>> addList(Map<String, Object> addMap) throws Exception;
+    List<Map<String, Object>> upCalList(Map<String, Object> upMap) throws Exception;
 
-    List<Map<String, Object>> upList(Map<String, Object> upMap) throws Exception;
+    List<Map<String, Object>> calList(Map<String, Object> calMap) throws Exception;
 
-    List<Map<String, Object>> reservList(Map<String, Object> upMap) throws Exception;
-
-    List<Map<String, Object>> myReservList(Map<String, Object> myReservMap) throws Exception;
+    List<Map<String, Object>> myCalList(Map<String, Object> myCalMap) throws Exception;
 }

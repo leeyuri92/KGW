@@ -29,86 +29,62 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public List<Map<String, Object>> assetList(Map<String, Object> aMap) {
-        List<Map<String, Object>> assetList = null;
-        logger.info("Service : assetList 호출");
+    public List<Map<String, Object>> addCalList(Map<String, Object> addMap) {
+        List<Map<String, Object>> addCalList = null;
+        logger.info("Service : addCalList 호출");
         try {
-            assetList = calendarDao.assetList(aMap);
+            addCalList = calendarDao.addCalList(addMap);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return assetList;
+        return addCalList;
+    }
+    @Override
+    public List<Map<String, Object>> delCalList(Map<String, Object> delMap) {
+        List<Map<String, Object>> delCalList = null;
+        logger.info("Service : delCalList 호출");
+        try {
+            delCalList = calendarDao.delCalList(delMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return delCalList;
     }
 
     @Override
-    public List<Map<String, Object>> assetReservationList(Map<String, Object> arMap) {
-        List<Map<String, Object>> assetReservationList = null;
-        logger.info("Service : assetReservationList 호출");
+    public List<Map<String, Object>> upCalList(Map<String, Object> upMap) {
+        List<Map<String, Object>> upCalList = null;
+        logger.info("Service : upCalList 호출");
         try {
-            assetReservationList = calendarDao.assetReservationList(arMap);
+            upCalList = calendarDao.upCalList(upMap);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return assetReservationList;
+        return upCalList;
     }
 
     @Override
-    public List<Map<String, Object>> addList(Map<String, Object> addMap) {
-        List<Map<String, Object>> addList = null;
-        logger.info("Service : delList 호출");
+    public List<Map<String, Object>> calList(Map<String, Object> calMap) {
+        List<Map<String, Object>> calList = null;
+        logger.info("Service : calList 호출");
         try {
-            addList = calendarDao.addList(addMap);
+            calList = calendarDao.calList(calMap);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return addList;
-    }
-    @Override
-    public List<Map<String, Object>> delList(Map<String, Object> delMap) {
-        List<Map<String, Object>> delList = null;
-        logger.info("Service : delList 호출");
-        try {
-            delList = calendarDao.delList(delMap);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return delList;
+        return calList;
     }
 
     @Override
-    public List<Map<String, Object>> upList(Map<String, Object> upMap) {
-        List<Map<String, Object>> upList = null;
-        logger.info("Service : upList 호출");
+    public List<Map<String, Object>> myCalList(Map<String, Object> myCalMap) {
+        List<Map<String, Object>> myCalList = null;
+        logger.info("Service : myCalList 호출");
         try {
-            upList = calendarDao.upList(upMap);
+            myCalList = calendarDao.myCalList(myCalMap);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return upList;
-    }
-
-    @Override
-    public List<Map<String, Object>> reservList(Map<String, Object> reservMap) {
-        List<Map<String, Object>> reservList = null;
-        logger.info("Service : upList 호출");
-        try {
-            reservList = calendarDao.reservList(reservMap);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return reservList;
-    }
-
-    @Override
-    public List<Map<String, Object>> myReservList(Map<String, Object> myReservMap) {
-        List<Map<String, Object>> myReservList = null;
-        logger.info("Service : upList 호출");
-        try {
-            myReservList = calendarDao.myReservList(myReservMap);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return myReservList;
+        return myCalList;
     }
 
 }

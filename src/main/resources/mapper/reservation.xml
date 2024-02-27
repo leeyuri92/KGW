@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgw.ticket.dao.ReservationDao">
+
+    <select id= "aList" parameterType="map" resultType="com.vo.CalendarVO">
+        SELECT * FROM asset
+    </select>
+
+    <select id= "arList" parameterType="map" resultType="com.vo.CalendarVO">
+        SELECT
+        a.reservation_no,
+        a.reservation_title,
+        a.reservation_start,
+        a.reservation_end,
+        b.asset_id,
+        b.asset_no,
+        b.asset_name,
+        b.team_no,
+        c.name
+        FROM asset_reservation a
+        INNER JOIN asset b ON a.asset_no = b.asset_no
+        INNER JOIN emp c ON a.emp_no = c.emp_no
+        <where>
+            AND a.asset_no = b.asset_no
+            AND a.emp_no = c.emp_no
+        </where>
+    </select>
+
+    <delete id="delReservList" parameterType="map">
+        DELETE FROM asset_reservation
+        <where>
+            AND reservation_no = ${reservationNo}
+        </where>
+    </delete>
+
+
+    <insert id="addReservList" parameterType="map">
+        INSERT INTO ASSET_RESERVATION (RESERVATION_NO, EMP_NO, ASSET_NO, RESERVATION_TITLE, RESERVATION_CONTENT, RESERVATION_START, RESERVATION_END)
+        VALUES (reservation_pk_seq.nextval, 1003, '${id}', '${title}', '예약', '${start}', '${end}')
+    </insert>
+
+    <update id="upReservList" parameterType="map">
+        UPDATE ASSET_RESERVATION
+        SET RESERVATION_NO = '${reservationNo}',
+            EMP_NO = 1003,
+            ASSET_NO = '${id}',
+            RESERVATION_TITLE = '${title}',
+            RESERVATION_CONTENT = '예약',
+            RESERVATION_START = '${start}',
+            RESERVATION_END = '${end}'
+        where reservation_no = ${reservationNo}
+    </update>
+
+    <select id="reservList" parameterType="map" resultType="map">
+        SELECT
+        a.reservation_no,
+        a.reservation_title,
+        a.reservation_start,
+        a.reservation_end,
+        b.asset_id,
+        b.asset_no,
+        b.asset_name,
+        b.team_no,
+        c.name
+        FROM asset_reservation a
+        INNER JOIN asset b ON a.asset_no = b.asset_no
+        INNER JOIN emp c ON a.emp_name = c.emp_name
+        <where>
+            <if test="asset_no!=null">AND b.asset_no=#{asset_no}</if>
+            <if test="gubun!=null">
+                <choose>
+                    <when test='gubun.equals("name")'>
+                        AND c.name LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("reservation_title")'>
+                        AND a.reservation_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("reservation_start")'>
+                        AND a.reservation_start LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
+        </where>
+        order by a.reservation_no desc
+    </select>
+
+    <select id= "myReservList" parameterType="map" resultType="com.vo.CalendarVO">
+        SELECT
+        a.reservation_no,
+        a.reservation_title,
+        a.reservation_start,
+        a.reservation_end,
+        b.asset_id,
+        b.asset_no,
+        b.asset_name,
+        b.team_no,
+        c.name
+        FROM asset_reservation a
+        INNER JOIN asset b ON a.asset_no = b.asset_no
+        INNER JOIN emp c ON a.emp_no = c.emp_no
+        <where>
+            AND a.asset_no = b.asset_no
+            AND a.emp_no = c.emp_no
+        </where>
+    </select>
+
+
+
+</mapper>

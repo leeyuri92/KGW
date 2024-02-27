@@ -29,70 +29,50 @@ public class CalendarDaoImpl implements CalendarDao {
     }
 
     @Override
-    public List<Map<String, Object>> assetList(@RequestParam Map<String, Object> aMap)throws Exception {
-        logger.info("Dao : facilityList 호출");
-        logger.info(aMap.toString());
-        List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("aList", aMap);
-        logger.info(list.toString());
-        return list;
-    }
-
-    @Override
-    public List<Map<String, Object>> assetReservationList(@RequestParam Map<String, Object> arMap)throws Exception {
-        logger.info("Dao : assetReservationList 호출");
-        logger.info(arMap.toString());
-        List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("arList", arMap);
-        logger.info(list.toString());
-        return list;
-    }
-
-    @Override
-    public List<Map<String, Object>> addList(@RequestParam Map<String, Object> addMap)throws Exception {
-        logger.info("Dao : addList 호출");
+    public List<Map<String, Object>> addCalList(@RequestParam Map<String, Object> addMap)throws Exception {
+        logger.info("Dao : addCalList 호출");
         logger.info(addMap.toString());
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("addList", addMap);
+        list = sqlSessionTemplate.selectList("addCalList", addMap);
         logger.info(list.toString());
         return list;
     }
     @Override
-    public List<Map<String, Object>> delList(@RequestParam Map<String, Object> delMap)throws Exception {
-        logger.info("Dao : delList 호출");
+    public List<Map<String, Object>> delCalList(@RequestParam Map<String, Object> delMap)throws Exception {
+        logger.info("Dao : delCalList 호출");
         logger.info(delMap.toString());
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("delList", delMap);
+        list = sqlSessionTemplate.selectList("delCalList", delMap);
         logger.info(list.toString());
         return list;
     }
 
     @Override
-    public List<Map<String, Object>> upList(@RequestParam Map<String, Object> upMap)throws Exception {
-        logger.info("Dao : upList 호출");
+    public List<Map<String, Object>> upCalList(@RequestParam Map<String, Object> upMap)throws Exception {
+        logger.info("Dao : upCalList 호출");
         logger.info(upMap.toString());
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("upList", upMap);
+        list = sqlSessionTemplate.selectList("upCalList", upMap);
         logger.info(list.toString());
         return list;
     }
 
     @Override
-    public List<Map<String, Object>> reservList(@RequestParam Map<String, Object> reservMap)throws Exception {
-        logger.info("Dao : reservList 호출");
-        logger.info(reservMap.toString());
+    public List<Map<String, Object>> calList(@RequestParam Map<String, Object> calMap)throws Exception {
+        logger.info("Dao : calList 호출");
+        logger.info(calMap.toString());
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("reservList", reservMap);
+        list = sqlSessionTemplate.selectList("reservList", calMap);
         logger.info(list.toString());
         return list;
     }
 
     @Override
-    public List<Map<String, Object>> myReservList(@RequestParam Map<String, Object> myReservMap)throws Exception {
-        logger.info("Dao : myReservList 호출");
-        logger.info(myReservMap.toString());
+    public List<Map<String, Object>> myCalList(@RequestParam Map<String, Object> myCalMap)throws Exception {
+        logger.info("Dao : myCalList 호출");
+        logger.info(myCalMap.toString());
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("myReservList", myReservMap);
+        list = sqlSessionTemplate.selectList("myCalList", myCalMap);
         logger.info(list.toString());
         return list;
     }
