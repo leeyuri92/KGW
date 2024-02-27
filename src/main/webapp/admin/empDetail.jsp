@@ -2,7 +2,6 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%
-
     List<Map<String, Object>> empList = (List) request.getAttribute("empList");
     Map<String,Object> rmap = empList.get(0);
 %>
@@ -23,21 +22,7 @@
             location.href = "/admin/empList";
         }
 
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview').src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-                console.log(reader);
-            } else {
-                document.getElementById('preview').src = "";
-            }
-        }
-        const preView = () => {
-            document.querySelector("#file").click();
-        }
+
     </script>
 
 </head>
@@ -88,14 +73,11 @@
                     <h3 style="display: flex; align-items: center; justify-content: center;" ><%=rmap.get("NAME")%>님 정보</h3>
                 </div>
 
+                <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
+                    <img id="preview" src="/images/go.png" />
+                </div>
 
-
-                <form  id="f_member" method="post" action="/admin/empInfoUpdate">
-                    <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                        <input class="img-circle m-5 " id="file" type="file" onchange="readURL(this);" name="profile_img" style="display:none; width: 200px; height: 200px; ">
-                        <img id="preview" src="/images/<%=rmap.get("PROFILE_IMG")%>" onclick="preView()"/>
-                    </div>
-
+                <form id="f_member" method="post" action="/admin/empInfoUpdate">
                     <input type="hidden" name="emp_no" value="<%=rmap.get("EMP_NO")%>">
                     <div class="row">
                     <div class="col-6 mb-3 mt-3">
@@ -149,9 +131,10 @@
                             <span id="team_no_" class="text-danger" style="display:none">부서형식이 아닙니다.</span>
                         </label>
                         <select class="form-control" id="team_no" name="team_no" onblur="validateTeam()">
-                            <option value="<%=rmap.get("TEAM_NO")%>" selected><%=rmap.get("TEAM_NAME")%></option>
+                            <option value="<%=rmap.get("TEAM_NO")%>" selected> <%=rmap.get("TEAM_NAME")%> </option>
                             <hr class="dropdown-divider">
                             <option value="1">운영팀</option>
+
                             <option value="2">지원팀</option>
                             <!-- Add more options as needed -->
                         </select>

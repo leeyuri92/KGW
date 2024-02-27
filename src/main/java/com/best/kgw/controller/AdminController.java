@@ -107,9 +107,10 @@ public class AdminController {
         String rawPassword = empVO.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         empVO.setPassword(encPassword);
+
         int result = 0;
         result = adminSevice.empInfoUpdate(empVO);
-        logger.info(String.valueOf(result));
+        logger.info("empInfoUpdate = "+result);
         return "redirect:/admin/empList";
 }
 }

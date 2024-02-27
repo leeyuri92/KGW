@@ -4,23 +4,23 @@
 
     <update id="empInfoUpdate" parameterType="map">
         update emp
-        set team_no = #{team_no  jdbcType = VARCHAR}
-          ,emp_access = #{emp_access jdbcType = VARCHAR}
-          ,emp_position = #{emp_position jdbcType = VARCHAR}
+        set team_no = #{team_no}
+          ,emp_access = #{emp_access}
+          ,emp_position = #{emp_position}
           ,sign_no = 0
           ,dayoff_cnt = 0
           ,emp_year = 0
-          ,hire_date = #{hire_date  jdbcType = VARCHAR}
-          ,emp_state = #{emp_state jdbcType = VARCHAR}
-          ,password = #{password jdbcType = VARCHAR}
-          ,name = #{name jdbcType = VARCHAR}
-          ,email = #{email jdbcType = VARCHAR}
-          ,birthdate = #{birthdate jdbcType = VARCHAR}
-          ,phone_num = #{phone_num jdbcType = VARCHAR}
+          ,hire_date = #{hire_date}
+          ,emp_state = #{emp_state}
+          ,password = #{password}
+          ,name = #{name jdbcType}
+          ,email = #{email jdbcType}
+          ,birthdate = #{birthdate}
+          ,phone_num = #{phone_num}
           ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
-          ,address = #{address jdbcType = VARCHAR}
-          ,retire_date = #{retire_date jdbcType = VARCHAR}
-        ,profile_img = #{profile_img jdbcType = VARCHAR}
+          ,address = #{address}
+          ,retire_date = #{retire_date}}
+        ,profile_img = null
         where emp_no = #{emp_no}
     </update>
 
