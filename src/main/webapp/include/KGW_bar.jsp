@@ -230,7 +230,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/empChart.jsp" class="nav-link">
+                                <a href="/admin/empChart" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>입/퇴사자 현황</p>
                                 </a>

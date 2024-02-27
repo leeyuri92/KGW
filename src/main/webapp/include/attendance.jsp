@@ -39,26 +39,27 @@
                 events: [
                     <%
                       for(int i = 0; i < attendanceCalendar.size(); i++) {
-
+                        if (attendanceCalendar.get(i).getState() != null){
                     %>
                     {
                         title: '<%=attendanceCalendar.get(i).getState()%>',
                         start: '<%=attendanceCalendar.get(i).getWork_date()%>',
                         color:
                                 `
-                            <% if (attendanceCalendar.get(i).getState().equals("지각")){ %>
-                             #ba1b39
-                            <%
-                            }else if(attendanceCalendar.get(i).getState().equals("조퇴")){
-                            %>
-                            #efc30f
-                            <%
-                            }
-                            %>
-                            `
+                                            <% if (attendanceCalendar.get(i).getState().equals("지각")){ %>
+                                              #ba1b39
+                                            <%
+                                              }else if(attendanceCalendar.get(i).getState().equals("조퇴")){
+                                            %>
+                                              #efc30f
+                                            <%
+                                              }
+                                            %>
+                                            `
                     },
                     <%
-                    }
+                        }
+                      }
                     %>
                 ]
 
