@@ -15,6 +15,7 @@ public class AttendanceVO {
     private String end_time;
     private String state;
     private String reg_date;
+    private String request_content;
 
     @Override
     public String toString() {
@@ -27,6 +28,7 @@ public class AttendanceVO {
                 ", end_time='" + end_time + '\'' +
                 ", state='" + state + '\'' +
                 ", reg_date='" + reg_date + '\'' +
+                ", request_content='" + request_content + '\'' +
                 '}';
     }
 }

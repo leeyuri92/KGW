@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -51,15 +52,21 @@ public class AttendanceController {
 
     @GetMapping("attendanceList")
     public String attendanceList(AttendanceVO attendanceVO, Model model) throws Exception{
+        logger.info(attendanceVO.toString());
+        List<AttendanceVO> attendanceModList = attendanceService.attendaceModList(attendanceVO);
         List<AttendanceVO> attendanceList = attendanceService.attendanceData(attendanceVO.getEmp_no());
+        logger.info(attendanceModList.toString());
+        model.addAttribute("attendanceModList",attendanceModList);
         model.addAttribute("attendanceList",attendanceList);
         return "forward:/attendance/attendanceList.jsp";
     }
 
     @PostMapping("attendaceMod")
-    public String attendaceMod(AttendanceVO attendanceVO) throws Exception{
+    public String attendaceMod(AttendanceVO attendanceVO, RedirectAttributes redirectAttributes) throws Exception{
+        logger.info(attendanceVO.toString());
         attendanceService.attendaceMod(attendanceVO);
-        return "redirect:/attendanceList";
+        redirectAttributes.addAttribute("emp_no", attendanceVO.getEmp_no());
+        return "redirect:./attendanceList";
     }
 
     @Scheduled(cron = "0 49 20 ? * 1-5")

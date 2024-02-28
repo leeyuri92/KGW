@@ -49,4 +49,10 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void attendaceMod(AttendanceVO attendanceVO) throws Exception {
         attendanceDao.attendaceMod(attendanceVO);
     }
+
+    @Override
+    public List<AttendanceVO> attendaceModList(AttendanceVO attendanceVO) throws Exception {
+        List<AttendanceVO> attendaceModList = attendanceDao.attendaceModList(attendanceVO);
+        return attendaceModList;
+    }
 }
