@@ -21,6 +21,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         List<AttendanceVO> attendanceCalendar = (List) attendanceDao.attendanceData(emp_no);
         return attendanceCalendar;
     }
+
     @Override
     public void attendanceTime(AttendanceVO attendanceVO) throws Exception {
 
@@ -38,5 +39,9 @@ public class AttendanceServiceImpl implements AttendanceService {
         return attendanceDao.attendance(emp_no);
     }
 
-
+    //스케줄러에 따라서 월-금 23:59:59 에 근태 상태값 업데이트
+    @Override
+    public void attemdamceStateUpdate() throws Exception {
+        attendanceDao.attemdamceStateUpdate();
+    }
 }

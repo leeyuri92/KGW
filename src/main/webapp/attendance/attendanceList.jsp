@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
+<%@ page import="com.vo.AttendanceVO" %>
 <%
-//  int size = 0;//전체 레코드 수
-//  List<Map<String, Object>> empList = (List) request.getAttribute("empList");
-//  if(empList !=null){
-//    size = empList.size();
-//  }
-//  out.print(size);//3
-//  //페이지처리
-//  int numPerPage = 5;
-//  int nowPage = 0;
-//  if(request.getParameter("nowPage")!=null){
-//    nowPage = Integer.parseInt(request.getParameter("nowPage"));
-//  }
+  List<AttendanceVO> attendanceList = (List) request.getAttribute("attendanceList");
+  int size = 0;
+  if(attendanceList !=null){
+    size = attendanceList.size();
+  }
+  out.print(attendanceList);//3
+  //페이지처리
+  int numPerPage = 5;
+  int nowPage = 0;
+  if(request.getParameter("nowPage")!=null){
+    nowPage = Integer.parseInt(request.getParameter("nowPage"));
+  }
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -81,20 +82,19 @@
             </thead>
             <tbody>
             <%
-//                   for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
-//                     if (i == size) break;
-//                      Map<String,Object> rmap = empList.get(i);
+                   for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
+                     if (i == size) break;
+                     AttendanceVO attendancevo = attendanceList.get(i);
             %>
             <tr>
-<%--                   <td><%=rmap.get("NAME") %></td>--%>
-<%--                   <td><%=rmap.get("TEAM_NAME")%></td>--%>
-<%--                    <td><%=rmap.get("EMP_POSITION") %></td>--%>
-<%--                    <td><%=rmap.get("PHONE_NUM") %></td>--%>
-<%--                    <td><%=rmap.get("EMAIL") %></td>--%>
+                   <td><%=attendancevo.getAttendance_no() %></td>
+                   <td><%=attendancevo.getEmp_no()%></td>
+                    <td><%=attendancevo.getWork_date()%></td>
+                    <td><%=attendancevo.getState()%></td>
             </tr>
-<%--                  <%--%>
-<%--                    }--%>
-<%--                  %>--%>
+                  <%
+                    }
+                  %>
             </tbody>
           </table>
           <hr />
@@ -102,11 +102,11 @@
                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
           <div style="display:flex; justify-content:center;">
             <ul class="pagination">
-<%--                    <%--%>
-<%--                      String pagePath = "empInfo";--%>
-<%--                      BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);--%>
-<%--                      out.print(bspb.getPageBar());--%>
-<%--                    %>--%>
+                    <%
+                      String pagePath = "empInfo";
+                      BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
+                      out.print(bspb.getPageBar());
+                    %>
             </ul>
           </div>
                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
@@ -138,7 +138,7 @@
             </div>
             <div class="row mb-5">
               <div class="col-2" style="line-height: 37px"><label for="name">근태상태</label></div>
-              <div class="col-10" ><input type="text" class="form-control" id="state" name="state" value="결근" disabled></div>
+              <div class="col-10" ><input type="text" class="form-control" id="state" name="state" value="" disabled></div>
             </div>
             <div class="row mb-5">
               <div class="col-2" style="line-height: 37px"><label for="name">요청사유</label></div>

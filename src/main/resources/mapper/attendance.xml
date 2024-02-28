@@ -11,7 +11,13 @@
 
     <update id="updateData" parameterType="com.vo.AttendanceVO">
         update attendance set
-            end_time = #{end_time}
+            end_time = #{end_time},
+            state = CASE
+                    WHEN #{start_time} &lt; '09:00:00' AND #{end_time} &lt; '18:00:00' THEN '조퇴'
+                    WHEN #{start_time} &lt; '09:00:00' AND #{end_time} &gt; '18:00:00' THEN '정상출근'
+                    WHEN #{start_time} &gt; '09:00:00' AND #{end_time} &gt; '18:00:00' THEN '지각'
+                    ELSE '비정상출근'
+                END
         where attendance_no = #{attendance_no}
     </update>
 
@@ -25,5 +31,17 @@
         select attendance_no, emp_no, work_date, start_time, end_time, state, mod_content from attendance
         where emp_no = #{emp_no}
     </select>
+
+    <insert id="insertAbsenteeism">
+        INSERT INTO ATTENDANCE (attendance_no, emp_no, work_date, state)
+        SELECT attendance_pk_seq.nextval, e.emp_no, to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD'), '결근'
+        FROM EMP e
+        WHERE NOT EXISTS(
+            SELECT 1
+            FROM ATTENDANCE
+            WHERE work_date is null
+              AND emp_no = e.emp_no
+            )
+    </insert>
 
 </mapper>

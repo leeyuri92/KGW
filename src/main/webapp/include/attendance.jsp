@@ -33,7 +33,7 @@
                 selectable: true, // 달력 일자 드래그 설정가능
                 nowIndicator: true, // 현재 시간 마크
                 dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-                height: '650px', // calendar 높이 설정
+                height: '550px', // calendar 높이 설정
                 locale: 'ko', // 한국어 설정
 
                 events: [
@@ -53,7 +53,11 @@
                                             %>
                                               #efc30f
                                             <%
-                                              }
+                                              }else if(attendanceCalendar.get(i).getState().equals("정상출근")){
+                                            %>
+                                               #5eb900
+                                            <%
+                                            }
                                             %>
                                             `
                     },
