@@ -53,39 +53,13 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="../notice/noticeList" class="nav-link">
                             <i class="nav-icon bi bi-bell-fill"></i>
                             <p>
                                 공지사항
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="../board/boardList2.jsp" class="nav-link">
-                                    <i class="bi bi-record nav-icon"></i>
-                                    <p>게시판 예시</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../board/boardList2.jsp" class="nav-link">
-                                    <i class="bi bi-record-fill nav-icon"></i>
-                                    <p>Dashboard v1</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../../index2.html" class="nav-link">
-                                    <i class="bi bi-stop-fill nav-icon"></i>
-                                    <p>Dashboard v2</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../../index3.html" class="nav-link">
-                                    <i class="bi bi-stop nav-icon"></i>
-                                    <p>Dashboard v3</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="/empInfo" class="nav-link">
@@ -108,7 +82,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/kiwoom/kiwoomNotice" class="nav-link">
+                                <a href="/media/mediaNotice" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>우리구단소식</p>
                                 </a>

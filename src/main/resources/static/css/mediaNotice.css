@@ -69,21 +69,6 @@
     font-size: 1.4rem;
 }
 
-/* 댓글 작성 폼 */
-#commentForm {
-    margin-top: 2rem; /* 위 여백 조절 */
-}
-
-/* 댓글 내용 입력 부분 */
-#commentForm .mb-3 {
-    margin-bottom: 1rem; /* 아래 여백 조절 */
-}
-
-#commentForm label {
-    display: block;
-    font-size: 1.2rem;
-}
-
 #commentForm textarea {
     width: 100%;
     padding: 1px;
@@ -95,4 +80,38 @@
 /* 댓글 작성 버튼 부분 */
 #commentForm .d-flex.justify-content-end {
     margin-top: 1rem; /* 위 여백 조절 */
+}
+.comment-list {
+    width: 100%;
+    margin: auto;
+}
+
+.comment {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-text {
+    margin: 0;
+}
+.comment-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-date {
+    margin-right: 10px; /* 옆으로 떨어뜨릴 간격 조절 */
 }

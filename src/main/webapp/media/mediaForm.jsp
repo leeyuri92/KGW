@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>우리구단소식</title>
 </head>
+
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
@@ -50,13 +51,16 @@
                                 <hr />
                                 <div class="container">
                                     <%@include file="/common/summernote.jsp"%>
-                                    <div>
-                                        <input type="text" name="subject" class="form-control mb-3"  placeholder="제목을 입력해주세요." id="subject">
-                                    </div>
-                                    <div id="summernote"></div>
-                                    <div class="d-flex justify-content-end mt-3">
-                                        <button type="submit" class="btn btn-primary" id="submit">수정</button>
-                                    </div>
+                                    <form id="insert" method="post" action="/media/mediaInsert">
+                                        <div>
+                                            <input type="text" name="board_title" class="form-control mb-3"  placeholder="제목을 입력해주세요." id="subject">
+                                        </div>
+                                        <textarea id="summernote" name="board_content"></textarea>
+                                        <div class="d-flex gap-2 justify-content-end mt-3">
+                                            <button type="submit" class="btn btn-primary" id="submit" onclick="mediaNoticeInsert()">작성</button>
+                                            <button type="submit" class="btn btn-primary" onclick="mediaNoticeList()">이전</button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <script>
                                     $('#summernote').summernote({
@@ -73,6 +77,38 @@
                                             ['view', ['fullscreen', 'codeview', 'help']]
                                         ]
                                     });
+
+                                    const btn_submit = document.querySelector('#submit');
+                                    btn_submit.addEventListener("click", () => {
+                                        const id_subject = document.querySelector('#subject');
+                                        if (id_subject.value == '') {
+                                            alert('제목을 입력하세요.');
+                                            id_subject.focus();
+                                            return false;
+                                        }
+
+                                        const markupStr = $('#summernote').summernote('code');
+                                        if (markupStr === '<p><br></p>') {
+                                            alert('내용을 입력하세요.');
+                                            //summernote 에디터에 포커스 추가
+                                            $('#summernote').summernote('focus');
+                                            return false
+                                        }
+                                        //  const insert =new FormData()
+                                        //
+                                        // insert.append('subject',id_subject.value)
+                                        // insert.append('content',markupStr)
+                                        //
+                                        // const xhr =new XMLHttpRequest()
+                                        // xhr.open("POST",)
+                                    });
+                                    function mediaNoticeList(){
+                                        location.href="/media/mediaNotice";
+                                    }
+                                    const mediaNoticeInsert =()=> {
+                                        console.log("작성")
+                                        document.querySelector("#insert").submit();
+                                    };
                                 </script>
                             </div>
                         </div>

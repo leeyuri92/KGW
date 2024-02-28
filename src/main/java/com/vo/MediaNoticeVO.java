@@ -5,13 +5,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class KiwoomNoticeVO {
-    private int board_no;
-    private int emp_no;
+public class MediaNoticeVO {
+    private Integer board_no;
+    private Integer emp_no;
     private String board_title;
     private String board_content;
     private String reg_date;
-    private int board_hit;
+    private Integer board_hit;
     private String mod_date;
 
     @Override

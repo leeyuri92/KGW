@@ -2,20 +2,26 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
-<%@ page import="com.vo.KiwoomNoticeVO" %>
+<%@ page import="com.vo.MediaNoticeVO" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%
   int size=0;
-  List<KiwoomNoticeVO> kiwoomNoticeList = (List)request.getAttribute("kiwoomNoticeList");
-  if(kiwoomNoticeList!=null){
-    size=kiwoomNoticeList.size();
+  List<MediaNoticeVO> mediaNoticeList = (List)request.getAttribute("mediaNoticeList");
+  if(mediaNoticeList!=null){
+    size = mediaNoticeList.size();
   }
-  out.print(kiwoomNoticeList);
+
   //페이징처리
   int numPerPage = 5;
   int nowPage = 0;
   if(request.getParameter("nowPage")!=null){
     nowPage = Integer.parseInt(request.getParameter("nowPage"));
+
   }
+
+  Date date = new Date();
+  SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+  String atrDate =simpleDate.format(date);
 %>
 
 <!DOCTYPE html>
@@ -35,19 +41,19 @@
     }
     event.isComposing//검색후 잔여검색기록 없애는코드
   }
-  function kiwoomNoticeSearch(){
-    console.log('kiwoomNoticeSearch');
+  function mediaNoticeSearch(){
+    console.log('mediaNoticeSearch');
     const gubun = document.querySelector("#gubun").value;
     const keyword = document.querySelector("#keyword").value;
     console.log(`${gubun} , ${keyword}`);
-    location.href="/kiwoom/kiwoomNotice?gubun="+gubun+"&keyword="+keyword;
+    location.href="/media/mediaNotice?gubun="+gubun+"&keyword="+keyword;
   }
 
-  function kiwoomNoticeForm () {
-    location.href = '/kiwoom/kiwoom.jsp';
+  function mediaNoticeForm () {
+    location.href = '/media/mediaForm.jsp';
   }
-  const kiwoomDetail=(Board_no) => {
-    location.href = '/kiwoom/kiwoomDetail?Board_no='+Board_no;
+  const mediaDetail=(board_no) => {
+    location.href = '/media/mediaDetail?board_no='+board_no;
   }
 
 
@@ -57,7 +63,7 @@
 <div class="wrapper">
   <!-- header start -->
   <%@include file="/include/KGW_bar.jsp"%>
-  <link rel="stylesheet" href="/css/kiwoomNoticeCard.css">
+  <link rel="stylesheet" href="/css/mediaNoticeCard.css">
 
   <!-- header end    -->
 
@@ -111,10 +117,10 @@
                          aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
                 </div>
                 <div class="col-1">
-                  <button id="btn_search" class="btn btn-danger" onclick="kiwoomNoticeSearch()">검색</button>
+                  <button id="btn_search" class="btn btn-danger" onclick="mediaNoticeSearch()">검색</button>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
-                  <button type="button" class="btn btn-danger" onclick="kiwoomNoticeForm()">작성</button>
+                  <button type="button" class="btn btn-danger" onclick="mediaNoticeForm()">작성</button>
                 </div>
               </div>
               <!-- 회원목록 시작 -->
@@ -122,7 +128,7 @@
 
                 <%  for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
                   if (i == size) break;
-                  KiwoomNoticeVO kiwoomnoticeVO = kiwoomNoticeList.get(i);
+                  MediaNoticeVO mediaNoticeVO = mediaNoticeList.get(i);
                 %>
                 <div class="card mb-3 custom-card">
                   <div class="row g-0">
@@ -134,20 +140,22 @@
 
                       <div class="card-body">
                         <p class="card-link">
-                          <a href="javascript:kiwoomDetail('<%=kiwoomnoticeVO.getBoard_no()%>')">
-                            <%=kiwoomnoticeVO.getBoard_title()%>
+                          <a href="javascript:mediaDetail('<%=mediaNoticeVO.getBoard_no()%>')">
+                            <%=mediaNoticeVO.getBoard_title()%>
                           </a>
                         </p>
-                        <p class="card-text"><%=kiwoomnoticeVO.getEmp_no()%></p>
-                        <p class="card-text"><%=kiwoomnoticeVO.getMod_date()%></p>
+                        <p class="card-text"><%=mediaNoticeVO.getEmp_no()%></p>
+                        <p class="card-text"><%=atrDate%></p>
                         <p class="card-text">
-                          <small class="text-body-secondary"><%=kiwoomnoticeVO.getBoard_no()%></small>
+                          <small class="text-body-secondary"><%=mediaNoticeVO.getBoard_no()%></small>
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <% } %>
+                <%
+                }
+                %>
                 <hr/>
               </div>
 
@@ -155,7 +163,7 @@
               <div style="display:flex; justify-content:center;">
                 <ul class="pagination">
                   <%
-                    String pagePath = "kiwoomNoticeListPage";
+                    String pagePath = "mediaNoticeList";
                     BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
                     out.print(bspb.getPageBar());
                   %>
@@ -168,10 +176,8 @@
           </div>
         </div>
       </div>
-
     </section>
   </div>
 </div>
-
 </body>
 </html>
