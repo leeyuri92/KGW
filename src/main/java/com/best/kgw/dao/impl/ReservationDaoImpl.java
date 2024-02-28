@@ -21,7 +21,7 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public List<Map<String, Object>> assetList(@RequestParam Map<String, Object> aMap)throws Exception {
-        logger.info("Dao : facilityList 호출");
+        logger.info("Dao : assetList 호출");
         logger.info(aMap.toString());
         List<Map<String,Object>> list = null;
         list = sqlSessionTemplate.selectList("aList", aMap);

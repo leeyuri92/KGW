@@ -25,16 +25,19 @@
 
 #submitEvent,
 #exitEvent,
+#searchEvent,
 #exitEvent2,
+#addEventBtn,
 #deleteEvent,
 #updateEvent{
     font-family: Roboto !important;
     background-color: #652C2C !important;
-    color: white;
+    color: white; !important;
     font-weight: normal !important;
     font-size: small !important;
-    cursor: pointer;
-    padding: 0.5rem;
+    cursor: pointer; !important;
+    border-radius: 3px;
+    padding: 0.5rem; !important;
 }
 
 .btn-primary{
@@ -104,7 +107,7 @@
 /* **********************<< 예약 CSS >>*********************** */
 #calendar1 {
     max-width: 100%;
-    margin: 30px auto 70px auto;
+    margin: 30px auto 30px auto;
 }
 
 .table{

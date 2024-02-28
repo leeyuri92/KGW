@@ -83,7 +83,6 @@
                         let startInput = document.getElementById('insertStart');
                         let endInput = document.getElementById('insertEnd');
                         let resourceIdInput = document.getElementById('insertResourceId');
-                        let insertAssetNoInput = document.getElementById('insertAssetNo');
 
                         let startTime = moment(arg.start, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
                         let endTime = moment(arg.end, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
@@ -91,7 +90,6 @@
                         startInput.value = startTime;
                         endInput.value = endTime;
                         resourceIdInput.value = arg.resource.id;
-                        // insertAssetNoInput.value = arg.event.id;
                     }
                 },
 
@@ -163,9 +161,9 @@
                 },
 
                 resources: [
-                    <%  List<CalendarVO> assetList1 = (List<CalendarVO>) request.getAttribute("assetList");
-                        if (assetList1 != null) {
-                            for (CalendarVO vo : assetList1) {
+                    <%  List<CalendarVO> vehicleList = (List<CalendarVO>) request.getAttribute("vehicleList");
+                        if (vehicleList != null) {
+                            for (CalendarVO vo : vehicleList) {
                                 if (vo != null) {
                     %>
                     {
@@ -176,9 +174,9 @@
                     <% }}} %>
                 ],
                 events: [
-                    <%  List<CalendarVO> assetReservationList1 = (List<CalendarVO>) request.getAttribute("assetReservationList");
-                        if (assetReservationList1 != null) {
-                            for (CalendarVO vo1 : assetReservationList1) { %>
+                    <%  List<CalendarVO> vehicleReservationList = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
+                        if (vehicleReservationList != null) {
+                            for (CalendarVO vo1 : vehicleReservationList) { %>
                     {
                         id: '<%= vo1.getAsset_no() %>', // 이벤트의 고유 ID
                         extendedProps: { reservationNo: '<%= vo1.getReservation_no() %>' }, // 예약 정보를 사용자 정의 속성 extendedProps에 포함 (events 배열에서 각 이벤트 객체의 extendedProps를 설정하여 확장 속성을 추가)
@@ -252,7 +250,7 @@
             let end = endInput.value;
             let resourceId = resourceIdInput.value;
             let id = assetNoInput.value;
-            let url = '/reservation/addReservation';
+            let url = '/vehicleReservation/addVehicleReservation';
 
             if (title && start && end && id && resourceId) {
                 let xhr = new XMLHttpRequest();
@@ -306,7 +304,7 @@
             let reservationNoInput = document.getElementById('detailReservationNo');
             let reservationNo = reservationNoInput.value;
             let eventToDelete = calendar.getEventById(id);
-            let url = '/reservation/delReservation';
+            let url = '/vehicleReservation/delVehicleReservation';
 
             // AJAX를 이용하여 서버에 삭제 요청
             let xhr = new XMLHttpRequest();
@@ -360,7 +358,7 @@
             let id = assetNoInput.value;
 
             if (title && start && end && resourceId && reservationNo && id) {
-                let url = '/reservation/updateReservation';
+                let url = '/vehicleReservation/upVehicleReservList';
                 let xhr = new XMLHttpRequest();
                 xhr.open('PUT', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -472,7 +470,7 @@
         searchData.append('gubun', gubun);
         searchData.append('keyword', keyword);
 
-        fetch('/reservation/reservList', {
+        fetch('/vehicleReservation/vehicleReservList', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -499,7 +497,7 @@
     // CRUD 작업 후 예약 목록 업데이트
     function updateReservationList() {
         let xhr = new XMLHttpRequest();
-        let url = '/reservation/reservationList';
+        let url = '/vehicleReservation/vehicleReservationList';
 
         xhr.open('GET', url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -613,14 +611,15 @@
                                     <th scope="col">#</th>
                                     <th scope="col">예약장소</th>
                                     <th scope="col">예약자</th>
+                                    <th scope="col">예약명</th>
                                     <th scope="col">예약시간</th>
                                     <th scope="col">취소</th>
                                 </tr>
                                 </thead>
                                 <tbody id="reservationTableBody">
-                                <% List<CalendarVO> assetReservationList = (List<CalendarVO>) request.getAttribute("assetReservationList");
-                                    if (assetReservationList != null) {
-                                        for (CalendarVO vo : assetReservationList) {
+                                <% List<CalendarVO> vehicleReservationList1 = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
+                                    if (vehicleReservationList1 != null) {
+                                        for (CalendarVO vo : vehicleReservationList1) {
                                             String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
                                             String endDateCheck = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
                                             String startDate = vo.getReservation_end();
@@ -673,21 +672,11 @@
                         </div>
                         <select class="form-control" id="insertAssetNo" name="insertAssetNo">
                             <option value="0" selected>자산을 선택하세요.</option>
-                            <option value="101">대회의실</option>
-                            <option value="102">소회의실</option>
-                            <option value="103">미팅룸</option>
-                            <option value="104">선수훈련실</option>
-                            <option value="105">물리치료실A</option>
-                            <option value="106">물리치료실B</option>
                             <option value="107">벤틀리</option>
                             <option value="108">벤츠S</option>
                             <option value="109">전용기</option>
                         </select>
                         <br>
-<%--                        <div class="form-floating mb-3">--%>
-<%--                            <input type="text" class="form-control rounded-3" id="insertAssetNo" name="insertAssetNo" placeholder="시설 고유ID">--%>
-<%--                            <label for="insertAssetNo">시설 고유ID</label>--%>
-<%--                        </div>--%>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="submitEvent" name="submitEvent" value="등록"/>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-secondary close" id="exitEvent" name="exitEvent" value="취소"/>
                     </div>

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationDao reservationDao;
 
     @Override
-    public List<Map<String, Object>> assetList(Map<String, Object> aMap) {
+    public List<Map<String, Object>> assetList(@RequestParam Map<String, Object> aMap) {
         List<Map<String, Object>> assetList = null;
         logger.info("Service : assetList 호출");
         try {
@@ -31,7 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Object>> assetReservationList(Map<String, Object> arMap) {
+    public List<Map<String, Object>> assetReservationList(@RequestParam Map<String, Object> arMap) {
         List<Map<String, Object>> assetReservationList = null;
         logger.info("Service : assetReservationList 호출");
         try {
@@ -43,7 +44,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Object>> addReservList(Map<String, Object> addMap) {
+    public List<Map<String, Object>> addReservList(@RequestParam Map<String, Object> addMap) {
         List<Map<String, Object>> addReservList = null;
         logger.info("Service : addReservList 호출");
         try {
@@ -54,7 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
         return addReservList;
     }
     @Override
-    public List<Map<String, Object>> delReservList(Map<String, Object> delMap) {
+    public List<Map<String, Object>> delReservList(@RequestParam Map<String, Object> delMap) {
         List<Map<String, Object>> delReservList = null;
         logger.info("Service : delReservList 호출");
         try {
@@ -66,7 +67,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Object>> upReservList(Map<String, Object> upMap) {
+    public List<Map<String, Object>> upReservList(@RequestParam Map<String, Object> upMap) {
         List<Map<String, Object>> upReservList = null;
         logger.info("Service : upReservList 호출");
         try {
@@ -78,7 +79,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Object>> reservList(Map<String, Object> reservMap) {
+    public List<Map<String, Object>> reservList(@RequestParam Map<String, Object> reservMap) {
         List<Map<String, Object>> reservList = null;
         logger.info("Service : reservList 호출");
         try {
@@ -90,7 +91,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Object>> myReservList(Map<String, Object> myReservMap) {
+    public List<Map<String, Object>> myReservList(@RequestParam Map<String, Object> myReservMap) {
         List<Map<String, Object>> myReservList = null;
         logger.info("Service : myReservList 호출");
         try {

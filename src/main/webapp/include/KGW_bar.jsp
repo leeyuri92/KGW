@@ -102,21 +102,57 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="../calendar/calendarList" class="nav-link">
+                        <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-calendar-heart"></i>
                             <p>
                                 일정
-                                <i class="right fas fa-angle-left"></i>
+                                <span class="badge badge-info right">2</span>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/calendar/calendarList" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>내 일정</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/calendar/calendarList" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>팀 일정</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/calendar/calendarList" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>전사 일정</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
-                        <a href="../reservation/reservationList" class="nav-link">
+                        <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-list-stars"></i>
                             <p>
                                 예약
-                                <i class="fas fa-angle-left right"></i>
+                                <span class="badge badge-info right">2</span>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/assetReservation/assetReservationList" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>자산 예약</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/vehicleReservation/vehicleReservationList" class="nav-link">
+                                    <i class="bi bi-record nav-icon"></i>
+                                    <p>차량 예약</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                         <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-pencil-square"></i>

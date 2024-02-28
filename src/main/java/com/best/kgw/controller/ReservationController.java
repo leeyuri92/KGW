@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/reservation/*")
+@RequestMapping("/assetReservation/*")
 public class ReservationController {
     Logger logger = LoggerFactory.getLogger(ReservationController.class);
     @Autowired
     private ReservationService reservationService;
 
-    @GetMapping("reservationList")
-    public String reservationList(@RequestParam Map<String, Object> aMap, @RequestParam Map<String, Object> arMap, Model model){
+    @GetMapping("assetReservationList")
+    public String assetReservationList(@RequestParam Map<String, Object> aMap, @RequestParam Map<String, Object> arMap, Model model){
         List<Map<String, Object>> assetList;
         List<Map<String, Object>> assetReservationList;
         logger.info("ReservationController: assetList 호출");
@@ -30,7 +30,7 @@ public class ReservationController {
         model.addAttribute("assetReservationList", assetReservationList);
         logger.info(assetList.toString());
         logger.info(assetReservationList.toString());
-        return "forward:/reservation/reservation.jsp";
+        return "forward:/reservation/assetReservation.jsp";
     }
 
     @PostMapping("/addReservation")
@@ -40,7 +40,7 @@ public class ReservationController {
         addReservList = reservationService.addReservList(addMap);
         model.addAttribute("addReservList", addReservList);
         logger.info(addReservList.toString());
-        return "forward:/reservation/reservation.jsp";
+        return "forward:/reservation/assetReservation.jsp";
     }
 
     @DeleteMapping("/delReservation")
@@ -50,7 +50,7 @@ public class ReservationController {
         delReservList = reservationService.delReservList(delMap);
         model.addAttribute("delReservList", delReservList);
         logger.info(delReservList.toString());
-        return "forward:/reservation/reservation.jsp";
+        return "forward:/reservation/assetReservation.jsp";
     }
 
     @PutMapping("/updateReservation")
@@ -60,7 +60,7 @@ public class ReservationController {
         upReservList = reservationService.upReservList(upMap);
         model.addAttribute("upReservList", upReservList);
         logger.info(upReservList.toString());
-        return "forward:/reservation/reservation.jsp";
+        return "forward:/reservation/assetReservation.jsp";
     }
 
     @GetMapping("reservList")
@@ -70,7 +70,7 @@ public class ReservationController {
         reservList = reservationService.reservList(reservMap);
         model.addAttribute("reservList", reservList);
         logger.info(reservList.toString());
-        return "forward:/reservation/reservation.jsp";
+        return "forward:/reservation/assetReservation.jsp";
     }
 
     @GetMapping("myReservList")
@@ -80,8 +80,7 @@ public class ReservationController {
         myReservList = reservationService.myReservList(myReservMap);
         model.addAttribute("myReservList", myReservList);
         logger.info(myReservList.toString());
-        return "forward:/reservation/reservation.jsp";
+        return "forward:/reservation/assetReservation.jsp";
     }
-
 }
 

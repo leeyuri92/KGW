@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping("/calendar/*")
-@Slf4j
 public class CalendarController {
     Logger logger = LoggerFactory.getLogger(CalendarController.class);
     @Autowired

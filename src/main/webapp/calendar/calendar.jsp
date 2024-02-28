@@ -2,7 +2,23 @@
 <%@ page import="com.vo.CalendarVO" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%
+    List<Map<String, Object>> list = (List) request.getAttribute("list");
+    int size = 0;
+    if (list != null) {
+        size = list.size();
+    }
+
+    int numPerPage = 10;
+    int nowPage = 0;
+    if(request.getParameter("nowPage")!=null){
+        nowPage = Integer.parseInt(request.getParameter("nowPage"));
+    }
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -148,7 +164,7 @@
 
         submitBtn.addEventListener('click', handleEventSubmit);
         submitBtn.addEventListener('click', handleEventUpdate);
-        searchBtn.addEventListener('click', reservSearch);
+        searchBtn.addEventListener('click', calendarSearch);
         exitBtn.addEventListener('click', handleEventSubmit);
         exitBtn.addEventListener('click', handleEventUpdate);
         deleteBtn.addEventListener('click', handleEventDelete);
@@ -157,54 +173,6 @@
             closeBtn.addEventListener('click', handleModalClose);
             closeBtn.addEventListener('click', handleEventUpdate);
         });
-
-        // function handleEventSubmit() {
-        //     let idInput = document.getElementById('insertCalendarId');
-        //     let titleInput = document.getElementById('insertTitle');
-        //     let startInput = document.getElementById('insertStart');
-        //     let endInput = document.getElementById('insertEnd');
-        //
-        //     let id = idInput.value; // 이 부분이 수정되어야 합니다.
-        //     let title = titleInput.value;
-        //     let start = startInput.value;
-        //     let end = endInput.value;
-        //     let url = '/calendar/addCalendar';
-        //
-        //     if (title && start && end && id) {
-        //         let xhr = new XMLHttpRequest();
-        //         xhr.open('POST', url, true);
-        //         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //
-        //         xhr.onreadystatechange = function() {
-        //             if (xhr.readyState === XMLHttpRequest.DONE) {
-        //                 // console.log(xhr.responseText);
-        //                 addEventToCalendar(title, start, end, id);
-        //                 updateCalendarList();
-        //                 console.log('새 이벤트가 성공적으로 등록되었습니다.');
-        //             }
-        //         };
-        //
-        //         let data = 'id=' + encodeURIComponent(id) +
-        //             '&title=' + encodeURIComponent(title) +
-        //             '&start=' + encodeURIComponent(start) +
-        //             '&end=' + encodeURIComponent(end); // 데이터 전송 형식 수정
-        //         xhr.send(data);
-        //     }
-        //     closeModalAndClearInputs();
-        // }
-        //
-        //
-        // function addEventToCalendar(title, start, end, id) {
-        //     // renderCalendarList();
-        //     // updateCalendarList();
-        //     calendar.addEvent({
-        //         id: id,
-        //         title: title,
-        //         start: start,
-        //         end: end,
-        //         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-        //     });
-        // }
 
         function handleEventSubmit() {
                 let idInput = document.getElementById('insertCalendarId');
@@ -365,38 +333,29 @@
         }
     }
 
-    function searchEnter(event) {
-        console.log(event.key);
-        if (event.key === 'Enter') {
-            noticeSearch();
+    $(document).ready(function() {
+        $('#calendarTable').show();
+        $('#my').hide();
+        $('#team').hide();
+        $('#company').hide();
+        $('#calendarGubun').show();
+    });
+
+    function calendarSearch() {
+        var gubunValue = document.getElementById('gubun').value;
+        var calendarGubunValue = document.getElementById('calendarGubun').value;
+
+        if (gubunValue === 'my') {
+            if (calendarGubunValue === 'calendarTable') {
+                window.location.href = '/calendar/myList';
+            } else if (gubunValue === 'team ') {
+                if (calendarGubunValue === 'calendarTable') {
+                    window.location.href = '/calendar/teamList';
+                } else {
+                    window.location.href = '/calendar/companyList';
+                }
+            }
         }
-        event.isComposing; //검색후 잔여검색기록 없애는코드
-    }
-
-    // 검색된 값을 서버로 전송하고, 서버로부터 받은 데이터를 처리하여 예약 현황에 출력하는 함수
-    function reservSearch() {
-        const gubun = document.querySelector("#gubun").value;
-        const keyword = document.querySelector("#keyword").value;
-
-        // 서버로 전송할 데이터를 준비합니다.
-        const searchData = new URLSearchParams();
-        searchData.append('gubun', gubun);
-        searchData.append('keyword', keyword);
-
-        fetch('/calendar/calList', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: searchData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                renderSearchedCalendarList(data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
     }
 </script>
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -459,21 +418,26 @@
                         <div class="container-fluid1">
                             <h2 class="cal_title">오늘 내 일정</h2>
                             <!-- 검색기 시작 -->
-                            <div class="row">
-                                <div class="col-3">
+                            <div class="row search">
+                                <div class="col-2">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
-                                        <option value="none">분류선택</option>
-                                        <option value="b_title">참석자</option>
-                                        <option value="b_writer">일정명</option>
-                                        <option value="b_content">일정일</option>
+                                        <option value="my">내 일정</option>
+                                        <option value="team">팀 일정</option>
+                                        <option value="company">전사 일정</option>
                                     </select>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-2">
+                                    <select id="calendarGubun" class="form-select" aria-label="분류선택">
+                                        <option value="calendarTable">참석자</option>
+                                        <option value="calendarTable">날짜</option>
+                                    </select>
+                                </div>
+                                <div class="col-7">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                                            aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
-                                <div class="col-3">
-                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" onclick="reservSearch()"/>
+                                <div class="col-1">
+                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" onclick="calendarSearch()"/>
                                 </div>
                             </div>
                         </div>

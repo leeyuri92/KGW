@@ -1,7 +1,11 @@
 /* **********************<< 공통 CSS >>*********************** */
 /* 캘린더 전체 너비 */
 .fc {
-    width: 2050px;
+    width: 2200px;
+}
+
+.search{
+    width: 35% !important;
 }
 
 .container-fluid {
@@ -15,7 +19,7 @@
     display: flex;
     justify-content: space-between; /* 요소를 컨테이너 양쪽 정렬 */
     align-items: center; /* 요소를 수직 가운데 정렬 */
-    margin: 30px 1px 10px 10px;
+    margin: 30px 15px 10px 10px;
 }
 
 .form-control,
@@ -30,16 +34,19 @@
 
 #submitEvent,
 #exitEvent,
+#searchEvent,
 #exitEvent2,
+#addEvent,
 #deleteEvent,
 #updateEvent{
     font-family: Roboto !important;
     background-color: #652C2C !important;
-    color: white;
+    color: white; !important;
     font-weight: normal !important;
     font-size: small !important;
-    cursor: pointer;
-    padding: 0.5rem;
+    cursor: pointer; !important;
+    border-radius: 3px;
+    padding: 0.5rem; !important;
 }
 
 .btn-primary{
@@ -87,7 +94,7 @@
 
 /* 헤더툴바 마진 */
 .fc-header-toolbar {
-    /*margin: 0px 20px 0px 20px;*/
+    margin: 0px 20px 0px 20px;
 }
 
 

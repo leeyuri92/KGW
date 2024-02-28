@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kgw.ticket.dao.ReservationDao">
+<mapper namespace="com.kgw.ticket.dao.VehicleReservationDao">
 
-    <select id= "aList" parameterType="map" resultType="com.vo.CalendarVO">
+    <select id= "vList" parameterType="map" resultType="com.vo.CalendarVO">
         SELECT * FROM asset
-        WHERE asset_category != '차량'
+        WHERE asset_category = '차량'
     </select>
 
-    <select id= "arList" parameterType="map" resultType="com.vo.CalendarVO">
+    <select id= "vrList" parameterType="map" resultType="com.vo.CalendarVO">
         SELECT
         a.reservation_no,
         a.reservation_title,
@@ -26,12 +26,11 @@
         <where>
             AND a.asset_no = b.asset_no
             AND a.emp_no = c.emp_no
-            AND b.asset_category != '차량'
+            AND b.asset_category = '차량'
         </where>
     </select>
 
-
-    <delete id="delReservList" parameterType="map">
+    <delete id="delVehicleReservation" parameterType="map">
         DELETE FROM asset_reservation
         <where>
             AND reservation_no = ${reservationNo}
@@ -39,12 +38,12 @@
     </delete>
 
 
-    <insert id="addReservList" parameterType="map">
+    <insert id="addVehicleReservation" parameterType="map">
         INSERT INTO ASSET_RESERVATION (RESERVATION_NO, EMP_NO, ASSET_NO, RESERVATION_TITLE, RESERVATION_CONTENT, RESERVATION_START, RESERVATION_END)
         VALUES (reservation_pk_seq.nextval, 1003, '${id}', '${title}', '예약', '${start}', '${end}')
     </insert>
 
-    <update id="upReservList" parameterType="map">
+    <update id="upVehicleReservList" parameterType="map">
         UPDATE ASSET_RESERVATION
         SET RESERVATION_NO = '${reservationNo}',
             EMP_NO = 1003,
@@ -56,7 +55,7 @@
         where reservation_no = ${reservationNo}
     </update>
 
-    <select id="reservList" parameterType="map" resultType="map">
+    <select id="vehicleReservList" parameterType="map" resultType="map">
         SELECT
         a.reservation_no,
         a.reservation_title,
@@ -89,7 +88,7 @@
         order by a.reservation_no desc
     </select>
 
-    <select id= "myReservList" parameterType="map" resultType="com.vo.CalendarVO">
+    <select id= "myVehicleReservList" parameterType="map" resultType="com.vo.CalendarVO">
         SELECT
         a.reservation_no,
         a.reservation_title,
