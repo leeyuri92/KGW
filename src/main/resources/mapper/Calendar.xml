@@ -12,71 +12,59 @@
         </where>
     </select>
 
-    <delete id="delCalList" parameterType="map">
+    <delete id="deleteCalendar" parameterType="int">
         DELETE FROM calendar
-        <where>
-            calendar_no = '${calendarNo}'
-        </where>
+        WHERE calendar_no = #{calendar_no}
     </delete>
 
 
-    <insert id="addCalList" parameterType="map">
+    <insert id="insertCalendar" parameterType="com.vo.CalendarVO">
         INSERT INTO CALENDAR (CALENDAR_NO, EMP_NO, CALENDAR_ID, CALENDAR_TITLE, CALENDAR_CONTENT, CALENDAR_START, CALENDAR_END, REG_DATE, MOD_DATE)
-        VALUES (calendar_pk_seq.nextval, 1003, 7, '${title}', '일정', '${start}', '${end}', to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'), NULL)
+        VALUES (calendar_pk_seq.nextval, 1003, '${calendar_id}', '${calendar_title}', '일정', '${calendar_start}', '${calendar_end}', to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'), to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'))
     </insert>
 
-    <update id="upCalList" parameterType="map">
+    <update id="updateCalendar" parameterType="com.vo.CalendarVO">
         UPDATE calendar
-        SET calendar_no = '${calendarNo}',
-            calendar_title = '${title}',
+        SET calendar_no = '${calendar_no}',
+            calendar_title = '${calendar_title}',
+            calendar_id = '${calendar_id}',
             calendar_content = '예약',
-            calendar_start = '${start}',
-            calendar_end = '${end}'
-        where calendar_no = '${calendarNo}'
+            calendar_start = '${calendar_start}',
+            calendar_end = '${calendar_end}'
+        where calendar_no = '${calendar_no}'
     </update>
 
     <select id="calList" parameterType="map" resultType="map">
         SELECT
-        a.reservation_no,
-        a.reservation_title,
-        a.reservation_start,
-        a.reservation_end,
-        b.asset_id,
-        b.asset_no,
-        b.asset_name,
-        b.team_no,
-        c.name
-        FROM asset_reservation a
-        INNER JOIN asset b ON a.asset_no = b.asset_no
-        INNER JOIN emp c ON a.emp_name = c.emp_name
+        *
+        FROM calendar a
+        INNER JOIN emp b ON b.emp_name = '${name}'
         <where>
-            <if test="asset_no!=null">AND b.asset_no=#{asset_no}</if>
+            <if test="calendar_no!=null">AND b.calendar_no=#{calendar_no}</if>
             <if test="gubun!=null">
                 <choose>
                     <when test='gubun.equals("name")'>
-                        AND c.name LIKE '%'||#{keyword}||'%'
+                        AND b.name LIKE '%'||#{keyword}||'%'
                     </when>
-                    <when test='gubun.equals("reservation_title")'>
-                        AND a.reservation_title LIKE '%'||#{keyword}||'%'
+                    <when test='gubun.equals("calendar_title")'>
+                        AND a.calendar_title LIKE '%'||#{keyword}||'%'
                     </when>
-                    <when test='gubun.equals("reservation_start")'>
-                        AND a.reservation_start LIKE '%'||#{keyword}||'%'
+                    <when test='gubun.equals("calendar_id")'>
+                        AND a.calendar_id LIKE '%'||#{keyword}||'%'
                     </when>
                 </choose>
             </if>
         </where>
-        order by a.reservation_no desc
+        order by a.calendar_no desc
     </select>
 
     <select id= "myCalList" parameterType="map" resultType="com.vo.CalendarVO">
         SELECT
         *
         FROM calendar
-        INNER JOIN asset b ON a.asset_no = b.asset_no
-        INNER JOIN emp c ON a.emp_no = c.emp_no
+        INNER JOIN emp b ON a.emp_no = c.emp_no
         <where>
-            AND a.asset_no = b.asset_no
-            AND a.emp_no = c.emp_no
+            AND a.emp_no = b.emp_no
         </where>
     </select>
 </mapper>

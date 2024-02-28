@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CalendarVO {
     private int calendar_no;
+    private int calendar_id;
     private String calendar_title;
     private String calendar_memo;
     private String calendar_start;
@@ -34,6 +35,7 @@ public class CalendarVO {
     public String toString() {
         return "CalendarVO{" +
                 "calendar_no=" + calendar_no +
+                ", calendar_id=" + calendar_id +
                 ", calendar_title='" + calendar_title + '\'' +
                 ", calendar_memo='" + calendar_memo + '\'' +
                 ", calendar_start='" + calendar_start + '\'' +
@@ -47,7 +49,7 @@ public class CalendarVO {
                 ", asset_color='" + asset_color + '\'' +
                 ", reservation_no=" + reservation_no +
                 ", emp_no=" + emp_no +
-                ", name=" + name +
+                ", name='" + name + '\'' +
                 ", reservation_title='" + reservation_title + '\'' +
                 ", reservation_id='" + reservation_id + '\'' +
                 ", reservation_content='" + reservation_content + '\'' +

@@ -389,8 +389,6 @@
                     '&end=' + encodeURIComponent(end);
 
                 xhr.send(eventData);
-            } else {
-                console.error('입력값이 유효하지 않습니다.');
             }
             let modal = document.getElementById('detailModal');
             modal.style.display = 'none';
@@ -623,16 +621,18 @@
                                 <% List<CalendarVO> assetReservationList = (List<CalendarVO>) request.getAttribute("assetReservationList");
                                     if (assetReservationList != null) {
                                         for (CalendarVO vo : assetReservationList) {
-                                            String startDateTime = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
-                                            String endDateTime = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
-                                            if (startDateTime.equals(todayDate) || endDateTime.equals(todayDate) || (startDateTime.compareTo(todayDate) < 0 && endDateTime.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
+                                            String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
+                                            String endDateCheck = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
+                                            String startDate = vo.getReservation_end();
+                                            String endDate = vo.getReservation_end();
+                                            if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
                                 %>
                                 <tr>
                                     <th scope="row">#</th>
                                     <td><%= vo.getAsset_no() %></td>
                                     <td><%= vo.getName() %></td>
                                     <td><%= vo.getReservation_title() %></td>
-                                    <td><%= startDateTime + "~" + endDateTime %></td>
+                                    <td><%= startDate + "~" + endDate %></td>
                                     <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
                                 </tr>
                                 <%          }
@@ -671,10 +671,23 @@
                             <input type="text" class="form-control rounded-3" id="insertResourceId" name="insertResourceId" placeholder="시설 ID">
                             <label for="insertResourceId">시설 ID</label>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="insertAssetNo" name="insertAssetNo" placeholder="시설 고유ID">
-                            <label for="insertAssetNo">시설 고유ID</label>
-                        </div>
+                        <select class="form-control" id="insertAssetNo" name="insertAssetNo">
+                            <option value="0" selected>자산을 선택하세요.</option>
+                            <option value="101">대회의실</option>
+                            <option value="102">소회의실</option>
+                            <option value="103">미팅룸</option>
+                            <option value="104">선수훈련실</option>
+                            <option value="105">물리치료실A</option>
+                            <option value="106">물리치료실B</option>
+                            <option value="107">벤틀리</option>
+                            <option value="108">벤츠S</option>
+                            <option value="109">전용기</option>
+                        </select>
+                        <br>
+<%--                        <div class="form-floating mb-3">--%>
+<%--                            <input type="text" class="form-control rounded-3" id="insertAssetNo" name="insertAssetNo" placeholder="시설 고유ID">--%>
+<%--                            <label for="insertAssetNo">시설 고유ID</label>--%>
+<%--                        </div>--%>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="submitEvent" name="submitEvent" value="등록"/>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-secondary close" id="exitEvent" name="exitEvent" value="취소"/>
                     </div>

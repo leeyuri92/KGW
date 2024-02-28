@@ -1,9 +1,13 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.CalendarService;
+import com.vo.CalendarVO;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/calendar/*")
+@Slf4j
 public class CalendarController {
     Logger logger = LoggerFactory.getLogger(CalendarController.class);
     @Autowired
@@ -28,35 +33,64 @@ public class CalendarController {
         return "forward:/calendar/calendar.jsp";
     }
 
-    @PostMapping("/addCalendar")
-    public String addCalList(@RequestParam Map<String, Object> addMap, Model model){
-        List<Map<String, Object>> addCalList;
-        logger.info("calendarController: delList 호출");
-        addCalList = calendarService.addCalList(addMap);
-        model.addAttribute("addCalList", addCalList);
-        logger.info(addCalList.toString());
-        return "forward:/calendar/calendar.jsp";
+    @PostMapping("/insertCalendar")
+    @ResponseBody
+    public ResponseEntity<String> insertCalendar(CalendarVO calendarVO) {
+        logger.info("등록 컨트롤러 호출");
+
+        ResponseEntity<String> entity = null;
+
+        try {
+            calendarService.insertCalendar(calendarVO);
+            logger.info("업데이트 DB 연결 시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 업데이트 DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
     }
 
-    @DeleteMapping("/delCalendar")
-    public String delCalList(@RequestParam Map<String, Object> delMap, Model model){
-        List<Map<String, Object>> delCalList;
-        logger.info("calendarController: delList 호출");
-        delCalList = calendarService.delCalList(delMap);
-        model.addAttribute("delCalList", delCalList);
-        logger.info(delCalList.toString());
-        return "forward:/calendar/calendar.jsp";
+    @PostMapping("/deleteCalendar")
+    @ResponseBody
+    public ResponseEntity<String> deleteCalList(CalendarVO calendarVO) {
+        logger.info("삭제 컨트롤러 호출");
+        log.info(Integer.toString(calendarVO.getCalendar_no()));
+        int calendar_no = calendarVO.getCalendar_no();
+        ResponseEntity<String> entity = null;
+
+        try {
+            calendarService.deleteCalList(calendar_no);
+            logger.info("삭제DB연결시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 삭제DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
     }
 
-    @PutMapping("/updateCalendar")
-    public String upCalList(@RequestParam Map<String, Object> upMap, Model model){
-        List<Map<String, Object>> upCalList;
-        logger.info("calendarController: delList 호출");
-        upCalList = calendarService.upCalList(upMap);
-        model.addAttribute("upCalList", upCalList);
-        logger.info(upCalList.toString());
-        return "forward:/calendar/calendar.jsp";
+    @PostMapping("/updateCalendar")
+    @ResponseBody
+    public ResponseEntity<String> updateCalendar(CalendarVO calendarVO) {
+        logger.info("업데이트 컨트롤러 호출");
+
+        ResponseEntity<String> entity = null;
+
+        try {
+            calendarService.updateCalendar(calendarVO);
+            logger.info("업데이트 DB 연결 시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 업데이트 DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
     }
+
 
     @GetMapping("calList")
     public String calList(@RequestParam Map<String, Object> calMap, Model model){

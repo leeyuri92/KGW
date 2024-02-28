@@ -2,6 +2,7 @@ package com.best.kgw.service.impl;
 
 import com.best.kgw.dao.CalendarDao;
 import com.best.kgw.service.CalendarService;
+import com.vo.CalendarVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,38 +30,34 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public List<Map<String, Object>> addCalList(Map<String, Object> addMap) {
-        List<Map<String, Object>> addCalList = null;
-        logger.info("Service : addCalList 호출");
+    public void insertCalendar(CalendarVO calendarVO) {
+        logger.info("Service : insertCalendar 호출");
         try {
-            addCalList = calendarDao.addCalList(addMap);
+            calendarDao.insertCalendar(calendarVO);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("일정 등록 중 오류가 발생했습니다.", e);
         }
-        return addCalList;
-    }
-    @Override
-    public List<Map<String, Object>> delCalList(Map<String, Object> delMap) {
-        List<Map<String, Object>> delCalList = null;
-        logger.info("Service : delCalList 호출");
-        try {
-            delCalList = calendarDao.delCalList(delMap);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return delCalList;
     }
 
     @Override
-    public List<Map<String, Object>> upCalList(Map<String, Object> upMap) {
-        List<Map<String, Object>> upCalList = null;
-        logger.info("Service : upCalList 호출");
+    public void deleteCalList(int calendarNo) {
+        logger.info("Service : delCalList 호출");
         try {
-            upCalList = calendarDao.upCalList(upMap);
+            calendarDao.deleteCalendar(calendarNo);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
         }
-        return upCalList;
+    }
+
+
+    @Override
+    public void updateCalendar(CalendarVO calendarVO) {
+        logger.info("Service : updateCalendar 호출");
+        try {
+            calendarDao.updateCalendar(calendarVO);
+        } catch (Exception e) {
+            throw new RuntimeException("일정 업데이트 중 오류가 발생했습니다.", e);
+        }
     }
 
     @Override
