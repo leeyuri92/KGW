@@ -6,6 +6,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>login</title>
     <%@include file="/common/bootstrap_common.jsp" %>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +19,24 @@
             document.getElementById("f_login").submit();  // form 에 있는 action="loginProcess"실행
         }
 
+        const findId = () => {
+            $.ajax({
+                type: "POST",
+                url: "findId",
+                data: {
+                    name: $('#name').val(),
+                    email: $('#email').val()
+                },
+                success: function (data) {
+                    console.log("받아온 data 값 : " + data);
+                    if (data != "") {
+                        alert("사원번호는 " + data + " 입니다.");
+                    } else {
+                        alert("일치하는 정보가 없습니다.");
+                    }
+                },
+            });
+        }
     </script>
 </head>
 <body>
@@ -26,12 +46,12 @@
             <h1 class="mb-4">로그인</h1>
             <p class="mb-4">KIWOOM 구단에 오신 것을 환영합니다.</p>
             <div class="mb-1">
-                <label for="employee-id" class="form-label">사원번호</label>
-                <input type="text" id="employee-id" name="emp_no" class="form-control" placeholder="사원번호를 입력하세요.">
+                <label for="emp_no" class="form-label">사원번호</label>
+                <input type="text" id="emp_no" name="emp_no" class="form-control" placeholder="사원번호를 입력하세요.">
             </div>
-            <div class="mb-2 login-options">
+            <div class="m-2 login-options">
                 <input type="checkbox" id="remember-me" class="form-check-input">
-                <label for="remember-me" class="form-check-label">아이디 기억하기</label>
+                <label for="remember-me" class="form-check-label">사원번호 기억하기</label>
             </div>
             <div class="mb-2">
                 <label for="password" class="form-label">비밀번호</label>
@@ -39,7 +59,7 @@
             </div>
             <button type="button" class="btn btn-sm btn-outline-dark" onclick="login()">LOGIN</button>
             <div class="d-flex justify-content-between mt-2 gap-2" >
-                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#findID">아이디찾기</button>
+                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#findID">사원번호찾기</button>
                 <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#findPW">비밀번호찾기</button>
             </div>
         </form>
@@ -51,21 +71,20 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
-                <h1 class="fw-bold mb-0 fs-2">아이디 찾기</h1>
+                <h1 class="fw-bold mb-0 fs-2">사원번호 찾기</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-5 pt-0">
                 <form id="f_findId" method="post" action="/findId">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control rounded-3" id="mbr_nm" name="mbr_nm" placeholder="Leave a comment here">
-                        <label for="mbr_nm">이름 입력</label>
+                        <input type="text" class="form-control rounded-3" id="name" name="name" placeholder="Leave a comment here">
+                        <label for="name">이름 입력</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control rounded-3" id="mbr_email" name="mbr_email" placeholder="name@example.com">
-                        <label for="mbr_email">이메일주소 입력</label>
+                        <input type="email" class="form-control rounded-3" id="email" name="email" placeholder="name@example.com">
+                        <label for="email">이메일주소 입력</label>
                     </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" style="background-color: #652C2C;"  onclick="findId()">찾기</button>
-                    <%--                    <small class="text-body-secondary">아이디 바로 보여주기 구현</small>--%>
+                    <button type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" style="background-color: #652C2C;"  onclick="findId()">찾기</button>
                 </form>
             </div>
         </div>
@@ -83,7 +102,6 @@
             </div>
 
             <div class="modal-body p-5 pt-0">
-                <%--                <form id="findID" method="get" action="/컨트롤러메소드?">--%>
                 <form class="">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control rounded-3" id="floatingPW_id" placeholder="ID">
@@ -91,13 +109,11 @@
                     </div>
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit"  style="background-color: #652C2C;" onclick="findPW()">찾기</button>
                     <small class="text-body-secondary">입력하신 이메일로 임시비밀번호를 보내드립니다.</small>
-
                 </form>
             </div>
         </div>
     </div>
 </div>
 <!-- ========================== [[ find PW Modal End ]] ========================== -->
-
 </body>
 </html>

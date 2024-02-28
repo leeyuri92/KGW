@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 /**********************************************************************************
@@ -49,18 +50,32 @@ public class LoginController {
   }
 
   @PostMapping("/findId")
-  public String findId(@RequestParam Map<String, Object> fmap, Model model) {
+  @ResponseBody
+  public String findId(@RequestParam Map<String, Object> fmap) {
     logger.info("findId");
 
     try {
       String id = loginService.findId(fmap);
       logger.info("id : "+id);
-      model.addAttribute("findId", id);
-      return "forward:auth/login.jsp";
+      return id;
     }
     catch (Exception e) {
       throw new RuntimeException(e);
     }
+
+//  @PostMapping("/findId")
+//  public String findId(@RequestParam Map<String, Object> fmap, Model model) {
+//    logger.info("findId");
+//
+//    try {
+//      String id = loginService.findId(fmap);
+//      logger.info("id : "+id);
+//      model.addAttribute("findId", id);
+//      return "forward:auth/login.jsp";
+//    }
+//    catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
 
   }
 
