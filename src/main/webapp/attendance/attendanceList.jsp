@@ -23,7 +23,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>인사정보</title>
   <script type="text/javascript">
+      const modAttendance = () =>{
+          console.log("제출버튼 클릭");
+          const modDate_vale = document.getElementById('work_date').value
+          const mod_content = document.getElementById('mod_content').value
 
+          if(modDate_vale == 0){
+              alert('수정요청일 선택해 주세요.');
+          }else if (mod_content == ""){
+              alert('요청사유를 입력해 주세요.');
+          }else{
+              document.querySelector('#attendaceMod').submit();
+          }
+      }
   </script>
 </head>
 
@@ -126,15 +138,29 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="f_findId" method="post" action="">
+        <form id="attendaceMod" method="post" action="/attendance/attendaceMod">
           <div class="form-floating m-3">
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label for="name">작성자</label></div>
-              <div class="col-10" ><input type="text" class="form-control" id="name" name="name" value="이유리" disabled></div>
+              <div class="col-10" ><input type="text" class="form-control" id="name" name="name" value="[[이유리]]" disabled></div>
             </div>
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label for="name">수정요청일</label></div>
-              <div class="col-10" ><input type="date" class="form-control" id="mod_date" name="mod_date" value=""></div>
+              <div class="col-10" >
+                <select class="form-control" id="work_date" name="work_date" >
+                  <option value="0" selected>원하시는 날짜를 선택하세요.</option>
+                  <hr class="dropdown-divider">
+                  <%
+                    for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
+                      if (i == size) break;
+                      AttendanceVO attendancevo = attendanceList.get(i);
+                  %>
+                  <option value="<%=attendancevo.getWork_date()%>">| <%=attendancevo.getWork_date()%> | <%=attendancevo.getState()%></option>
+                  <%
+                    }
+                  %>
+                </select>
+              </div>
             </div>
             <div class="row mb-5">
               <div class="col-2" style="line-height: 37px"><label for="name">근태상태</label></div>
@@ -145,14 +171,24 @@
               <div class="col-10" ><textarea type="text" class="form-control" id="mod_content" name="mod_content"></textarea>
             </div>
           </div>
-
           <div style=" text-align: right;">
-            <input type="button" class="btn btn-danger" onclick="insertAttendance()" value="제출"/>
+            <input type="button" class="btn btn-danger" onclick="modAttendance()" value="제출"/>
             <input type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" value="취소"/>
           </div>
 
           </div>
         </form>
+        <script>
+            // select 요소에 대한 이벤트 리스너 추가
+            document.getElementById('work_date').addEventListener('change', function() {
+                // 선택된 option 요소 가져오기
+                var selectedOption = this.options[this.selectedIndex];
+                // 해당 option 요소의 텍스트 값에서 근태 상태 추출
+                var attendanceState = selectedOption.innerText.split('|')[2].trim();
+                // 근태 상태를 state input 요소의 value로 설정
+                document.getElementById('state').value = attendanceState;
+            });
+        </script>
       </div>
     </div>
   </div>

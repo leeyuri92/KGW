@@ -55,8 +55,8 @@ public class DashboardController{
     public String DashboardForm(EmpVO empvo, Model model) throws Exception {
         logger.info("Controller : DashboardForm");
         EmpVO empDetail = dashboardService.empDetail(empvo);
-        logger.info(empDetail.toString());
         AttendanceVO attendance = attendanceService.attendance(empDetail.getEmp_no());
+        logger.info(empDetail.getEmp_no()+"");
         List<AttendanceVO> attendanceCalendar = attendanceService.attendanceData(empDetail.getEmp_no());
         model.addAttribute("attendanceCalendar",attendanceCalendar);
         model.addAttribute("empDetail", empDetail);

@@ -46,4 +46,9 @@ public class AttendanceDaoImpl implements AttendanceDao {
     public void attemdamceStateUpdate() throws Exception {
         sqlSessionTemplate.insert("insertAbsenteeism");
     }
+
+    @Override
+    public void attendaceMod(AttendanceVO attendanceVO) throws Exception {
+        sqlSessionTemplate.insert("attendaceModify", attendanceVO);
+    }
 }

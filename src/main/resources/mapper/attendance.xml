@@ -5,8 +5,8 @@
 <mapper namespace="com.mybatis.mapper.AttendanceMapper">
 
     <insert id="insertData" parameterType="com.vo.AttendanceVO">
-        insert into attendance (attendance_no, emp_no, work_date, start_time, end_time, state, mod_content)
-        values (attendance_pk_seq.nextval, #{emp_no}, to_char(sysdate, 'YYYY-MM-DD'), #{start_time, jdbcType=VARCHAR}, #{end_time, jdbcType=VARCHAR}, #{state, jdbcType=VARCHAR}, #{mod_content, jdbcType=VARCHAR})
+        insert into attendance (attendance_no, emp_no, work_date, start_time, end_time, state, reg_date)
+        values (attendance_pk_seq.nextval, #{emp_no}, to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD'), #{start_time, jdbcType=VARCHAR}, #{end_time, jdbcType=VARCHAR}, #{state, jdbcType=VARCHAR}, to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS'))
     </insert>
 
     <update id="updateData" parameterType="com.vo.AttendanceVO">
@@ -22,13 +22,15 @@
     </update>
 
     <select id="selectDate" parameterType="int" resultType="com.vo.AttendanceVO">
-        select attendance_no, emp_no, work_date, start_time, end_time, state, mod_content from attendance
-        where emp_no = #{emp_no}
-        and work_date = to_char(sysdate,'YYYY-MM-DD')
+        select attendance_no, b.emp_no, b.name, work_date, start_time, end_time, state, a.reg_date
+        from attendance a join emp b
+        on a.EMP_NO = b.EMP_NO
+        where b.emp_no = #{emp_no}
+          and a.work_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD')
     </select>
 
     <select id="selectOne" parameterType="int" resultType="com.vo.AttendanceVO">
-        select attendance_no, emp_no, work_date, start_time, end_time, state, mod_content from attendance
+        select attendance_no, emp_no, work_date, start_time, end_time, state, reg_date from attendance
         where emp_no = #{emp_no}
     </select>
 
@@ -42,6 +44,12 @@
             WHERE work_date is null
               AND emp_no = e.emp_no
             )
+    </insert>
+
+    <insert id="attendaceModify" parameterType="com.vo.AttendanceVO">
+        INSERT INTO attendancemodify (ATTENDANCEMOD_NO, ATTENDANCE_NO, REG_DATE, ORIGINAL_START_TIME, ORIGINAL_END_TIME,
+                                      ORIGINAL_STATE, REQUEST_CONTENT, MOD_DATE, MOD_CONTENT, STATE, MOD_STATE)
+        values (ATTENDANCEMOD_PK_SEQ.nextval, #{ATTENDANCE_NO}, )
     </insert>
 
 </mapper>
