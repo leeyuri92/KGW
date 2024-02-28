@@ -8,9 +8,11 @@ public interface ChartService {
 
     List<Map<String, Object>> pList(Map<String, Object> pmap);
 
-    List<Map<String, Object>> fList(Map<String, Object> fmap);
+    List<Map<String, Object>> faList(Map<String, Object> fmap);
 
     double kWar(Map<String, Object> kmap);
+
+    void faInit(Map<String, Object> imap);
 
     void faUpdate(Map<String, Object> FA_NO);
 

@@ -1,8 +1,3 @@
-/**********************************************************************************
- 작성자 : 이유리
- 작성일자 : 24.02.18
- 기능 : FAchart 페이지 생성 및 리스트, chart 생성
- **********************************************************************************/
 package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.ChartDao;
@@ -22,6 +17,11 @@ public class ChartDaoImpl implements ChartDao {
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.18
+     기능 : FAchart 페이지 생성 및 리스트, chart 생성
+     **********************************************************************************/
     @Override
     public List<Map<String, Object>> wList(Map<String, Object> wmap) {
         logger.info("wList");
@@ -41,12 +41,12 @@ public class ChartDaoImpl implements ChartDao {
     }
 
     @Override
-    public List<Map<String, Object>> fList(Map<String, Object> fmap) {
-        logger.info("fList");
-        List<Map<String, Object>> fList = null;
-        fList = sqlSessionTemplate.selectList("fList", fmap);
-        logger.info(fList.toString());
-        return fList;
+    public List<Map<String, Object>> faList(Map<String, Object> fmap) {
+        logger.info("faList");
+        List<Map<String, Object>> faList = null;
+        faList = sqlSessionTemplate.selectList("faList", fmap);
+        logger.info(faList.toString());
+        return faList;
     }
 
     @Override
@@ -62,7 +62,6 @@ public class ChartDaoImpl implements ChartDao {
      작성일자 : 24.02.21
      기능 : 등록/방출에 따른 WAR값 업데이트
      **********************************************************************************/
-
     @Override
     public  void faUpdate(Map<String, Object> umap) {
         logger.info("faUpdate 입력값 : " + umap);
@@ -92,5 +91,17 @@ public class ChartDaoImpl implements ChartDao {
         rList = sqlSessionTemplate.selectList("retireList", rmap);
         logger.info(rList.toString());
         return rList;
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.28
+     기능 : 등록/방출 버튼 기본값으로 초기화
+     **********************************************************************************/
+    @Override
+    public void faInit(Map<String, Object> imap) {
+        logger.info("faInit");
+        int result = sqlSessionTemplate.update("faInit",imap);
+        logger.info("업데이트 성공했니? result : " + result );
     }
 }

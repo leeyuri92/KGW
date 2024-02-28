@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.ChartMapper">
 
     <select id= "wList" parameterType="map" resultType="map">
@@ -17,10 +15,22 @@
         group by FA_POS
     </select>
 
-    <select id= "fList" parameterType="map" resultType="map">
+    <select id= "faList" parameterType="map" resultType="map">
         select FA_NO, FA_NAME, FA_DATE, FA_TEAM, FA_POS, FA_WAR, FA_STATE, FA_AGENT
         from FA
-        where FA_AGENT='FA자유계약'
+        <where>
+            FA_AGENT='FA자유계약'
+            <if test="gubun!=null">
+                <choose>
+                    <when test='gubun.equals("FA_TEAM")'>
+                        AND FA_TEAM LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("FA_POS")'>
+                        AND FA_POS LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
+        </where>
     </select>
 
     <select id= "kWar" parameterType="map" resultType="double">
@@ -40,7 +50,7 @@
 
     <select id= "hireList" parameterType="map" resultType="map">
         select  YEAR as HIREYEAR,
-            count(to_char(to_date(HIRE_DATE,'YYYY-MM-DD'),'YYYY')) AS COUNT
+                    count(to_char(to_date(HIRE_DATE,'YYYY-MM-DD'),'YYYY')) AS COUNT
         from EMP RIGHT OUTER JOIN (
                                                             SELECT TO_CHAR(SYSDATE, 'YYYY' ) - LEVEL + 1 AS YEAR
                                                             FROM DUAL
@@ -53,15 +63,24 @@
 
     <select id= "retireList" parameterType="map" resultType="map">
         select  YEAR as RETIREYEAR,
-            count(to_char(to_date(RETIRE_DATE,'YYYY-MM-DD'),'YYYY')) AS COUNT
+                    count(to_char(to_date(RETIRE_DATE,'YYYY-MM-DD'),'YYYY')) AS COUNT
         from EMP RIGHT OUTER JOIN (
                                                             SELECT TO_CHAR(SYSDATE, 'YYYY' ) - LEVEL + 1 AS YEAR
                                                             FROM DUAL
                                                             <![CDATA[ CONNECT BY LEVEL <= (TO_CHAR(SYSDATE,'YYYY')+1)-2015
-                                                             ) ]]>
+                                                            ) ]]>
         ON TO_CHAR(TO_DATE(RETIRE_DATE, 'YYYY-MM-DD'), 'YYYY') = YEAR
         GROUP BY YEAR
         ORDER BY YEAR
     </select>
+
+    <update id="faInit" parameterType="java.util.Map">
+        UPDATE FA
+        SET FA_STATE = CASE
+                           WHEN FA_TEAM = '키움' THEN 'TRUE'
+                           ELSE 'FALSE'
+            END
+        WHERE FA_AGENT='FA자유계약'
+    </update>
 
 </mapper>

@@ -1,9 +1,3 @@
-/**********************************************************************************
- 작성자 : 이유리
- 작성일자 : 24.02.18
- 기능 : FAchart 페이지 생성 및 리스트, chart 생성
- **********************************************************************************/
-
 package com.best.kgw.controller;
 
 import com.best.kgw.service.ChartService;
@@ -29,6 +23,11 @@ public class ChartController {
     @Autowired
     private ChartService chartService;
 
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.18
+     기능 : FAchart 페이지 생성 및 리스트, chart 생성
+     **********************************************************************************/
     @GetMapping("kList")
     public String faPage(Map<String, Object> fmap, Map<String, Object> wmap, Map<String, Object> kmap, Map<String, Object> pmap, Model model) {
         logger.info("faPage 호출");
@@ -68,9 +67,9 @@ public class ChartController {
         model.addAttribute("pChart", pChart);
 
         // 3. FA 선수 명단
-        List<Map<String, Object>> fList = chartService.fList(fmap);
-        logger.info("fList : " + fList);
-        model.addAttribute("fList", fList);
+        List<Map<String, Object>> faList = chartService.faList(fmap);
+        logger.info("faList : " + faList);
+        model.addAttribute("faList", faList);
 
         // 4. FA 선수 명단 - WAR 비교차트_키움
         double kWar = chartService.kWar(kmap);
@@ -85,7 +84,6 @@ public class ChartController {
      작성일자 : 24.02.21
      기능 : 등록/방출에 따른 WAR값 업데이트
      **********************************************************************************/
-
     @GetMapping("faUpdate")
     @ResponseBody // Ajax 처리 시 넘기는 값이 없어도 필요
     public void faUpdate(@RequestParam Map<String, Object> k_id) {
@@ -107,7 +105,6 @@ public class ChartController {
      작성일자 : 24.02.26
      기능 : 입/퇴사자 차트
      **********************************************************************************/
-
     @GetMapping("admin/empChart")
     public String hnrPage(Map<String, Object> hmap, Map<String, Object> rmap, Model model) {
         logger.info("hnrPage 호출");
@@ -153,5 +150,35 @@ public class ChartController {
         model.addAttribute("rChart", rChart);
 
         return "forward:/admin/empChart.jsp";
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.27
+     기능 : 검색기 비동기 처리
+     **********************************************************************************/
+    @GetMapping("searchFA")
+    @ResponseBody
+    public String searchFA (@RequestParam Map<String, Object> smap) {
+        logger.info("searchFA 호출");
+        List<Map<String, Object>> searchFA = chartService.faList(smap);
+        logger.info("searchFA : " + searchFA);
+
+        Gson g = new Gson();
+        String faJson = g.toJson(searchFA);
+        logger.info(faJson);
+        return faJson;
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.02.28
+     기능 : 등록/방출 버튼 기본값으로 초기화
+     **********************************************************************************/
+    @GetMapping("faInit")
+    public String faInit(Map<String, Object> imap) {
+        logger.info("faInit");
+        chartService.faInit(imap);
+        return "redirect:kList";
     }
 }
