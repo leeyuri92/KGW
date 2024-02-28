@@ -17,4 +17,6 @@ public interface AttendanceService {
     public void attemdamceStateUpdate() throws Exception;
 
     public void attendaceMod(AttendanceVO attendanceVO) throws Exception;
+
+    public List<AttendanceVO> attendaceModList(AttendanceVO attendanceVO) throws Exception;
 }

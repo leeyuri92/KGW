@@ -47,9 +47,21 @@
     </insert>
 
     <insert id="attendaceModify" parameterType="com.vo.AttendanceVO">
-        INSERT INTO attendancemodify (ATTENDANCEMOD_NO, ATTENDANCE_NO, REG_DATE, ORIGINAL_START_TIME, ORIGINAL_END_TIME,
-                                      ORIGINAL_STATE, REQUEST_CONTENT, MOD_DATE, MOD_CONTENT, STATE, MOD_STATE)
-        values (ATTENDANCEMOD_PK_SEQ.nextval, #{ATTENDANCE_NO}, )
+        INSERT INTO attendancemodify (attendancemod_no, attendance_no, reg_date, original_start_time, original_end_time,
+                                      original_state, request_content, mod_date)
+        SELECT attendancemod_pk_seq.nextval, attendance_no, reg_date, start_time, end_time, state, #{request_content}, to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
+        FROM ATTENDANCE
+        where attendance_no = #{attendance_no}
     </insert>
+
+    <select id="attendaceModList" parameterType="com.vo.AttendanceVO" resultType="com.vo.AttendanceModifyVO">
+        SELECT b.ATTENDANCEMOD_NO, a.EMP_NO, b.ATTENDANCE_NO, b.REG_DATE, b.ORIGINAL_STATE, b.state
+        FROM attendance a
+                 JOIN attendancemodify b ON a.ATTENDANCE_NO = b.ATTENDANCE_NO
+                 JOIN emp c ON a.EMP_NO = c.EMP_NO
+        <where>
+        <if test="emp_no!=null">AND c.emp_no=#{emp_no}</if>
+        </where>
+    </select>
 
 </mapper>

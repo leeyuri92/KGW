@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -50,5 +49,11 @@ public class AttendanceDaoImpl implements AttendanceDao {
     @Override
     public void attendaceMod(AttendanceVO attendanceVO) throws Exception {
         sqlSessionTemplate.insert("attendaceModify", attendanceVO);
+    }
+
+    @Override
+    public List<AttendanceVO> attendaceModList(AttendanceVO attendanceVO) throws Exception {
+        logger.info(attendanceVO.toString());
+        return sqlSessionTemplate.selectList("attendaceModList", attendanceVO);
     }
 }

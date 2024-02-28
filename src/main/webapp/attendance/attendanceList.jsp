@@ -2,13 +2,15 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
 <%@ page import="com.vo.AttendanceVO" %>
+<%@ page import="com.vo.AttendanceModifyVO" %>
 <%
+  List<AttendanceModifyVO> attendanceModList = (List) request.getAttribute("attendanceModList");
   List<AttendanceVO> attendanceList = (List) request.getAttribute("attendanceList");
   int size = 0;
-  if(attendanceList !=null){
-    size = attendanceList.size();
+  if(attendanceModList !=null){
+    size = attendanceModList.size();
   }
-  out.print(attendanceList);//3
+//  out.print(attendanceModList);//3
   //페이지처리
   int numPerPage = 5;
   int nowPage = 0;
@@ -25,12 +27,12 @@
   <script type="text/javascript">
       const modAttendance = () =>{
           console.log("제출버튼 클릭");
-          const modDate_vale = document.getElementById('work_date').value
-          const mod_content = document.getElementById('mod_content').value
+          const modDate_vale = document.getElementById('attendance_no').value
+          const request_content = document.getElementById('request_content').value
 
           if(modDate_vale == 0){
               alert('수정요청일 선택해 주세요.');
-          }else if (mod_content == ""){
+          }else if (request_content == ""){
               alert('요청사유를 입력해 주세요.');
           }else{
               document.querySelector('#attendaceMod').submit();
@@ -96,13 +98,15 @@
             <%
                    for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
                      if (i == size) break;
-                     AttendanceVO attendancevo = attendanceList.get(i);
+                     AttendanceModifyVO attendancemodifyvo = attendanceModList.get(i);
             %>
             <tr>
-                   <td><%=attendancevo.getAttendance_no() %></td>
-                   <td><%=attendancevo.getEmp_no()%></td>
-                    <td><%=attendancevo.getWork_date()%></td>
-                    <td><%=attendancevo.getState()%></td>
+                   <td><%=attendancemodifyvo.getAttendancemod_no() %></td>
+                   <td><%=attendancemodifyvo.getEmp_no()%></td>
+                   <td><%=attendancemodifyvo.getAttendance_no()%></td>
+                   <td><%=attendancemodifyvo.getReg_date()%></td>
+                   <td><%=attendancemodifyvo.getOriginal_state()%></td>
+                   <td><%=attendancemodifyvo.getState()%></td>
             </tr>
                   <%
                     }
@@ -147,28 +151,32 @@
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label for="name">수정요청일</label></div>
               <div class="col-10" >
-                <select class="form-control" id="work_date" name="work_date" >
+                <select class="form-control" id="attendance_no" name="attendance_no" >
                   <option value="0" selected>원하시는 날짜를 선택하세요.</option>
                   <hr class="dropdown-divider">
                   <%
-                    for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
-                      if (i == size) break;
+                    for(int i = 0; i < attendanceList.size(); i++) {
                       AttendanceVO attendancevo = attendanceList.get(i);
+                      if (attendancevo.getState().equals("정상출근")){
+                        continue;
+                      }else{
                   %>
-                  <option value="<%=attendancevo.getWork_date()%>">| <%=attendancevo.getWork_date()%> | <%=attendancevo.getState()%></option>
+                  <option value="<%=attendancevo.getAttendance_no()%>">|<%=attendancevo.getEmp_no()%>| <%=attendancevo.getWork_date()%> | <%=attendancevo.getState()%></option>
                   <%
+                      }
                     }
                   %>
                 </select>
               </div>
             </div>
+            <input type="hidden" class="form-control" id="emp_no" name="emp_no" value="" >
             <div class="row mb-5">
               <div class="col-2" style="line-height: 37px"><label for="name">근태상태</label></div>
               <div class="col-10" ><input type="text" class="form-control" id="state" name="state" value="" disabled></div>
             </div>
             <div class="row mb-5">
               <div class="col-2" style="line-height: 37px"><label for="name">요청사유</label></div>
-              <div class="col-10" ><textarea type="text" class="form-control" id="mod_content" name="mod_content"></textarea>
+              <div class="col-10" ><textarea type="text" class="form-control" id="request_content" name="request_content"></textarea>
             </div>
           </div>
           <div style=" text-align: right;">
@@ -180,13 +188,15 @@
         </form>
         <script>
             // select 요소에 대한 이벤트 리스너 추가
-            document.getElementById('work_date').addEventListener('change', function() {
+            document.getElementById('attendance_no').addEventListener('change', function() {
                 // 선택된 option 요소 가져오기
                 var selectedOption = this.options[this.selectedIndex];
                 // 해당 option 요소의 텍스트 값에서 근태 상태 추출
-                var attendanceState = selectedOption.innerText.split('|')[2].trim();
+                var attendanceState = selectedOption.innerText.split('|')[3].trim();
+                var emp_no = selectedOption.innerText.split('|')[1].trim();
                 // 근태 상태를 state input 요소의 value로 설정
                 document.getElementById('state').value = attendanceState;
+                document.getElementById('emp_no').value = emp_no;
             });
         </script>
       </div>
