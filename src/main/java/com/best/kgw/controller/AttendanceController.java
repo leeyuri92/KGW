@@ -56,6 +56,12 @@ public class AttendanceController {
         return "forward:/attendance/attendanceList.jsp";
     }
 
+    @PostMapping("attendaceMod")
+    public String attendaceMod(AttendanceVO attendanceVO) throws Exception{
+        attendanceService.attendaceMod(attendanceVO);
+        return "redirect:/attendanceList";
+    }
+
     @Scheduled(cron = "0 49 20 ? * 1-5")
     public void run() throws Exception {
         try {

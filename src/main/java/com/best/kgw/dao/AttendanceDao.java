@@ -14,4 +14,6 @@ public interface AttendanceDao {
     public List<AttendanceVO> attendanceData(int attendanceVO) throws Exception;
 
     public void attemdamceStateUpdate() throws Exception;
+
+    public void attendaceMod(AttendanceVO attendanceVO) throws Exception;
 }

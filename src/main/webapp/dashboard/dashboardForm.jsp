@@ -12,7 +12,7 @@
   EmpVO empDetail = (EmpVO) request.getAttribute("empDetail");
   AttendanceVO attendance = (AttendanceVO) request.getAttribute("attendance");
   List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
-//  out.print(attendance);
+//out.print(attendance);
 %>
 
 <!DOCTYPE html>
@@ -302,7 +302,7 @@
                   }else {
                     if(attendance.getStart_time() == null){
                 %>
-                 <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
+                  <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
                 <%
                     }else if(attendance.getEnd_time() == null){
                 %>

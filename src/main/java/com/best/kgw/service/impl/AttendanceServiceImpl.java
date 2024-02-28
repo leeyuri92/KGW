@@ -44,4 +44,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void attemdamceStateUpdate() throws Exception {
         attendanceDao.attemdamceStateUpdate();
     }
+
+    @Override
+    public void attendaceMod(AttendanceVO attendanceVO) throws Exception {
+        attendanceDao.attendaceMod(attendanceVO);
+    }
 }
