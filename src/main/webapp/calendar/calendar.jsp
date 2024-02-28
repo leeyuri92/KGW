@@ -73,11 +73,13 @@
                         let modal = document.getElementById('detailModal');
                         modal.style.display = 'block';
                         let detailCalendarNoInput = document.getElementById('detailCalendarNo');
+                        let detailCalendarIdInput = document.getElementById('detailCalendarId');
                         let detailTitleInput = document.getElementById('detailTitle');
                         let detailStartInput = document.getElementById('detailStart');
                         let detailEndInput = document.getElementById('detailEnd');
                         let event = info.event;
                         detailTitleInput.value = event.title;
+                        detailCalendarIdInput.value = event.id;
                         detailCalendarNoInput.value = event.extendedProps.CalendarNo;
                         detailStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
                         detailEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
@@ -99,6 +101,7 @@
                             for (CalendarVO vo : calendarList) { %>
                     {
                         extendedProps: { CalendarNo: '<%= vo.getCalendar_no() %>' },
+                        id: '<%= vo.getCalendar_id() %>',
                         title: '<%= vo.getCalendar_title() %>',
                         start: '<%= vo.getCalendar_start() %>',
                         end: '<%= vo.getCalendar_end() %>',
@@ -155,162 +158,177 @@
             closeBtn.addEventListener('click', handleEventUpdate);
         });
 
+        // function handleEventSubmit() {
+        //     let idInput = document.getElementById('insertCalendarId');
+        //     let titleInput = document.getElementById('insertTitle');
+        //     let startInput = document.getElementById('insertStart');
+        //     let endInput = document.getElementById('insertEnd');
+        //
+        //     let id = idInput.value; // 이 부분이 수정되어야 합니다.
+        //     let title = titleInput.value;
+        //     let start = startInput.value;
+        //     let end = endInput.value;
+        //     let url = '/calendar/addCalendar';
+        //
+        //     if (title && start && end && id) {
+        //         let xhr = new XMLHttpRequest();
+        //         xhr.open('POST', url, true);
+        //         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //
+        //         xhr.onreadystatechange = function() {
+        //             if (xhr.readyState === XMLHttpRequest.DONE) {
+        //                 // console.log(xhr.responseText);
+        //                 addEventToCalendar(title, start, end, id);
+        //                 updateCalendarList();
+        //                 console.log('새 이벤트가 성공적으로 등록되었습니다.');
+        //             }
+        //         };
+        //
+        //         let data = 'id=' + encodeURIComponent(id) +
+        //             '&title=' + encodeURIComponent(title) +
+        //             '&start=' + encodeURIComponent(start) +
+        //             '&end=' + encodeURIComponent(end); // 데이터 전송 형식 수정
+        //         xhr.send(data);
+        //     }
+        //     closeModalAndClearInputs();
+        // }
+        //
+        //
+        // function addEventToCalendar(title, start, end, id) {
+        //     // renderCalendarList();
+        //     // updateCalendarList();
+        //     calendar.addEvent({
+        //         id: id,
+        //         title: title,
+        //         start: start,
+        //         end: end,
+        //         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+        //     });
+        // }
+
         function handleEventSubmit() {
-            let titleInput = document.getElementById('insertTitle');
-            let startInput = document.getElementById('insertStart');
-            let endInput = document.getElementById('insertEnd');
+                let idInput = document.getElementById('insertCalendarId');
+                let titleInput = document.getElementById('insertTitle');
+                let startInput = document.getElementById('insertStart');
+                let endInput = document.getElementById('insertEnd');
 
-            let title = titleInput.value;
-            let start = startInput.value;
-            let end = endInput.value;
-            let url = '/calendar/addCalendar';
+                let calendar_id = idInput.value;
+                let calendar_title = titleInput.value;
+                let calendar_start = startInput.value;
+                let calendar_end = endInput.value;
+                let url = '/calendar/insertCalendar';
 
-            if (title && start && end) {
-                let xhr = new XMLHttpRequest();
-                xhr.open('POST', url, true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            if (calendar_title && calendar_start && calendar_end && calendar_id) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        calendar_title: calendar_title,
+                        calendar_start: calendar_start,
+                        calendar_end: calendar_end,
+                        calendar_id: calendar_id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response > 0) {
+                            if (window.opener) window.opener.location.reload(true);
+                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/calendarList';
 
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        // console.log(xhr.responseText);
-                        console.log(addEventToCalendar.toString());
-                        addEventToCalendar(title, start, end);
-                        console.log('새 이벤트가 성공적으로 등록되었습니다.');
+                            alert("일정이 등록되었습니다.");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.error("오류 발생 >> " + error);
                     }
-                };
-
-                let data = 'title=' + encodeURIComponent(title) +
-                    '&start=' + encodeURIComponent(start) +
-                    '&end=' + encodeURIComponent(end)
-                xhr.send(data);
+                });
             }
-            closeModalAndClearInputs();
-        }
-
-
-        function addEventToCalendar(title, start, end) {
-            updateCalendarList(renderCalendarList);
-            calendar.addEvent({
-                title: title,
-                start: start,
-                end: end,
-                color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-            });
-        }
-
-        function closeModalAndClearInputs() {
+            // 모달 숨기기
             let modal = document.getElementById('insertModal');
             modal.style.display = 'none';
-            clearModalInputs();
+            closeModalAndClearInputs();
         }
 
         function handleEventDelete() {
             let calendarNoInput = document.getElementById('detailCalendarNo');
-            let calendarNo = calendarNoInput.value;
-            let eventToDelete = calendar.getEventById(calendarNo);
-            let url = '/calendar/delCalendar';
+            let calendar_no = calendarNoInput.value;
+            let url = "<%=request.getContextPath()%>/calendar/deleteCalendar";
 
-            // AJAX를 이용하여 서버에 삭제 요청
-            let xhr = new XMLHttpRequest();
-            xhr.open('DELETE', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            if (calendar_no) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: { calendar_no: calendar_no },
+                    success: function(response) {
+                        console.log(response);
+                        if (response > 0) {
+                            if (window.opener) window.opener.location.reload(true);
+                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/calendarList';
 
-            // Promise를 이용한 비동기 처리
-            let promise = new Promise(function(resolve, reject) {
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        console.log(xhr);
-                        resolve(); // 비동기 작업 완료를 알림
+                            alert("일정이 삭제되었습니다.");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.error("오류 발생 >> " + error);
                     }
-                };
-            });
-
-            promise.then(function() {
-                if (eventToDelete) {
-                    eventToDelete.remove(); // 이벤트 삭제
-                    updateCalendarList(renderCalendarList);
-                    console.log('이벤트가 성공적으로 삭제되었습니다.');
-                }
-
-                let modal = document.getElementById('detailModal');
-                modal.style.display = 'none';
-            });
-
-            // 서버로 전송할 데이터 설정
-            let data = '&calendarNo=' + encodeURIComponent(calendarNo);
-            console.log(data);
-            xhr.send(data); // 데이터 전송
+                });
+            }
+            closeModalAndClearInputs();
+            // 모달 숨기기
+            let modal = document.getElementById('detailModal');
+            modal.style.display = 'none';
         }
 
-
-        //업데이트
-        function handleEventUpdate() {
+        function handleEventUpdate(updatedEvent) {
             let titleInput = document.getElementById('detailTitle');
             let startInput = document.getElementById('detailStart');
             let endInput = document.getElementById('detailEnd');
             let calendarNoInput = document.getElementById('detailCalendarNo');
+            let idInput = document.getElementById('detailCalendarId');
+            let existingEvent = calendar.getEventById(updatedEvent.extendedProps); // 기존 이벤트 가져오기
 
-            let title = titleInput.value;
-            let start = startInput.value;
-            let end = endInput.value;
-            let calendarNo = calendarNoInput.value;
+            let calendar_title = titleInput.value;
+            let calendar_start = startInput.value;
+            let calendar_end = endInput.value;
+            let calendar_no = calendarNoInput.value;
+            let calendar_id = idInput.value;
+            let url = "/calendar/updateCalendar";
 
-            if (title && start && end && calendarNo) {
-                let url = '/calendar/updateCalendar';
-                let xhr = new XMLHttpRequest();
-                xhr.open('PUT', url, true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            if (calendar_title && calendar_start && calendar_end && calendar_no && calendar_id) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        calendar_title: calendar_title,
+                        calendar_start: calendar_start,
+                        calendar_end: calendar_end,
+                        calendar_no : calendar_no,
+                        calendar_id: calendar_id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response > 0) {
+                            if (window.opener) window.opener.location.reload(true);
+                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/calendarList';
 
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        console.log('이벤트가 성공적으로 업데이트되었습니다.');
-                        let updatedEvent = {
-                            title: title,
-                            start: start,
-                            end: end,
-                            extendedProps: {
-                                calendarNo: calendarNo
-                            }
-                        };
-                        updateToCalendar(updatedEvent);
+                            alert("일정이 수정되었습니다.");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.error("오류 발생 >> " + error);
                     }
-                };
-
-                let eventData =
-                    '&calendarNo=' + encodeURIComponent(calendarNo) +
-                    '&title=' + encodeURIComponent(title) +
-                    '&start=' + encodeURIComponent(start) +
-                    '&end=' + encodeURIComponent(end);
-
-                xhr.send(eventData);
-            } else {
-                console.error('입력값이 유효하지 않습니다.');
+                });
             }
+            closeModalAndClearInputs();
+            // 모달 숨기기
             let modal = document.getElementById('detailModal');
             modal.style.display = 'none';
-            closeModalAndClearInputs();
         }
 
-
-        // 기존 이벤트를 업데이트 함수
-        function updateToCalendar(updatedEvent) {
-            if (updatedEvent && updatedEvent.calendarNo) {
-                let existingEvent = calendar.getEventById(updatedEvent.calendarNo); // 기존 이벤트 가져오기
-                if (existingEvent) {
-                    existingEvent.remove(); // 기존 이벤트 삭제
-                    updateCalendarList(renderCalendarList);
-                    // 업데이트된 이벤트를 캘린더에 추가
-                    calendar.addEvent({
-                        title: updatedEvent.title,
-                        start: updatedEvent.start,
-                        end: updatedEvent.end,
-                        extendedProps: {
-                            calendarNo: updatedEvent.extendedProps.calendarNo
-                        },
-                        color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-                    });
-                }
-            }
+        // 모달 닫기 및 입력 값 초기화 함수
+        function closeModalAndClearInputs() {
+            let modal = document.getElementById('insertModal');
+            modal.style.display = 'none';
+            clearModalInputs();
         }
 
         // 모달 닫기 처리 함수
@@ -320,6 +338,8 @@
             modal1.style.display = 'none';
             modal2.style.display = 'none';
             clearModalInputs();
+            renderCalendarList();
+            updateCalendarList();
         }
 
         // 모달 입력값 초기화 함수
@@ -377,47 +397,6 @@
             .catch((error) => {
                 console.error('Error:', error);
             });
-    }
-
-    // 서버에서 받은 데이터를 처리하여 예약 현황에 출력하는 함수
-    function renderSearchedCalendarList(data) {
-        // 받은 데이터를 예약 현황에 출력하는 코드를 작성
-        // 예를 들어, 받은 데이터를 HTML 형식으로 파싱하여 예약 현황에 추가
-        // 이 함수는 실제 예약 현황을 업데이트하는 데 필요한 로직을 구현해야함
-    }
-
-
-    // CRUD 작업 후 예약 목록 업데이트
-    function updateCalendarList() {
-        let xhr = new XMLHttpRequest();
-        let url = '/calendar/calendarList';
-
-        xhr.open('GET', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                let responseText = xhr.responseText;
-                renderCalendarList(responseText);
-            }
-        };
-        xhr.send();
-    }
-
-    // 예약 목록을 화면에 렌더링하는 함수
-    function renderCalendarList(data) {
-        // 서버에서 받은 HTML 코드를 파싱해 임시 요소 넣음
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = data;
-
-        // 'calendarTableBody' id를 가진 요소만 선택추출
-        const calendarTableBody = tempDiv.querySelector('#calendarTableBody');
-
-        // tbody가 존재하면 해당 내용을 표시
-        if (calendarTableBody) {
-            const tbody = document.getElementById('calendarTableBody');
-            tbody.innerHTML = calendarTableBody.innerHTML;
-        }
     }
 </script>
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -515,15 +494,18 @@
                                     if (calendarList1 != null) {
                                         int count = 0; // 일정 카운터 변수 추가
                                         for (CalendarVO vo : calendarList1) {
-                                            String startDateTime = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
-                                            String endDateTime = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
-                                            if (startDateTime.equals(todayDate) || endDateTime.equals(todayDate) || (startDateTime.compareTo(todayDate) < 0 && endDateTime.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
+                                            String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
+                                            String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
+                                            String startDate = vo.getCalendar_end();
+                                            String endDate = vo.getCalendar_end();
+                                            // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
+                                            if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) {
                                 %>
                                 <tr>
                                     <th scope="row"><%= ++count %></th> <!-- 일정 번호 출력 -->
                                     <td><%= vo.getName() %></td>
                                     <td><%= vo.getCalendar_title() %></td>
-                                    <td><%= startDateTime + "~" + endDateTime %></td>
+                                    <td><%= startDate + "~" + endDate %></td>
                                     <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
                                 </tr>
                                 <%          }
@@ -558,6 +540,17 @@
                             <input type="datetime-local" class="form-control rounded-3" id="insertEnd" name="insertEnd">
                             <label for="insertEnd">일정 종료</label>
                         </div>
+                        <select class="form-control" id="insertCalendarId" name="insertCalendarId">
+                            <option value="0" selected>일정을 선택하세요.</option>
+                            <option value="1">내일정</option>
+                            <option value="2">팀일정</option>
+                            <option value="3">전사일정</option>
+                        </select>
+                        <br>
+                        <%--                        <div class="form-floating mb-3">--%>
+                        <%--                            <input type="text" class="form-control rounded-3" id="insertCalendarId" name="insertCalendarId" placeholder="일정 ID">--%>
+                        <%--                            <label for="insertCalendarId">일정 ID</label>--%>
+                        <%--                        </div>           --%>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="submitEvent" name="submitEvent" value="등록"/>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-secondary close" id="exitEvent" name="exitEvent" value="취소"/>
                     </div>
@@ -588,6 +581,10 @@
                         <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control rounded-3" id="detailEnd" name="detailEnd">
                             <label for="detailEnd">일정 종료</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="detailCalendarId" name="detailCalendarId" placeholder="일정 ID">
+                            <label for="detailCalendarId">일정 ID</label>
                         </div>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="updateEvent" name="updateEvent" value="수정"/>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="deleteEvent" name="deleteEvent" value="삭제"/>
