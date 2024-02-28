@@ -23,7 +23,7 @@
 
   <script>
       const mod_attendance = () => {
-          location.href = "/attendance/attendanceList.jsp";
+          location.href = "/attendance/attendanceList?emp_no=<%=attendanceCalendar.get(0).getEmp_no()%>";
       }
 
   </script>
@@ -60,7 +60,7 @@
     </div>
 
     <section class="content">
-      <div class="box mt-3">
+      <div class="box mt-3"style="margin: auto; width: 80%">
         <div class="box-header d-flex align-items-center pb-0">
           <div class="d-flex align-items-center">
             <h4 style="font-weight: bold; margin-left: 1.5rem">근태관리</h4>
@@ -70,7 +70,7 @@
           </div>
         </div>
         <hr />
-        <div class="row">
+        <div id='calendar-container' >
           <%@include file="/include/attendance.jsp"%>
         </div>
       </div>

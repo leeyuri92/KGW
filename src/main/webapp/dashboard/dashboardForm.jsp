@@ -84,14 +84,14 @@
             if(attendance != null){
           %>
             attendace_no = <%=attendance.getAttendance_no()%>;
-          <%
-          }
-          %>
+
           const data = {
+              "start_time" : '<%=attendance.getStart_time()%>',
               "end_time" : timeString,
               "emp_no" : <%=empDetail.getEmp_no()%>,
               "attendance_no" : attendace_no
           }
+
           Swal.fire({
               title: "퇴근하시겠습니까?",
               showCancelButton: true,
@@ -122,6 +122,9 @@
                   })
               }
           });
+          <%
+          }
+          %>
       }
 
       function success (position){
@@ -195,50 +198,54 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-2 mr-1 text-center" >
-          <div class="col" style=" position:sticky; top:10px;">
-            <div class="row mainbox" style="background-color: #dfded0";>
-              <div class="row">
+        <div class="col-2 text-center" >
+          <div class="col" style="position:sticky; top:10px;">
+            <div class="row mainbox" style="background-color: #dfded0;">
+              <div class="row" style="margin: auto;">
                 <div class="user-panel">
-                  <a href="/mypage?emp_no=<%=empDetail.getEmp_no()%>"><img src="/images/<%=empDetail.getProfile_img()%>" class="img-circle m-5 " alt="User Image" style=" margin: auto; width: 175px; height: 175px; "></a>
+                  <a href="/mypage?emp_no=<%=empDetail.getEmp_no()%>">
+                    <img src="/images/<%=empDetail.getProfile_img()%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
+                  </a>
                 </div>
               </div>
-              <div class="row">
-                <div class="text-bold text-lg">
-                  [<%=empDetail.getTeam_name()%>]
+              <div class="row" style="margin: auto;">
+                <div class="row" style="margin: auto;">
+                  <div class="text text-bold text-lg">
+                    [<%=empDetail.getTeam_name()%>]
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-5">
-                <div class="text-bold text-lg">
-                  <%=empDetail.getName()%> 사원
+                <div class="row mb-5" style="margin: auto;">
+                  <div class="text text-bold text-lg">
+                    <%=empDetail.getName()%> 사원
+                  </div>
                 </div>
               </div>
             </div>
 
             <div class="row mainbox mt-3 pt-5" style="background-color: #dfded0; ">
-                <div class="row text-bold text-lg">
-                  <div class="col-6 ">
-                    <label>현재 시간 : </label>
+                <div class="row text-bold text-lg" style="margin: auto;">
+                  <div class="text col-6 ">
+                    <label>현재 시간  </label>
                   </div>
-                  <div class="col-6">
+                  <div class="text2 col-6">
                     <div id="clock"></div>
                   </div>
                 </div>
-                <div class="row text-bold text-lg mt-2 mb-5">
-                  <div class="col-6 " style="line-height: 70px">
-                    <label>현재 날씨 : </label>
+                <div class="row text-bold text-lg mt-2 mb-5" style="margin: auto;">
+                  <div class="text col-6 " style="line-height: 70px">
+                    <label>현재 날씨 </label>
                   </div>
-                  <div class="col-6">
+                  <div class="text2 col-6">
                     <div>
                       <img class="icon " style="width: 70px; height: 70px; "/>
                     </div>
                   </div>
                 </div>
-                <div class="row text-bold text-lg">
-                  <div class="col-6 ">
+                <div class="row text-bold text-lg" style="margin: auto;">
+                  <div class="text col-6 ">
                     <label>출근시간 : </label>
                   </div>
-                  <div class="col-6">
+                  <div class="text2 col-6">
                     <%
                       if(attendance != null){
                         if(attendance.getStart_time() != null){
@@ -258,11 +265,11 @@
                     %>
                   </div>
                 </div>
-                <div class="row text-bold text-lg">
-                  <div class="col-6 ">
+                <div class="row text-bold text-lg" style="margin: auto;">
+                  <div class="text col-6 ">
                     <label>퇴근시간 : </label>
                   </div>
-                  <div class="col-6">
+                  <div class="text2 col-6">
                     <%
                       if(attendance != null){
                         if(attendance.getEnd_time() != null){
@@ -286,36 +293,58 @@
               <div class="mt-5 mb-5">
                 <hr class="m-3" style=" height: 1px; background-color: #0e0e0e; border: 0">
               </div>
-              <div class="mb-5">
+              <div class="mb-5" >
                 <%
-                  if(attendance != null){
-                    if(attendance.getStart_time() != null){
+                  if(attendance == null){
                 %>
-                    <button id="btn_start" class="btn btn-danger" onclick="workStart()" disabled>출근</button>
+                  <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
+                <%
+                  }else {
+                    if(attendance.getStart_time() == null){
+                %>
+                 <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
+                <%
+                    }else if(attendance.getEnd_time() == null){
+                %>
+                  <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>
                 <%
                     }else{
                 %>
-                    <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
+                  <button id="btn_start" class="btn btn-danger" onclick="workStart()" disabled>출근</button>
+                  <button id="btn_end" class="btn btn-danger" onclick="workEnd()" disabled>퇴근</button>
                 <%
                     }
-                %>
-                <%
-                    if(attendance.getEnd_time() != null){
-                %>
-                    <button id="btn_end" class="btn btn-danger" onclick="workEnd()" disabled>퇴근</button>
-                <%
-                  }else{
-                %>
-                    <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>
-                <%
-                    }
-                  }else{
-                %>
-                <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>
-                <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>
-                <%
                   }
                 %>
+<%--                <%--%>
+<%--                  if(attendance != null){--%>
+<%--                    if(attendance.getStart_time() != null){--%>
+<%--                %>--%>
+<%--                    <button id="btn_start" class="btn btn-danger" onclick="workStart()" disabled>출근</button>--%>
+<%--                <%--%>
+<%--                    }else{--%>
+<%--                %>--%>
+<%--                    <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>--%>
+<%--                <%--%>
+<%--                    }--%>
+<%--                %>--%>
+<%--                <%--%>
+<%--                    if(attendance.getEnd_time() != null){--%>
+<%--                %>--%>
+<%--                    <button id="btn_end" class="btn btn-danger" onclick="workEnd()" disabled>퇴근</button>--%>
+<%--                <%--%>
+<%--                  }else{--%>
+<%--                %>--%>
+<%--                    <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>--%>
+<%--                <%--%>
+<%--                    }--%>
+<%--                  }else{--%>
+<%--                %>--%>
+<%--                <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>--%>
+<%--                <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>--%>
+<%--                <%--%>
+<%--                  }--%>
+<%--                %>--%>
 
               </div>
             </div>
@@ -373,6 +402,31 @@
             <div class="col mainbox">
               <div class="mainbox-header d-flex align-items-center pb-0">
                 <div class="d-flex align-items-center">
+                  <span style="font-weight: bold; margin-left: 1.5rem" >공지게시판</span>
+                </div>
+                <div style="margin-left: auto; margin-right: 1.5rem">
+                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                </div>
+              </div>
+              <hr/>
+            </div>
+            <div class="col mainbox">
+              <div class="mainbox-header d-flex align-items-center pb-0">
+                <div class="d-flex align-items-center">
+                  <span style="font-weight: bold; margin-left: 1.5rem" >미디어게시판</span>
+                </div>
+                <div style="margin-left: auto; margin-right: 1.5rem">
+                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                </div>
+              </div>
+              <hr/>
+            </div>
+          </div>
+
+          <div class="row" >
+            <div class="col mainbox">
+              <div class="mainbox-header d-flex align-items-center pb-0">
+                <div class="d-flex align-items-center">
                   <span style="font-weight: bold; margin-left: 1.5rem" >전략분석 차트</span>
                 </div>
                 <div style="margin-left: auto; margin-right: 1.5rem">
@@ -396,30 +450,6 @@
                 </div>
             </div>
 
-          </div>
-          <div class="row" >
-            <div class="col mainbox">
-              <div class="mainbox-header d-flex align-items-center pb-0">
-                <div class="d-flex align-items-center">
-                  <span style="font-weight: bold; margin-left: 1.5rem" >공지게시판</span>
-                </div>
-                <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
-                </div>
-              </div>
-              <hr/>
-            </div>
-            <div class="col mainbox">
-              <div class="mainbox-header d-flex align-items-center pb-0">
-                <div class="d-flex align-items-center">
-                  <span style="font-weight: bold; margin-left: 1.5rem" >공지게시판</span>
-                </div>
-                <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
-                </div>
-              </div>
-              <hr/>
-            </div>
           </div>
         </div>
       </div>

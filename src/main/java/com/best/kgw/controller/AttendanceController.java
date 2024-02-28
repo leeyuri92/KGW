@@ -5,6 +5,9 @@ import com.vo.AttendanceVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,8 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/attendance/*")
+@EnableScheduling
+@Component
 public class AttendanceController {
     Logger logger = LoggerFactory.getLogger(AttendanceController.class);
 
@@ -44,4 +49,22 @@ public class AttendanceController {
         attendanceService.attendanceEndTime(attendanceVO);
     }
 
+    @GetMapping("attendanceList")
+    public String attendanceList(AttendanceVO attendanceVO, Model model) throws Exception{
+        List<AttendanceVO> attendanceList = attendanceService.attendanceData(attendanceVO.getEmp_no());
+        model.addAttribute("attendanceList",attendanceList);
+        return "forward:/attendance/attendanceList.jsp";
+    }
+
+    @Scheduled(cron = "0 49 20 ? * 1-5")
+    public void run() throws Exception {
+        try {
+            logger.info("아뭐냐고!!!!");
+            attendanceService.attemdamceStateUpdate();
+        }catch (Exception e) {
+            // 예외 발생 시 로그 출력 또는 예외 처리 로직 추가
+            e.printStackTrace();
+        }
+
+    }
 }

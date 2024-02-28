@@ -8,11 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
 public class AttendanceDaoImpl implements AttendanceDao {
     Logger logger = LoggerFactory.getLogger(AttendanceDaoImpl.class);
+
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
@@ -21,6 +23,8 @@ public class AttendanceDaoImpl implements AttendanceDao {
         List<AttendanceVO> attendanceCalendar = sqlSessionTemplate.selectList("selectOne", emp_no);
         return attendanceCalendar;
     }
+
+
     @Override
     public void attendanceTime(AttendanceVO attendanceVO) throws Exception {
         sqlSessionTemplate.insert("insertData", attendanceVO);
@@ -38,5 +42,8 @@ public class AttendanceDaoImpl implements AttendanceDao {
         return sqlSessionTemplate.selectOne("selectDate",emp_no);
     }
 
-
+    @Override
+    public void attemdamceStateUpdate() throws Exception {
+        sqlSessionTemplate.insert("insertAbsenteeism");
+    }
 }

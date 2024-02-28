@@ -149,3 +149,24 @@ hr{
   background-color: #494747;
   border: none;
 }
+
+@media (max-width: 1920px) {
+  .img-circle {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+
+@media (max-width: 1500px) {
+  .text{
+    display: none;
+  };
+}
+
+@media (max-width: 1500px) {
+  .text2{
+    margin: auto;
+  }
+
+}
