@@ -1,6 +1,7 @@
 <%@ page import="com.best.kgw.auth.PrincipalDetails" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="com.vo.EmpVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/bootstrap_common.jsp" %>
 <%
@@ -42,7 +43,7 @@
                 <div class="user-panel d-flex" >
 
                     <div class="info">
-                        <a href="/mypage?emp_no=<%=empVO.getEmp_no()%>"><img src="/images/<%="go.png"%>" class="img-circle" alt="User Image"> <%=empVO.getName()%></a>
+                        <a href="/mypage?emp_no=<%=empVO.getEmp_no()%>"><img src="/fileUpload/profile/<%=empVO.getProfile_img()%>" class="img-circle" alt="User Image"> <%=empVO.getName()%></a>
                     </div>
                 </div>
             </li>

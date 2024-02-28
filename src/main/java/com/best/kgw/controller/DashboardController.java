@@ -1,5 +1,6 @@
 package com.best.kgw.controller;
 
+import com.best.kgw.auth.PrincipalDetails;
 import com.best.kgw.service.AttendanceService;
 import com.best.kgw.service.DashboardService;
 import com.vo.AttendanceVO;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,14 +55,16 @@ public class DashboardController{
      기능 : 메인페이지
      **********************************************************************************/
     @GetMapping("/")
-    public String DashboardForm(EmpVO empvo, Model model) throws Exception {
-        logger.info("Controller : DashboardForm");
-        EmpVO empDetail = dashboardService.empDetail(empvo);
-        AttendanceVO attendance = attendanceService.attendance(empDetail.getEmp_no());
-        logger.info(empDetail.getEmp_no()+"");
-        List<AttendanceVO> attendanceCalendar = attendanceService.attendanceData(empDetail.getEmp_no());
+    public String DashboardForm(Model model) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        EmpVO empVO = principalDetails.getEmpVO();
+
+        logger.info("Controller : DashboardForm" + empVO.toString());
+        AttendanceVO attendance = attendanceService.attendance(empVO.getEmp_no());
+        logger.info(empVO.getEmp_no()+"");
+        List<AttendanceVO> attendanceCalendar = attendanceService.attendanceData(empVO.getEmp_no());
         model.addAttribute("attendanceCalendar",attendanceCalendar);
-        model.addAttribute("empDetail", empDetail);
         model.addAttribute("attendance", attendance);
         return "forward:/dashboard/dashboardForm.jsp";
     }

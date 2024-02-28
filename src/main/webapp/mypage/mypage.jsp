@@ -81,7 +81,7 @@
             </div>
             <div class="col-8">
               <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                <img src="/images/<%=empDetail.getProfile_img()%>" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
+                <img src="/fileUpload/profile/<%=empDetail.getProfile_img()%>" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
               </div>
             </div>
           </div>

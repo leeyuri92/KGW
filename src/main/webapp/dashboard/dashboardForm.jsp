@@ -9,7 +9,6 @@
 <%@ page import="com.vo.EmpVO" %>
 <%@ page import="com.vo.AttendanceVO" %>
 <%
-  EmpVO empDetail = (EmpVO) request.getAttribute("empDetail");
   AttendanceVO attendance = (AttendanceVO) request.getAttribute("attendance");
   List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
 //out.print(attendance);
@@ -30,22 +29,27 @@
   <link rel="stylesheet" href="/css/mainCalendar.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>메인페이지</title>
-
-  <script>
-      const updateTime = () => {
-          let timeString = moment().format('HH:mm:ss');
-          document.querySelector("#clock").textContent = timeString;
-      }
-
-      // 매 초마다 시간을 업데이트
-      setInterval(updateTime, 1000);
-
-      const workStart = () =>{
-          let timeString = moment().format('HH:mm:ss');
-          const data = {
-              "start_time" : timeString,
-              "emp_no" : <%=empDetail.getEmp_no()%>
+</head>
+<body class="hold-transition sidebar-mini sidebar-collapse ">
+    <div class="wrapper">
+      <!-- header start -->
+      <%@include file="/include/KGW_bar.jsp"%>
+      <link rel="stylesheet" href="/css/dashboard.css">
+      <script>
+          const updateTime = () => {
+              let timeString = moment().format('HH:mm:ss');
+              document.querySelector("#clock").textContent = timeString;
           }
+
+          // 매 초마다 시간을 업데이트
+          setInterval(updateTime, 1000);
+
+          const workStart = () =>{
+              let timeString = moment().format('HH:mm:ss');
+              const data = {
+                  "start_time" : timeString,
+                  "emp_no" : <%=empVO.getEmp_no()%>
+              }
               Swal.fire({
                   title: "출근하시겠습니까?",
                   showCancelButton: true,
@@ -56,123 +60,117 @@
               }).then((result) => {
                   if (result.isConfirmed) {
                       $.ajax({
-                        type:"POST",
-                        url: '/attendance/attendanceTime',
-                        data: data,
-                        success: function(response) {
-                            console.log('성공');
-                            Swal.fire({
-                                title: "출근이 완료되었습니다.",
-                                text: "좋은 하루 되세요.",
-                                icon: "success",
-                            });
-                            document.querySelector("#workStart").textContent = timeString;
-                            location.reload();
-                        },
-                        error: function(error) {
-                            console.error('실패:', error);
-                            // 실패한 경우 처리할 내용 추가
-                        }
+                          type:"POST",
+                          url: '/attendance/attendanceTime',
+                          data: data,
+                          success: function(response) {
+                              console.log('성공');
+                              Swal.fire({
+                                  title: "출근이 완료되었습니다.",
+                                  text: "좋은 하루 되세요.",
+                                  icon: "success",
+                              });
+                              document.querySelector("#workStart").textContent = timeString;
+                              location.reload();
+                          },
+                          error: function(error) {
+                              console.error('실패:', error);
+                              // 실패한 경우 처리할 내용 추가
+                          }
                       })
                   }
               });
-      }
-      const workEnd = () =>{
-          let timeString = moment().format('HH:mm:ss');
-          let attendace_no = 0;
-          <%
-            if(attendance != null){
-          %>
-            attendace_no = <%=attendance.getAttendance_no()%>;
-
-          const data = {
-              "start_time" : '<%=attendance.getStart_time()%>',
-              "end_time" : timeString,
-              "emp_no" : <%=empDetail.getEmp_no()%>,
-              "attendance_no" : attendace_no
           }
+          const workEnd = () =>{
+              let timeString = moment().format('HH:mm:ss');
+              let attendace_no = 0;
+              <%
+                if(attendance != null){
+              %>
+              attendace_no = <%=attendance.getAttendance_no()%>;
 
-          Swal.fire({
-              title: "퇴근하시겠습니까?",
-              showCancelButton: true,
-              confirmButtonColor: "#7c1512",
-              cancelButtonColor: "#868686",
-              confirmButtonText: "네",
-              cancelButtonText: "아니요"
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  $.ajax({
-                      type:"POST",
-                      url: '/attendance/attendanceEndTime',
-                      data: data,
-                      success: function(response) {
-                          console.log('성공');
-                          Swal.fire({
-                              title: "퇴근이 완료되었습니다.",
-                              text: "오늘 하루 고생하셨습니다.",
-                              icon: "success",
-                          });
-                          document.querySelector("#workStart").textContent = timeString;
-                          location.reload();
-                      },
-                      error: function(error) {
-                          console.error('실패:', error);
-                          // 실패한 경우 처리할 내용 추가
-                      }
-                  })
+              const data = {
+                  "start_time" : '<%=attendance.getStart_time()%>',
+                  "end_time" : timeString,
+                  "emp_no" : <%=empVO.getEmp_no()%>,
+                  "attendance_no" : attendace_no
               }
-          });
-          <%
-          }
-          %>
-      }
 
-      function success (position){
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-
-          getWeather(latitude, longitude);
-      }
-
-
-
-      function getWeather (lat, lon) {
-          const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
-          fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${API_KEY}&units=metric&lang=kr`
-          )
-              .then((response) => {
-                  if (!response.ok) {
-                      throw new Error('날씨 정보를 가져오는 데 실패했습니다.');
+              Swal.fire({
+                  title: "퇴근하시겠습니까?",
+                  showCancelButton: true,
+                  confirmButtonColor: "#7c1512",
+                  cancelButtonColor: "#868686",
+                  confirmButtonText: "네",
+                  cancelButtonText: "아니요"
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      $.ajax({
+                          type:"POST",
+                          url: '/attendance/attendanceEndTime',
+                          data: data,
+                          success: function(response) {
+                              console.log('성공');
+                              Swal.fire({
+                                  title: "퇴근이 완료되었습니다.",
+                                  text: "오늘 하루 고생하셨습니다.",
+                                  icon: "success",
+                              });
+                              document.querySelector("#workStart").textContent = timeString;
+                              location.reload();
+                          },
+                          error: function(error) {
+                              console.error('실패:', error);
+                              // 실패한 경우 처리할 내용 추가
+                          }
+                      })
                   }
-                  return response.json();
-              })
-              .then((data) => {
-                  const iconSection = document.querySelector('.icon');
-                  const icon = data.weather[0].icon;
-                  console.log(icon)
-                  const iconURL = `http://openweathermap.org/img/wn/\${icon}.png`;
-                  console.log(iconURL)
-                  iconSection.setAttribute('src', iconURL);
-                  iconSection.setAttribute('alt', data.weather[0].description);
-              })
-              .catch((error) => {
-                  console.error('Error:', error);
               });
-      }
+              <%
+              }
+              %>
+          }
 
-      navigator.geolocation.getCurrentPosition(success);
+          function success (position){
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
 
-      const mypage = () =>{
-          location.href = "/mypage?emp_no=<%=1004%>";
-      }
-  </script>
-</head>
-<body class="hold-transition sidebar-mini sidebar-collapse ">
-    <div class="wrapper">
-      <!-- header start -->
-      <%@include file="/include/KGW_bar.jsp"%>
-      <link rel="stylesheet" href="/css/dashboard.css">
+              getWeather(latitude, longitude);
+          }
+
+
+
+          function getWeather (lat, lon) {
+              const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
+              fetch(
+                  `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${API_KEY}&units=metric&lang=kr`
+              )
+                  .then((response) => {
+                      if (!response.ok) {
+                          throw new Error('날씨 정보를 가져오는 데 실패했습니다.');
+                      }
+                      return response.json();
+                  })
+                  .then((data) => {
+                      const iconSection = document.querySelector('.icon');
+                      const icon = data.weather[0].icon;
+                      console.log(icon)
+                      const iconURL = `http://openweathermap.org/img/wn/\${icon}.png`;
+                      console.log(iconURL)
+                      iconSection.setAttribute('src', iconURL);
+                      iconSection.setAttribute('alt', data.weather[0].description);
+                  })
+                  .catch((error) => {
+                      console.error('Error:', error);
+                  });
+          }
+
+          navigator.geolocation.getCurrentPosition(success);
+
+          const mypage = () =>{
+              location.href = "/mypage?emp_no=<%=empVO.getEmp_no()%>";
+          }
+      </script>
 
       <!-- body start    -->
       <div class="content-wrapper">
@@ -203,20 +201,20 @@
             <div class="row mainbox" style="background-color: #dfded0;">
               <div class="row" style="margin: auto;">
                 <div class="user-panel">
-                  <a href="/mypage?emp_no=<%=empDetail.getEmp_no()%>">
-                    <img src="/images/<%=empDetail.getProfile_img()%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
+                  <a href="/mypage?emp_no=<%=empVO.getEmp_no()%>">
+                    <img src="/fileUpload/profile/<%=empVO.getProfile_img()%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
                   </a>
                 </div>
               </div>
               <div class="row" style="margin: auto;">
                 <div class="row" style="margin: auto;">
                   <div class="text text-bold text-lg">
-                    [<%=empDetail.getTeam_name()%>]
+                    [<%=empVO.getTeam_name()%>]
                   </div>
                 </div>
                 <div class="row mb-5" style="margin: auto;">
                   <div class="text text-bold text-lg">
-                    <%=empDetail.getName()%> 사원
+                    <%=empVO.getName()%> 사원
                   </div>
                 </div>
               </div>
@@ -349,7 +347,7 @@
               </div>
             </div>
             <div class="row mainbox mt-3 p-4 d-grid gap-5  mx-auto" style="background-color: #dfded0; ">
-              <a href="/mypage?emp_no=<%=empDetail.getEmp_no()%>" class="btn btn-danger">프로필정보수정</a>
+              <a href="/mypage?emp_no=<%=empVO.getEmp_no()%>" class="btn btn-danger">프로필정보수정</a>
             </div>
           </div>
         </div>
@@ -441,7 +439,7 @@
                   <span style="font-weight: bold; margin-left: 1.5rem" >근태관리</span>
                 </div>
                 <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="/attendance/attendanceCalendar?emp_no=<%=empDetail.getEmp_no()%>" class="btn btn-danger" style="border-radius:30px">more</a>
+                  <a href="/attendance/attendanceCalendar?emp_no=<%=empVO.getEmp_no()%>" class="btn btn-danger" style="border-radius:30px">more</a>
                 </div>
               </div>
                 <hr/>

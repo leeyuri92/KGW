@@ -7,7 +7,7 @@
     <select id="empDetail" parameterType="com.vo.EmpVO" resultType="com.vo.EmpVO">
         select emp_no, team_no,team_name, emp_access, emp_position,  dayoff_cnt, emp_year, hire_date, emp_state, password, name, email, birthdate, phone_num, address, reg_date, mod_date, profile_img
         from emp natural join team
-        where emp_no = 1004
+        where emp_no = #{emp_no}
     </select>
 
     <update id="empDetailUpdate" parameterType="com.vo.EmpVO">
