@@ -1,29 +1,13 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import="com.vo.KiwoomNoticeVO" %>
+<%@ page import="com.vo.NoticeBoardVO" %>
 
 <%
+    /*상세조회 */
     int size=0;
-    List<KiwoomNoticeVO> kiwoomNoticeList = (List)request.getAttribute("kiwoomNoticeList");
-    KiwoomNoticeVO noticeVO = kiwoomNoticeList.get(0);
-//    if(kiwoomNoticeList != null){
-//        size= kiwoomNoticeList.size();
-//    }
-//    out.print(kiwoomNoticeList);
-//
-//    int board_No=0;
-//    if (request.getParameter("board_no") != null) {
-//        board_No=Integer.parseInt(request.getParameter("board_no"));
-//    }
-//
-//    KiwoomNoticeVO kiwoomNoticeVO = null;
-//    // Board_id를 이용해 해당 데이터를 가져오기
-//    for(KiwoomNoticeVO kiwoomNotice:kiwoomNoticeList) {
-//        if (kiwoomNotice.getBoard_no() == board_No) {
-//            kiwoomNoticeVO = kiwoomNotice;
-//            break;
-//        }
+    List<NoticeBoardVO> noticeList = (List)request.getAttribute("noticeList");
+    NoticeBoardVO noticeVO = noticeList.get(0);
 
 %>
 
@@ -34,12 +18,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>우리구단소식</title>
     <script>
-        function kiwoomNoticeList(){
-            location.href='/kiwoom/kiwoomNotice';
+        function noticeList(){
+            location.href='/notice/noticeList';
         }
-        const  kiwoomNoticeDelete =() => {
-            location.href = "/kiwoom/kiwoomDelete?board_no="+<%=noticeVO.getBoard_no()%>;
+
+        const  noticeDelete =() => {
+            let notice_no = <%=noticeVO.getNotice_no()%>;
+            location.href = "/notice/noticeDelete?notice_no="+notice_no;
+            console.log("delete"+notice_no);
         }
+
     </script>
 </head>
 
@@ -47,7 +35,7 @@
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
-    <link rel="stylesheet" href="/css/kiwoomNotice.css">
+    <link rel="stylesheet" href="/css/mediaNotice.css">
     <!-- header end -->
     <!-- body start -->
     <div class="content-wrapper">
@@ -84,12 +72,12 @@
                                 <hr />
                                 <div class="board_view">
                                     <div class="title">
-                                        <dd><%=noticeVO.getBoard_title()%></dd>
+                                        <dd><%=noticeVO.getNotice_title()%></dd>
                                     </div>
                                     <div class="info">
                                         <dl>
                                             <dt>번호</dt>
-                                            <dd><%=noticeVO.getBoard_no()%>
+                                            <dd><%=noticeVO.getNotice_no()%>
                                         </dl>
                                         <dl>
                                             <dt>작성자</dt>
@@ -105,34 +93,18 @@
                                         </dl>
                                         <dl>
                                             <dt>조회</dt>
-                                            <dd><%=noticeVO.getBoard_hit()%></dd>
+                                            <dd><%=noticeVO.getNotice_hit()%></dd>
                                         </dl>
                                     </div>
                                     <div class="cont">
-                                        <%=noticeVO.getBoard_content()%>
+                                        <%=noticeVO.getNotice_content()%>
                                     </div>
                                 </div>
 
                                 <div class="d-flex gap-2 justify-content-end mt-2">
-                                    <button type="submit" class="btn btn-primary" onclick="kiwoomNoticeList()">목록</button>
-                                    <button type="submit" class="btn btn-primary">수정</button>
-                                    <button type="submit" class="btn btn-primary" onclick="kiwoomNoticeDelete()">삭제</button>
-                                </div>
-
-                                <div class="comment-section mt-4">
-                                    <div id="commentList" class="mt-3">
-                                        댓글내용
-                                    </div>
-
-                                    <form id="commentForm">
-                                        <div class="mb-3">
-                                            <label for="commentContent" class="form-label">댓글</label>
-                                            <textarea class="form-control" id="commentContent" rows="3" placeholder='댓글을 입력해주세요.' required></textarea>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary" >댓글 작성</button>
-                                        </div>
-                                    </form>
+                                    <button type="submit" class="btn btn-primary" onclick="noticeList()">목록</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#noticeMod">수정</button>
+                                    <button type="submit" class="btn btn-primary" onclick="noticeDelete()">삭제</button>
                                 </div>
                             </div>
                         </div>
@@ -142,5 +114,56 @@
         </section>
     </div>
 </div>
+
+수정 모달창
+<div class="modal" id="noticeMod">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h4 style="font-weight: bold; margin-left: 2rem" >게시글 수정</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <hr />
+            </div>
+            <div class="modal-body p-5 pt-0">
+                <%@include file="/common/summernote.jsp"%>
+                <form id="Modify" method="post" action="/notice/noticeModify">
+                    <div>
+                        <input type="hidden" class="form-control mb-3" id="notice_no" name="notice_no" value="<%=noticeVO.getNotice_no()%>">
+                        <input type="hidden" class="form-control mb-3" id="mod_date" name="mod_date" value="<%=noticeVO.getMod_date()%>">
+                    </div>
+                    <div>
+                        <input type="text" class="form-control mb-3" id="notice_title" name="notice_title" placeholder="제목을 입력해주세요." value="<%=noticeVO.getNotice_title()%>">
+                    </div>
+                    <textarea id="summernote" name="notice_content"><%=noticeVO.getNotice_content()%></textarea>
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="button" class="btn btn-primary" onclick="noticeModify()">수정</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#summernote').summernote({
+        placeholder: '글 내용을 입력해주세요.',
+        tabsize: 2,
+        height: 500,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    const noticeModify =()=> {
+        console.log("수정버튼클릭")
+        document.querySelector("#Modify").submit();
+    }
+</script>
 </body>
 </html>

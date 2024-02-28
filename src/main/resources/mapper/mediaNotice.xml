@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.KiwoomNoticeMapper">
+
+    <select id="mediaNoticeList" parameterType="com.vo.MediaNoticeVO" resultType="com.vo.MediaNoticeVO">
+        select
+        board_no,
+        emp_no,
+        board_title,
+        board_content,
+        reg_date,
+        board_hit,
+        mod_date
+        from
+        media_board
+        <where>
+                        <if test="board_no != null">AND board_no=#{board_no}</if>
+<!--                        <if test="gubun != null">-->
+<!--                            <choose>-->
+<!--                                <when test='gubun.equals("board_title")'>-->
+<!--                                    AND board_title LIKE '%'||#{keyword}||'%'-->
+<!--                                </when>-->
+<!--                                <when test='gubun.equals("board_no")'>-->
+<!--                                    AND board_no = #{keyword}-->
+<!--                                </when>-->
+<!--                                <when test='gubun.equals("emp_no")'>-->
+<!--                                    AND emp_no = #{keyword}-->
+<!--                                </when>-->
+<!--                            </choose>-->
+<!--                        </if>-->
+            <!--            SELECT-->
+            <!--            mb.board_no,-->
+            <!--            mb.emp_no,-->
+            <!--            mb.board_title,-->
+            <!--            mb.board_content,-->
+            <!--            mb.reg_date,-->
+            <!--            mb.board_hit,-->
+            <!--            mb.mod_date,-->
+            <!--            mbf.board_file_no,-->
+            <!--            mbf.physical_file_name,-->
+            <!--            mbf.logical_file_name,-->
+            <!--            mbf.file_size,-->
+            <!--            mbf.file_type,-->
+            <!--            mbf.file_path,-->
+            <!--            mbf.reg_date as file_reg_date,-->
+            <!--            mbf.mod_date as file_mod_date,-->
+            <!--            mbc.commend_no,-->
+            <!--            mbc.emp_no as commend_emp_no,-->
+            <!--            mbc.commend_content,-->
+            <!--            mbc.reg_date as commend_reg_date,-->
+            <!--            mbc.mod_date as commend_mod_date-->
+            <!--            FROM-->
+            <!--            media_board mb-->
+            <!--            LEFT JOIN-->
+            <!--            media_board_file mbf ON mb.board_no = mbf.board_no-->
+            <!--            LEFT JOIN-->
+            <!--            media_board_commend mbc ON mb.board_no = mbc.board_no;-->
+        </where>
+        order by board_no desc
+    </select>
+
+    <delete id="mediaNoticeDelete" parameterType="int">
+        delete from media_board
+        where board_no= #{board_no}
+    </delete>
+
+    <insert id="mediaNoticeInsert" parameterType="com.vo.MediaNoticeVO">
+        insert into media_board(board_no,board_title,board_content,emp_no,reg_date,board_hit,mod_date)
+        values(board_pk_seq.nextval,
+               #{board_title},
+               #{board_content},
+               1010,
+               TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+               0,
+               TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))
+    </insert>
+
+    <update id="mediaNoticeModify" parameterType="com.vo.MediaNoticeVO">
+        update media_board
+        set
+            board_title = #{board_title},
+            board_content = #{board_content},
+            mod_date= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+        where board_no = #{board_no}
+    </update>
+    <!--댓글 쿼리-->
+    <select id="commendList" parameterType="com.vo.MediaNoticeCommendVO" resultType ="com.vo.MediaNoticeCommendVO">
+        select a.BOARD_NO,
+               a.EMP_NO,
+               a.COMMEND_CONTENT,
+               a.COMMEND_NO,
+               a.REG_DATE
+        from MEDIA_BOARD_COMMEND a join MEDIA_BOARD b
+                                        on a.BOARD_NO = b.BOARD_NO
+        where a.board_no = #{board_no}
+        order by board_no desc
+    </select>
+
+    <insert id="mediaCommendInsert" parameterType="com.vo.MediaNoticeCommendVO">
+        insert into media_board_commend(commend_no,
+                                        board_no,
+                                        emp_no,
+                                        commend_content,
+                                        reg_date,
+                                        mod_date)
+        values (   COMMEND_PK_SEQ.nextval,
+                   #{board_no},
+                   #{emp_no},
+                   #{commend_content},
+                   TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+                   TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+               )
+    </insert>
+
+    <delete id="mediaCommendDelete" parameterType="int">
+        delete from media_board_commend
+        where commend_no= #{commend_no}
+    </delete>
+
+</mapper>
