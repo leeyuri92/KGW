@@ -16,6 +16,8 @@ public class AttendanceVO {
     private String state;
     private String reg_date;
     private String request_content;
+    private String gubun;
+    private String keyword;
 
     @Override
     public String toString() {
@@ -29,6 +31,8 @@ public class AttendanceVO {
                 ", state='" + state + '\'' +
                 ", reg_date='" + reg_date + '\'' +
                 ", request_content='" + request_content + '\'' +
+                ", gubun='" + gubun + '\'' +
+                ", keyword='" + keyword + '\'' +
                 '}';
     }
 }

@@ -46,7 +46,6 @@
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
-    <link rel="stylesheet" href="/css/kiwoomNoticeCard.css">
     <!-- header end    -->
 
     <!-- body start    -->

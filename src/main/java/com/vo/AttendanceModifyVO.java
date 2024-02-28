@@ -18,6 +18,7 @@ public class AttendanceModifyVO {
     private String mod_content;
     private String state;
     private String mod_state;
+    private String name;
 
     @Override
     public String toString() {
@@ -34,6 +35,7 @@ public class AttendanceModifyVO {
                 ", mod_content='" + mod_content + '\'' +
                 ", state='" + state + '\'' +
                 ", mod_state='" + mod_state + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.AttendanceService;
+import com.vo.AttendanceModifyVO;
 import com.vo.AttendanceVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,8 +53,8 @@ public class AttendanceController {
 
     @GetMapping("attendanceList")
     public String attendanceList(AttendanceVO attendanceVO, Model model) throws Exception{
-        logger.info(attendanceVO.toString());
-        List<AttendanceVO> attendanceModList = attendanceService.attendaceModList(attendanceVO);
+        logger.info("emp_no"+attendanceVO.getEmp_no());
+        List<AttendanceModifyVO> attendanceModList = attendanceService.attendaceModList(attendanceVO);
         List<AttendanceVO> attendanceList = attendanceService.attendanceData(attendanceVO.getEmp_no());
         logger.info(attendanceModList.toString());
         model.addAttribute("attendanceModList",attendanceModList);
@@ -67,6 +68,29 @@ public class AttendanceController {
         attendanceService.attendaceMod(attendanceVO);
         redirectAttributes.addAttribute("emp_no", attendanceVO.getEmp_no());
         return "redirect:./attendanceList";
+    }
+
+    @GetMapping("adminAttendance")
+    public String adminAttendance(AttendanceVO attendancevo, Model model) throws Exception{
+        logger.info("AttendanceController: adminAttendance");
+        List<AttendanceModifyVO> attendanceModList = attendanceService.attendaceModList(attendancevo);
+        logger.info(attendanceModList.toString());
+        model.addAttribute("attendanceModList", attendanceModList);
+        return "forward:/admin/adminAttendance.jsp";
+    }
+
+    @GetMapping("adminModAttendance")
+    public String adminModAttendeance(AttendanceModifyVO attendancemodifyvo, Model model) throws Exception{
+        Map<String, Object> attendanceModMap = attendanceService.adminModAttendeanceMap(attendancemodifyvo);
+        model.addAttribute("attendanceModMap", attendanceModMap);
+        return "forward:/admin/adminModAttendance.jsp";
+    }
+
+    @PostMapping("attendanceModUpdate")
+    public String attendanceModUpdate(AttendanceModifyVO attendancemodifyvo) throws Exception{
+        logger.info(attendancemodifyvo.toString());
+        attendanceService.attendanceModUpdate(attendancemodifyvo);
+        return "redirect:./adminAttendance";
     }
 
     @Scheduled(cron = "0 49 20 ? * 1-5")

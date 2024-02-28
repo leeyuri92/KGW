@@ -17,7 +17,7 @@
           ,password = #{password}
           ,email = #{email}
           ,phone_num = #{phone_num}
-          ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
+          ,mod_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
           ,address = #{address}
         where emp_no = #{emp_no}
     </update>

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,9 @@ public class DashboardController{
 
     @Autowired
     private AttendanceService attendanceService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 //    private
 
     /**********************************************************************************
@@ -92,6 +96,9 @@ public class DashboardController{
     @GetMapping("empDetailUpdate")
     public String empDetailUpdate(EmpVO empvo) throws Exception {
         logger.info("empDetailUpdate");
+        String rawPassword = empvo.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        empvo.setPassword(encPassword);
         int result = 0;
         result = dashboardService.empDetailUpdate(empvo);
 

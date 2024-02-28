@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
+<%@ page import="com.vo.AttendanceModifyVO" %>
 <%
-  //  int size = 0;//전체 레코드 수
-  //  List<Map<String, Object>> empList = (List) request.getAttribute("empList");
-  //  if(empList !=null){
-  //    size = empList.size();
-  //  }
-  //  out.print(size);//3
-  //  //페이지처리
-  //  int numPerPage = 5;
-  //  int nowPage = 0;
-  //  if(request.getParameter("nowPage")!=null){
-  //    nowPage = Integer.parseInt(request.getParameter("nowPage"));
-  //  }
+  List<AttendanceModifyVO> attendanceModList = (List) request.getAttribute("attendanceModList");
+  int size = 0;
+  if(attendanceModList !=null){
+    size = attendanceModList.size();
+  }
+  //페이지처리
+  int numPerPage = 5;
+  int nowPage = 0;
+  if(request.getParameter("nowPage")!=null){
+    nowPage = Integer.parseInt(request.getParameter("nowPage"));
+  }
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -22,7 +22,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>인사정보</title>
   <script type="text/javascript">
-
+      function attendanceSearch(){
+          console.log('attendanceSearch');
+          const gubun = document.querySelector("#gubun").value;
+          const keyword = document.querySelector("#keyword").value;
+          console.log(`${gubun} , ${keyword}`);
+          location.href="/attendance/adminAttendance?gubun="+gubun+"&keyword="+keyword;
+      }
   </script>
 </head>
 
@@ -81,35 +87,35 @@
           </div>
         </div>
 
-        <!-- 회원목록 시작 -->
         <div class='board-list'>
           <table class="table table-hover text-center ">
             <thead>
             <tr>
-              <th width="15%">번호</th>
-              <th width="15%">작성자</th>
-              <th width="15%">작성일</th>
-              <th width="20%">요청일</th>
-              <th width="20%">출/퇴근</th>
-              <th width="20%">상태</th>
+              <th>번호</th>
+              <th>작성자</th>
+              <th>작성일</th>
+              <th>요청일</th>
+              <th>출/퇴근</th>
+              <th>상태</th>
             </tr>
             </thead>
             <tbody>
             <%
-              //                   for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
-//                     if (i == size) break;
-//                      Map<String,Object> rmap = empList.get(i);
+              for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
+                if (i == size) break;
+                AttendanceModifyVO attendancemodifyvo = attendanceModList.get(i);
             %>
             <tr>
-              <%--                   <td><%=rmap.get("NAME") %></td>--%>
-              <%--                   <td><%=rmap.get("TEAM_NAME")%></td>--%>
-              <%--                    <td><%=rmap.get("EMP_POSITION") %></td>--%>
-              <%--                    <td><%=rmap.get("PHONE_NUM") %></td>--%>
-              <%--                    <td><%=rmap.get("EMAIL") %></td>--%>
+              <td><%=attendancemodifyvo.getAttendancemod_no()%></td>
+              <td><a href="/attendance/adminModAttendance?attendancemod_no=<%=attendancemodifyvo.getAttendancemod_no()%>"><%=attendancemodifyvo.getName()%></a></td>
+              <td><%=attendancemodifyvo.getReg_date()%></td>
+              <td><%=attendancemodifyvo.getMod_date()%></td>
+              <td><%=attendancemodifyvo.getOriginal_state()%></td>
+              <td><%=attendancemodifyvo.getState()%></td>
             </tr>
-            <%--                  <%--%>
-            <%--                    }--%>
-            <%--                  %>--%>
+            <%
+              }
+            %>
             </tbody>
           </table>
           <hr />
@@ -117,17 +123,16 @@
           <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
           <div style="display:flex; justify-content:center;">
             <ul class="pagination">
-              <%--                    <%--%>
-              <%--                      String pagePath = "empInfo";--%>
-              <%--                      BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);--%>
-              <%--                      out.print(bspb.getPageBar());--%>
-              <%--                    %>--%>
+              <%
+                String pagePath = "adminAttendance";
+                BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
+                out.print(bspb.getPageBar());
+              %>
             </ul>
           </div>
           <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
         </div>
-        <!-- 회원목록   끝  -->
       </div>
     </section>
   </div>

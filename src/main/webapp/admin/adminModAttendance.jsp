@@ -2,7 +2,8 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
 <%
-
+  Map<String, Object> attendanceModMap = (Map) request.getAttribute("attendanceModMap");
+  out.print(attendanceModMap);
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -11,7 +12,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>인사정보</title>
   <script type="text/javascript">
+      const adminattendanceList = () =>{
+          location.href = "/attendance/adminAttendance";
+      }
 
+      const signOn = () =>{
+          document.getElementById('state').value = "승인";
+          document.querySelector('#attendanceModUpdate').submit();
+      }
+
+      const signOff = () =>{
+          document.getElementById('state').value = "반려";
+          document.querySelector('#attendanceModUpdate').submit();
+      }
   </script>
 </head>
 
@@ -56,71 +69,73 @@
           <div class="col-5 mr-3 ml-5">
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label>작성자</label></div>
-              <div class="col-10"><input type="text" class="form-control" value="[이유리]" disabled></div>
+              <div class="col-10"><input type="text" class="form-control" value="<%=attendanceModMap.get("NAME")%>" disabled></div>
             </div>
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label>작성일</label></div>
-              <div class="col-10"><input type="text" class="form-control" value="[2024-02-01]" disabled></div>
+              <div class="col-10"><input type="text" class="form-control" value="<%=attendanceModMap.get("REG_DATE")%>" disabled></div>
             </div>
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label>수정요청일</label></div>
-              <div class="col-10"><input type="text" class="form-control" value="[2024-02-04]" disabled></div>
+              <div class="col-10"><input type="text" class="form-control" value="<%=attendanceModMap.get("MOD_DATE")%>" disabled></div>
             </div>
             <div class="row mb-3" style="line-height: 37px"><label>요청사유</label></div>
-            <div class="row mb-3"><textarea type="text" class="form-control" id="mod_content" name="mod_content"></textarea></div>
+            <div class="row mb-3"><textarea type="text" class="form-control" id="request_content" name="request_content" disabled><%=attendanceModMap.get("REQUEST_CONTENT")%></textarea></div>
           </div>
 
           <div class="col-5 ml-5" style="border: 1px solid grey">
             <div class="row m-4">
               <div class="col-6"><label>출근일</label></div>
-              <div class="col-6">[2024-02-01]</div>
+              <div class="col-6"><%=attendanceModMap.get("WORK_DATE")%></div>
             </div>
             <hr/>
             <div class="row m-4" >
               <div class="col-6"><label>출근시간</label></div>
-              <div class="col-6">[00:00:00]</div>
+              <div class="col-6"><%=attendanceModMap.get("START_TIME")%></div>
             </div>
             <hr/>
             <div class="row m-4" >
               <div class="col-6"><label>퇴근시간</label></div>
-              <div class="col-6">[00:00:00]</div>
+              <div class="col-6"><%=attendanceModMap.get("END_TIME")%></div>
             </div>
             <hr/>
             <div class="row m-4" >
               <div class="col-6"><label>근태상태</label></div>
-              <div class="col-6">[결근]</div>
+              <div class="col-6"><%=attendanceModMap.get("STATE")%></div>
             </div>
           </div>
         </div>
 
         <hr style="margin-top: 50px; margin-bottom: 50px;"/>
-        <form id="#" method="post" action="">
+        <form id="attendanceModUpdate" method="post" action="/attendance/attendanceModUpdate">
           <div class="form-floating m-3">
             <div class="row mb-3" >
               <div class="col-1" style=" line-height: 37px"><label>상태수정</label></div>
               <div class="col-2" >
-                <select id="gubun" class="form-select" aria-label="분류선택">
-                  <option value="none">분류선택</option>
-                  <option value="name">정상출근</option>
-                  <option value="state">지각</option>
-                  <option value="state">결근</option>
-                  <option value="state">휴가</option>
-                  <option value="state">조퇴</option>
+                <select id="mod_state" name="mod_state" class="form-select" aria-label="분류선택">
+                  <option value="none" selected>분류선택</option>
+                  <option value="정상출근">정상출근</option>
+                  <option value="비정상출근">비정상출근</option>
+                  <option value="지각">지각</option>
+                  <option value="결근">결근</option>
+                  <option value="휴가">휴가</option>
+                  <option value="조퇴">조퇴</option>
                 </select>
               </div>
             </div>
-
+            <input type="hidden" id="attendancemod_no" name="attendancemod_no" value="<%=attendanceModMap.get("ATTENDANCEMOD_NO")%>">
+            <input type="hidden" id="state" name="state" value="">
             <div class="row mb-3">
               <div class="col" style="line-height: 37px"><label>수정사유</label></div>
             </div>
             <div class="row mb-3">
-              <textarea type="text" class="form-control" id="res_content" name="res_content"></textarea>
+              <textarea type="text" class="form-control" id="mod_content" name="mod_content"></textarea>
             </div>
 
             <div style=" text-align: right;">
-              <input type="button" class="btn btn-danger" onclick="" value="목록"/>
-              <input type="button" class="btn btn-danger" onclick="" value="승인"/>
-              <input type="button" class="btn btn-danger" onclick="" value="반려"/>
+              <input type="button" class="btn btn-danger" onclick="adminattendanceList()" value="목록"/>
+              <input type="button" class="btn btn-danger"  onclick="signOn()" value="승인"/>
+              <input type="button" class="btn btn-danger"  onclick="signOff()" value="반려"/>
             </div>
 
           </div>

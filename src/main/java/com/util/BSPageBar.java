@@ -58,14 +58,20 @@ public class BSPageBar {
     public void setPageBar() {
         StringBuilder pageLink = new StringBuilder();
         // 전체 레코드 수가 0보다 클때 처리하기
+
         if (totalRecord > 0) {
             // nowBlock이 0보다 클때 처리
             // 이전 페이지로 이동 해야 하므로 페이지 번호에 a태그를 붙여야 하고
             // pagePath뒤에 이동할 페이지 번호를 붙여서 호출 해야함.
             if (nowBlock > 0) { // (1-1)*2+(2-1)=1
                 pageLink.append("<li class='page-item'>");
-                pageLink.append("<a class='page-link' href='" + pagePath + "?nowPage="
-                        + ((nowBlock - 1) * pagePerBlock + (pagePerBlock - 1)) + "'>");
+                if (pagePath.contains("?")){
+                    pageLink.append("<a class='page-link' href='" + pagePath + "&nowPage="
+                            + ((nowBlock - 1) * pagePerBlock + (pagePerBlock - 1)) + "'>");
+                }else{
+                    pageLink.append("<a class='page-link' href='" + pagePath + "?nowPage="
+                            + ((nowBlock - 1) * pagePerBlock + (pagePerBlock - 1)) + "'>");
+                }
                 pageLink.append("<span aria-hidden='true'>&laquo;</span>");
                 pageLink.append("</a>");
                 pageLink.append("</li>");
@@ -77,9 +83,13 @@ public class BSPageBar {
                 }
                 // 그렇지 않을 때를 나누어 처리해야 함.
                 else {
-                    pageLink.append("<a class='page-link' href='" + pagePath + "?nowPage="
-                            + ((nowBlock * pagePerBlock) + i) + "'>" + ((nowBlock * pagePerBlock) + i + 1) + "</a>");
-
+                    if (pagePath.contains("?")){
+                        pageLink.append("<a class='page-link' href='" + pagePath + "&nowPage="
+                                + ((nowBlock * pagePerBlock) + i) + "'>" + ((nowBlock * pagePerBlock) + i + 1) + "</a>");
+                    }else{
+                        pageLink.append("<a class='page-link' href='" + pagePath + "?nowPage="
+                                + ((nowBlock * pagePerBlock) + i) + "'>" + ((nowBlock * pagePerBlock) + i + 1) + "</a>");
+                    }
                 }
                 // 모든 경우에 pagePerBlock만큼 반복되지 않으므로 break처리해야 함.
                 // 주의할 것.
@@ -90,8 +100,13 @@ public class BSPageBar {
             // a태그 활용하여 링크 처리하기
             if (totalBlock > nowBlock + 1) {
                 pageLink.append("<li class='page-item'>");
-                pageLink.append("<a class='page-link' aria-label='Next' href='" + pagePath + "?nowPage="
-                        + ((nowBlock + 1) * pagePerBlock) + "'>");
+                if (pagePath.contains("?")){
+                    pageLink.append("<a class='page-link' aria-label='Next' href='" + pagePath + "&nowPage="
+                            + ((nowBlock + 1) * pagePerBlock) + "'>");
+                }else{
+                    pageLink.append("<a class='page-link' aria-label='Next' href='" + pagePath + "?nowPage="
+                            + ((nowBlock + 1) * pagePerBlock) + "'>");
+                }
                 pageLink.append("<span aria-hidden=\"true\">&raquo;</span>");
                 pageLink.append("</a>");
                 pageLink.append("</li>");

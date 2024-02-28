@@ -2,13 +2,17 @@ package com.best.kgw.service.impl;
 
 import com.best.kgw.dao.AttendanceDao;
 import com.best.kgw.service.AttendanceService;
+import com.vo.AttendanceModifyVO;
 import com.vo.AttendanceVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -51,8 +55,22 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<AttendanceVO> attendaceModList(AttendanceVO attendanceVO) throws Exception {
-        List<AttendanceVO> attendaceModList = attendanceDao.attendaceModList(attendanceVO);
+    public List<AttendanceModifyVO> attendaceModList(AttendanceVO attendanceVO) throws Exception {
+        List<AttendanceModifyVO> attendaceModList = attendanceDao.attendaceModList(attendanceVO);
         return attendaceModList;
+    }
+
+    @Override
+    public Map<String, Object> adminModAttendeanceMap(AttendanceModifyVO attendancemodifyvo) throws Exception {
+        Map<String, Object> adminModAttendeanceMap = attendanceDao.adminModAttendeanceMap(attendancemodifyvo);
+        return adminModAttendeanceMap;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void attendanceModUpdate(AttendanceModifyVO attendancemodifyvo) throws Exception {
+        logger.info("==================================="+attendancemodifyvo.toString());
+        attendanceDao.attendanceModUpdate(attendancemodifyvo);
+        attendanceDao.attendanceUpdate(attendancemodifyvo);
     }
 }

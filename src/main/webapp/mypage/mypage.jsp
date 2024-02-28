@@ -19,6 +19,7 @@
   <title>사원정보</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script type="text/javascript">
       const empDetailUpdate = () =>{
           console.log("수정 클릭");
@@ -224,6 +225,26 @@
     </div>
   </div>
   <script>
+      const openZipcode = () => {
+          new daum.Postcode({//Postcode객체 생성하기  - 생성하자마자 내부에 구현하기가 전기해고있다
+              oncomplete: function(data) {//완료되었을때 - 요청에 대한 응답이 완료되었을때 -이벤트처리
+                  let addr = '';
+                  if (data.userSelectedType === 'R') {
+                      addr = data.roadAddress;//도로명
+                  } else {
+                      addr = data.jibunAddress;//지번
+                  }
+                  console.log(data);
+                  console.log(addr);
+                  //console.log(post.postNum);
+                  //setPost({...post, zipcode:data.zonecode, addr:addr}) ;
+                  // document.querySelector("#mem_zipcode").value = data.zonecode;//우편번호
+                  // document.querySelector("#mem_address").value = addr;//주소
+                  document.getElementById("address").value = addr;//주소
+                  //document.getElementById("postDetail").focus();
+              }
+          }).open();
+      }
 
       //비밀번호 정규식표현
       const expPwText = /^[A-Za-z0-9]{4,12}$/;
@@ -345,14 +366,7 @@
                         contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 컨텐츠 타입을 설정하지 않도록 함
                         success: function (response) {
                             console.log('파일 전송 성공');
-                            let modal = document.querySelector(".modal")
-                            modal.style.display = "none";
-                            var backdrop = document.querySelector(".modal-backdrop");
-                            // 요소가 존재하는 경우에만 숨김 처리
-                            if (backdrop) {
-                                backdrop.classList.remove("show"); // modal-backdrop의 show 클래스 제거
-                                backdrop.style.display = "none"; // 요소를 화면에서 숨기기
-                            }
+                            $('.modal').modal('hide');
                             document.querySelector("#signImage").src = "/fileUpload/sign/<%=empDetail.getEmp_no()%>.png";
                             signaturePad.clear();
                         },

@@ -81,7 +81,6 @@
         </div>
         <hr />
 
-        <!-- 회원목록 시작 -->
         <div class='board-list'>
           <table class="table table-hover text-center ">
             <thead>
@@ -102,9 +101,9 @@
             %>
             <tr>
                    <td><%=attendancemodifyvo.getAttendancemod_no() %></td>
-                   <td><%=attendancemodifyvo.getEmp_no()%></td>
-                   <td><%=attendancemodifyvo.getAttendance_no()%></td>
+                   <td><%=attendancemodifyvo.getName()%></td>
                    <td><%=attendancemodifyvo.getReg_date()%></td>
+                   <td><%=attendancemodifyvo.getMod_date()%></td>
                    <td><%=attendancemodifyvo.getOriginal_state()%></td>
                    <td><%=attendancemodifyvo.getState()%></td>
             </tr>
@@ -119,7 +118,7 @@
           <div style="display:flex; justify-content:center;">
             <ul class="pagination">
                     <%
-                      String pagePath = "empInfo";
+                      String pagePath = "attendanceList?emp_no="+empVO.getEmp_no();
                       BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
                       out.print(bspb.getPageBar());
                     %>
@@ -128,7 +127,6 @@
                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
         </div>
-        <!-- 회원목록   끝  -->
       </div>
     </section>
   </div>

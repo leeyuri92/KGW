@@ -4,7 +4,6 @@
 <%
   List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
 
-//  out.print(attendanceCalendar);
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,17 +20,18 @@
   <link rel="stylesheet" href="/css/calendar.css">
   <title>근태일정</title>
 
-  <script>
-      const mod_attendance = () => {
-          location.href = "/attendance/attendanceList?emp_no=<%=attendanceCalendar.get(0).getEmp_no()%>";
-      }
 
-  </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
 <div class="wrapper">
   <!-- header start -->
   <%@include file="/include/KGW_bar.jsp"%>
+  <script>
+      const mod_attendance = () => {
+          location.href = "/attendance/attendanceList?emp_no=<%=empVO.getEmp_no()%>";
+      }
+
+  </script>
   <!-- header end    -->
 
   <!-- body start    -->

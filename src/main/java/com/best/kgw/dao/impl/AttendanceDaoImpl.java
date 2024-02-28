@@ -1,6 +1,7 @@
 package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.AttendanceDao;
+import com.vo.AttendanceModifyVO;
 import com.vo.AttendanceVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class AttendanceDaoImpl implements AttendanceDao {
@@ -52,8 +54,25 @@ public class AttendanceDaoImpl implements AttendanceDao {
     }
 
     @Override
-    public List<AttendanceVO> attendaceModList(AttendanceVO attendanceVO) throws Exception {
+    public List<AttendanceModifyVO> attendaceModList(AttendanceVO attendanceVO) throws Exception {
         logger.info(attendanceVO.toString());
         return sqlSessionTemplate.selectList("attendaceModList", attendanceVO);
+    }
+
+    @Override
+    public Map<String, Object> adminModAttendeanceMap(AttendanceModifyVO attendancemodifyvo) throws Exception {
+        List<Map<String, Object>> adminModAttendeanceMap = sqlSessionTemplate.selectList("adminModAttendeanceMap", attendancemodifyvo);
+        logger.info(adminModAttendeanceMap.toString());
+        return adminModAttendeanceMap.get(0);
+    }
+
+    @Override
+    public void attendanceModUpdate(AttendanceModifyVO attendancemodifyvo) throws Exception {
+        sqlSessionTemplate.update("attendanceModUpdate",attendancemodifyvo);
+    }
+
+    @Override
+    public void attendanceUpdate(AttendanceModifyVO attendancemodifyvo) throws Exception {
+        sqlSessionTemplate.update("attendanceUpdate", attendancemodifyvo);
     }
 }

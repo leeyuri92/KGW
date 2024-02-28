@@ -253,7 +253,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/adminAttendance.jsp" class="nav-link">
+                                <a href="/attendance/adminAttendance" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>근태관리</p>
                                 </a>

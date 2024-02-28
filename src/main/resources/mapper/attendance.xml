@@ -55,13 +55,48 @@
     </insert>
 
     <select id="attendaceModList" parameterType="com.vo.AttendanceVO" resultType="com.vo.AttendanceModifyVO">
-        SELECT b.ATTENDANCEMOD_NO, a.EMP_NO, b.ATTENDANCE_NO, b.REG_DATE, b.ORIGINAL_STATE, b.state
+        SELECT b.ATTENDANCEMOD_NO, c.name, a.EMP_NO, b.ATTENDANCE_NO, b.REG_DATE, b.ORIGINAL_STATE, b.state, b.mod_date
         FROM attendance a
                  JOIN attendancemodify b ON a.ATTENDANCE_NO = b.ATTENDANCE_NO
                  JOIN emp c ON a.EMP_NO = c.EMP_NO
         <where>
-        <if test="emp_no!=null">AND c.emp_no=#{emp_no}</if>
+            <if test="emp_no!=0">AND c.emp_no=#{emp_no}</if>
+            <if test="gubun!=null">
+                <choose>
+                    <when test='gubun.equals("name")'>
+                        AND c.name LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("state")'>
+                        AND b.state LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
         </where>
+        order by c.emp_no desc
     </select>
+
+    <select id="adminModAttendeanceMap" parameterType="com.vo.AttendanceModifyVO" resultType="map">
+        select a.WORK_DATE, a.START_TIME, a.END_TIME, a.STATE, b.REG_DATE, b.MOD_DATE, b.REQUEST_CONTENT, c.name, b.attendancemod_no
+        from ATTENDANCE a join ATTENDANCEMODIFY b
+                               on a.ATTENDANCE_NO = b.ATTENDANCE_NO
+        join emp c on a.EMP_NO = c.EMP_NO
+        where b.attendancemod_no = #{attendancemod_no}
+    </select>
+
+    <update id="attendanceModUpdate" parameterType="com.vo.AttendanceModifyVO">
+        update attendancemodify set
+            mod_content = #{mod_content},
+            state = #{state},
+            mod_state = #{mod_state}
+        where attendancemod_no = #{attendancemod_no}
+    </update>
+
+    <update id="attendanceUpdate" parameterType="com.vo.AttendanceModifyVO">
+        update attendance set
+            state = #{mod_state}
+        where attendance_no = #{attendance_no}
+    </update>
+
+
 
 </mapper>
