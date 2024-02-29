@@ -5,58 +5,31 @@
 <mapper namespace="com.mybatis.mapper.KiwoomNoticeMapper">
 
     <select id="mediaNoticeList" parameterType="com.vo.MediaNoticeVO" resultType="com.vo.MediaNoticeVO">
-        select
-        board_no,
-        emp_no,
-        board_title,
-        board_content,
-        reg_date,
-        board_hit,
-        mod_date
-        from
-        media_board
+        select a.BOARD_NO,
+        a.EMP_NO,
+        a.BOARD_TITLE,
+        a.BOARD_HIT,
+        a.REG_DATE,
+        a.MOD_DATE,
+        a.BOARD_CONTENT,
+        a.FILENAME,
+        b.EMP_NO,
+        b.TEAM_NO,
+        b.NAME
+        from media_board a join emp b on a.EMP_NO = b.EMP_NO
         <where>
-                        <if test="board_no != null">AND board_no=#{board_no}</if>
-<!--                        <if test="gubun != null">-->
-<!--                            <choose>-->
-<!--                                <when test='gubun.equals("board_title")'>-->
-<!--                                    AND board_title LIKE '%'||#{keyword}||'%'-->
-<!--                                </when>-->
-<!--                                <when test='gubun.equals("board_no")'>-->
-<!--                                    AND board_no = #{keyword}-->
-<!--                                </when>-->
-<!--                                <when test='gubun.equals("emp_no")'>-->
-<!--                                    AND emp_no = #{keyword}-->
-<!--                                </when>-->
-<!--                            </choose>-->
-<!--                        </if>-->
-            <!--            SELECT-->
-            <!--            mb.board_no,-->
-            <!--            mb.emp_no,-->
-            <!--            mb.board_title,-->
-            <!--            mb.board_content,-->
-            <!--            mb.reg_date,-->
-            <!--            mb.board_hit,-->
-            <!--            mb.mod_date,-->
-            <!--            mbf.board_file_no,-->
-            <!--            mbf.physical_file_name,-->
-            <!--            mbf.logical_file_name,-->
-            <!--            mbf.file_size,-->
-            <!--            mbf.file_type,-->
-            <!--            mbf.file_path,-->
-            <!--            mbf.reg_date as file_reg_date,-->
-            <!--            mbf.mod_date as file_mod_date,-->
-            <!--            mbc.commend_no,-->
-            <!--            mbc.emp_no as commend_emp_no,-->
-            <!--            mbc.commend_content,-->
-            <!--            mbc.reg_date as commend_reg_date,-->
-            <!--            mbc.mod_date as commend_mod_date-->
-            <!--            FROM-->
-            <!--            media_board mb-->
-            <!--            LEFT JOIN-->
-            <!--            media_board_file mbf ON mb.board_no = mbf.board_no-->
-            <!--            LEFT JOIN-->
-            <!--            media_board_commend mbc ON mb.board_no = mbc.board_no;-->
+            <if test="board_no != null">AND board_no=#{board_no}</if>
+            <if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("board_title")'>
+                        AND board_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("emp_no")'>
+                        AND emp_no = #{keyword}
+                    </when>
+                </choose>
+            </if>
+
         </where>
         order by board_no desc
     </select>
@@ -67,14 +40,16 @@
     </delete>
 
     <insert id="mediaNoticeInsert" parameterType="com.vo.MediaNoticeVO">
-        insert into media_board(board_no,board_title,board_content,emp_no,reg_date,board_hit,mod_date)
+        insert into media_board(board_no,board_title,board_content,emp_no,reg_date,board_hit,mod_date,filename)
         values(board_pk_seq.nextval,
                #{board_title},
                #{board_content},
-               1010,
+               #{emp_no},
                TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
                0,
-               TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))
+               TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+               #{filename}
+              )
     </insert>
 
     <update id="mediaNoticeModify" parameterType="com.vo.MediaNoticeVO">
@@ -82,7 +57,8 @@
         set
             board_title = #{board_title},
             board_content = #{board_content},
-            mod_date= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+            mod_date= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+            filename= #{filename}
         where board_no = #{board_no}
     </update>
     <!--댓글 쿼리-->

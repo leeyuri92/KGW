@@ -12,7 +12,7 @@
 
     List<MediaNoticeCommendVO> mediaNoticeCommend = (List)request.getAttribute("commendList");
 
-//    out.print(mediaNoticeList);
+    out.print(mediaNoticeList);
 
 %>
 
@@ -95,7 +95,7 @@
                                         </dl>
                                         <dl>
                                             <dt>작성자</dt>
-                                            <dd><%=mediaVO.getEmp_no()%></dd>
+                                            <dd><%=mediaVO.getName()%></dd>
                                         </dl>
                                         <dl>
                                             <dt>작성일</dt>
@@ -111,6 +111,7 @@
                                         </dl>
                                     </div>
                                     <div class="cont">
+                                        <img src=""/>
                                         <%=mediaVO.getBoard_content()%>
                                     </div>
                                 </div>
@@ -137,7 +138,7 @@
                                                 <p class="user-name"><%=commendVO.getEmp_no()%></p>
                                                 <p class="comment-text"><%=commendVO.getCommend_content()%></p>
                                                 <div class="row">
-                                                <p class="comment-date"><%=commendVO.getReg_date()%></p>
+                                                    <p class="comment-date"><%=commendVO.getReg_date()%></p>
                                                 </div>
                                                 <button type="button" class="btn btn-primary" onclick="mediaCommendDelete('<%=commendVO.getCommend_no()%>')">삭제</button>
                                             </div>
@@ -146,19 +147,20 @@
                                                 }
                                             }
                                         %>
-                                    <%--댓글작성--%>
-                                    <form id="commentForm" method="post" action="/media/CommendInsert">
-                                        <div class="mb-3">
-                                            <label for="commendContent" class="form-label">댓글</label>
-                                            <input type="hidden" class="form-control mb-3" name="board_no" value="<%=mediaVO.getBoard_no()%>">
-                                            <%--                                            <input type="hidden" class="form-control mb-3" name="commend_no" value="<%=mediaNoticeList.get("board_no")%>>">--%>
-                                            <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=mediaVO.getEmp_no()%>" >
-                                            <textarea class="form-control" id="commendContent" rows="3" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="button" class="btn btn-primary" onclick="commendInsert()">댓글 작성</button>
-                                        </div>
-                                    </form>
+                                        <%--댓글작성--%>
+                                        <form id="commentForm" method="post" action="/media/CommendInsert">
+                                            <div class="mb-3">
+                                                <label for="commendContent" class="form-label">댓글</label>
+                                                <input type="hidden" class="form-control mb-3" name="board_no" value="<%=mediaVO.getBoard_no()%>">
+                                                <%--                                            <input type="hidden" class="form-control mb-3" name="commend_no" value="<%=mediaNoticeList.get("board_no")%>>">--%>
+                                                <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=mediaVO.getEmp_no()%>" >
+                                                <textarea class="form-control" id="commendContent" rows="3" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button type="button" class="btn btn-primary" onclick="commendInsert()">댓글 작성</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +182,7 @@
             </div>
             <div class="modal-body p-5 pt-0">
                 <%@include file="/common/summernote.jsp"%>
-                <form id="Modify" method="post" action="/media/mediaModify">
+                <form id="Modify" method="post" action="/media/mediaModify" enctype="multipart/form-data">
                     <div>
                         <input type="hidden" class="form-control mb-3" id="board_no" name="board_no" value="<%=mediaVO.getBoard_no()%>">
                         <input type="hidden" class="form-control mb-3" id="mod_date" name="mod_date" value="<%=mediaVO.getMod_date()%>">

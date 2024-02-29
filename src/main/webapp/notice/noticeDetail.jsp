@@ -8,6 +8,7 @@
     int size=0;
     List<NoticeBoardVO> noticeList = (List)request.getAttribute("noticeList");
     NoticeBoardVO noticeVO = noticeList.get(0);
+//    out.print(noticeVO);
 
 %>
 
@@ -70,6 +71,7 @@
                             <div class="box-header">
                                 <h4 style="font-weight: bold; margin-left: 2rem" >상세보기</h4>
                                 <hr />
+                                <%--------------------게시글 상세내용---------------------%>
                                 <div class="board_view">
                                     <div class="title">
                                         <dd><%=noticeVO.getNotice_title()%></dd>
@@ -81,7 +83,7 @@
                                         </dl>
                                         <dl>
                                             <dt>작성자</dt>
-                                            <dd><%=noticeVO.getEmp_no()%></dd>
+                                            <dd><%=noticeVO.getName()%></dd>
                                         </dl>
                                         <dl>
                                             <dt>작성일</dt>
@@ -115,7 +117,7 @@
     </div>
 </div>
 
-수정 모달창
+<%--수정 모달창--%>
 <div class="modal" id="noticeMod">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-4 shadow">
@@ -133,6 +135,30 @@
                     </div>
                     <div>
                         <input type="text" class="form-control mb-3" id="notice_title" name="notice_title" placeholder="제목을 입력해주세요." value="<%=noticeVO.getNotice_title()%>">
+                    </div>
+                    <div class="row">
+                        <div class="col-2 mb-3 mt-3 d-flex align-items-center">
+                            <div class="form-check">
+                                <%
+                                    if (noticeVO.isNotice_pin()){
+                                %>
+                                <input type="checkbox" id="notice_pin" name="notice_pin" class="form-check-input" style="margin-right: 5px;" checked>
+                                <%
+                                }else{
+                                %>
+                                <input type="checkbox" id="notice_pin" name="notice_pin" class="form-check-input" style="margin-right: 5px;">
+                                <%
+                                    }
+                                %>
+                                <label for="notice_pin" class="form-check-label">상단고정 여부</label>
+                            </div>
+                        </div>
+                        <div class="col-5 mb-3 mt-3">
+                            <input type="date" class="form-control" id="pin_start"  name="pin_start">
+                        </div>
+                        <div class="col-5 mb-3 mt-3">
+                            <input type="date" class="form-control" id="pin_end"  name="pin_end">
+                        </div>
                     </div>
                     <textarea id="summernote" name="notice_content"><%=noticeVO.getNotice_content()%></textarea>
                     <div class="d-flex justify-content-end mt-3">
@@ -159,6 +185,24 @@
             ['view', ['fullscreen', 'codeview', 'help']]
         ]
     });
+    $(document).ready(function() {
+        // 페이지 로딩 시 체크박스 상태에 따라 인풋 필드 활성화 또는 비활성화
+        if ($('#notice_pin').is(':checked')) {
+            $('#pin_start, #pin_end').prop('disabled', false);
+        } else {
+            $('#pin_start, #pin_end').prop('disabled', true);
+        }
+
+        // 체크박스 변경 시 인풋 필드 활성화 또는 비활성화
+        $('#notice_pin').change(function() {
+            if (this.checked) {
+                $('#pin_start, #pin_end').prop('disabled', false);
+            } else {
+                $('#pin_start, #pin_end').prop('disabled', true);
+            }
+        });
+    });
+
 
     const noticeModify =()=> {
         console.log("수정버튼클릭")

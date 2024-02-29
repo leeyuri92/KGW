@@ -13,10 +13,14 @@ public class MediaNoticeVO {
     private String reg_date;
     private Integer board_hit;
     private String mod_date;
+    private String filename;
+    private String gubun;
+    private String keyword;
+    private String name;
 
     @Override
     public String toString() {
-        return "KiwoomNoticeVO{" +
+        return "MediaNoticeVO{" +
                 "board_no=" + board_no +
                 ", emp_no=" + emp_no +
                 ", board_title='" + board_title + '\'' +
@@ -24,6 +28,10 @@ public class MediaNoticeVO {
                 ", reg_date='" + reg_date + '\'' +
                 ", board_hit=" + board_hit +
                 ", mod_date='" + mod_date + '\'' +
+                ", filename='" + filename + '\'' +
+                ", gubun='" + gubun + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

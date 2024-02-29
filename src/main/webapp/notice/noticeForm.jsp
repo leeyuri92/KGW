@@ -60,8 +60,8 @@
                                         <div class="row">
                                             <div class="col-2 mb-3 mt-3 d-flex align-items-center">
                                                 <div class="form-check">
-                                                    <input type="checkbox" id="remember-me" class="form-check-input" style="margin-right: 5px;">
-                                                    <label for="remember-me" class="form-check-label">상단고정 여부</label>
+                                                    <input type="checkbox" id="notice_pin" name="notice_pin" class="form-check-input" style="margin-right: 5px;">
+                                                    <label for="notice_pin" class="form-check-label">상단고정 여부</label>
                                                 </div>
                                             </div>
                                             <div class="col-5 mb-3 mt-3">
@@ -95,14 +95,14 @@
                                     });
                                     $(document).ready(function() {
                                         // 페이지 로딩 시 체크박스 상태에 따라 인풋 필드 활성화 또는 비활성화
-                                        if ($('#remember-me').is(':checked')) {
+                                        if ($('#notice_pin').is(':checked')) {
                                             $('#pin_start, #pin_end').prop('disabled', false);
                                         } else {
                                             $('#pin_start, #pin_end').prop('disabled', true);
                                         }
 
                                         // 체크박스 변경 시 인풋 필드 활성화 또는 비활성화
-                                        $('#remember-me').change(function() {
+                                        $('#notice_pin').change(function() {
                                             if (this.checked) {
                                                 $('#pin_start, #pin_end').prop('disabled', false);
                                             } else {
@@ -126,7 +126,7 @@
                                             id_subject.focus();
                                         }else if(markupStr === '<p><br></p>'){
                                             alert('내용을 입력하세요.');
-                                            //summernote 에디터에 포커스 추가
+                                            //summernote 에디터에 포커스 추가(내용 미작성시 알림창과 마우스커서를 텍스트로 보냄)
                                             $('#summernote').summernote('focus');
                                         }else{
                                             document.querySelector('#insert').submit();

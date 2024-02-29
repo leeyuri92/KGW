@@ -7,6 +7,7 @@
 <%
   int size=0;
   List<MediaNoticeVO> mediaNoticeList = (List)request.getAttribute("mediaNoticeList");
+//  out.print(mediaNoticeList);
   if(mediaNoticeList!=null){
     size = mediaNoticeList.size();
   }
@@ -19,9 +20,8 @@
 
   }
 
-  Date date = new Date();
   SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
-  String atrDate =simpleDate.format(date);
+
 %>
 
 <!DOCTYPE html>
@@ -109,7 +109,6 @@
                     <option value="none">분류선택</option>
                     <option value="board_title">제목</option>
                     <option value="emp_no">작성자</option>
-                    <option value="board_content">내용</option>
                   </select>
                 </div>
                 <div class="col-3">
@@ -123,18 +122,21 @@
                   <button type="button" class="btn btn-danger" onclick="mediaNoticeForm()">작성</button>
                 </div>
               </div>
-              <!-- 회원목록 시작 -->
+              <!-- 미디어게시판목록 시작 -->
               <div class='board-list'>
 
                 <%  for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
                   if (i == size) break;
                   MediaNoticeVO mediaNoticeVO = mediaNoticeList.get(i);
+                  String originalString  = mediaNoticeVO.getReg_date();
+                  String newFormatString = originalString.substring(0, 10);
                 %>
                 <div class="card mb-3 custom-card">
                   <div class="row g-0">
 
                     <div class="col-md-4">
-                      <img src="..." class="img-fluid rounded-start" alt="...">
+                      <%-- 이미지의 경로를 가져오는 코드--%>
+                      <img src="/fileUpload/media/<%=mediaNoticeVO.getFilename()%>/" class="img-fluid rounded-start" alt="...이미지 없음 ">
                     </div>
                     <div class="col-md-8">
 
@@ -144,8 +146,8 @@
                             <%=mediaNoticeVO.getBoard_title()%>
                           </a>
                         </p>
-                        <p class="card-text"><%=mediaNoticeVO.getEmp_no()%></p>
-                        <p class="card-text"><%=atrDate%></p>
+                        <p class="card-text"><%=mediaNoticeVO.getName()%></p>
+                        <p class="card-text"><%=newFormatString%></p>
                         <p class="card-text">
                           <small class="text-body-secondary"><%=mediaNoticeVO.getBoard_no()%></small>
                         </p>
@@ -154,7 +156,7 @@
                   </div>
                 </div>
                 <%
-                }
+                  }
                 %>
                 <hr/>
               </div>
@@ -172,7 +174,7 @@
               <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
             </div>
-            <!-- 회원목록   끝  -->
+            <!-- 미디어게시판목록   끝  -->
           </div>
         </div>
       </div>

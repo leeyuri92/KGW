@@ -51,14 +51,15 @@
                                 <hr />
                                 <div class="container">
                                     <%@include file="/common/summernote.jsp"%>
-                                    <form id="insert" method="post" action="/media/mediaInsert">
+                                    <form id="insert" method="post" action="/media/mediaInsert" enctype="multipart/form-data">
+                                        <input type="hidden" name="emp_no" id="emp_no" value="1004">
                                         <div>
                                             <input type="text" name="board_title" class="form-control mb-3"  placeholder="제목을 입력해주세요." id="subject">
                                         </div>
-                                        <textarea id="summernote" name="board_content"></textarea>
+                                        <textarea id="summernote" name="board_content"> </textarea>
                                         <div class="d-flex gap-2 justify-content-end mt-3">
-                                            <button type="submit" class="btn btn-primary" id="submit" onclick="mediaNoticeInsert()">작성</button>
-                                            <button type="submit" class="btn btn-primary" onclick="mediaNoticeList()">이전</button>
+                                            <button type="button" class="btn btn-primary" onclick="mediaNoticeInsert()">작성</button>
+                                            <button type="button" class="btn btn-primary" onclick="mediaNoticeList()">이전</button>
                                         </div>
                                     </form>
                                 </div>
@@ -78,36 +79,25 @@
                                         ]
                                     });
 
-                                    const btn_submit = document.querySelector('#submit');
-                                    btn_submit.addEventListener("click", () => {
-                                        const id_subject = document.querySelector('#subject');
-                                        if (id_subject.value == '') {
-                                            alert('제목을 입력하세요.');
-                                            id_subject.focus();
-                                            return false;
-                                        }
-
-                                        const markupStr = $('#summernote').summernote('code');
-                                        if (markupStr === '<p><br></p>') {
-                                            alert('내용을 입력하세요.');
-                                            //summernote 에디터에 포커스 추가
-                                            $('#summernote').summernote('focus');
-                                            return false
-                                        }
-                                        //  const insert =new FormData()
-                                        //
-                                        // insert.append('subject',id_subject.value)
-                                        // insert.append('content',markupStr)
-                                        //
-                                        // const xhr =new XMLHttpRequest()
-                                        // xhr.open("POST",)
-                                    });
                                     function mediaNoticeList(){
                                         location.href="/media/mediaNotice";
                                     }
                                     const mediaNoticeInsert =()=> {
                                         console.log("작성")
-                                        document.querySelector("#insert").submit();
+
+                                        const id_subject = document.querySelector('#subject');
+                                        const markupStr = $('#summernote').summernote('code');
+
+                                        if (id_subject.value == '') {
+                                            alert('제목을 입력하세요.');
+                                            id_subject.focus();
+                                        }else if(markupStr === '<p><br></p>'){
+                                            alert('내용을 입력하세요.');
+                                            //summernote 에디터에 포커스 추가
+                                            $('#summernote').summernote('focus');
+                                        }else{
+                                            document.querySelector('#insert').submit();
+                                        }
                                     };
                                 </script>
                             </div>

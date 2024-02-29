@@ -12,11 +12,14 @@ public class NoticeBoardVO {
     private String notice_content;
     private String category;
     private Integer notice_hit;
-    private String notice_pin;
+    private boolean notice_pin;
     private String pin_start;
     private String pin_end;
     private String reg_date;
     private String mod_date;
+    private String gubun;
+    private String keyword;
+    private String name;
 
     @Override
     public String toString() {
@@ -27,11 +30,14 @@ public class NoticeBoardVO {
                 ", notice_content='" + notice_content + '\'' +
                 ", category='" + category + '\'' +
                 ", notice_hit=" + notice_hit +
-                ", notice_pin='" + notice_pin + '\'' +
+                ", notice_pin=" + notice_pin +
                 ", pin_start='" + pin_start + '\'' +
                 ", pin_end='" + pin_end + '\'' +
                 ", reg_date='" + reg_date + '\'' +
                 ", mod_date='" + mod_date + '\'' +
+                ", gubun='" + gubun + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

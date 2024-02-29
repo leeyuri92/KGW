@@ -5,42 +5,40 @@
 <mapper namespace="com.mybatis.mapper.NoticeListMapper">
 
     <select id="noticeList" parameterType="com.vo.NoticeBoardVO" resultType="com.vo.NoticeBoardVO">
-        select
-        notice_no,
-        emp_no,
-        notice_title,
-        notice_content,
-        category,
-        notice_hit,
-        notice_pin,
-        pin_start,
-        pin_end,
-        reg_date,
-        mod_date
-        from
-        notice
+        select a.notice_no,
+        a.emp_no,
+        a.notice_title,
+        a.notice_content,
+        a.category,
+        a.notice_hit,
+        a.notice_pin,
+        a.pin_start,
+        a.pin_end,
+        a.reg_date,
+        a.mod_date,
+        b.emp_no,
+        b.name
+        from notice a join emp b on a.EMP_NO = b.EMP_NO
         <where>
-         <if test="notice_no != null">AND notice_no=#{notice_no}</if>
-            <!--            <if test="gubun != null">-->
-            <!--                <choose>-->
-            <!--                    <when test='gubun.equals("board_title")'>-->
-            <!--                        AND board_title LIKE '%'||#{keyword}||'%'-->
-            <!--                    </when>-->
-            <!--                    <when test='gubun.equals("board_no")'>-->
-            <!--                        AND board_no = #{keyword}-->
-            <!--                    </when>-->
-            <!--                    <when test='gubun.equals("emp_no")'>-->
-            <!--                        AND emp_no = #{keyword}-->
-            <!--                    </when>-->
-            <!--                </choose>-->
-            <!--            </if>-->
-        </where>
-        order by notice_no desc
-    </select>
+            <if test="notice_no != null">AND notice_no=#{notice_no}</if>
 
-<!--    <delete id="kiwoomNoticeDelete" parameterType="int">-->
-<!--        delete from media_board where board_no= #{board_no}-->
-<!--    </delete>-->
+            <if test="notice_pin != null and notice_pin != ''">   /* notice_pin이 null이 아니고 빈 문자열이 아닌 경우 */
+                AND notice_pin=#{notice_pin}
+            </if>
+
+            <if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("notice_title")'>
+                        AND notice_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("emp_no")'>
+                        AND emp_no = #{keyword}
+                    </when>
+                </choose>
+            </if>
+        </where>
+        order by notice_pin desc, notice_no desc   /*notice_pin을 내림차순으로 정렬하고, 그 후에 notice_no를 내림차순으로 정렬*/
+    </select>
 
     <insert id="noticeInsert" parameterType="com.vo.NoticeBoardVO">
         INSERT INTO notice (
@@ -56,13 +54,13 @@
             reg_date,
             mod_date
         ) VALUES (
-            notice_pk_seq.nextval,
+                     notice_pk_seq.nextval,
                      1004,
-                    #{notice_title},
-                    #{notice_content},
-                  '카테고리',
+                     #{notice_title},
+                     #{notice_content},
+                     '카테고리',
                      1,
-                     'y',
+                     #{notice_pin},
                      '2024-01-01',
                      '2024-01-01',
                      TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
@@ -79,6 +77,7 @@
         set
             notice_title = #{notice_title},
             notice_content = #{notice_content},
+            notice_pin = #{notice_pin},
             mod_date= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
         where notice_no = #{notice_no}
     </update>

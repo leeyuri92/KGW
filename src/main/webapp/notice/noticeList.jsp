@@ -8,14 +8,14 @@
     if(noticeList!=null){
         size=noticeList.size();
     }
-    out.print(noticeList);
 
     //페이지처리
-    int numPerPage = 5;
+    int numPerPage = 15;
     int nowPage = 0;
     if(request.getParameter("nowPage")!=null){
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
     }
+
     Date date = new Date();
     SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
     String atrDate =simpleDate.format(date);
@@ -37,8 +37,8 @@
             }
             event.isComposing//검색후 잔여검색기록 없애는코드
         }
-        function empSearch(){
-            console.log('empSearch');
+        function noticeSearch(){
+            console.log('noticeSearch');
             const gubun = document.querySelector("#gubun").value;
             const keyword = document.querySelector("#keyword").value;
             console.log(`${gubun} , ${keyword}`);
@@ -101,7 +101,7 @@
                                 <div class="col-2">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
                                         <option value="none">분류선택</option>
-                                        <option value="name">제목</option>
+                                        <option value="notice_title">제목</option>
                                         <option value="emp_no">작성자</option>
                                     </select>
                                 </div>
@@ -110,7 +110,7 @@
                                            aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
                                 <div class="col-1">
-                                    <button id="btn_search" class="btn btn-danger" onclick="empSearch()">검색</button>
+                                    <button id="btn_search" class="btn btn-danger" onclick="noticeSearch()">검색</button>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end gap-2">
                                     <button type="button" class="btn btn-danger" onclick="NoticeForm()">작성</button>
@@ -128,28 +128,43 @@
                                         <th style="width: 17%;">조회수</th>
                                     </tr>
                                     </thead>
+                                    <hr />
+                                    <tbody>
+                                    <% for (int i = nowPage * numPerPage; i < (nowPage * numPerPage) + numPerPage; i++) {
+                                        if (i == size) break;
+                                        NoticeBoardVO noticeVO = noticeList.get(i);
+                                    %>
+                                    <tr>
+                                        <td>
+                                            <%--메서드를 통해 해당 공지사항이 상단에 고정된 것인지 여부를 확인하는 JSP 스크립틀릿
+                                             만약 상단에 고정된 공지사항이라면 (true), <i class="bi bi-pin-angle"></i> 아이콘이 표시되고,
+                                             그렇지 않다면 (false), 해당 공지사항의 번호인 <%= noticeVO.getNotice_no() %> 가 표시--%>
+                                            <% if (noticeVO.isNotice_pin()) {%>
+                                            <i class="bi bi-pin-angle-fill" style="color: #7c1512;"></i>
+                                            &nbsp;
+                                            <% } else
+                                            {
+                                            %>
+                                            <%=noticeVO.getNotice_no()%>
+                                        </td>
+                                        <%
+                                            }
+                                        %>
+                                        <td>
+                                            <a href="javascript:noticeDetail('<%=noticeVO.getNotice_no()%>')">
+                                                <%=noticeVO.getNotice_title()%>
+                                            </a>
 
-
-                                <hr />
-                                <tbody>
-                                <% for (int i = nowPage * numPerPage; i < (nowPage * numPerPage) + numPerPage; i++) {
-                                    if (i == size) break;
-                                    NoticeBoardVO noticeVO = noticeList.get(i);
-                                %>
-                                <tr>
-                                    <td><%=noticeVO.getNotice_no()%></td>
-                                    <td><a href="javascript:noticeDetail('<%=noticeVO.getNotice_no()%>')">
-                                        <%=noticeVO.getNotice_title()%></a>
-                                    </td>
-                                    <td><%=noticeVO.getEmp_no()%></td>
-                                    <td><%=noticeVO.getReg_date()%></td>
-                                    <td><%=noticeVO.getNotice_hit()%></td>
-                                    <td></td>
-                                </tr>
-                                <%
-                                }
-                                %>
-                                </tbody>
+                                        </td>
+                                        <td><%=noticeVO.getName()%></td>
+                                        <td><%=noticeVO.getReg_date()%></td>
+                                        <td><%=noticeVO.getNotice_hit()%></td>
+                                        <td></td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                    </tbody>
                                 </table>
                                 <hr />
 
@@ -157,14 +172,13 @@
                                 <div style="display:flex; justify-content:center;">
                                     <ul class="pagination">
                                         <%
-                                            String pagePath = "empList";
+                                            String pagePath = "noticeList";
                                             BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
                                             out.print(bspb.getPageBar());
                                         %>
                                     </ul>
                                 </div>
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
-
                             </div>
                             <!-- 회원목록   끝  -->
                         </div>
@@ -173,6 +187,5 @@
             </div>
         </section>
     </div>
-</div>
 </body>
 </html>
