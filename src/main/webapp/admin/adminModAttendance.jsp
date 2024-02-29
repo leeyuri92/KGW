@@ -123,6 +123,7 @@
                 </select>
               </div>
             </div>
+            <input type="hidden" id="attendance_no" name="attendance_no" value="<%=attendanceModMap.get("ATTENDANCE_NO")%>">
             <input type="hidden" id="attendancemod_no" name="attendancemod_no" value="<%=attendanceModMap.get("ATTENDANCEMOD_NO")%>">
             <input type="hidden" id="state" name="state" value="">
             <div class="row mb-3">

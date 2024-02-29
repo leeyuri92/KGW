@@ -76,7 +76,7 @@
     </select>
 
     <select id="adminModAttendeanceMap" parameterType="com.vo.AttendanceModifyVO" resultType="map">
-        select a.WORK_DATE, a.START_TIME, a.END_TIME, a.STATE, b.REG_DATE, b.MOD_DATE, b.REQUEST_CONTENT, c.name, b.attendancemod_no
+        select a.WORK_DATE, a.START_TIME, a.END_TIME, a.STATE, b.REG_DATE, b.MOD_DATE, b.REQUEST_CONTENT, c.name, b.attendancemod_no, b.attendance_no
         from ATTENDANCE a join ATTENDANCEMODIFY b
                                on a.ATTENDANCE_NO = b.ATTENDANCE_NO
         join emp c on a.EMP_NO = c.EMP_NO
