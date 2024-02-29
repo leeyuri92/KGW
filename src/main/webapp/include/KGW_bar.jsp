@@ -79,7 +79,6 @@
                             <i class="nav-icon bi bi-person-heart"></i>
                             <p>
                                 인사정보
-                                <span class="right badge badge-danger">New</span>
                             </p>
                         </a>
                     </li>
@@ -90,7 +89,6 @@
                             <p>
                                 우리구단
                                 <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">6</span>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -101,7 +99,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/media/kiwoomSearch.jsp" class="nav-link">
+                                <a href="/kiwoom/kiwoomList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>우리구단선수조회</p>
                                 </a>
@@ -224,7 +222,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-header">EXAMPLES</li>
+                    <li class="nav-header">관리자</li>
                     <li class="nav-item">
                         <a href="../calendar.html" class="nav-link">
                             <i class="nav-icon bi bi-heart-fill"></i>
