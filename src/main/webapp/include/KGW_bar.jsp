@@ -170,15 +170,15 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../forms/general.html" class="nav-link">
+                                <a href="../approval/docu" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>General Elements</p>
+                                    <p>기안문서작성</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../forms/advanced.html" class="nav-link">
+                                <a href="../approval/approvalList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Advanced Elements</p>
+                                    <p>기안문서함</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -205,9 +205,9 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../tables/simple.html" class="nav-link">
+                                <a href="../player/PitchersList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Simple Tables</p>
+                                    <p>전체선수조회</p>
                                 </a>
                             </li>
                             <li class="nav-item">

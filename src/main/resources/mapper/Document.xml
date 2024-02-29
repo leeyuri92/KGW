@@ -2,24 +2,98 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.DocumentMapper">
 
-    <select id="selectDocument" parameterType="map" resultType="com.vo.DocumentVO">
-        SELECT
-            d.document_no,
-            d.emp_no,
-            d.document_title,
-            d.document_category,
-            d.submission_date,
-            d.state,
-            d.draftday,
-            d.start_date,
-            d.end_date,
-            d.dayoff_content,
-            d.k_id,
-            d.salary,
-            d.contract_term,
-            e.name AS empNameFor1002
-        FROM
-            document d
-                LEFT JOIN emp e ON e.emp_no = 1002
+<!--    기안자 select-->
+    <select id="selectDocument" parameterType="map" resultType="com.vo.ApprovalVO">
+        SELECT * FROM document
+                          LEFT JOIN approval ON document.document_no = approval.document_no
     </select>
+
+
+
+
+<!--영입 계약필요한 데이터 -->
+    <select id="faTeam">
+        select * from fa where fa_team !='키움';
+    </select>
+
+    <!--   결재자 select -->
+<select id="documentList">
+    SELECT
+        d.*, a.*
+    FROM
+        document d
+            INNER JOIN
+        approval a ON d.document_no = a.document_no
+
+</select>
+
+
+    <select id="DocumentInfo" parameterType="map" resultType="com.vo.ApprovalVO">
+        SELECT name, emp_position, dayoff_cnt, emp_no, null as k_no, null as k_name
+        FROM emp where emp_no=1001
+        union
+        SELECT null as name, null as emp_position, null as dayoff_cnt, null as emp_no, k_no, k_name
+        FROM kiwoom
+    </select>
+
+
+<!--  기안서작성 -->
+    <insert id="insertDocument" parameterType="com.vo.ApprovalVO" useGeneratedKeys="true" keyColumn="document_no" keyProperty="document_no">
+        INSERT INTO document (
+            document_no,
+            emp_no,
+            document_title,
+            document_category,
+            draftday,
+            start_date,
+            end_date,
+            k_no,
+            salary,
+            dayoff_content,
+            contract_term
+        )
+    VALUES (
+        document_pk_seq.nextval,
+        #{emp_no},
+        #{document_title},
+        #{document_category},
+        #{draftday},
+        #{start_date},
+        #{end_date},
+        #{k_no},
+        #{salary},
+        #{dayoff_content},
+        #{contract_term}
+        )
+    </insert>
+
+<!--결재 작성 -->
+    <insert id="insertApproval" parameterType="com.vo.ApprovalVO" >
+        INSERT INTO approval (approval_no, document_no, approval_emp_no, approval_category,
+        rejection_content, middle_approval_date, final_approval_date, middleSign_img, finalSign_img)
+        VALUES (approval_pk_seq.nextval, 16, #{approval_emp_no}, #{approval_category},
+        #{rejection_content}, #{middle_approval_date}, #{final_approval_date}, EMPTY_BLOB(), EMPTY_BLOB())
+    </insert>
+
+
 </mapper>
+
+
+
+
+<!--<insert id="insertDocument" parameterType="com.vo.ApprovalVO" useGeneratedKeys="true" keyColumn="document_no" keyProperty="document_no">-->
+<!--INSERT INTO document ( document_no,emp_no, document_title, document_category, draftday ,start_date, end_date, k_NO, salary, dayoff_content, contract_term)-->
+<!--VALUES (-->
+<!--           document_pk_seq.nextval,-->
+<!--           #{emp_no},-->
+<!--           #{document_title},-->
+<!--           #{document_category},-->
+<!--           #{draftday},-->
+<!--           #{start_date},-->
+<!--           #{end_date},-->
+<!--           #{k_no},-->
+<!--           #{salary},-->
+<!--           #{dayoff_content},-->
+<!--           #{contract_term}-->
+<!--       )-->
+<!--</insert>-->

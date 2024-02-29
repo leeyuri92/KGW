@@ -23,9 +23,10 @@ public class PlayersController {
     Logger logger = LoggerFactory.getLogger("PlayersController".getClass());
 
     @GetMapping("/HittersList")
-    public String hitterList(Model model, @RequestParam Map<String, Object> hMap) {
+    public String hitterList(Model model, @RequestParam Map<String, Object> hMap  , int H_AB   ) {
         List<Map<String, Object>> list = playerService.hitterList(hMap);
         model.addAttribute("list", list);
+//        model.addAttribute("H_AB",hab);
         return "forward:HittersList.jsp";
 
     }

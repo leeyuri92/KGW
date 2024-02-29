@@ -61,6 +61,8 @@
 
 
 
+
+
         function PlayersSearch() {
             var gubunValue = document.getElementById('gubun').value;// select1 value option
             var gubunHittersValue = document.getElementById('gubunHitters').value; // select2 value option
@@ -69,7 +71,6 @@
                 if (gubunHittersValue === 'hitterTable') {
                     window.location.href = '/player/HittersList';
                 } else {
-                    // 이닝수 랑 타석 처리 부분
                 }
             } else if (gubunValue === 'pitcherTable') {
                 if (gubunHittersValue === 'hitterTable') {
@@ -79,6 +80,16 @@
                 }
             }
         }
+
+
+
+
+    /*
+
+    * */
+
+        // h_ab>100 result;
+
 
     </script>
 
@@ -121,6 +132,7 @@
                     </div>
 
                     <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
+
                     <div class="row">
                         <div class="col-2">
                             <select id="gubun" class="form-select" aria-label="분류선택">
@@ -172,7 +184,7 @@
                                 <td><%= hittersVO.getH_name()%></td>
                                 <td><%= hittersVO.getH_team()%></td>
                                 <td><%= hittersVO.getH_avg()%></td>
-                                <td><%= hittersVO.getH_ab()%></td>
+                                <td ><%= hittersVO.getH_ab()%></td>
                                 <td><%= hittersVO.getH_h()%></td>
                                 <td><%= hittersVO.getH_hr()%></td>
                                 <td><%= hittersVO.getH_r()%></td>

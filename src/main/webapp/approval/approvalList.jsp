@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
-<%@  page import="com.vo.DocumentVO" %>
+<%@  page import="com.vo.ApprovalVO" %>
 <%
     List<Map<String,Object>>list=(List)request.getAttribute("list");
     int size=0;
@@ -100,13 +100,13 @@
                                         <%
                                         for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
                                             if(i==size)break;
-                                            DocumentVO documentVO=(DocumentVO) list.get(i);
-                                            if(!"임시저장".equals(documentVO.getState())){ // if문 으로 임시저장 구분
+                                            ApprovalVO approvalVO=(ApprovalVO) list.get(i);
+                                            if(!"임시저장".equals(approvalVO.getState())){ // if문 으로 임시저장 구분
                                         %>
                                         <tr>
-                                        <td><%= documentVO.getDocument_No()%></td>
-                                        <td><%= documentVO.getDocument_Category()%></td>
-                                        <td><%= documentVO.getState()%></td>
+                                        <td><%= approvalVO.getDocument_no()%></td>
+                                        <td><%= approvalVO.getDocument_category()%></td>
+                                        <td><%= approvalVO.getState()%></td>
                                         </tr>
                                         <%
                                         }
