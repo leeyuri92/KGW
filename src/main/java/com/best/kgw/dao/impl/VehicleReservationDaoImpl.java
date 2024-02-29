@@ -1,6 +1,7 @@
 package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.VehicleReservationDao;
+import com.vo.CalendarVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,32 +40,26 @@ public class VehicleReservationDaoImpl implements VehicleReservationDao {
     }
 
     @Override
-    public List<Map<String, Object>> addVehicleReservation(@RequestParam Map<String, Object> addMap)throws Exception {
-        logger.info("Dao : addVehicleReservation 호출");
-        logger.info(addMap.toString());
+    public void insertVehicleList(CalendarVO calendarVO)throws Exception {
+        logger.info("Dao : insertVehicleList 호출");
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("addVehicleReservation", addMap);
+        list = sqlSessionTemplate.selectList("insertVehicleList", calendarVO);
         logger.info(list.toString());
-        return list;
     }
     @Override
-    public List<Map<String, Object>> delVehicleReservation(@RequestParam Map<String, Object> delMap)throws Exception {
-        logger.info("Dao : delVehicleReservation 호출");
-        logger.info(delMap.toString());
+    public void deleteVehicleList(CalendarVO calendarVO)throws Exception {
+        logger.info("Dao : deleteVehicleList 호출");
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("delVehicleReservation", delMap);
+        list = sqlSessionTemplate.selectList("deleteVehicleList", calendarVO);
         logger.info(list.toString());
-        return list;
     }
 
     @Override
-    public List<Map<String, Object>> upVehicleReservList(@RequestParam Map<String, Object> upMap)throws Exception {
-        logger.info("Dao : upVehicleReservList 호출");
-        logger.info(upMap.toString());
+    public void updateVehicleList(CalendarVO calendarVO)throws Exception {
+        logger.info("Dao : updateVehicleList 호출");
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("upVehicleReservList", upMap);
+        list = sqlSessionTemplate.selectList("updateVehicleList", calendarVO);
         logger.info(list.toString());
-        return list;
     }
 
     @Override

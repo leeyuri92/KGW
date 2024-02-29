@@ -1,5 +1,7 @@
 package com.best.kgw.service;
 
+import com.vo.CalendarVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,11 +11,11 @@ public interface VehicleReservationService {
 
     List<Map<String, Object>> vehicleReservationList(Map<String, Object> vrMap);
 
-    List<Map<String, Object>> delVehicleReservation(Map<String, Object> delMap);
+    void deleteVehicleList(CalendarVO calendarVO);
 
-    List<Map<String, Object>> addVehicleReservation(Map<String, Object> addMap);
+    void insertVehicleList(CalendarVO calendarVO);
 
-    List<Map<String, Object>> upVehicleReservList(Map<String, Object> upMap);
+    void updateVehicleList(CalendarVO calendarVO);
 
     List<Map<String, Object>> vehicleReservList(Map<String, Object> reservMap);
 

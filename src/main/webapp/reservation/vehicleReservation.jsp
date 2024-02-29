@@ -31,7 +31,7 @@
         if (calendarEl) {
             calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'resourceTimelineDay',
-                resourceAreaWidth: '87px',
+                resourceAreaWidth: '92px',
                 expandRows: false,
                 aspectRatio: 1,
                 headerToolbar: {
@@ -46,16 +46,6 @@
                 resourceAreaHeaderContent: '',
                 height: 'auto',
                 locale: 'ko',
-                // slotLabelFormat: { hour: 'numeric', minute: '2-digit', hour12: false }, // 시간을 24시간 형식으로 표시
-                // eventAdd: function(obj) {
-                //     console.log(obj);
-                // },
-                // eventChange: function(obj) {
-                //     console.log(obj);
-                // },
-                // eventRemove: function(obj) {
-                //     console.log(obj);
-                // },
 
                 // 타임라인 드래그 이벤트
                 select: function(arg) {
@@ -228,7 +218,7 @@
 
         submitBtn.addEventListener('click', handleEventSubmit);
         submitBtn.addEventListener('click', handleEventUpdate);
-        searchBtn.addEventListener('click', reservSearch);
+        searchBtn.addEventListener('click', calendarSearch);
         exitBtn.addEventListener('click', handleEventSubmit);
         exitBtn.addEventListener('click', handleEventUpdate);
         deleteBtn.addEventListener('click', handleEventDelete);
@@ -245,176 +235,134 @@
             let resourceIdInput = document.getElementById('insertResourceId');
             let assetNoInput = document.getElementById('insertAssetNo');
 
-            let title = titleInput.value;
-            let start = startInput.value;
-            let end = endInput.value;
-            let resourceId = resourceIdInput.value;
-            let id = assetNoInput.value;
-            let url = '/vehicleReservation/addVehicleReservation';
+            let reservation_title = titleInput.value;
+            let reservation_start = startInput.value;
+            let reservation_end = endInput.value;
+            let asset_id = resourceIdInput.value;
+            let asset_no = assetNoInput.value;
+            let url = '/vehicleReservation/insertVehicleList';
 
-            if (title && start && end && id && resourceId) {
-                let xhr = new XMLHttpRequest();
-                xhr.open('POST', url, true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            if (reservation_title && reservation_start && reservation_end && asset_id && asset_no) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        reservation_title: reservation_title,
+                        reservation_start: reservation_start,
+                        reservation_end: reservation_end,
+                        asset_id: asset_id,
+                        asset_no: asset_no
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response > 0) {
+                            if (window.opener) window.opener.location.reload(true);
+                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
 
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        // console.log(xhr.responseText);
-                        console.log(addEventToCalendar.toString());
-                        addEventToCalendar(title, start, end, resourceId, id);
-                        console.log('새 이벤트가 성공적으로 등록되었습니다.');
+                            alert("일정이 등록되었습니다.");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.error("오류 발생 >> " + error);
                     }
-                };
-
-                let data = 'title=' + encodeURIComponent(title) +
-                    '&start=' + encodeURIComponent(start) +
-                    '&end=' + encodeURIComponent(end) +
-                    '&resourceId=' + encodeURIComponent(resourceId) +
-                    '&id=' + encodeURIComponent(id);
-
-                xhr.send(data);
-            } else {
-                console.error('입력값이 유효하지 않습니다.');
+                });
             }
+            // 모달 숨기기
+            let modal = document.getElementById('insertModal');
+            modal.style.display = 'none';
             closeModalAndClearInputs();
         }
 
+        function handleEventDelete() {
+            let reservationNoInput = document.getElementById('detailReservationNo');
+            let reservation_no = reservationNoInput.value;
+            let url = '<%=request.getContextPath()%>/vehicleReservation/deleteVehicleList';
 
-        function addEventToCalendar(title, start, end, resourceId, id) {
-            updateReservationList(renderReservationList);
-            calendar.addEvent({
-                title: title,
-                start: start,
-                end: end,
-                resourceId: resourceId,
-                id: id,
-                color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-            });
+            if (reservation_no) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        reservation_no: reservation_no,
+                        // asset_no: asset_no
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response > 0) {
+                            if (window.opener) window.opener.location.reload(true);
+                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';v
+
+                            alert("일정이 삭제되었습니다.");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.error("오류 발생 >> " + error);
+                    }
+                });
+            }
+            closeModalAndClearInputs();
+            // 모달 숨기기
+            let modal = document.getElementById('detailModal');
+            modal.style.display = 'none';
         }
 
+        function handleEventUpdate(updatedEvent) {
+            let titleInput = document.getElementById('detailTitle');
+            let startInput = document.getElementById('detailStart');
+            let endInput = document.getElementById('detailEnd');
+            let assetNoInput = document.getElementById('detailAssetNo');
+            let reservationNoInput = document.getElementById('detailReservationNo');
+
+            let reservation_title = titleInput.value;
+            let reservation_start = startInput.value;
+            let reservation_end = endInput.value;
+            let asset_no = assetNoInput.value;
+            let reservation_no = reservationNoInput.value;
+            let url = "/vehicleReservation/insertVehicleList";
+
+            if (reservation_title && reservation_start && reservation_end && asset_no && reservation_no) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        reservation_title: reservation_title,
+                        reservation_start: reservation_start,
+                        reservation_end: reservation_end,
+                        asset_no: asset_no,
+                        reservation_no: reservation_no
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response > 0) {
+                            if (window.opener) window.opener.location.reload(true);
+                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+
+                            // 업데이트된 내용이 성공적으로 처리된 후 기존 일정 제거
+                            // 기존 일정 요소를 선택하여 삭제
+                            let existingEventElement = document.getElementById('existingEvent');
+                            existingEventElement.remove();
+
+                            alert("일정이 수정되었습니다.");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.error("오류 발생 >> " + error);
+                    }
+                });
+            }
+        
+
+        closeModalAndClearInputs();
+            // 모달 숨기기
+            let modal = document.getElementById('detailModal');
+            modal.style.display = 'none';
+        }
+
+        // 모달 닫기 및 입력 값 초기화 함수
         function closeModalAndClearInputs() {
             let modal = document.getElementById('insertModal');
             modal.style.display = 'none';
             clearModalInputs();
-        }
-
-        function handleEventDelete() {
-            let assetNoInput = document.getElementById('detailAssetNo');
-            let id = assetNoInput.value;
-            let reservationNoInput = document.getElementById('detailReservationNo');
-            let reservationNo = reservationNoInput.value;
-            let eventToDelete = calendar.getEventById(id);
-            let url = '/vehicleReservation/delVehicleReservation';
-
-            // AJAX를 이용하여 서버에 삭제 요청
-            let xhr = new XMLHttpRequest();
-            xhr.open('DELETE', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            // Promise를 이용한 비동기 처리
-            let promise = new Promise(function(resolve, reject) {
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        console.log(xhr);
-                        resolve(); // 비동기 작업 완료를 알림
-                    }
-                };
-            });
-
-            promise.then(function() {
-                if (eventToDelete) {
-                    eventToDelete.remove(); // 이벤트 삭제
-                    updateReservationList(renderReservationList)
-                    console.log('이벤트가 성공적으로 삭제되었습니다.');
-                } else {
-                    console.log('삭제할 이벤트를 찾을 수 없습니다.');
-                }
-
-                let modal = document.getElementById('detailModal');
-                modal.style.display = 'none';
-            });
-
-            // 서버로 전송할 데이터 설정 (id와 함께 예약번호도 포함)
-            let data = 'id=' + encodeURIComponent(id) + '&reservationNo=' + encodeURIComponent(reservationNo);
-            console.log(data);
-            xhr.send(data); // 데이터 전송
-        }
-
-
-        //업데이트
-        function handleEventUpdate() {
-            let titleInput = document.getElementById('detailTitle');
-            let startInput = document.getElementById('detailStart');
-            let endInput = document.getElementById('detailEnd');
-            let resourceIdInput = document.getElementById('detailResourceId');
-            let reservationNoInput = document.getElementById('detailReservationNo');
-            let assetNoInput = document.getElementById('detailAssetNo');
-
-            let title = titleInput.value;
-            let start = startInput.value;
-            let end = endInput.value;
-            let resourceId = resourceIdInput.value;
-            let reservationNo = reservationNoInput.value;
-            let id = assetNoInput.value;
-
-            if (title && start && end && resourceId && reservationNo && id) {
-                let url = '/vehicleReservation/upVehicleReservList';
-                let xhr = new XMLHttpRequest();
-                xhr.open('PUT', url, true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        console.log('이벤트가 성공적으로 업데이트되었습니다.');
-                        let updatedEvent = {
-                            title: title,
-                            start: start,
-                            end: end,
-                            resourceId: resourceId,
-                            id: id,
-                            extendedProps: {
-                                reservationNo: reservationNo
-                            }
-                        };
-                        updateToCalendar(updatedEvent);
-                    }
-                };
-
-                let eventData = 'id=' + encodeURIComponent(id) +
-                    '&reservationNo=' + encodeURIComponent(reservationNo) +
-                    '&title=' + encodeURIComponent(title) +
-                    '&start=' + encodeURIComponent(start) +
-                    '&end=' + encodeURIComponent(end);
-
-                xhr.send(eventData);
-            }
-            let modal = document.getElementById('detailModal');
-            modal.style.display = 'none';
-            closeModalAndClearInputs();
-        }
-
-
-        // 기존 이벤트를 업데이트 함수
-        function updateToCalendar(updatedEvent) {
-            if (updatedEvent && updatedEvent.id) {
-                let existingEvent = calendar.getEventById(updatedEvent.id); // 기존 이벤트 가져오기
-                if (existingEvent) {
-                    existingEvent.remove(); // 기존 이벤트 삭제
-                    updateReservationList(renderReservationList);
-                    // 업데이트된 이벤트를 캘린더에 추가
-                    calendar.addEvent({
-                        title: updatedEvent.title,
-                        start: updatedEvent.start,
-                        end: updatedEvent.end,
-                        resourceId: updatedEvent.resourceId,
-                        id: updatedEvent.id,
-                        extendedProps: {
-                            reservationNo: updatedEvent.extendedProps.reservationNo
-                        },
-                        color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-                    });
-                }
-            }
         }
 
         // 모달 닫기 처리 함수
@@ -434,10 +382,6 @@
             document.getElementById('detailStart').value = '';
             document.getElementById('insertEnd').value = '';
             document.getElementById('detailEnd').value = '';
-            document.getElementById('insertAssetNo').value = '';
-            document.getElementById('detailAssetNo').value = '';
-            document.getElementById('insertResourceId').value = '';
-            document.getElementById('detailResourceId').value = '';
             document.getElementById('detailReservationNo').value = '';
         }
     });
@@ -453,74 +397,28 @@
         }
     }
 
-    function searchEnter(event) {
-        console.log(event.key);
-        if (event.key === 'Enter') {
-            noticeSearch();
-        }
-        event.isComposing; //검색후 잔여검색기록 없애는코드
-    }
+    $(document).ready(function() {
+        $('#calendarTable').show();
+        $('#my').hide();
+        $('#team').hide();
+        $('#company').hide();
+        $('#calendarGubun').show();
+    });
 
-    // 검색된 값을 서버로 전송하고, 서버로부터 받은 데이터를 처리하여 예약 현황에 출력하는 함수
-    function reservSearch() {
-        const gubun = document.querySelector("#gubun").value;
-        const keyword = document.querySelector("#keyword").value;
+    function calendarSearch() {
+        var gubunValue = document.getElementById('gubun').value;
+        var calendarGubunValue = document.getElementById('calendarGubun').value;
 
-        const searchData = new URLSearchParams();
-        searchData.append('gubun', gubun);
-        searchData.append('keyword', keyword);
-
-        fetch('/vehicleReservation/vehicleReservList', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: searchData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                renderSearchedReservationList(data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    }
-
-    // 서버에서 받은 데이터를 처리하여 예약 현황에 출력하는 함수
-    function renderSearchedReservationList(data) {
-        // 받은 데이터를 예약 현황에 출력하는 코드를 작성
-        // 예를 들어, 받은 데이터를 HTML 형식으로 파싱하여 예약 현황에 추가
-        // 이 함수는 실제 예약 현황을 업데이트하는 데 필요한 로직을 구현해야함
-    }
-
-
-    // CRUD 작업 후 예약 목록 업데이트
-    function updateReservationList() {
-        let xhr = new XMLHttpRequest();
-        let url = '/vehicleReservation/vehicleReservationList';
-
-        xhr.open('GET', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                let responseText = xhr.responseText;
-                renderReservationList(responseText);
+        if (gubunValue === 'my') {
+            if (calendarGubunValue === 'calendarTable') {
+                window.location.href = '/calendar/myList';
+            } else if (gubunValue === 'team ') {
+                if (calendarGubunValue === 'calendarTable') {
+                    window.location.href = '/calendar/teamList';
+                } else {
+                    window.location.href = '/calendar/companyList';
+                }
             }
-        };
-        xhr.send();
-    }
-
-    // 예약 목록을 화면에 렌더링하는 함수
-    function renderReservationList(data) {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = data;
-
-        const reservationTableBody = tempDiv.querySelector('#reservationTableBody');
-
-        if (reservationTableBody) {
-            const tbody = document.getElementById('reservationTableBody');
-            tbody.innerHTML = reservationTableBody.innerHTML;
         }
     }
 </script>
@@ -552,13 +450,30 @@
             </div>
         </div>
 
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <%-- 내 예약 현황 태그 --%>
+                        <div class="container-fluid1"></div>
+                            <h2 class="cal_title">차량 주의사항</h2><br>
+                            <hr /><br><br>
+                            <h5>1 .  사용 신청 이후 운영관리자에게 차키와 운행일지를 수령, 사용 후 반납</h5><br>
+                            <h5>2 .  차량 반납 시 차량내부의 쓰레기 등을 반드시 수거하여 차량 청결에 유의</h5><br>
+                            <h5>3 .  차량이용자는 운전 전 차량의 상태 (안전사항 및 청결도)를 확인하며, 이상이 있을 경우 즉시 운영관리자에게 연락함</h5><br>
+                            <h5>4 .  차량 내부에서는 절대 금연함</h5><br>
+                            <h5>◎    운영관리자   :   업무지원팀   (  ☎ 8888  )</h5><br><br>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
                         <div class="container-fluid1">
-                            <h2 class="cal_title">자산 예약 현황</h2>
+                            <h2 class="cal_title">차량 예약 현황</h2>
                             <button id="addEventBtn" class="btn btn-primary col-md-1">일정 등록</button>
                         </div>
                         <hr />
@@ -585,21 +500,26 @@
                         <div class="container-fluid1">
                             <h2 class="cal_title">내 예약 현황</h2>
                             <!-- 검색기 시작 -->
-                            <div class="row">
-                                <div class="col-3">
+                            <div class="row search">
+                                <div class="col-2">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
-                                        <option value="none">분류선택</option>
-                                        <option value="b_title">제목</option>
-                                        <option value="b_writer">작성자</option>
-                                        <option value="b_content">내용</option>
+                                        <option value="my">내 일정</option>
+                                        <option value="team">팀 일정</option>
+                                        <option value="company">전사 일정</option>
                                     </select>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-2">
+                                    <select id="calendarGubun" class="form-select" aria-label="분류선택">
+                                        <option value="calendarTable">참석자</option>
+                                        <option value="calendarTable">날짜</option>
+                                    </select>
+                                </div>
+                                <div class="col-7">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                                            aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
-                                <div class="col-3">
-                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" onclick="reservSearch()"/>
+                                <div class="col-1">
+                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" onclick="calendarSearch()"/>
                                 </div>
                             </div>
                         </div>
@@ -609,7 +529,7 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">예약장소</th>
+                                    <th scope="col">예약차량</th>
                                     <th scope="col">예약자</th>
                                     <th scope="col">예약명</th>
                                     <th scope="col">예약시간</th>
@@ -672,9 +592,12 @@
                         </div>
                         <select class="form-control" id="insertAssetNo" name="insertAssetNo">
                             <option value="0" selected>자산을 선택하세요.</option>
-                            <option value="107">벤틀리</option>
-                            <option value="108">벤츠S</option>
-                            <option value="109">전용기</option>
+                            <option value="114">벤츠S</option>
+                            <option value="115">벤틀리</option>
+                            <option value="116">머스탱</option>
+                            <option value="117">롤스로이스</option>
+                            <option value="118">전용기A</option>
+                            <option value="119">전용기B</option>
                         </select>
                         <br>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="submitEvent" name="submitEvent" value="등록"/>

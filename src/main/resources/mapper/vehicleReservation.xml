@@ -30,29 +30,29 @@
         </where>
     </select>
 
-    <delete id="delVehicleReservation" parameterType="map">
+    <delete id="deleteVehicleList" parameterType="com.vo.CalendarVO">
         DELETE FROM asset_reservation
         <where>
-            AND reservation_no = ${reservationNo}
+            AND reservation_no = ${reservation_no}
         </where>
     </delete>
 
 
-    <insert id="addVehicleReservation" parameterType="map">
+    <insert id="insertVehicleList" parameterType="com.vo.CalendarVO">
         INSERT INTO ASSET_RESERVATION (RESERVATION_NO, EMP_NO, ASSET_NO, RESERVATION_TITLE, RESERVATION_CONTENT, RESERVATION_START, RESERVATION_END)
-        VALUES (reservation_pk_seq.nextval, 1003, '${id}', '${title}', '예약', '${start}', '${end}')
+        VALUES (reservation_pk_seq.nextval, 1003, '${asset_no}', '${reservation_title}', '예약', '${reservation_start}', '${reservation_end}')
     </insert>
 
-    <update id="upVehicleReservList" parameterType="map">
+    <update id="updateVehicleList" parameterType="com.vo.CalendarVO">
         UPDATE ASSET_RESERVATION
-        SET RESERVATION_NO = '${reservationNo}',
+        SET RESERVATION_NO = '${reservation_no}',
             EMP_NO = 1003,
-            ASSET_NO = '${id}',
-            RESERVATION_TITLE = '${title}',
+            ASSET_NO = '${asset_no}',
+            RESERVATION_TITLE = '${reservation_title}',
             RESERVATION_CONTENT = '예약',
-            RESERVATION_START = '${start}',
-            RESERVATION_END = '${end}'
-        where reservation_no = ${reservationNo}
+            RESERVATION_START = '${reservation_start}',
+            RESERVATION_END = '${reservation_end}'
+        where reservation_no = '${reservation_no}'
     </update>
 
     <select id="vehicleReservList" parameterType="map" resultType="map">

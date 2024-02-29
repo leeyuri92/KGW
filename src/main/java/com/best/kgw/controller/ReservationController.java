@@ -1,9 +1,12 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.ReservationService;
+import com.vo.CalendarVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,35 +36,63 @@ public class ReservationController {
         return "forward:/reservation/assetReservation.jsp";
     }
 
-    @PostMapping("/addReservation")
-    public String addReservList(@RequestParam Map<String, Object> addMap, Model model){
-        List<Map<String, Object>> addReservList;
-        logger.info("reservationService: addReservList 호출");
-        addReservList = reservationService.addReservList(addMap);
-        model.addAttribute("addReservList", addReservList);
-        logger.info(addReservList.toString());
-        return "forward:/reservation/assetReservation.jsp";
+    @PostMapping("/insertReservation")
+    @ResponseBody
+    public ResponseEntity<String> insertReservation(CalendarVO calendarVO) {
+        logger.info("등록 컨트롤러 호출");
+
+        ResponseEntity<String> entity = null;
+
+        try {
+            reservationService.insertReservation(calendarVO);
+            logger.info("등록 DB 연결 시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 등록 DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
     }
 
-    @DeleteMapping("/delReservation")
-    public String delReservList(@RequestParam Map<String, Object> delMap, Model model){
-        List<Map<String, Object>> delReservList;
-        logger.info("reservationService: delReservList 호출");
-        delReservList = reservationService.delReservList(delMap);
-        model.addAttribute("delReservList", delReservList);
-        logger.info(delReservList.toString());
-        return "forward:/reservation/assetReservation.jsp";
+    @PostMapping("/deleteReservation")
+    @ResponseBody
+    public ResponseEntity<String> deleteReservation(CalendarVO calendarVO) {
+        logger.info("삭제 컨트롤러 호출");
+
+        ResponseEntity<String> entity = null;
+
+        try {
+            reservationService.deleteReservation(calendarVO);
+            logger.info("삭제 DB 연결 시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 삭제 DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
     }
 
-    @PutMapping("/updateReservation")
-    public String upReservList(@RequestParam Map<String, Object> upMap, Model model){
-        List<Map<String, Object>> upReservList;
-        logger.info("reservationService: upReservList 호출");
-        upReservList = reservationService.upReservList(upMap);
-        model.addAttribute("upReservList", upReservList);
-        logger.info(upReservList.toString());
-        return "forward:/reservation/assetReservation.jsp";
+    @PostMapping("/updateReservation")
+    @ResponseBody
+    public ResponseEntity<String> updateReservation(CalendarVO calendarVO) {
+        logger.info("업데이트 컨트롤러 호출");
+
+        ResponseEntity<String> entity = null;
+
+        try {
+            reservationService.updateReservation(calendarVO);
+            logger.info("업데이트 DB 연결 시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 업데이트 DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
     }
+
 
     @GetMapping("reservList")
     public String reservList(@RequestParam Map<String, Object> reservMap, Model model){

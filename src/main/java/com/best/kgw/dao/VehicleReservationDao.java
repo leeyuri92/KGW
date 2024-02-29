@@ -1,5 +1,6 @@
 package com.best.kgw.dao;
 
+import com.vo.CalendarVO;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -11,11 +12,11 @@ public interface VehicleReservationDao {
 
     List<Map<String, Object>> vehicleReservationList(Map<String, Object> vrMap)throws Exception;
 
-    List<Map<String, Object>> delVehicleReservation(Map<String, Object> delMap)throws Exception;
+    void deleteVehicleList(CalendarVO calendarVO)throws Exception;
 
-    List<Map<String, Object>> addVehicleReservation(Map<String, Object> addMap)throws Exception;
+    void insertVehicleList(CalendarVO calendarVO)throws Exception;
 
-    List<Map<String, Object>> upVehicleReservList(Map<String, Object> upMap)throws Exception;
+    void updateVehicleList(CalendarVO calendarVO)throws Exception;
 
     List<Map<String, Object>> vehicleReservList(Map<String, Object> reservMap)throws Exception;
 
