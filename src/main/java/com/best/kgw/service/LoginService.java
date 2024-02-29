@@ -10,4 +10,5 @@ public interface LoginService {
 
     public String findId(Map<String, Object> fmap) throws Exception;
 
+    String findPw(String emp_no) throws Exception;
 }

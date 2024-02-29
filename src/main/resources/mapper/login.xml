@@ -21,5 +21,16 @@
         WHERE  name = #{name} AND email = #{email}
     </select>
 
+    <select id="emp_no" parameterType="String" resultType="String">
+        SELECT email
+        FROM emp
+        WHERE  emp_no = #{emp_no}
+    </select>
+
+    <update id="updatePw" parameterType="com.best.kgw.auth.EmailMessage">
+        UPDATE EMP
+        SET password = #{encPW}
+        WHERE EMAIL = #{to}
+    </update>
 
 </mapper>

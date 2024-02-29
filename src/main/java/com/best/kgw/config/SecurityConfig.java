@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/admin/**").hasRole("LEADER")
 //                        .requestMatchers("/mypage/**").authenticated()
-                        .requestMatchers("/findId/**").permitAll()
+                        .requestMatchers("/findId/**","/findPw/**","/sendPassword/**").permitAll()
 //                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(login -> login

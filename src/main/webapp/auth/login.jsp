@@ -4,14 +4,14 @@
   내용 : login페이지
 ----------------------------------------------------------%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>login</title>
     <%@include file="/common/bootstrap_common.jsp" %>
     <link rel="stylesheet" href="/css/login.css">
-
 
     <script type="text/javascript">
 
@@ -24,14 +24,14 @@
         }
 
         const login = (event) => {
-            alert("로그인 호출");
+            alert("로그인에 성공하였습니다.");
             document.getElementById("f_login").submit();  // form 에 있는 action="loginProcess"실행
         }
 
         const findId = () => {
             $.ajax({
                 type: "POST",
-                url: "/findId",
+                url: "findId",
                 data: {
                     name: $('#name').val(),
                     email: $('#email').val()
@@ -44,6 +44,38 @@
                         alert("일치하는 정보가 없습니다.");
                     }
                 },
+            });
+        }
+
+        const findPw = () => {
+            console.log('findPw 클릭')
+            $.ajax({
+                type: "POST",
+                url: "findPw",
+                data: {
+                    emp_no: $('#floatingPW_id').val()
+                },
+                success: function (data) {
+                    console.log("받아온 data 값 : " + data);
+                    if (data != "") {
+                        sendEmail(data);
+                    } else {
+                        alert("일치하는 정보가 없습니다.");
+                    }
+                }
+            });
+        }
+
+        const sendEmail = (email) => {
+            console.log('sendEmail 실행')
+            $.ajax({
+                type: "POST",
+                url: "sendPassword",
+                data: {email: email},
+                success: function (resource) {
+                    console.log("성공여부 : " + resource);
+                    alert("이메일로 임시비밀번호를 보내드렸습니다.");
+                }
             });
         }
     </script>
@@ -111,12 +143,12 @@
             </div>
 
             <div class="modal-body p-5 pt-0">
-                <form class="">
+                <form id="f_findPw" method="post" action="">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control rounded-3" id="floatingPW_id" placeholder="ID">
-                        <label for="floatingPW_id">아이디 입력</label>
+                        <input type="text" class="form-control rounded-3" id="floatingPW_id" name="emp" placeholder="ID">
+                        <label for="floatingPW_id">사원번호 입력</label>
                     </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="button"  style="background-color: #652C2C;" onclick="findPW()">찾기</button>
+                    <button type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"  style="background-color: #652C2C;" onclick="findPw()">찾기</button>
                     <small class="text-body-secondary">입력하신 이메일로 임시비밀번호를 보내드립니다.</small>
                 </form>
             </div>
