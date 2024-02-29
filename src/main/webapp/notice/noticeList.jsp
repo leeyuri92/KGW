@@ -16,9 +16,7 @@
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
     }
 
-    Date date = new Date();
     SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
-    String atrDate =simpleDate.format(date);
 
 %>
 <!DOCTYPE html>
@@ -133,6 +131,8 @@
                                     <% for (int i = nowPage * numPerPage; i < (nowPage * numPerPage) + numPerPage; i++) {
                                         if (i == size) break;
                                         NoticeBoardVO noticeVO = noticeList.get(i);
+                                        String originalString  = noticeVO.getReg_date();
+                                        String newFormatString = originalString.substring(0, 10);
                                     %>
                                     <tr>
                                         <td>
@@ -157,7 +157,7 @@
 
                                         </td>
                                         <td><%=noticeVO.getName()%></td>
-                                        <td><%=noticeVO.getReg_date()%></td>
+                                        <td><%=newFormatString%></td>
                                         <td><%=noticeVO.getNotice_hit()%></td>
                                         <td></td>
                                     </tr>
