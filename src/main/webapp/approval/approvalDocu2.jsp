@@ -171,15 +171,15 @@
                                     <!-- Existing items: 부서, 담당자, 신청자 -->
                                     <div class="item">
                                         <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="pla1_depat_no" value="숫자값">
+                                        <input type="text" class="value-input" id="pla2_depat_no" value="숫자값">
                                     </div>
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="pla1_depart_title" value="선수관련"  readonly>
+                                        <input type="text" class="value-input" id="pla2_depart_title" value="선수관련"  readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="pla1_departTitle" value="선수관련" readonly>
+                                        <input type="text" class="value-input" id="pla2_departTitle" value="선수관련" readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
@@ -187,12 +187,12 @@
                                             ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
                                             if(approvalVO.getName()!=null) {
                                         %>
-                                        <input type="text" class="value-input" id="pla1_manager" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
+                                        <input type="text" class="value-input" id="pla3_manager" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
                                         <% }} %>
                                     </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="pla1_applicant" value="자동불러옴" readonly>
+                                        <input type="text" class="value-input" id="pla2_applicant" value="자동불러옴" readonly>
                                     </div>
 
                                     <div class="item">
@@ -227,15 +227,15 @@
                                 <div class="document-section">
                                         <div class="item">
                                             <span class="title">사원번호:</span>
-                                            <input type="text" class="value-input" id="pla2_depat_no" value="숫자값">
+                                            <input type="text" class="value-input" id="pla3_depat_no" value="숫자값">
                                         </div>
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="pla2_depart_title" value="선수관련"  readonly>
+                                            <input type="text" class="value-input" id="pla3_depart_title" value="선수관련"  readonly>
                                         </div>
                                         <div class="item">
                                             <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="pla2_departTitle" value="선수관련" readonly>
+                                            <input type="text" class="value-input" id="pla3_departTitle" value="선수관련" readonly>
                                         </div>
                                         <div class="item">
                                             <span class="title">담당자:</span>
@@ -243,12 +243,12 @@
                                                 ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
                                                 if(approvalVO.getName()!=null) {
                                             %>
-                                            <input type="text" class="value-input" id="pla2_manager" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
+                                            <input type="text" class="value-input" id="pla3_manager" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
                                             <% }} %>
                                         </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="pla2_applicant" value="자동불러옴" readonly>
+                                        <input type="text" class="value-input" id="pla1_applicant" value="자동불러옴" readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">방출선수:</span>
@@ -267,22 +267,19 @@
                             </div>
 
 
-
-
-                            <form id="dc_c"    name="dc_c"  action="./approvalList" method="post">
                             <div class="frame" id="do_pla_c"> <%--영입 문서--%>
                                 <div class="document-section">
                                     <div class="item">
                                         <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="emp_no"  name="emp_no" value="숫자값">
+                                        <input type="text" class="value-input" id="pla4_depat_no" value="숫자값">
                                     </div>
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="document_title" name="document_title" value="선수관련"  >
+                                        <input type="text" class="value-input" id="pla4_depart_title" value="선수관련"  readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="document_category"  name="document_category" value="선수관련" >
+                                        <input type="text" class="value-input" id="pla4_departTitle" value="선수관련" readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
@@ -290,70 +287,74 @@
                                             ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
                                             if(approvalVO.getName()!=null) {
                                         %>
-                                        <input type="text" class="value-input" id="approval_emp_no" name=approval_emp_no" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
+                                        <input type="text" class="value-input" id="pla3_manager" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
                                         <% }} %>
                                     </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="name" name="name"value="나신입" >
+                                        <input type="text" class="value-input" id="pla3_applicant" value="자동불러옴" readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">영입 선수:</span>
-                                        <select id="playersList" name="playersList">
+                                        <select id="playersList">
                                             <% for (int i = 0; i < size; i++) {
                                                 ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
                                                 if(approvalVO.getK_name() != null) {
                                             %>
-                                            <option value="<%= approvalVO.getK_no() %>" name="<%= approvalVO.getK_no() %>"><%= approvalVO.getK_name() %></option>
+                                            <option value="<%= approvalVO.getK_no() %>"><%= approvalVO.getK_name() %></option>
                                             <% }} %>
                                         </select>
-<%--          히든 데이터필요시   <input type="hidden" id="hiddenData" name="hiddenData" value="yourHiddenDataValue">--%>
-
                                     </div>
                                     <div class="text-wrapper-2">상기와 같이 영입 희망함</div>
                                 </div>
 
-                                <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button  type="button"  id="Ev3" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="ev3()" >재출</button>
-                                    <button id="btn_search3" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
-                                </div>
 
-
-</form>
 
     </div>
-                            <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                <button id="btn_search5" class="btn btn-danger" onclick="Search()">삭제 </button>
-                            </div>
-
-
-                        <script>
-                            function ev3() {
-                                let emp_no = $('#emp_no').val();
-                                let document_title = $('#document_title').val();
-                                let document_category = $('#document_category').val();
-                                let approval_emp_no = $('#approval_emp_no').val();
-                                // let selected_option = $('#playersList').val();
-
-                                // $('#emp_no').val(emp_no);
-                                // $('#document_title').val(document_title);
-                                // $('#document_category').val(document_category);
-                                // $('#approval_emp_no').val(ap proval_emp_no);
-                                // $('#selected_option').val(selected_option);
-
-                                $('#dc_c').submit();
-                            }
-                        </script>
-
-<%--                            <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">--%>
-<%--                                <button  type="button"  id="submitEv" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="" >재출</button>--%>
-<%--                                <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>--%>
-<%--                                <button id="btn_search5" class="btn btn-danger" onclick="Search()">삭제 </button>--%>
-<%--                            </div>--%>
+                        <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
+                            <button  type="button"  id="submitEv" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="" >재출</button>
+                            <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                            <button id="btn_search3" class="btn btn-danger" onclick="Search()">삭제 </button>
+                        </div>
     <!-- content-wrapper end-->
 <!-- body end   -->
 
+                            <script>
+                                $(document).ready(function() {
+                                    $('#submitEv').click(function(event) {
+                                        event.preventDefault();
 
+                                        let selectedDivId = $('.frame:visible').attr('id');
+                                        let formData = {};
+
+                                        switch (selectedDivId) {
+                                            case 'do_pla_c':
+                                                let selectedOptionValue = $('#playersList').val();
+                                                formData = {
+                                                    emp_no: $('#pla4_depat_no').val(),
+                                                    document_title: $('#pla4_depart_title').val(),
+                                                    document_category: $('#pla4_departTitle').val(),
+                                                    approval_empNo: $('#pla3_manager').val(),
+                                                    selectedOption: selectedOptionValue
+                                                };
+                                                break;
+                                            // Add cases for other frames if needed
+                                        }
+
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: './approvalInsert',
+                                            data: formData,
+                                            success: function (response) {
+                                                console.log('요청성공', response);
+                                            },
+                                            error: function (error) {
+                                                console.error('실패', error);
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
 
 
 </body>
