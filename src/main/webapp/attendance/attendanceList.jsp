@@ -118,7 +118,7 @@
           <div style="display:flex; justify-content:center;">
             <ul class="pagination">
                     <%
-                      String pagePath = "attendanceList?emp_no="+empVO.getEmp_no();
+                      String pagePath = "attendanceList?emp_no="+sessionVO.getEmp_no();
                       BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
                       out.print(bspb.getPageBar());
                     %>

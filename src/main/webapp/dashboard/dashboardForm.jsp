@@ -48,7 +48,7 @@
               let timeString = moment().format('HH:mm:ss');
               const data = {
                   "start_time" : timeString,
-                  "emp_no" : <%=empVO.getEmp_no()%>
+                  "emp_no" : <%=sessionVO.getEmp_no()%>
               }
               Swal.fire({
                   title: "출근하시겠습니까?",
@@ -92,7 +92,7 @@
               const data = {
                   "start_time" : '<%=attendance.getStart_time()%>',
                   "end_time" : timeString,
-                  "emp_no" : <%=empVO.getEmp_no()%>,
+                  "emp_no" : <%=sessionVO.getEmp_no()%>,
                   "attendance_no" : attendace_no
               }
 
@@ -168,7 +168,7 @@
           navigator.geolocation.getCurrentPosition(success);
 
           const mypage = () =>{
-              location.href = "/mypage?emp_no=<%=empVO.getEmp_no()%>";
+              location.href = "/mypage?emp_no=<%=sessionVO.getEmp_no()%>";
           }
       </script>
 
@@ -201,20 +201,20 @@
             <div class="row mainbox" style="background-color: #dfded0;">
               <div class="row" style="margin: auto;">
                 <div class="user-panel">
-                  <a href="/mypage?emp_no=<%=empVO.getEmp_no()%>">
-                    <img src="/fileUpload/profile/<%=empVO.getProfile_img()%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
+                  <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>">
+                    <img src="/fileUpload/profile/<%=sessionVO.getProfile_img()%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
                   </a>
                 </div>
               </div>
               <div class="row" style="margin: auto;">
                 <div class="row" style="margin: auto;">
                   <div class="text text-bold text-lg">
-                    [<%=empVO.getTeam_name()%>]
+                    [<%=sessionVO.getTeam_name()%>]
                   </div>
                 </div>
                 <div class="row mb-5" style="margin: auto;">
                   <div class="text text-bold text-lg">
-                    <%=empVO.getName()%> 사원
+                    <%=sessionVO.getName()%> 사원
                   </div>
                 </div>
               </div>
@@ -347,7 +347,7 @@
               </div>
             </div>
             <div class="row mainbox mt-3 p-4 d-grid gap-5  mx-auto" style="background-color: #dfded0; ">
-              <a href="/mypage?emp_no=<%=empVO.getEmp_no()%>" class="btn btn-danger">프로필정보수정</a>
+              <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>" class="btn btn-danger">프로필정보수정</a>
             </div>
           </div>
         </div>
@@ -439,7 +439,7 @@
                   <span style="font-weight: bold; margin-left: 1.5rem" >근태관리</span>
                 </div>
                 <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="/attendance/attendanceCalendar?emp_no=<%=empVO.getEmp_no()%>" class="btn btn-danger" style="border-radius:30px">more</a>
+                  <a href="/attendance/attendanceCalendar?emp_no=<%=sessionVO.getEmp_no()%>" class="btn btn-danger" style="border-radius:30px">more</a>
                 </div>
               </div>
                 <hr/>

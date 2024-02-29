@@ -8,7 +8,7 @@
     // 세션에서 로그인된 유저 정보 가져오기
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-    EmpVO empVO = principalDetails.getEmpVO();
+    EmpVO sessionVO = principalDetails.getEmpVO();
 %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -43,7 +43,7 @@
                 <div class="user-panel d-flex" >
 
                     <div class="info">
-                        <a href="/mypage?emp_no=<%=empVO.getEmp_no()%>"><img src="/fileUpload/profile/<%=empVO.getProfile_img()%>" class="img-circle" alt="User Image"> <%=empVO.getName()%></a>
+                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>"><img src="/fileUpload/profile/<%=sessionVO.getProfile_img()%>" class="img-circle" alt="User Image"> <%=sessionVO.getName()%></a>
                     </div>
                 </div>
             </li>

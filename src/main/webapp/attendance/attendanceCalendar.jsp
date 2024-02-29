@@ -28,7 +28,7 @@
   <%@include file="/include/KGW_bar.jsp"%>
   <script>
       const mod_attendance = () => {
-          location.href = "/attendance/attendanceList?emp_no=<%=empVO.getEmp_no()%>";
+          location.href = "/attendance/attendanceList?emp_no=<%=sessionVO.getEmp_no()%>";
       }
 
   </script>
