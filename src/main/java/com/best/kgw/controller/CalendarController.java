@@ -42,10 +42,10 @@ public class CalendarController {
 
         try {
             calendarService.insertCalendar(calendarVO);
-            logger.info("업데이트 DB 연결 시도");
+            logger.info("등록 DB 연결 시도");
             entity = new ResponseEntity<>("1", HttpStatus.OK);
         } catch (Exception e) {
-            logger.info("예외 발생 업데이트 DB 처리 못함");
+            logger.info("예외 발생 등록 DB 처리 못함");
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -62,10 +62,10 @@ public class CalendarController {
 
         try {
             calendarService.deleteCalList(calendar_no);
-            logger.info("삭제DB연결시도");
+            logger.info("삭제 DB 연결 시도");
             entity = new ResponseEntity<>("1", HttpStatus.OK);
         } catch (Exception e) {
-            logger.info("예외 발생 삭제DB 처리 못함");
+            logger.info("예외 발생 삭제 DB 처리 못함");
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

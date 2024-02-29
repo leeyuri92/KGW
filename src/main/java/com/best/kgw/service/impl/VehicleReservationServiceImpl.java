@@ -2,6 +2,7 @@ package com.best.kgw.service.impl;
 
 import com.best.kgw.dao.VehicleReservationDao;
 import com.best.kgw.service.VehicleReservationService;
+import com.vo.CalendarVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,38 +44,33 @@ public class VehicleReservationServiceImpl implements VehicleReservationService 
     }
 
     @Override
-    public List<Map<String, Object>> addVehicleReservation(Map<String, Object> addMap) {
-        List<Map<String, Object>> addVehicleReservation = null;
-        logger.info("Service : addVehicleReservation 호출");
+    public void deleteVehicleList(CalendarVO calendarVO) {
+        logger.info("Service : deleteVehicleList 호출");
         try {
-            addVehicleReservation = vehicleReservationDao.addVehicleReservation(addMap);
+            vehicleReservationDao.deleteVehicleList(calendarVO);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
         }
-        return addVehicleReservation;
-    }
-    @Override
-    public List<Map<String, Object>> delVehicleReservation(Map<String, Object> delMap) {
-        List<Map<String, Object>> delVehicleReservation = null;
-        logger.info("Service : delVehicleReservation 호출");
-        try {
-            delVehicleReservation = vehicleReservationDao.delVehicleReservation(delMap);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return delVehicleReservation;
     }
 
     @Override
-    public List<Map<String, Object>> upVehicleReservList(Map<String, Object> upMap) {
-        List<Map<String, Object>> upVehicleReservList = null;
-        logger.info("Service : upVehicleReservList 호출");
+    public void updateVehicleList(CalendarVO calendarVO) {
+        logger.info("Service : updateVehicleList 호출");
         try {
-            upVehicleReservList = vehicleReservationDao.upVehicleReservList(upMap);
+            vehicleReservationDao.updateVehicleList(calendarVO);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
         }
-        return upVehicleReservList;
+    }
+
+    @Override
+    public void insertVehicleList(CalendarVO calendarVO) {
+        logger.info("Service : insertVehicleList 호출");
+        try {
+            vehicleReservationDao.insertVehicleList(calendarVO);
+        } catch (Exception e) {
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
+        }
     }
 
     @Override

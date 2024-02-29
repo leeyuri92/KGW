@@ -4,6 +4,7 @@ import com.best.kgw.dao.CalendarDao;
 import com.best.kgw.dao.ReservationDao;
 import com.best.kgw.service.CalendarService;
 import com.best.kgw.service.ReservationService;
+import com.vo.CalendarVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,38 +45,34 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Object>> addReservList(@RequestParam Map<String, Object> addMap) {
-        List<Map<String, Object>> addReservList = null;
-        logger.info("Service : addReservList 호출");
+    public void insertReservation(CalendarVO calendarVO) {
+        logger.info("Service : insertReservation 호출");
         try {
-            addReservList = reservationDao.addReservList(addMap);
+            reservationDao.insertReservation(calendarVO);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("일정 등록 중 오류가 발생했습니다.", e);
         }
-        return addReservList;
-    }
-    @Override
-    public List<Map<String, Object>> delReservList(@RequestParam Map<String, Object> delMap) {
-        List<Map<String, Object>> delReservList = null;
-        logger.info("Service : delReservList 호출");
-        try {
-            delReservList = reservationDao.delReservList(delMap);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return delReservList;
     }
 
     @Override
-    public List<Map<String, Object>> upReservList(@RequestParam Map<String, Object> upMap) {
-        List<Map<String, Object>> upReservList = null;
-        logger.info("Service : upReservList 호출");
+    public void deleteReservation(CalendarVO calendarVO) {
+        logger.info("Service : deleteReservation 호출");
         try {
-            upReservList = reservationDao.upReservList(upMap);
+            reservationDao.deleteReservation(calendarVO);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
         }
-        return upReservList;
+    }
+
+
+    @Override
+    public void updateReservation(CalendarVO calendarVO) {
+        logger.info("Service : updateReservation 호출");
+        try {
+            reservationDao.updateReservation(calendarVO);
+        } catch (Exception e) {
+            throw new RuntimeException("일정 업데이트 중 오류가 발생했습니다.", e);
+        }
     }
 
     @Override

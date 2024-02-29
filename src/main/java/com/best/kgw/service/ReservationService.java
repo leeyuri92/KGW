@@ -1,5 +1,6 @@
 package com.best.kgw.service;
 
+import com.vo.CalendarVO;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -11,11 +12,11 @@ public interface ReservationService {
 
     List<Map<String, Object>> assetReservationList(@RequestParam Map<String, Object> arMap);
 
-    List<Map<String, Object>> addReservList(@RequestParam Map<String, Object> addMap);
+    public void deleteReservation(CalendarVO calendarVO);
 
-    List<Map<String, Object>> delReservList(@RequestParam Map<String, Object> delMap);
+    public void insertReservation(CalendarVO calendarVO);
 
-    List<Map<String, Object>> upReservList(@RequestParam Map<String, Object> upMap);
+    public void updateReservation(CalendarVO calendarVO);
 
     List<Map<String, Object>> reservList(@RequestParam Map<String, Object> reservMap);
 

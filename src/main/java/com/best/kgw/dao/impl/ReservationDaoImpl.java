@@ -2,6 +2,7 @@ package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.CalendarDao;
 import com.best.kgw.dao.ReservationDao;
+import com.vo.CalendarVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,32 +41,33 @@ public class ReservationDaoImpl implements ReservationDao {
     }
 
     @Override
-    public List<Map<String, Object>> addReservList(@RequestParam Map<String, Object> addMap)throws Exception {
-        logger.info("Dao : addReservList 호출");
-        logger.info(addMap.toString());
-        List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("addReservList", addMap);
-        logger.info(list.toString());
-        return list;
-    }
-    @Override
-    public List<Map<String, Object>> delReservList(@RequestParam Map<String, Object> delMap)throws Exception {
-        logger.info("Dao : delReservList 호출");
-        logger.info(delMap.toString());
-        List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("delReservList", delMap);
-        logger.info(list.toString());
-        return list;
+    public void insertReservation(CalendarVO calendarVO) throws Exception {
+        logger.info("Dao : insertReservation 호출");
+        try {
+            sqlSessionTemplate.insert("insertReservation", calendarVO);
+        } catch (Exception e) {
+            throw new Exception("일정 등록 중 오류가 발생했습니다.", e);
+        }
     }
 
     @Override
-    public List<Map<String, Object>> upReservList(@RequestParam Map<String, Object> upMap)throws Exception {
-        logger.info("Dao : upReservList 호출");
-        logger.info(upMap.toString());
-        List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("upReservList", upMap);
-        logger.info(list.toString());
-        return list;
+    public void deleteReservation(CalendarVO calendarVO) throws Exception {
+        logger.info("Dao : deleteReservation 호출");
+        try {
+            sqlSessionTemplate.update("deleteReservation", calendarVO);
+        } catch (Exception e) {
+            throw new Exception("일정 업데이트 중 오류가 발생했습니다.", e);
+        }
+    }
+
+    @Override
+    public void updateReservation(CalendarVO calendarVO) throws Exception {
+        logger.info("Dao : updateReservation 호출");
+        try {
+            sqlSessionTemplate.update("updateReservation", calendarVO);
+        } catch (Exception e) {
+            throw new Exception("일정 업데이트 중 오류가 발생했습니다.", e);
+        }
     }
 
     @Override
