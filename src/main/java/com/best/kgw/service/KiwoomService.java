@@ -1,10 +1,11 @@
 package com.best.kgw.service;
 
+import com.vo.KChartVO;
+
 import java.util.List;
-import java.util.Map;
 
 public interface KiwoomService {
 
-    public List<Map<String, Object>> kiwoomList(Map<String, Object> pmap);
+    public List<KChartVO> kiwoomList(KChartVO kChartVO);
 
 }

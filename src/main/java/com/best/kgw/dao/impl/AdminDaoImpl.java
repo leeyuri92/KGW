@@ -37,10 +37,9 @@ public class AdminDaoImpl implements AdminDao {
      기능 : 사원목록 레포지토리
      **********************************************************************************/
     @Override
-    public List<Map<String, Object>> empList(Map<String, Object> pmap) {
-        logger.info("Repository : empList 호출" + pmap);
-        List<Map<String,Object>> empList = null;
-        empList = sqlSessionTemplate.selectList("empList",pmap);
+    public List<EmpVO> empList(EmpVO empVO) throws Exception {
+        logger.info("Repository : empList 호출" + empVO);
+        List<EmpVO> empList = sqlSessionTemplate.selectList("empList", empVO);
         logger.info(empList.toString());
         return empList;
     }
@@ -51,7 +50,7 @@ public class AdminDaoImpl implements AdminDao {
      기능 : 사원수정 레포지토리
      **********************************************************************************/
     @Override
-    public int empInfoUpdate(EmpVO empVO) {
+    public int empInfoUpdate(EmpVO empVO) throws Exception {
         logger.info("Repository : empInfoUpdate");
         int result = 0;
         try {
@@ -62,6 +61,14 @@ public class AdminDaoImpl implements AdminDao {
         }
         logger.info(String.valueOf(result));
         return result;
+    }
+
+    @Override
+    public List<EmpVO> empSerach(EmpVO empVO) {
+        logger.info("Repository : empSerach 호출" + empVO);
+        List<EmpVO> empList = sqlSessionTemplate.selectList("empSerach", empVO);
+        logger.info(empList.toString());
+        return empList;
     }
 
 }

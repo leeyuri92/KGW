@@ -1,10 +1,12 @@
 package com.best.kgw.dao;
 
+import com.vo.KChartVO;
+
 import java.util.List;
 import java.util.Map;
 
 public interface KiwoomDao {
 
-    public List<Map<String, Object>> kiwoomList(Map<String, Object> pmap);
+    public List<KChartVO>  kiwoomList(KChartVO kChartVO);
 
 }

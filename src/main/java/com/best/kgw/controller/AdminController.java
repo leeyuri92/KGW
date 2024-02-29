@@ -78,10 +78,9 @@ public class AdminController {
      기능 : 사원목록조회
      **********************************************************************************/
     @GetMapping("empList")
-    public String empList(@RequestParam Map<String, Object> pmap, Model model) throws Exception{
+    public String empList(EmpVO empVO, Model model) throws Exception{
         logger.info("Controller : empList 호출");
-        List<Map<String ,Object>> empList = null;
-        empList = adminSevice.empList(pmap);
+        List<EmpVO> empList = adminSevice.empList(empVO);
         model.addAttribute("empList", empList);
         logger.info(empList.toString());
         return "forward:/admin/adminSearch.jsp";
@@ -92,10 +91,10 @@ public class AdminController {
      기능 : 사원상세정보조회
      **********************************************************************************/
     @GetMapping("empDetail")
-    public String empDetail(Model model, @RequestParam Map<String, Object> pmap) {
+    public String empDetail(Model model,EmpVO empVO) throws Exception {
         logger.info("empDetail");
-        List<Map<String, Object>> empList = null;// [ {},{},{} ]
-        empList = adminSevice.empList(pmap);
+        List<EmpVO> empList = null;// [ {},{},{} ]
+        empList = adminSevice.empList(empVO);
         model.addAttribute("empList", empList);
         return "forward:/admin/empDetail.jsp"; // webapp아래에서찾음
     }

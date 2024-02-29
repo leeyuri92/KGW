@@ -24,6 +24,7 @@ import java.util.Objects;
 @Controller
 public class ExelController {
 
+    @Autowired
     private AdminSevice adminSevice;
 
     Logger logger = LoggerFactory.getLogger(ExelController.class);
@@ -99,14 +100,13 @@ public class ExelController {
      기능 : 선택사원정보 다운
      **********************************************************************************/
     @GetMapping("/selectDownLoadExel")
-    public void downloadExel(@RequestParam Map<String, Object> pmap, HttpServletResponse response, EmpVO empVO) throws IOException {
+    public void downloadExel(HttpServletResponse response, EmpVO empVO) throws Exception {
 
         // 엑셀에 들어갈 데이터 생성
         logger.info("Controller : empList 호출");
-        List<Map<String, Object>> empList = null;
-        empList = adminSevice.empList(pmap);
+        List<EmpVO> empList = adminSevice.empList(empVO);
         logger.info(empList.toString());
-        Map<String, Object> rmap = empList.get(0);
+        EmpVO rmap = empList.get(0);
 
         Workbook workbook = new HSSFWorkbook();
         Sheet sheet = workbook.createSheet("Emp Data");
@@ -124,21 +124,21 @@ public class ExelController {
         headerRow.createCell(9).setCellValue("주소");
 
 
-        String name = (String) rmap.get("NAME");
+        String name =  rmap.getName();
         int empno = empVO.getEmp_no();
-        String hiredate = (String) rmap.get("HIRE_DATE");
-        String teamname = (String) rmap.get("TEAM_NAME");
-        String position = (String) rmap.get("EMP_POSITION");
-        String state = (String) rmap.get("EMP_STATE");
+        String hiredate = rmap.getHire_date();
+        String teamname =rmap.getName();
+        String position = rmap.getEmp_position();
+        String state = rmap.getEmp_state();
         if (Objects.equals(state, "0")) {
             state = "퇴직";
         } else {
             state = "재직";
         }
-        String phonenum = (String) rmap.get("PHONE_NUM");
-        String birthdate = (String) rmap.get("BIRTHDATE");
-        String email = (String) rmap.get("EMAIL");
-        String address = (String) rmap.get("ADDRESS");
+        String phonenum = (String) rmap.getPhone_num();
+        String birthdate = (String) rmap.getBirthdate();
+        String email = (String) rmap.getEmail();
+        String address = (String) rmap.getAddress();
 
         Row row = sheet.createRow(1);
         row.createCell(0).setCellValue(name);

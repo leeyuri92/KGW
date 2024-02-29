@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
+<%@ page import="com.vo.EmpVO" %>
 <%
     int size = 0;//전체 레코드 수
-    List<Map<String, Object>> empList = (List) request.getAttribute("empList");
+    List<EmpVO> empList = (List) request.getAttribute("empList");
     if(empList !=null){
         size = empList.size();
     }
@@ -23,6 +24,7 @@
     <link rel="stylesheet" href="/css/admin.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript">
+
         function searchEnter(event){
             console.log(window.event.keyCode)
             if(window.event.keyCode === 13){
@@ -30,6 +32,7 @@
             }
             event.isComposing//검색후 잔여검색기록 없애는코드
         }
+
         function empSearch(){
             console.log('empSearch');
             const gubun = document.querySelector("#gubun").value;
@@ -37,13 +40,14 @@
             console.log(`${gubun} , ${keyword}`);
             location.href="/admin/empList?gubun="+gubun+"&keyword="+keyword;
         }
+
         const empDetail= (emp_no)=>{
             location.href= "/admin/empDetail?emp_no="+emp_no;
         }
+
         const empCertificate= (emp_no)=>{
             location.href= "/empCertificate?emp_no="+emp_no;
         }
-
 
         const retireCertificate= (emp_no)=>{
             location.href= "/retireCertificate?emp_no="+emp_no;
@@ -59,14 +63,17 @@
             });
             console.log(tdNo);
         }
+
         const empSelectDown= ()=>{
             check();
             location.href= "/selectDownLoadExel?emp_no="+tdNo;
         }
+
         const empAllDown= ()=>{
             check();
             location.href= "/allDownLoadExel";
         }
+
     </script>
     <!-- Google Font: Source Sans Pro -->
 </head>
@@ -126,7 +133,7 @@
                                            aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
                                 <div class="col-1">
-                                    <button id="btn_search" class="btn btn-danger" onclick="empSearch()">검색</button>
+                                    <button type="button" id="btn_search" class="btn btn-danger" onclick="empSearch()">검색</button>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end gap-2">
                                     <button id="btn_selectDown" type="button" class="btn btn-danger" onclick="empSelectDown()">선택사원 다운로드</button>
@@ -153,26 +160,26 @@
                                     <%
                                         for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
                                             if (i == size) break;
-                                            Map<String,Object> rmap = empList.get(i);
+                                            EmpVO empVO = empList.get(i);
                                     %>
                                     <tr>
 
                                         <td> <input type="checkbox" class="form-check-input" id="check" name="checkboxName" onclick="check() "></td>
-                                        <td><%=rmap.get("EMP_NO")%></td>
-                                        <td><a href="javascript:empDetail('<%=rmap.get("EMP_NO")%>')"><%=rmap.get("NAME") %></a></td>
-                                        <td><%=rmap.get("TEAM_NAME")%></td>
-                                        <td><%=rmap.get("EMP_POSITION") %></td>
-                                        <% if (rmap.get("EMP_STATE").equals("0")){ %>
+                                        <td><%=empVO.getEmp_no()%></td>
+                                        <td><a href="javascript:empDetail('<%=empVO.getEmp_no()%>')"><%=empVO.getName() %></a></td>
+                                        <td><%=empVO.getTeam_name()%></td>
+                                        <td><%=empVO.getEmp_position()%></td>
+                                        <% if (empVO.getEmp_state().equals("0")){ %>
                                         <td>퇴직</td>
                                         <% }else{ %>
                                         <td>재직</td>
                                         <%  } %>
-                                        <td><%=rmap.get("EMAIL") %></td>
-                                        <td><%=rmap.get("DAYOFF_CNT") %></td>
-                                        <% if (rmap.get("EMP_STATE").equals("0")){ %>
-                                        <td><a href="javascript:retireCertificate('<%=rmap.get("EMP_NO")%>')">퇴직증명서</a></td>
+                                        <td><%=empVO.getEmail() %></td>
+                                        <td><%=empVO.getDayoff_cnt() %></td>
+                                        <% if (empVO.getEmp_state().equals("0")){ %>
+                                        <td><a href="javascript:retireCertificate('<%=empVO.getEmp_no()%>')">퇴직증명서</a></td>
                                         <% }else{ %>
-                                        <td><a href="javascript:empCertificate('<%=rmap.get("EMP_NO")%>')">재직증명서</a></td>
+                                        <td><a href="javascript:empCertificate('<%=empVO.getEmp_no()%>')">재직증명서</a></td>
                                         <%  } %>
                                     </tr>
                                     <%

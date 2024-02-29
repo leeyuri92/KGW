@@ -1,6 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.AdminSevice;
+import com.vo.EmpVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,10 @@ public class CertificateController {
      기능 : 재직증명서 조회
      **********************************************************************************/
     @GetMapping("empCertificate")
-    public String empCertificate(Model model, @RequestParam Map<String, Object> pmap) {
+    public String empCertificate(Model model, EmpVO empVO) throws Exception {
         logger.info("empCertificate");
-        List<Map<String, Object>> empList = null;
-        empList = adminSevice.empList(pmap);
+        List<EmpVO> empList = null;
+        empList = adminSevice.empList(empVO);
         model.addAttribute("empList", empList);
         return "forward:/admin/empCertificate.jsp"; //
     }
@@ -39,10 +40,10 @@ public class CertificateController {
      기능 : 퇴직증명서 조회
      **********************************************************************************/
     @GetMapping("retireCertificate")
-    public String retireCertificate(Model model, @RequestParam Map<String, Object> pmap) {
+    public String retireCertificate(Model model, EmpVO empVO) throws Exception {
         logger.info("retireCertificate");
-        List<Map<String, Object>> empList = null;
-        empList = adminSevice.empList(pmap);
+        List<EmpVO> empList = null;
+        empList = adminSevice.empList(empVO);
         model.addAttribute("empList", empList);
         return "forward:/admin/retireCertificate.jsp"; //
     }

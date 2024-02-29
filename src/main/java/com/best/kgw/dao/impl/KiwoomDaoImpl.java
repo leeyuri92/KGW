@@ -1,6 +1,7 @@
 package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.KiwoomDao;
+import com.vo.KChartVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +20,10 @@ public class KiwoomDaoImpl implements KiwoomDao {
     SqlSessionTemplate sqlSessionTemplate;
 
     @Override
-    public List<Map<String, Object>> kiwoomList(Map<String, Object> kmap) {
-        logger.info("Repository : kiwoomList 호출" + kmap);
-        List<Map<String,Object>> empList = null;
-        empList = sqlSessionTemplate.selectList("kiwoomList",kmap);
+    public List<KChartVO> kiwoomList(KChartVO kChartVO) {
+        logger.info("Repository : kiwoomList 호출" + kChartVO);
+        List<KChartVO> empList = sqlSessionTemplate.selectList("kiwoomList",kChartVO);
         logger.info(empList.toString());
         return empList;
     }
-
-
 }

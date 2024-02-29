@@ -43,10 +43,9 @@ public class AdminServiceImpl implements AdminSevice {
      기능 : 사원목록 서비스
      **********************************************************************************/
     @Override
-    public List<Map<String, Object>> empList(Map<String, Object> pmap) {
-        List<Map<String, Object>> empList = new ArrayList<>();
+    public List<EmpVO> empList(EmpVO empVO) throws Exception {
         logger.info("Service Detail");
-        empList = adminDao.empList(pmap);
+        List<EmpVO> empList = adminDao.empList(empVO);
         logger.info(empList.toString());
         return empList;
     }
@@ -57,10 +56,18 @@ public class AdminServiceImpl implements AdminSevice {
      기능 : 사원수정 서비스
      **********************************************************************************/
     @Override
-    public int empInfoUpdate(EmpVO empVO) {
+    public int empInfoUpdate(EmpVO empVO) throws Exception {
         logger.info("Service empInfoUpdate");
         int result = 0;
         result = adminDao.empInfoUpdate(empVO);
         return result;
+    }
+
+    @Override
+    public List<EmpVO> empSerach(EmpVO empVO) {
+        logger.info("Service Detail");
+        List<EmpVO> empList = adminDao.empSerach(empVO);
+        logger.info(empList.toString());
+        return empList;
     }
 }

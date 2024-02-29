@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
+<%@ page import="com.vo.KChartVO" %>
 
 <%
-    List<Map<String, Object>> kList = (List) request.getAttribute("kList");
-    Map<String,Object> kmap = kList.get(0);
+    List<KChartVO> kList = (List) request.getAttribute("kList");
+    KChartVO kmap = kList.get(0);
 %>
 
 <!DOCTYPE html>
@@ -74,24 +75,24 @@
 
                                                 <div class="col-md-4">
                                                     <div class="card-body">
-                                                        <p class="card-text fs-5" >  NO  : <%= kmap.get("K_NUM") %></p>
-                                                        <p class="card-text fs-1">  <%= kmap.get("K_NAME") %></p>
+                                                        <p class="card-text fs-5" >  NO  : <%= kmap.getK_num() %></p>
+                                                        <p class="card-text fs-1">  <%= kmap.getK_name() %></p>
                                                         <hr style="width: 600px;">
-                                                        <p class="card-text fs-5"> 생년월일  : <%= kmap.get("K_BIRTH") %></p>
-                                                        <p class="card-text fs-5"> 신장/체중 : <%= kmap.get("K_PHY") %></p>
-                                                        <p class="card-text fs-5"> 연봉  : <%= kmap.get("K_SAL") %></p>
+                                                        <p class="card-text fs-5"> 생년월일  : <%= kmap.getK_birth() %></p>
+                                                        <p class="card-text fs-5"> 신장/체중 : <%= kmap.getK_PHY() %></p>
+                                                        <p class="card-text fs-5"> 연봉  : <%= kmap.getK_sal() %></p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 d-flex align-items-end" >
                                                     <div class="card-body ">
-                                                        <p class="card-text fs-5"> 포지션  : <%= kmap.get("K_POS") %></p>
-                                                        <p class="card-text fs-5"> 데뷔년도  : <%= kmap.get("K_HIRE") %></p>
-                                                        <p class="card-text fs-5"> 연자 : <%= kmap.get("K_YEAR") %></p>
+                                                        <p class="card-text fs-5"> 포지션  : <%= kmap.getK_pos() %></p>
+                                                        <p class="card-text fs-5"> 데뷔년도  : <%= kmap.getK_hire() %></p>
+                                                        <p class="card-text fs-5"> 연자 : <%= kmap.getK_year() %></p>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4 d-flex align-items-end"  style="display:flex; justify-content:center;">
-                                                    <img src="/images/profile.jpg" class="img-fluid rounded-start" alt="profile" style="height: 230px">
+                                                    <img src="/images/profile/<%=kmap.getK_name()%>.jpeg" class="img-fluid rounded-start" alt="profile" style="height: 230px">
                                                 </div>
 
                                             </div>

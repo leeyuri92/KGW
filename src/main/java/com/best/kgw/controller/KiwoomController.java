@@ -1,6 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.KiwoomService;
+import com.vo.KChartVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +24,18 @@ public class KiwoomController {
     private KiwoomService kiwoomService;
 
     @GetMapping("kiwoomList")
-    public String kiwoomList(@RequestParam Map<String, Object> kmap, Model model) throws Exception{
+    public String kiwoomList(KChartVO kChartVO, Model model) throws Exception{
         logger.info("Controller : kiwoomList 호출");
-        List<Map<String ,Object>> kList = null;
-        kList = kiwoomService.kiwoomList(kmap);
+        List<KChartVO> kList = kiwoomService.kiwoomList(kChartVO);
         model.addAttribute("kList", kList);
         logger.info(kList.toString());
         return "forward:/kiwoom/kiwoomSearch.jsp";
     }
 
     @GetMapping("kiwoomDetail")
-    public String kiwoomDetail( @RequestParam Map<String, Object> kmap , Model model) {
+    public String kiwoomDetail( KChartVO kChartVO , Model model) {
         logger.info("kiwoomDetail");
-        List<Map<String, Object>> kList = null;
-        kList = kiwoomService.kiwoomList(kmap);
+        List<KChartVO> kList = kiwoomService.kiwoomList(kChartVO);
         model.addAttribute("kList", kList);
         return "forward:/kiwoom/kiwoomDetail.jsp";
     }

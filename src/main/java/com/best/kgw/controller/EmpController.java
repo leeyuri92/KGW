@@ -1,6 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.AdminSevice;
+import com.vo.EmpVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,9 @@ public class EmpController {
      기능 : 전사원 목록 조회
      **********************************************************************************/
     @GetMapping("empInfo")
-    public String empInfo(@RequestParam Map<String, Object> pmap, Model model) {
+    public String empInfo(EmpVO empVO, Model model) throws Exception {
         logger.info("Controller : empInfo 호출");
-        List<Map<String ,Object>> empList = null;
-        empList = adminSevice.empList(pmap);
+        List<EmpVO> empList = adminSevice.empList(empVO);
         model.addAttribute("empList", empList);
         return "forward:/empinfo/empInfo.jsp";
     }

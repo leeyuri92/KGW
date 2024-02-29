@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.util.BSPageBar" %>
+<%@ page import="com.vo.KChartVO" %>
 
 <%
   int size = 0;//전체 레코드 수
-  List<Map<String, Object>> kList = (List) request.getAttribute("kList");
+  List<KChartVO> kList = (List) request.getAttribute("kList");
   if(kList !=null){
     size = kList.size();
   }
@@ -112,25 +113,25 @@
               <%
                 for (int i = nowPage * numPerPage; i < (nowPage * numPerPage) + numPerPage; i++) {
                   if (i == size) break;
-                  Map<String, Object> kmap = kList.get(i);
+                  KChartVO kmap = kList.get(i);
               %>
               <% if (i % 3 == 0) { %>
               <div class="row mb-3">
                 <% } %>
                 <div class="col-md-4">
                   <div class="card mb-3" style="display:flex; justify-content:center;">
-                  <a href="javascript:kiwoomDetail('<%=kmap.get("K_NO")%>')">
+                  <a href="javascript:kiwoomDetail('<%=kmap.getK_no()%>')">
                     <div class="row g-0" >
 
                       <div class="col-md-6 " style="display:flex; justify-content:center;">
-                        <img src="/images/profile.jpg" class="img-fluid rounded-start" alt="profile" >
+                        <img src="/images/profile/<%=kmap.getK_name()%>.jpeg" class="img-fluid rounded-start" alt="profile" >
                       </div>
                       <div class="col-md-6">
                         <div class="card-body">
-                          <p class="card-text">  <%= kmap.get("K_POS") %></p>
-                          <p class="card-text fw-bold" > <%= kmap.get("K_NAME") %></p>
+                          <p class="card-text">  <%= kmap.getK_pos() %></p>
+                          <p class="card-text fw-bold" > <%= kmap.getK_name() %></p>
                           <hr style="width: 50px">
-                          <p class="card-text"> NO  : <%= kmap.get("K_NUM") %></p>
+                          <p class="card-text"> NO  : <%= kmap.getK_num()%></p>
                         </div>
                       </div>
                     </div>

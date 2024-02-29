@@ -2,12 +2,13 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.vo.EmpVO" %>
 <%
     Date date = new Date();
     SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
     String strDate = simpleDate.format(date);
-    List<Map<String, Object>> empList = (List) request.getAttribute("empList");
-    Map<String,Object> rmap = empList.get(0);
+    List<EmpVO> empList = (List) request.getAttribute("empList");
+    EmpVO rmap = empList.get(0);
 %>
 <html>
 <head>
@@ -37,31 +38,31 @@
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">소     속</td>
-            <td colspan="2"><%=rmap.get("TEAM_NAME")%></td>
+            <td colspan="2"><%=rmap.getName()%></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">직위/직책</td>
-            <td colspan="2"><%=rmap.get("EMP_POSITION") %></td>
+            <td colspan="2"><%=rmap.getEmp_position()%></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">성   명</td>
-            <td colspan="2"><%=rmap.get("NAME") %></td>
+            <td colspan="2"><%=rmap.getName()%></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">입 사 일 </td>
-            <td colspan="2"><%=rmap.get("HIRE_DATE")%></td>
+            <td colspan="2"><%=rmap.getHire_date()%></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">사   번</td>
-            <td colspan="2"><%=rmap.get("EMP_NO")%></td>
+            <td colspan="2"><%=rmap.getEmp_no()%></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">전화번호</td>
-            <td colspan="2"><%=rmap.get("PHONE_NUM")%></td>
+            <td colspan="2"><%=rmap.getPhone_num()%></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">주    소</td>
-            <td colspan="2"><%=rmap.get("ADDRESS")%></td>
+            <td colspan="2"><%=rmap.getAddress()%></td>
         </tr>
         <tr>
             <td class="fs-4" style="background-color: lightgray">용   도</td>

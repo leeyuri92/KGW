@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmpVO {
 
+
     private int emp_no;
     private int team_no;
     private String team_name;
@@ -33,9 +34,12 @@ public class EmpVO {
     private String reg_date;
     private String mod_date;
     private String profile_img;
+    private String gubun;
+    private String keyword;
 
     @Override
     public String toString() {
+
         return "EmpVO{" +
                 "emp_no=" + emp_no +
                 ", team_no=" + team_no +
@@ -57,6 +61,9 @@ public class EmpVO {
                 ", reg_date='" + reg_date + '\'' +
                 ", mod_date='" + mod_date + '\'' +
                 ", profile_img='" + profile_img + '\'' +
+                ", gubun='" + gubun + '\'' +
+                ", keyword='" + keyword + '\'' +
                 '}';
+
     }
 }
