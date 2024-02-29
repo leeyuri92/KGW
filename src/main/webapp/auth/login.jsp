@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>login</title>
     <%@include file="/common/bootstrap_common.jsp" %>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/login.css">
+
 
     <script type="text/javascript">
 
@@ -31,7 +31,7 @@
         const findId = () => {
             $.ajax({
                 type: "POST",
-                url: "findId",
+                url: "/findId",
                 data: {
                     name: $('#name').val(),
                     email: $('#email').val()
@@ -116,7 +116,7 @@
                         <input type="text" class="form-control rounded-3" id="floatingPW_id" placeholder="ID">
                         <label for="floatingPW_id">아이디 입력</label>
                     </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit"  style="background-color: #652C2C;" onclick="findPW()">찾기</button>
+                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="button"  style="background-color: #652C2C;" onclick="findPW()">찾기</button>
                     <small class="text-body-secondary">입력하신 이메일로 임시비밀번호를 보내드립니다.</small>
                 </form>
             </div>
