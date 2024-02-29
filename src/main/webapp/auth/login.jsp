@@ -14,6 +14,15 @@
     <link rel="stylesheet" href="/css/login.css">
 
     <script type="text/javascript">
+
+        const loginEnter = (event)=> {
+            console.log('loginEnter')
+            console.log(window.event.keyCode); // 13
+            if(window.event.keyCode==13){
+                login();
+            }
+        }
+
         const login = (event) => {
             alert("로그인 호출");
             document.getElementById("f_login").submit();  // form 에 있는 action="loginProcess"실행
@@ -55,7 +64,7 @@
             </div>
             <div class="mb-2">
                 <label for="password" class="form-label">비밀번호</label>
-                <input type="password" id="password" name="password" class="form-control "  placeholder="비밀번호를 입력하세요.">
+                <input type="password" id="password" name="password" class="form-control "  placeholder="비밀번호를 입력하세요." onkeyup="loginEnter()">
             </div>
             <button type="button" class="btn btn-sm btn-outline-dark" onclick="login()">LOGIN</button>
             <div class="d-flex justify-content-between mt-2 gap-2" >

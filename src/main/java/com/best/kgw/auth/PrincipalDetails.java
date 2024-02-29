@@ -29,8 +29,8 @@ public class PrincipalDetails implements UserDetails {
         collect.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                logger.info("getAuthority : " + empVO.getEmp_position());
-                return empVO.getEmp_position();
+                logger.info("getAuthority : " + empVO.getEmp_access());
+                return empVO.getEmp_access();
             }
         });
         return collect;
