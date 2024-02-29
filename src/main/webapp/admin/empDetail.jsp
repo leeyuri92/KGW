@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                    <img id="preview" src="/images/go.png" />
+                    <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
                 </div>
 
                 <form id="f_member" method="post" action="/admin/empInfoUpdate">
