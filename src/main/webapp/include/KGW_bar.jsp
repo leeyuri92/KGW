@@ -230,7 +230,6 @@
                             <i class="nav-icon bi bi-heart-fill"></i>
                             <p>
                                 관리자메뉴
-                                <span class="badge badge-info right">2</span>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -241,7 +240,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/regist.jsp" class="nav-link">
+                                <a href="/admin/registPage" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>사원추가</p>
                                 </a>

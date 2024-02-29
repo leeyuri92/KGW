@@ -43,6 +43,12 @@ public class AdminController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
+    @GetMapping("/registPage")
+    public String registPage() {
+        logger.info("registPage() 호출");
+        return "forward:/admin/regist.jsp";
+    }
     /**********************************************************************************
      작성자 : 이동건
      작성일자 : 24.02.19 ,24,02.26
@@ -111,6 +117,9 @@ public class AdminController {
         int result = 0;
         result = adminSevice.empInfoUpdate(empVO);
         logger.info("empInfoUpdate = "+result);
+
         return "redirect:/admin/empList";
 }
+
+
 }

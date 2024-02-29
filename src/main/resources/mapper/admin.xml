@@ -13,14 +13,15 @@
           ,hire_date = #{hire_date}
           ,emp_state = #{emp_state}
           ,password = #{password}
-          ,name = #{name jdbcType}
-          ,email = #{email jdbcType}
+          ,name = #{name}
+          ,email = #{email}
           ,birthdate = #{birthdate}
           ,phone_num = #{phone_num}
           ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
           ,address = #{address}
-          ,retire_date = #{retire_date}}
-        ,profile_img = null
+          ,retire_date = #{retire_date}
+          ,profile_img = null
+
         where emp_no = #{emp_no}
     </update>
 
