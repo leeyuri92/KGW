@@ -1,6 +1,5 @@
 package com.best.kgw.config;
 
-import com.best.kgw.auth.LoginSuccessHandler;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -13,12 +12,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터 체인에 등록됨
 @EnableMethodSecurity
@@ -29,11 +24,6 @@ public class SecurityConfig {
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler();
     }
 
     @Bean
@@ -52,7 +42,7 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/admin/**").hasRole("LEADER")
 //                        .requestMatchers("/mypage/**").authenticated()
-//                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/findId/**").permitAll()
 //                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(login -> login
@@ -62,7 +52,6 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .failureUrl("/login-error") // 비번이 틀렸을 때
                         .defaultSuccessUrl("/", true)
-                        .successHandler(loginSuccessHandler())
                         .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
