@@ -76,8 +76,11 @@ public class MediaNoticeDaoImpl implements MediaNoticeDao {
         return mediaCommendDelete;
     }
 
-//    @Override
-//    public List<KiwoomNoticeVO> kiwoomNoticeUpdate(KiwoomNoticeVO kiwoomNoticeVO) throws Exception {
-//        return null;
-//    }
+    @Override
+    public void mediaHitUpdate(MediaNoticeVO mediaNoticeVO) throws Exception {
+        sqlSessionTemplate.update("mediaHitUpdate",mediaNoticeVO);
+    }
+
+
 }
+

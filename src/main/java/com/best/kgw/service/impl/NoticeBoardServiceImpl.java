@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class NoticeBoardServiceImpl implements NoticeBoardService {
     Logger logger = LoggerFactory.getLogger(MediaNoticeController.class);
     @Autowired
- private NoticeBoardDao noticeBoardDao;
+    private NoticeBoardDao noticeBoardDao;
     @Override
     public List<NoticeBoardVO> noticeList(NoticeBoardVO noticeBoardVO) throws Exception {
         logger.info("NoticeList");
@@ -48,5 +49,12 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         int noticeModify =0;
         noticeModify=noticeBoardDao.noticeModify(noticeBoardVO);
         return noticeModify;
+    }
+    @Transactional
+    @Override
+    public List<NoticeBoardVO> noticeDetail(NoticeBoardVO noticeBoardVO) throws Exception {
+        noticeBoardDao.hitUpdate(noticeBoardVO);
+        List<NoticeBoardVO> noticeList=noticeBoardDao.noticeList(noticeBoardVO);
+        return noticeList;
     }
 }

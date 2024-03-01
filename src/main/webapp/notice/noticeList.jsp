@@ -46,7 +46,7 @@
             location.href= "/notice/noticeDetail?notice_no="+notice_no;
         }
         function NoticeForm () {
-            location.href = '/notice/noticeForm.jsp';
+            location.href = '../admin/noticeForm.jsp';
         }
     </script>
     <!-- Google Font: Source Sans Pro -->
@@ -111,10 +111,15 @@
                                     <button id="btn_search" class="btn btn-danger" onclick="noticeSearch()">검색</button>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end gap-2">
+                                    <%
+                                        if (sessionVO.getEmp_access().equals("ROLE_ADMIN") ) {
+                                    %>
                                     <button type="button" class="btn btn-danger" onclick="NoticeForm()">작성</button>
+                                    <%
+                                        }
+                                    %>
                                 </div>
                             </div>
-                            <!-- 회원목록 시작 -->
                             <div class='board-list'>
                                 <table class="table table-hover text-center ">
                                     <thead>

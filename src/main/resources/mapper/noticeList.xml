@@ -20,24 +20,24 @@
         b.name
         from notice a join emp b on a.EMP_NO = b.EMP_NO
         <where>
-            <if test="notice_no != null">AND notice_no=#{notice_no}</if>
+            <if test="notice_no != null">AND a.notice_no=#{notice_no}</if>
 
-            <if test="notice_pin != null and notice_pin != ''">   /* notice_pin이 null이 아니고 빈 문자열이 아닌 경우 */
-                AND notice_pin=#{notice_pin}
+            <if test="notice_pin != null and notice_pin != ''">
+                AND a.notice_pin=#{notice_pin}
             </if>
 
             <if test="gubun != null">
                 <choose>
                     <when test='gubun.equals("notice_title")'>
-                        AND notice_title LIKE '%'||#{keyword}||'%'
+                        AND a.notice_title LIKE '%'||#{keyword}||'%'
                     </when>
                     <when test='gubun.equals("emp_no")'>
-                        AND emp_no = #{keyword}
+                        AND b.name LIKE '%'||#{keyword}||'%'
                     </when>
                 </choose>
             </if>
         </where>
-        order by notice_pin desc, notice_no desc   /*notice_pin을 내림차순으로 정렬하고, 그 후에 notice_no를 내림차순으로 정렬*/
+        order by a.notice_pin desc, a.notice_no desc
     </select>
 
     <insert id="noticeInsert" parameterType="com.vo.NoticeBoardVO">
@@ -55,7 +55,7 @@
             mod_date
         ) VALUES (
                      notice_pk_seq.nextval,
-                     1004,
+                     #{emp_no},
                      #{notice_title},
                      #{notice_content},
                      '카테고리',
@@ -63,8 +63,8 @@
                      #{notice_pin},
                      '2024-01-01',
                      '2024-01-01',
-                     TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
-                     TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+                     to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
+                     to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
                  )
     </insert>
 
@@ -78,9 +78,13 @@
             notice_title = #{notice_title},
             notice_content = #{notice_content},
             notice_pin = #{notice_pin},
-            mod_date= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+            mod_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
         where notice_no = #{notice_no}
     </update>
 
-
+    <update id="hitUpdate" parameterType="com.vo.NoticeBoardVO">
+        update notice
+        set notice_hit = notice_hit+1
+        where notice_no = #{notice_no}
+    </update>
 </mapper>

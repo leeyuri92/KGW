@@ -4,10 +4,12 @@ import com.best.kgw.dao.MediaNoticeDao;
 import com.best.kgw.service.MediaNoticeService;
 import com.vo.MediaNoticeCommendVO;
 import com.vo.MediaNoticeVO;
+import com.vo.NoticeBoardVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -68,6 +70,14 @@ public class MediaNoticeServiceImpl implements MediaNoticeService {
         int mediaCommendDelete=0;
         mediaCommendDelete=mediaNoticeDao.mediaCommendDelete(commend_no);
         return mediaCommendDelete;
+    }
+
+    @Transactional
+    @Override
+    public List<MediaNoticeVO> mediaNoticeDetail(MediaNoticeVO mediaNoticeVO) throws Exception {
+        mediaNoticeDao.mediaHitUpdate(mediaNoticeVO);
+        List<MediaNoticeVO> mediaNoticeDetail =mediaNoticeDao.mediaNoticeList(mediaNoticeVO);
+        return mediaNoticeDetail;
     }
 //    @Override
 //    public List<Map<String, Object>> KiwoomNoticeDetail(KiwoomNoticeCommendVO kiwoomNoticeCommendVO) throws Exception {

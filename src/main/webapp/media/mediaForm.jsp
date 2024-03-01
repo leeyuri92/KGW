@@ -52,7 +52,7 @@
                                 <div class="container">
                                     <%@include file="/common/summernote.jsp"%>
                                     <form id="insert" method="post" action="/media/mediaInsert" enctype="multipart/form-data">
-                                        <input type="hidden" name="emp_no" id="emp_no" value="1004">
+                                        <input type="hidden" name="emp_no" id="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                         <div>
                                             <input type="text" name="board_title" class="form-control mb-3"  placeholder="제목을 입력해주세요." id="subject">
                                         </div>

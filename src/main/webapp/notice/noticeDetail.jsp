@@ -105,9 +105,13 @@
 
                                 <div class="d-flex gap-2 justify-content-end mt-2">
                                     <button type="submit" class="btn btn-primary" onclick="noticeList()">목록</button>
+                                    <%if (sessionVO.getEmp_access().equals("ROLE_ADMIN")){%>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#noticeMod">수정</button>
                                     <button type="submit" class="btn btn-primary" onclick="noticeDelete()">삭제</button>
                                 </div>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                     </div>

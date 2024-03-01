@@ -53,8 +53,9 @@
                                 <hr />
                                 <div class="container">
                                     <%@include file="/common/summernote.jsp"%>
-                                    <form id="insert" method="post" action="/notice/noticeInsert">
+                                    <form id="insert" method="post" action="/admin/noticeInsert">
                                         <div>
+                                            <input type="hidden" name="emp_no" id="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                             <input type="text" name="notice_title" class="form-control mb-3"  placeholder="제목을 입력해주세요." id="subject">
                                         </div>
                                         <div class="row">

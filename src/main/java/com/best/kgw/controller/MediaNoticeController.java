@@ -41,7 +41,7 @@ public class MediaNoticeController {
     //키움소식 상세조회
     public String mediaNoticeDetail(MediaNoticeVO mediaNoticeVO, MediaNoticeCommendVO mediaNoticeCommendVO, Model model) throws Exception {
         logger.info("mediaNoticeDetail");
-        List<MediaNoticeVO> mediaNoticeDetail = mediaNoticeService.mediaNoticeList(mediaNoticeVO);
+        List<MediaNoticeVO> mediaNoticeDetail = mediaNoticeService.mediaNoticeDetail(mediaNoticeVO);
         model.addAttribute("mediaNoticeDetail", mediaNoticeDetail);
         logger.info("mediaNoticeDetail:" + mediaNoticeDetail);
 

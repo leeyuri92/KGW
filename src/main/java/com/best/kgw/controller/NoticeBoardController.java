@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/notice/*")
 public class NoticeBoardController {
     Logger logger = LoggerFactory.getLogger(MediaNoticeController.class);
 
     @Autowired
     private NoticeBoardService noticeBoardService;
 
-    @GetMapping("noticeList")
+    @GetMapping("notice/noticeList")
     //보드리스트
     public String noticeList(NoticeBoardVO noticeboardVO, Model model) throws Exception {
         logger.info("NoticeList");
@@ -33,17 +32,17 @@ public class NoticeBoardController {
         return "forward:noticeList.jsp";
     }
 
-    @GetMapping("noticeDetail")
+    @GetMapping("notice/noticeDetail")
     // 상세조회
     public String noticeDetail(NoticeBoardVO noticeboardVO, Model model) throws Exception {
         logger.info("noticeDetail");
-        List<NoticeBoardVO> noticeList = noticeBoardService.noticeList(noticeboardVO);
+        List<NoticeBoardVO> noticeList = noticeBoardService.noticeDetail(noticeboardVO);
         model.addAttribute("noticeList", noticeList);
         logger.info("noticeDetail".toString());
         return "forward:noticeDetail.jsp";
     }
 
-    @PostMapping("noticeInsert")
+    @PostMapping("admin/noticeInsert")
     //공지사항 작성
     //POST 요청을 보낼 때, 요청에 "notice_pin"이라는 파라미터가 포함되어 있다면 그 값을 boolean으로 변환하여 notice_pin 변수에 저장
     //만약 "notice_pin" 파라미터가 요청에 포함되어 있지 않다면 기본값으로 false가 할당
@@ -57,7 +56,7 @@ public class NoticeBoardController {
         noticeInsert = noticeBoardService.noticeInsert(noticeboardVO);
         logger.info("noticeInsert");
         if (noticeInsert == 1) {
-            path = "redirect:noticeList";
+            path = "redirect:/notice/noticeList";
         } else {
             path = "error";
         }
@@ -65,7 +64,7 @@ public class NoticeBoardController {
     }
 
 
-    @GetMapping("noticeDelete")
+    @GetMapping("notice/noticeDelete")
     //게시글 삭제
     public String noticeDelete(int notice_no) throws Exception {
         logger.info("noticeDelete");
@@ -77,7 +76,7 @@ public class NoticeBoardController {
             return "error";
         }
     }
-    @PostMapping("noticeModify")
+    @PostMapping("notice/noticeModify")
     public String noticeModify (NoticeBoardVO noticeBoardVO) throws Exception {
         logger.info("noticeModify");
         int noticeModify=0;

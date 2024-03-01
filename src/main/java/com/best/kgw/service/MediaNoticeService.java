@@ -19,4 +19,6 @@ public interface MediaNoticeService {
 
     public List <MediaNoticeCommendVO>commendList(MediaNoticeCommendVO mediaNoticeCommendVO) throws Exception;
     public int mediaCommendDelete(int commend_no) throws Exception;
+
+    public List<MediaNoticeVO> mediaNoticeDetail(MediaNoticeVO mediaNoticeVO) throws Exception;
 }

@@ -45,4 +45,9 @@ public class NoticeBoardDaoImpl implements NoticeBoardDao {
         noticeModify=sqlSessionTemplate.update("noticeModify",noticeBoardVO);
         return noticeModify;
     }
+
+    @Override
+    public void hitUpdate(NoticeBoardVO noticeBoardVO) {
+        sqlSessionTemplate.update("hitUpdate",noticeBoardVO);
+    }
 }

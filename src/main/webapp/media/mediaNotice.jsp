@@ -165,7 +165,7 @@
               <div style="display:flex; justify-content:center;">
                 <ul class="pagination">
                   <%
-                    String pagePath = "mediaNoticeList";
+                    String pagePath = "mediaNotice";
                     BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
                     out.print(bspb.getPageBar());
                   %>

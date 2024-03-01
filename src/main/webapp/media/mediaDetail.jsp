@@ -118,8 +118,10 @@
 
                                 <div class="d-flex gap-2 justify-content-end mt-2">
                                     <button type="submit" class="btn btn-primary" onclick="mediaNoticeList()">목록</button>
+                                    <%if(sessionVO.getEmp_no() == mediaVO.getEmp_no()){%>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mediaMod">수정</button>
                                     <button type="submit" class="btn btn-primary" onclick="mediaNoticeDelete()">삭제</button>
+                                    <%}%>
                                 </div>
 
                                 <%--댓글목록--%>
@@ -135,12 +137,16 @@
                                             <input type="hidden" class="board_no" value="<%=mediaVO.getBoard_no()%>">
                                             <div class="user-avatar"></div>
                                             <div class="comment-content">
-                                                <p class="user-name"><%=commendVO.getEmp_no()%></p>
+                                                <p class="user-name"><%=commendVO.getName()%></p>
                                                 <p class="comment-text"><%=commendVO.getCommend_content()%></p>
                                                 <div class="row">
                                                     <p class="comment-date"><%=commendVO.getReg_date()%></p>
                                                 </div>
+                                                <%if(sessionVO.getEmp_no()==commendVO.getEmp_no()){ %>
                                                 <button type="button" class="btn btn-primary" onclick="mediaCommendDelete('<%=commendVO.getCommend_no()%>')">삭제</button>
+                                                <%
+                                                    }
+                                                %>
                                             </div>
                                         </div>
                                         <%
@@ -153,7 +159,7 @@
                                                 <label for="commendContent" class="form-label">댓글</label>
                                                 <input type="hidden" class="form-control mb-3" name="board_no" value="<%=mediaVO.getBoard_no()%>">
                                                 <%--                                            <input type="hidden" class="form-control mb-3" name="commend_no" value="<%=mediaNoticeList.get("board_no")%>>">--%>
-                                                <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=mediaVO.getEmp_no()%>" >
+                                                <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=sessionVO.getEmp_no()%>" >
                                                 <textarea class="form-control" id="commendContent" rows="3" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
                                             </div>
                                             <div class="d-flex justify-content-end">

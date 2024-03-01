@@ -9,4 +9,5 @@ public interface NoticeBoardDao {
     public int noticeInsert(NoticeBoardVO noticeboardVO) throws Exception;
     public int noticeDelete(int notice_no) throws Exception;
     public int noticeModify(NoticeBoardVO noticeBoardVO) throws Exception;
+    public void hitUpdate(NoticeBoardVO noticeBoardVO);
 }

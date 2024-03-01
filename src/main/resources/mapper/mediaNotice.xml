@@ -18,14 +18,14 @@
         b.NAME
         from media_board a join emp b on a.EMP_NO = b.EMP_NO
         <where>
-            <if test="board_no != null">AND board_no=#{board_no}</if>
+            <if test="board_no != null">AND a.board_no=#{board_no}</if>
             <if test="gubun != null">
                 <choose>
                     <when test='gubun.equals("board_title")'>
-                        AND board_title LIKE '%'||#{keyword}||'%'
+                        AND a.board_title LIKE '%'||#{keyword}||'%'
                     </when>
-                    <when test='gubun.equals("emp_no")'>
-                        AND emp_no = #{keyword}
+                    <when test='gubun.equals("name")'>
+                        AND b.name LIKE '%'||#{keyword}||'%'
                     </when>
                 </choose>
             </if>
@@ -45,9 +45,9 @@
                #{board_title},
                #{board_content},
                #{emp_no},
-               TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+               to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
                0,
-               TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+               to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
                #{filename}
               )
     </insert>
@@ -57,19 +57,27 @@
         set
             board_title = #{board_title},
             board_content = #{board_content},
-            mod_date= TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+            mod_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
             filename= #{filename}
         where board_no = #{board_no}
     </update>
+
+    <update id="mediaHitUpdate" parameterType="com.vo.MediaNoticeVO">
+        update media_board
+        set board_hit = board_hit+1
+        where board_no = #{board_no}
+    </update>
+
     <!--댓글 쿼리-->
     <select id="commendList" parameterType="com.vo.MediaNoticeCommendVO" resultType ="com.vo.MediaNoticeCommendVO">
         select a.BOARD_NO,
                a.EMP_NO,
                a.COMMEND_CONTENT,
                a.COMMEND_NO,
-               a.REG_DATE
-        from MEDIA_BOARD_COMMEND a join MEDIA_BOARD b
-                                        on a.BOARD_NO = b.BOARD_NO
+               a.REG_DATE,
+               c.NAME
+        from MEDIA_BOARD_COMMEND a inner join MEDIA_BOARD b on a.BOARD_NO = b.BOARD_NO
+                                   inner join emp c on a.emp_no = c.EMP_NO
         where a.board_no = #{board_no}
         order by board_no desc
     </select>
@@ -85,8 +93,8 @@
                    #{board_no},
                    #{emp_no},
                    #{commend_content},
-                   TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
-                   TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+                   to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
+                   to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
                )
     </insert>
 
@@ -94,5 +102,6 @@
         delete from media_board_commend
         where commend_no= #{commend_no}
     </delete>
+
 
 </mapper>
