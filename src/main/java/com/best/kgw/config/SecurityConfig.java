@@ -30,7 +30,7 @@ public class SecurityConfig {
     RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         //큰 권한 순서로 '>'를 사용하여 입력
-        roleHierarchy.setHierarchy("ROLE_MASTER > ROLE_LEADER > ROLE_USER");
+        roleHierarchy.setHierarchy("ROLE_MASTER > ROLE_ADMIN > ROLE_LEADER > ROLE_MANAGE > ROLE_USER");
         return roleHierarchy;
     }
 
@@ -40,7 +40,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/admin/**").hasRole("LEADER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/manage/**").hasRole("MANAGE")
 //                        .requestMatchers("/mypage/**").authenticated()
                         .requestMatchers("/findId/**","/findPw/**","/sendPassword/**").permitAll()
 //                        .requestMatchers("/**").permitAll()

@@ -28,7 +28,7 @@ public class ChartController {
      작성일자 : 24.02.18
      기능 : FAchart 페이지 생성 및 리스트, chart 생성
      **********************************************************************************/
-    @GetMapping("kList")
+    @GetMapping("manage/FAChart")
     public String faPage(Map<String, Object> fmap, Map<String, Object> wmap, Map<String, Object> kmap, Map<String, Object> pmap, Model model) {
         logger.info("faPage 호출");
 

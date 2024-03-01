@@ -215,7 +215,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/kList" class="nav-link">
+                                <a href="/manage/FAChart" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>FA선수현황</p>
                                 </a>
