@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,10 +71,17 @@ public class LoginController {
     }
   }
 
-  // 로그인처리가 되지 않았을 때 에러페이지 호출
+  /**********************************************************************************
+   작성자 : 이유리
+   작성일자 : 24.03.01
+   기능 : 로그인 실패시 에러처리
+   **********************************************************************************/
   @GetMapping("/login-error")
+  @ResponseBody
   public String loginError() {
-    return "loginError";
+    logger.info("loginError");
+    String msg= "loginError";
+    return msg;
   }
 
 }

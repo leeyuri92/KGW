@@ -23,9 +23,25 @@
             }
         }
 
-        const login = (event) => {
-            alert("로그인에 성공하였습니다.");
-            document.getElementById("f_login").submit();  // form 에 있는 action="loginProcess"실행
+        const login = () => {
+            console.log('login 클릭')
+            $.ajax({
+                type: "POST",
+                url: "/loginProcess",
+                data: {
+                    emp_no: $('#emp_no').val(),
+                    password: $('#password').val()
+                },
+                success: function (data) {
+                    console.log("받아온 data 값 : " + data);
+                    if (data === "loginError"){
+                        alert("일치하는 정보가 없습니다. 로그인에 실패하였습니다.");
+                    } else {
+                        alert("로그인에 성공하였습니다");
+                        location.href="/";
+                    }
+                }
+            });
         }
 
         const findId = () => {
