@@ -222,6 +222,9 @@
                             </li>
                         </ul>
                     </li>
+                    <%
+                        if(sessionVO.getEmp_access().equals("ROLE_ADMIN")){
+                    %>
                     <li class="nav-header">관리자</li>
                     <li class="nav-item">
                         <a href="../calendar.html" class="nav-link">
@@ -257,6 +260,9 @@
                             </li>
                         </ul>
                     </li>
+                    <%
+                        }
+                    %>
 
                 </ul>
             </nav>
