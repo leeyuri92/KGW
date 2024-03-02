@@ -86,13 +86,13 @@
                                                 <div class="col-md-4 d-flex align-items-end" >
                                                     <div class="card-body ">
                                                         <p class="card-text fs-5"> 포지션  : <%= kmap.getK_pos() %></p>
-                                                        <p class="card-text fs-5"> 데뷔년도  : <%= kmap.getK_hire() %></p>
-                                                        <p class="card-text fs-5"> 연자 : <%= kmap.getK_year() %></p>
+                                                        <p class="card-text fs-5"> 데뷔년도  : <%= kmap.getK_hire() %>년</p>
+                                                        <p class="card-text fs-5"> 연차  :  <%= kmap.getK_year() %>년차</p>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4 d-flex align-items-end"  style="display:flex; justify-content:center;">
-                                                    <img src="/images/profile/<%=kmap.getK_name()%>.jpeg" class="img-fluid rounded-start" alt="profile" style="height: 230px">
+                                                    <img src="/fileUpload/kiwoom/<%=kmap.getK_name()%>.jpeg" class="img-fluid rounded-start" alt="profile" style="height: 230px">
                                                 </div>
 
                                             </div>
@@ -103,7 +103,6 @@
                                     <div class="col-md-12 d-flex gap-2 justify-content-end mt-3 p-3" >
                                     <button id="btn_allDown" type="button" class="btn btn-danger"  onclick="kiwoomList()">목록</button>
                                     </div>
-
                             </div>
                         </div>
                     </div>

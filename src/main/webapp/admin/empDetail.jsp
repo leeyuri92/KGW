@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                    <img src="/images/go.png" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
+                    <img src="/fileUpload/profile/<%=rmap.getEmp_no()%>.png" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
                 </div>
 
                 <form id="f_member" method="post" action="/admin/empInfoUpdate">
@@ -135,9 +135,8 @@
                         <select class="form-control" id="team_no" name="team_no" onblur="validateTeam()">
                             <option value="<%=rmap.getTeam_no()%>" selected> <%=rmap.getTeam_name()%> </option>
                             <hr class="dropdown-divider">
-                            <option value="1">운영팀</option>
-
-                            <option value="2">지원팀</option>
+                            <option value="1">경영지원팀</option>
+                            <option value="2">운영팀</option>
                             <!-- Add more options as needed -->
                         </select>
                     </div>
@@ -193,14 +192,14 @@
                                 <span id="emp_access_" class="text-danger" style="display:none">형식이 아닙니다.</span>
                             </label>
                             <select class="form-control" id="emp_access" name="emp_access" >
-                                <option value="<%=rmap.getEmp_state()%>" selected><%=rmap.getEmp_position()%></option>
+                                <option value="<%=rmap.getEmp_access()%>" selected><%=rmap.getEmp_position()%></option>
                                 <hr class="dropdown-divider">
                                 <option value="ROLE_USER">사원</option>
-                                <option value="ROLE_LEADER">팀장</option>
+                                <option value="ROLE_ADMIN">경영지원팀</option>
+                                <option value="ROLE_MANAGE">운영팀</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
-
                     </div>
                     <br>
                     <br>

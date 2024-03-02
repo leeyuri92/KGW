@@ -124,7 +124,7 @@
                     <div class="row g-0" >
 
                       <div class="col-md-6 " style="display:flex; justify-content:center;">
-                        <img src="/images/profile/<%=kmap.getK_name()%>.jpeg" class="img-fluid rounded-start" alt="profile" >
+                        <img src="/fileUpload/kiwoom/<%=kmap.getK_name()%>.jpeg" class="img-fluid rounded-start" alt="profile" >
                       </div>
                       <div class="col-md-6">
                         <div class="card-body">
