@@ -43,7 +43,13 @@
                 <div class="user-panel d-flex" >
 
                     <div class="info">
-                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>"><img src="/fileUpload/profile/<%=sessionVO.getProfile_img()%>" class="img-circle" alt="User Image"> <%=sessionVO.getName()%></a>
+                        <%
+                            String profileImgUrl = sessionVO.getProfile_img();
+                            if (profileImgUrl == null || profileImgUrl.isEmpty()) {
+                                profileImgUrl = "K1.png"; // 기본 이미지 파일 경로 설정
+                            }
+                        %>
+                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>"><img src="/fileUpload/profile/<%=profileImgUrl%>" class="img-circle" alt="User Image"> <%=sessionVO.getName()%></a>
                     </div>
                 </div>
             </li>

@@ -28,6 +28,9 @@ public class FileController extends HttpServlet {
 
     @PostMapping("fileUpload")
     public String fileUpload(@RequestParam("fileFolder") String fileFolder,@RequestParam("uploadFile") MultipartFile file, HttpServletRequest req) throws Exception {
+
+        logger.info(file.getBytes()+"");
+
         fileService.fileUpload(fileFolder, file, req);
         return "redirect:/mypage/fileSelect.jsp";
     }
