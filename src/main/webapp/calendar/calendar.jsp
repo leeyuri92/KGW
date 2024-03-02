@@ -1,8 +1,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.vo.CalendarVO" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="com.vo.EmpVO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.Objects" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
@@ -40,6 +42,11 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.1/main.min.css" rel="stylesheet">
 </head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse">
+<div class="wrapper">
+    <%@include file="/include/KGW_bar.jsp"%>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendar');
@@ -114,7 +121,8 @@
                 events: [
                     <%  List<CalendarVO> calendarList = (List<CalendarVO>) request.getAttribute("calendarList");
                         if (calendarList != null) {
-                            for (CalendarVO vo : calendarList) { %>
+                            for (CalendarVO vo : calendarList) {
+                            if (Objects.equals(sessionVO.getName(), vo.getName())) { %>
                     {
                         extendedProps: { CalendarNo: '<%= vo.getCalendar_no() %>' },
                         id: '<%= vo.getCalendar_id() %>',
@@ -123,7 +131,7 @@
                         end: '<%= vo.getCalendar_end() %>',
                         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
                     },
-                    <% }} %>
+                    <% }}} %>
                 ]
             });
             calendar.render();
@@ -176,6 +184,7 @@
 
         function handleEventSubmit() {
                 let idInput = document.getElementById('insertCalendarId');
+                let empNoInput = document.getElementById('insertCalendarId');
                 let titleInput = document.getElementById('insertTitle');
                 let startInput = document.getElementById('insertStart');
                 let endInput = document.getElementById('insertEnd');
@@ -358,9 +367,6 @@
         }
     }
 </script>
-<body class="hold-transition sidebar-mini sidebar-collapse">
-<div class="wrapper">
-    <%@include file="/include/KGW_bar.jsp"%>
     <div class="content-wrapper">
 
         <div style="width: 100%; height: 100px; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
@@ -458,6 +464,7 @@
                                     if (calendarList1 != null) {
                                         int count = 0; // 일정 카운터 변수 추가
                                         for (CalendarVO vo : calendarList1) {
+                                         if (Objects.equals(sessionVO.getName(), vo.getName())) {
                                             String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
                                             String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
                                             String startDate = vo.getCalendar_end();
@@ -472,7 +479,8 @@
                                     <td><%= startDate + "~" + endDate %></td>
                                     <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
                                 </tr>
-                                <%          }
+                                <%}
+                                }
                                 }
                                 }
                                 %>
@@ -497,6 +505,10 @@
                             <label for="insertTitle">일정명</label>
                         </div>
                         <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="insertName" name="insertName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="insertName">참석자</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control rounded-3" id="insertStart" name="insertStart">
                             <label for="insertStart">일정 시작</label>
                         </div>
@@ -511,10 +523,6 @@
                             <option value="3">전사일정</option>
                         </select>
                         <br>
-                        <%--                        <div class="form-floating mb-3">--%>
-                        <%--                            <input type="text" class="form-control rounded-3" id="insertCalendarId" name="insertCalendarId" placeholder="일정 ID">--%>
-                        <%--                            <label for="insertCalendarId">일정 ID</label>--%>
-                        <%--                        </div>           --%>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="submitEvent" name="submitEvent" value="등록"/>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-secondary close" id="exitEvent" name="exitEvent" value="취소"/>
                     </div>
@@ -533,6 +541,10 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailTitle" name="detailTitle" placeholder="일정명">
                             <label for="detailTitle">일정명</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="detailName" name="detailName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="detailName">참석자</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailCalendarNo" name="detailCalendarNo" placeholder="일정 번호">
