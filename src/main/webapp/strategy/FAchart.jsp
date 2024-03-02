@@ -43,6 +43,8 @@
                             console.log("data : " + data + ", type : " + typeof (data));
                             document.querySelector('#barchart_material').innerHTML = data;
                             google.charts.setOnLoadCallback(drawChart(data));
+                            document.querySelector('#table_div').innerHTML = data;
+                            google.charts.setOnLoadCallback(drawTable(data));
                         },
                         error: function () {
                             alert('Error occurred while loading new chart.');
@@ -91,33 +93,6 @@
                 alert('That\'s column no. ' + selection[0].row);
             }
         };
-
-        // 두번째 차트
-        google.charts.load('current', {'packages': ['bar']}); //구글 지원하는 막대그래프 로딩
-        google.charts.setOnLoadCallback(drawChart); //막대그래프 그리려면 데이터가 필요함 - 함수호출
-
-        function drawChart(fWar) {
-            var data = google.visualization.arrayToDataTable([
-                ['선수', 'WAR'],
-                [' ', null],
-                ['우리구단 WAR', ${kWar}],
-                ['FA선수포함', fWar],
-                [' ', null]
-            ]);
-            var options = {
-                chart: {
-                    title: 'Company Performance',
-                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-                },
-                bar: {
-                    groupWidth: '50%', // 막대의 그룹 너비 조정
-                    gap: 0.1 // 막대 간의 간격 조정
-                },
-                colors: ['#7c1512']
-            };
-            var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-            chart.draw(data, google.charts.Bar.convertOptions(options));
-        }
 
         // 파이차트
         google.charts.load('current', {'packages': ['corechart']});
@@ -186,9 +161,63 @@
             })
         }
 
+        // 초기화 버튼
         const faInit = () => {
             location.href = '/faInit';
         };
+
+        // WAR 비교 차트 - 막대
+        google.charts.load('current', {'packages': ['bar']}); // 구글 지원하는 막대그래프 로딩
+        google.charts.setOnLoadCallback(drawChart); // 막대그래프 그리려면 데이터가 필요함 - 함수호출
+
+        function drawChart(fWar) {
+            var data = google.visualization.arrayToDataTable([
+                [' ', 'WAR'],
+                [' ', null],
+                ['우리구단 WAR', ${kWar}],
+                ['FA선수포함', fWar],
+                [' ', null]
+            ]);
+            var options = {
+                chart: {
+                    title: 'Company Performance',
+                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                },
+                bar: {
+                    groupWidth: '50%', // 막대의 그룹 너비 조정
+                    gap: 0.1 // 막대 간의 간격 조정
+                },
+                colors: ['#7c1512']
+            };
+            var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+
+        // WAR 비교 차트 - 표
+        google.charts.load('current', {'packages':['table']});
+        google.charts.setOnLoadCallback(drawTable);
+
+        function drawTable(fWar) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '');
+            data.addColumn('number', '평균 WAR 값');
+            data.addRows([
+                ['키움구단 선수 평균 WAR',  ${kWar}],
+                [' FA 선수 포함 평균 WAR',  fWar]
+            ]);
+
+            var options = {
+                showRowNumber: true,
+                width: '100%', // 표의 너비를 100%로 설정하여 전체 너비를 사용하도록 합니다.
+                height: '100%', // 표의 높이를 100%로 설정하여 전체 높이를 사용하도록 합니다.
+                cssClassNames: {
+                    headerRow: 'header-row', // 컬럼의 첫 번째 행에 배경색을 적용하기 위한 클래스 지정
+                }
+            };
+
+            var table = new google.visualization.Table(document.getElementById('table_div'));
+            table.draw(data, options);
+        }
     </script>
 
     <style>
@@ -202,6 +231,11 @@
             justify-content: center;
             align-items: center;
         }
+        /* 컬럼의 첫 번째 행에 배경색을 적용하기 위한 CSS */
+        .header-row th {
+            background-color: #d0455e;
+        }
+
     </style>
 </head>
 
@@ -360,6 +394,9 @@
                                 </div>
                                 <div class="chart">
                                     <div id="barchart_material" style="width: 100%; height: 400px;"></div>
+                                </div>
+                                <div class="chart justify-content-start text-center">
+                                    <div id="table_div" style="width: 80%; height: 110px; font-weight: bold;font-size: 13px" class="text-center"></div>
                                 </div>
                             </div>
                             <!-- /.col -->

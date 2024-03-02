@@ -179,6 +179,6 @@ public class ChartController {
     public String faInit(Map<String, Object> imap) {
         logger.info("faInit");
         chartService.faInit(imap);
-        return "redirect:kList";
+        return "redirect:manage/FAChart";
     }
 }

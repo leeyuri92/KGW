@@ -223,7 +223,7 @@
                         </ul>
                     </li>
                     <%
-                        if(sessionVO.getEmp_access().equals("ROLE_ADMIN")){
+                        if(sessionVO.getEmp_access().equals("ROLE_ADMIN") || sessionVO.getEmp_access().equals("ROLE_MASTER" )){
                     %>
                     <li class="nav-header">관리자</li>
                     <li class="nav-item">
