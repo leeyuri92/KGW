@@ -21,55 +21,38 @@ public class DocumentServiceImpl implements DocumentService {
 
     //기안자 문서함
     @Override
-    public List<Map<String, Object>> DocumentList(Map<String, Object> dMap) {
-        List<Map<String, Object>> list = documentDao.DocumentList(dMap);
+    public List<ApprovalVO> DocumentList(ApprovalVO approvalVO) {
+        List<ApprovalVO> list = documentDao.DocumentList(approvalVO);
         return list;
     }
 
+    //결재자 문서함
+    @Override
+    public List<ApprovalVO> ApprovalList(ApprovalVO approvalVO) {
+        List<ApprovalVO> list2 = documentDao.ApprovalList(approvalVO);
+        return list2;
+    }
+
+
     //기안하기필요한 문서 정보
     @Override
-    public List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo) {
-        List<Map<String,Object>> kiwoomList = documentDao.DocumentInfo(approvalvo);
+    public List<Map<String, Object>> DocumentInfo(ApprovalVO approvalvo) {
+        List<Map<String, Object>> kiwoomList = documentDao.DocumentInfo(approvalvo);
         return kiwoomList;
     }
 
+    @Transactional
     @Override
     public void documentInsert(ApprovalVO approvalVO) throws Exception {
         documentDao.documentInsert(approvalVO);
+//        logger.info(String.valueOf(approvalVO.getDocument_no()) + "serviceIMPL");
+        approvalVO.setDocument_no(approvalVO.getDocument_no());
+        logger.info(approvalVO.toString());
+        documentDao.approvalInsert(approvalVO);
+
     }
+
 }
 
 
 
-/*  임시 저장  파트 따로
-* List<Map<String, Object>> filteredList = list.stream()
-    .filter(map -> "임시저장".equals(map.get("state")))
-    .collect(Collectors.toList());
-*
-*
-* try {
-            // 插入文档
-            int documentInsertResult = documentDao.insertDocument(approvalVO);
-            if (documentInsertResult != 1) {
-                throw new RuntimeException("Failed to insert document");
-            }
-
-            // 获取插入文档后生成的文档编号
-            int documentNo = approvalVO.getDocument_no();
-
-            // 构造审批数据
-            approvalVO.setDocument_no(documentNo);
-
-            // 插入审批记录
-            int approvalInsertResult = documentDao.insertApproval(approvalVO);
-            if (approvalInsertResult != 1) {
-                throw new RuntimeException("Failed to insert approval");
-            }
-        } catch (Exception e) {
-            // 捕获异常并处理
-            logger.error("Error occurred during document and approval insertion: " + e.getMessage());
-            throw new RuntimeException("Insertion failed", e); // 抛出异常使事务回滚
-        }
-    }
-
-* */

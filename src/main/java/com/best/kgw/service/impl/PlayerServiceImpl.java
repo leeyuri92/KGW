@@ -2,6 +2,7 @@ package com.best.kgw.service.impl;
 
 import com.best.kgw.dao.PlayerDao;
 import com.best.kgw.service.PlayerService;
+import com.vo.PitchersVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,10 @@ public class PlayerServiceImpl  implements PlayerService {
         logger.info("hMap"+hMap);
         return list;
     }
-@Override
-    public List<Map<String, Object>> pitcherList(Map<String ,Object>pMap){
-    List<Map<String,Object>>list2=new ArrayList<>();
-        list2=playerDao.pitcherList(pMap);
+    @Override
+    public List<PitchersVO> pitcherList(PitchersVO pitchersVO){
+        List<PitchersVO >list2=new ArrayList<>();
+        list2=playerDao.pitcherList(pitchersVO);
         return list2;
-}
+    }
 }

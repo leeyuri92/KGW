@@ -162,7 +162,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-pencil-square"></i>
                             <p>
-                                전자결제
+                                전자결재
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -174,21 +174,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../approval/approvalList" class="nav-link">
+                                <a href="../approval/documentList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>기안문서함</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../forms/editors.html" class="nav-link">
+                                <a href="../approval/saveList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Editors</p>
+                                    <p>임시저장함 {아직}</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../forms/validation.html" class="nav-link">
+                                <a href="../approval/approvalList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>Validation</p>
+                                    <p>결재자문서함</p>
                                 </a>
                             </li>
                         </ul>

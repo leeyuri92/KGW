@@ -38,6 +38,9 @@ public class ApprovalVO {
         private  String  k_name; // 우리구단 선수명
         private  int fa_no; // fa no
         private  String  fa_name; //fa 이름
+    
+    
+        private String gubun;  //임시저장 select 사용 컬럼
         
 //        select 받아논 데이터 끝
     @Builder

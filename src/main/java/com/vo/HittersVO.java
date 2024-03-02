@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class HittersVO {
+    private  int h_no;
     private String h_name; //  H_소속
     private String h_team; //  H_팀
     private Double h_avg; //  H_타울
@@ -25,10 +26,11 @@ public class HittersVO {
 
 
     @Builder
-    public HittersVO( String h_name, String h_team, Double h_avg, Integer h_ab, Integer h_h,
+    public HittersVO( int h_no, String h_name, String h_team, Double h_avg, Integer h_ab, Integer h_h,
                      Integer h_hr, Integer h_r, Integer h_rbi, Integer h_so, Integer h_sb,
                      Double h_obp, Double h_slg, Double h_war, Double h_ops) {
         super();
+        this.h_no=h_no;
         this.h_name = h_name;
         this.h_team = h_team;
         this.h_avg = h_avg;

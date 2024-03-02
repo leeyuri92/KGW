@@ -22,12 +22,44 @@ public class DocumentController {
     private DocumentService documentService;
 
     //    문서함
-    @GetMapping("/approvalList")
-    public String DocumentList(Model model, @RequestParam Map<String, Object> dMap) {
-        List<Map<String, Object>> list = documentService.DocumentList(dMap);
+    @GetMapping("/documentList")
+    public String DocumentList(Model model, ApprovalVO approvalVO) {
+        approvalVO.setGubun("false");
+        List<ApprovalVO> list = documentService.DocumentList(approvalVO);
         model.addAttribute("list", list);
         return "forward:approvalList.jsp";
     }
+
+
+
+
+
+    //    결재 함
+    @GetMapping("/approvalList")
+    public String ApprovalList(Model model, ApprovalVO approvalVO) {
+        List<ApprovalVO> list2 = documentService.ApprovalList(approvalVO);
+        model.addAttribute("list2", list2);
+        return "forward:approvalList2.jsp";
+    }
+
+    // 문서 작성
+    @PostMapping("documentInsert")
+    public String  documentInsert( ApprovalVO approvalVO) throws Exception {
+        logger.info("DocumentController :  documentInsert");
+        documentService.documentInsert(approvalVO);
+        return "redirect:documentList";
+    }
+
+    @GetMapping("/saveList")
+    public String SaveList(Model model, ApprovalVO approvalVO) {
+        approvalVO.setGubun("true");
+        List<ApprovalVO> list3 = documentService.DocumentList(approvalVO);
+        model.addAttribute("list3", list3);
+        return "forward:approvalList3.jsp";
+    }
+
+
+
 
     //   값을 select 하기
     @GetMapping("/docu")
@@ -38,20 +70,7 @@ public class DocumentController {
 
     }
 
-    //    insert test
-//    @PostMapping("/approvalList")
-//    @ResponseBody
-//    public   void DocumentInsert(ApprovalVO approvalVO) throws  Exception{
-//        documentService.insertDocumentWithApproval(approvalVO);
-//        logger.info("ControllerInsert"+approvalVO.toString());
-//    }
 
-    @PostMapping("documentInsert")
-    public String  documentInsert( ApprovalVO approvalVO) throws Exception {
-        logger.info("DocumentController :  documentInsert");
-        documentService.documentInsert(approvalVO);
-        return "redirect:approvalList";
-    }
 }
 
 

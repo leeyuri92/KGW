@@ -1,6 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.PlayerService;
+import com.vo.PitchersVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class PlayersController {
     Logger logger = LoggerFactory.getLogger("PlayersController".getClass());
 
     @GetMapping("/HittersList")
-    public String hitterList(Model model, @RequestParam Map<String, Object> hMap  , int H_AB   ) {
+    public String hitterList(Model model, @RequestParam Map<String, Object> hMap   ) {
         List<Map<String, Object>> list = playerService.hitterList(hMap);
         model.addAttribute("list", list);
 //        model.addAttribute("H_AB",hab);
@@ -31,11 +32,22 @@ public class PlayersController {
 
     }
 
+
     @GetMapping("/PitchersList")
-    public String pitcherList(Model model, @RequestParam Map<String, Object> pMap) {
-        List<Map<String, Object>> list2 = playerService.pitcherList(pMap);
+    public String pitcherList(Model model, PitchersVO pitchersVO)  throws  Exception {
+        List<PitchersVO> list2 = playerService.pitcherList(pitchersVO);
         model.addAttribute("list2", list2);
         return "forward:PitchersList.jsp";
+    }
+
+
+    @GetMapping("/PitcherDetail")
+// 상세조회
+    public String pitcherDetail(PitchersVO pitchersVO, Model model) throws Exception {
+        logger.info("noticeDetail");
+        List<PitchersVO>  pitcherDetail = playerService.pitcherList(pitchersVO);
+        model.addAttribute("pitcherDetail", pitcherDetail);
+        return "forward:PitcherDetail.jsp";
     }
 
 }

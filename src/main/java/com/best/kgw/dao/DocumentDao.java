@@ -6,17 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 public interface DocumentDao {
-    List<Map<String ,Object>> DocumentList(Map<String, Object> dMap);
+//    기안문서 select
+    List<ApprovalVO> DocumentList(ApprovalVO approvalVO);
 
-    //    기안하기정보
+
+    //결재자 문서 select
+    List<ApprovalVO >ApprovalList(ApprovalVO approvalVO);
+
+    //    기안하기위한 정보들
     List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo);
 
 
-    //사용자 문서 입력
-    int DocumentInsert(ApprovalVO approvalVO);
-
-    //    문서결재
-    int ApprovalInsert(ApprovalVO approvalVO);
-
+// 기안문서 정보 insert
     public void documentInsert(ApprovalVO approvalVO) throws Exception;
+
+// 결재문서 정보 insert
+    void  approvalInsert(ApprovalVO approvalVO) throws  Exception;
 }

@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*  ,com.util.BSPageBar" %>
+<%@  page import="com.vo.ApprovalVO" %>
+<%
+    List<ApprovalVO>list2=(List)request.getAttribute("list2");
+    int size=0;
+    if(list2!=null){
+        size=list2.size();
+    }
+    int numPerPage=5;
+    int nowPage=0;
+    if(request.getParameter("nowPage")!=null){
+        nowPage=Integer.parseInt(request.getParameter("nowPage"));
+    }
+%>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -8,8 +22,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>전자결재 문서함</title>
-
+    <title>전자결재 결재자 문서함</title>
+    <%@include file="/common/bootstrap_common.jsp" %>
 
     <%--  <script type="text/javascript">--%>
 
@@ -39,7 +53,7 @@
     <%--  </script>--%>
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
@@ -110,42 +124,33 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <%--									<%--%>
-                                    <%--										for(int i=0;i<size;i++){--%>
-                                    <%--											Map<String,Object> rmap = bList.get(i);--%>
-                                    <%--									%>--%>
-                                    <%--									<tr>--%>
-                                    <%--										<td><%=rmap.get("B_NO") %></td>--%>
-                                    <%--										<td>--%>
-                                    <%--											<a href="javascript:boardDetail('<%=rmap.get("B_NO") %>')"> <%=rmap.get("B_TITLE") %></a>--%>
-                                    <%--										</td>--%>
-                                    <%--										<td><%=rmap.get("B_FILE") %>	</td>--%>
-                                    <%--										<td><%=rmap.get("B_WRITER") %></td>--%>
-                                    <%--										<td><%=rmap.get("B_HIT") %></td>--%>
-                                    <%--										<td><%=rmap.get("B_HIT") %></td>--%>
-                                    <%--									</tr>--%>
-                                    <%--									<%--%>
-                                    <%--										}--%>
-                                    <%--									%>--%>
+                                    <%
+                                        for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
+                                            if(i==size)break;
+                                            ApprovalVO approvalVO=(ApprovalVO) list2.get(i);
+                                    %>
+                                    <tr>
+                                        <td><%= approvalVO.getDocument_no()%></td>
+                                        <td><%= approvalVO.getDocument_category()%></td>
+                                        <td><%= approvalVO.getState()%></td>
+                                        <td>여기는 기안자 성함</td>
+                                        <td>여기는 가안문서 시간</td>
+                                    </tr>
+                                    <%
+
+                                        }
+                                    %>
                                     </tbody>
                                 </table>
                                 <hr />
 
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                                 <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
+                                    <%
+                                        String pagePath="approvalList";
+                                        BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
+                                        out.print(bsbp.getPageBar());
+                                    %>
                                 </ul>
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                             </div>
