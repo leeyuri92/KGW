@@ -33,9 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>전략분석패이지</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <%@include file="/common/bootstrap_common.jsp" %>
 
 
     <script type="text/javascript">
@@ -67,17 +65,11 @@
                 }
             }
         }
-
-
-
-
-
-
     </script>
 
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse ">
 <%@include file="/include/KGW_bar.jsp"%>
 <!-- body start    -->
 <div class="content-wrapper">

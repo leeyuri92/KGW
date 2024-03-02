@@ -2,7 +2,6 @@ package com.best.kgw.controller;
 
 import com.best.kgw.service.CalendarService;
 import com.vo.CalendarVO;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Controller
 @RequestMapping("/calendar/*")
 public class CalendarController {
@@ -56,7 +54,7 @@ public class CalendarController {
     @ResponseBody
     public ResponseEntity<String> deleteCalList(CalendarVO calendarVO) {
         logger.info("삭제 컨트롤러 호출");
-        log.info(Integer.toString(calendarVO.getCalendar_no()));
+        logger.info(Integer.toString(calendarVO.getCalendar_no()));
         int calendar_no = calendarVO.getCalendar_no();
         ResponseEntity<String> entity = null;
 

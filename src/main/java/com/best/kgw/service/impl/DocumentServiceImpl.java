@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.List;
 import java.util.Map;
@@ -16,10 +15,9 @@ import java.util.Map;
 @Service
 public class DocumentServiceImpl implements DocumentService {
     Logger logger = LoggerFactory.getLogger("DocumentServiceImpl".getClass());
+
     @Autowired
     DocumentDao documentDao;
-
-
 
     //기안자 문서함
     @Override
@@ -30,29 +28,15 @@ public class DocumentServiceImpl implements DocumentService {
 
     //기안하기필요한 문서 정보
     @Override
-    public List<Map<String, Object>> DocumentInfo(Map<String, Object> aMap) {
-        List<Map<String, Object>> list2 = documentDao.DocumentInfo(aMap);
-        return list2;
+    public List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo) {
+        List<Map<String,Object>> kiwoomList = documentDao.DocumentInfo(approvalvo);
+        return kiwoomList;
     }
-
-
-
-
 
     @Override
-    @Transactional
-    public int insertDocumentWithApproval(ApprovalVO approvalVO) {
-        logger.info("====================DocumentServiceImpl : insertDocumentWithApproval");
-        int generatedDocumentNo=0;
-        documentDao.DocumentInsert(approvalVO);
-        generatedDocumentNo = approvalVO.getDocument_no();
-//        approvalVO.setDocument_no(generatedDocumentNo);
-        documentDao.ApprovalInsert(approvalVO);
-        return generatedDocumentNo;
+    public void documentInsert(ApprovalVO approvalVO) throws Exception {
+        documentDao.documentInsert(approvalVO);
     }
-
-
-
 }
 
 

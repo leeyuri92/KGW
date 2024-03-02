@@ -27,11 +27,9 @@ public class DocumentDaoImpl implements DocumentDao {
     }
 //    기안하기정보
      @Override
-      public List<Map<String ,Object>>DocumentInfo(Map<String, Object> aMap){
-        List<Map<String,Object>>list2=new ArrayList<>();
-        list2=sqlSessionTemplate.selectList("DocumentInfo",aMap);
-//        logger.info("DocumentList"+list2);
-        return list2;
+      public List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo){
+         List<Map<String,Object>> kiwoomList =sqlSessionTemplate.selectList("k_List", approvalvo);
+        return kiwoomList;
     }
 // 문서 입력
     @Override
@@ -55,5 +53,10 @@ public class DocumentDaoImpl implements DocumentDao {
         return result2;
     }
 
+    @Override
+    public void documentInsert(ApprovalVO approvalVO) throws Exception {
+        logger.info("==================approvalVO"+ approvalVO);
+        sqlSessionTemplate.insert("documentInsert", approvalVO);
     }
+}
 

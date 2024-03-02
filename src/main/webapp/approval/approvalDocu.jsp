@@ -4,31 +4,16 @@
 <%@ page import="com.vo.DocumentVO,com.vo.ApprovalVO" %>
 <%@ page import="com.google.gson.Gson" %>
 <%
-    List<Map<String, Object>> list2 = (List<Map<String,Object>>) request.getAttribute("list2");
-    int size=0;
-    if(list2!=null){
-        size=list2.size();
-    }
-
-
+    List<Map<String,Object>> kiwoomList = (List) request.getAttribute("kiwoomList");
+//    out.print(approvalvo);
 %>
 
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>기안 문서</title>
-
-
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
-
-
+    <%@include file="/common/bootstrap_common.jsp" %>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelectorAll('.navbar-nav .nav-link'); //nav 링크전채 확보
@@ -49,14 +34,14 @@
             }));
         });
 
-
-
-
+        function docSubmit() {
+            $('#r_document').submit();
+        }
     </script>
     <link  rel="stylesheet " href="../css/approvalDocu.css">
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
@@ -83,7 +68,7 @@
                 </div>
                 <div class="d-flex align-items-center ms-2">
                     <div class="fw-bold fs-5">기안문서 </div>
-                    <div class="text-muted ms-3">문서 을 기안할수 있는 페이지입니다.</div>
+                    <div class="text-muted ms-3">문서기안 하는 페이지입니다.</div>
                 </div>
             </div>
         </div>
@@ -116,14 +101,11 @@
                                 </div>
                             </nav>
 
-
-
-
                             <div class="frame " id="do_vocation">   <%--휴가문서--%>
                                 <div class="document-section">
                                     <div class="item">
                                         <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="pla_depat_no" value="숫자값">
+                                        <input type="text" class="value-input" id="pla_depat_no" value="<%=sessionVO.getEmp_no()%>">
                                     </div>
                                     <div class="item">
                                         <span class="title">문서제목:</span>
@@ -135,12 +117,7 @@
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
-                                        <% for (int i = 0; i < size; i++) {
-                                            ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
-                                            if(approvalVO.getName()!=null) {
-                                        %>
-                                        <input type="text" class="value-input" id="pla_manager" value="<%= approvalVO.getEmp_no()%>"hidden="hidden"> 김운영
-                                        <% }} %>
+                                        <input type="text" class="value-input" id="pla_manager" value="경영지원팀장">
                                     </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
@@ -162,7 +139,7 @@
                                         <span class="title">휴가만료일：</span>
                                         <input type="date" id="endDate" value="2024-01-15">
                                     </div>
-                                    <div    class="text-wrapper-2">상기와 같이 휴가  희망함</div>
+                                    <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
                                 </div>
                             </div>
 
@@ -183,12 +160,7 @@
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
-                                        <% for (int i = 0; i < size; i++) {
-                                            ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
-                                            if(approvalVO.getName()!=null) {
-                                        %>
-                                        <input type="text" class="value-input" id="pla1_manager" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
-                                        <% }} %>
+                                        <input type="text" class="value-input" id="pla1_manager" value="운영팀장">
                                     </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
@@ -198,15 +170,16 @@
                                     <div class="item">
                                         <span class="title">계약연장  선수:</span>
                                         <select id="playersList3" name="playersList3">
-                                                 <% for (int i = 0; i < size; i++) {
-                                                   ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
-                                                   if(approvalVO.getK_name() != null) {
+                                                 <% for (int i = 0; i < kiwoomList.size(); i++) {
+                                                   Map<String,Object> KiwoomMap = kiwoomList.get(i);
+                                                   if(KiwoomMap != null) {
                                                    %>
-                                                   <option value="<%= approvalVO.getK_name() %>"><%= approvalVO.getK_name() %></option>
-                                                   <% }} %>
-
+                                                   <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                                   <%
+                                                       }
+                                                     }
+                                                   %>
                                         </select>
-
                                     </div>
                                     <div class="item flex-row">
                                         <div class="flex-item">
@@ -222,139 +195,102 @@
                                 </div>
                             </div>
 
-
                             <div class="frame" id="do_pla_b"><%-- 방출문서--%>
-                                <div class="document-section">
-                                        <div class="item">
-                                            <span class="title">사원번호:</span>
-                                            <input type="text" class="value-input" id="pla2_depat_no" value="숫자값">
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="pla2_depart_title" value="선수관련"  readonly>
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="pla2_departTitle" value="선수관련" readonly>
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">담당자:</span>
-                                            <% for (int i = 0; i < size; i++) {
-                                                ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
-                                                if(approvalVO.getName()!=null) {
-                                            %>
-                                            <input type="text" class="value-input" id="pla2_manager" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
-                                            <% }} %>
-                                        </div>
-                                    <div class="item">
-                                        <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="pla2_applicant" value="자동불러옴" readonly>
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">방출선수:</span>
-                                        <select id="myTeamPlayers">
-                                            <% for (int i = 0; i < size; i++) {
-                                                ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
-                                                if(approvalVO.getK_name() != null) {
-                                            %>
-                                            <option value="<%= approvalVO.getK_name() %>"><%= approvalVO.getK_name() %></option>
-                                            <% }} %>
-                                            <option value="동적value">testoption</option>
-                                        </select>
-                                    </div>
-                                    <div class="text-wrapper-2">상기와 같이 방출 희망함</div>
-                                </div>
-                            </div>
-
-
-
-
-                            <form id="dc_c"    name="dc_c"  action="./approvalList" method="post">
-                            <div class="frame" id="do_pla_c"> <%--영입 문서--%>
                                 <div class="document-section">
                                     <div class="item">
                                         <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="emp_no"  name="emp_no" value="숫자값">
+                                        <input type="text" class="value-input" id="pla2_depat_no" value="<%=sessionVO.getEmp_no()%>">
                                     </div>
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="document_title" name="document_title" value="선수관련"  >
+                                        <input type="text" class="value-input" id="pla2_depart_title" value="선수관련"  readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="document_category"  name="document_category" value="선수관련" >
+                                        <input type="text" class="value-input" id="pla2_departTitle" value="선수관련" readonly>
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
-                                        <% for (int i = 0; i < size; i++) {
-                                            ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
-                                            if(approvalVO.getName()!=null) {
+                                        <input type="text" class="value-input" id="pla2_manager" value="운영팀장">
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <span class="title">신청자:</span>
+                                    <input type="text" class="value-input" id="pla2_applicant" value="자동불러옴" readonly>
+                                </div>
+                                <div class="item">
+                                    <span class="title">방출선수:</span>
+                                    <select id="myTeamPlayers">
+                                        <% for (int i = 0; i < kiwoomList.size(); i++) {
+                                            Map<String,Object> KiwoomMap = kiwoomList.get(i);
+                                            if(KiwoomMap != null) {
                                         %>
-                                        <input type="text" class="value-input" id="approval_emp_no" name=approval_emp_no" value="<%= approvalVO.getEmp_no() %>"hidden="hidden"> 김운영
-                                        <% }} %>
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="name" name="name"value="나신입" >
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">영입 선수:</span>
-                                        <select id="playersList" name="playersList">
-                                            <% for (int i = 0; i < size; i++) {
-                                                ApprovalVO approvalVO = (ApprovalVO) list2.get(i);
-                                                if(approvalVO.getK_name() != null) {
-                                            %>
-                                            <option value="<%= approvalVO.getK_no() %>" name="<%= approvalVO.getK_no() %>"><%= approvalVO.getK_name() %></option>
-                                            <% }} %>
-                                        </select>
-<%--          히든 데이터필요시   <input type="hidden" id="hiddenData" name="hiddenData" value="yourHiddenDataValue">--%>
-
-                                    </div>
-                                    <div class="text-wrapper-2">상기와 같이 영입 희망함</div>
+                                        <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                        <option value="동적value">testoption</option>
+                                    </select>
                                 </div>
-
-                                <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button  type="button"  id="Ev3" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="ev3()" >재출</button>
-                                    <button id="btn_search3" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
-                                </div>
-
-
-</form>
-
-    </div>
-                            <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                <button id="btn_search5" class="btn btn-danger" onclick="Search()">삭제 </button>
+                                <div class="text-wrapper-2">상기와 같이 방출 희망함</div>
                             </div>
 
-
-                        <script>
-                            function ev3() {
-                                let emp_no = $('#emp_no').val();
-                                let document_title = $('#document_title').val();
-                                let document_category = $('#document_category').val();
-                                let approval_emp_no = $('#approval_emp_no').val();
-                                // let selected_option = $('#playersList').val();
-
-                                // $('#emp_no').val(emp_no);
-                                // $('#document_title').val(document_title);
-                                // $('#document_category').val(document_category);
-                                // $('#approval_emp_no').val(ap proval_emp_no);
-                                // $('#selected_option').val(selected_option);
-
-                                $('#dc_c').submit();
-                            }
-                        </script>
-
-<%--                            <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">--%>
-<%--                                <button  type="button"  id="submitEv" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="" >재출</button>--%>
-<%--                                <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>--%>
-<%--                                <button id="btn_search5" class="btn btn-danger" onclick="Search()">삭제 </button>--%>
-<%--                            </div>--%>
-    <!-- content-wrapper end-->
-<!-- body end   -->
-
-
-
-
+                            <%-- (r_document)Recruitment document : 영입문서                   --%>
+                            <form id="r_document" name="r_document" action="documentInsert" method="post">
+                                <div class="frame" id="do_pla_c"> <%--영입 문서--%>
+                                    <div class="document-section">
+                                        <div class="item">
+                                            <span class="title">사원번호:</span>
+                                            <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">문서제목:</span>
+                                            <input type="text" class="value-input" id="document_title" name="document_title" value="선수관련"  >
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">문서타이틀:</span>
+                                            <input type="text" class="value-input" id="document_category"  name="document_category" value="선수관련" >
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">담당자:</span>
+                                            <input type="text" class="value-input" id="approval_emp_no" name=approval_emp_no" value="운영팀장">
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">신청자:</span>
+                                            <input type="text" class="value-input" id="name" name="name" value="<%=sessionVO.getName()%>" >
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">영입 선수:</span>
+                                            <select id="playersList" name="playersList">
+                                                <% for (int i = 0; i < kiwoomList.size(); i++) {
+                                                    Map<String,Object> KiwoomMap = kiwoomList.get(i);
+                                                    if(KiwoomMap != null) {
+                                                %>
+                                                <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="text-wrapper-2">상기와 같이 영입 희망함</div>
+                                    </div>
+                                    <div id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
+                                        <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
+                                        <button type="button" id="btn_search3" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id ="delBtn" class="col-md-6 d-flex justify-content-end gap-2">
+                            <button id="btn_search5" class="btn btn-danger" onclick="Search()">삭제 </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 </body>
 </html>

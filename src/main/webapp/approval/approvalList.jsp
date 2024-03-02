@@ -19,19 +19,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>전자결재 문서함</title>
-
-
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
-    <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
-    <!-- header end    -->
-
-    <!-- body start    -->
     <div class="content-wrapper">
         <!-- 페이지 path start    -->
         <%--		<div class="card" >--%>
@@ -84,62 +77,55 @@
                                 				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">임시보관함</button>
                                 				<button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안문서 </button>
                                 			</div>
-                            <!-- 검색기 끝 -->
+                                <!-- 검색기 끝 -->
 
-                            <!-- 회원목록 시작 -->
-                            <div class='board-list'>
-                                <table class="table table-hover text-center ">
-                                    <thead>
-                                    <tr>
-                                        <th width="10%" >문서ID</th>
-                                        <th width="10%">종류</th>
-                                        <th width="15%">결재상태</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                        for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
-                                            if(i==size)break;
-                                            ApprovalVO approvalVO=(ApprovalVO) list.get(i);
-                                            if(!"임시저장".equals(approvalVO.getState())){ // if문 으로 임시저장 구분
-                                        %>
-                                        <tr>
-                                        <td><%= approvalVO.getDocument_no()%></td>
-                                        <td><%= approvalVO.getDocument_category()%></td>
-                                        <td><%= approvalVO.getState()%></td>
-                                        </tr>
-                                        <%
-                                        }
+                                <!-- 회원목록 시작 -->
+                                <div class='board-list'>
+                                    <table class="table table-hover text-center ">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%" >문서ID</th>
+                                                <th width="10%">종류</th>
+                                                <th width="15%">결재상태</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                            for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
+                                                if(i==size)break;
+                                                ApprovalVO approvalVO=(ApprovalVO) list.get(i);
+                                                if(!"임시저장".equals(approvalVO.getState())){ // if문 으로 임시저장 구분
+                                            %>
+                                            <tr>
+                                            <td><%= approvalVO.getDocument_no()%></td>
+                                            <td><%= approvalVO.getDocument_category()%></td>
+                                            <td><%= approvalVO.getState()%></td>
+                                            </tr>
+                                            <%
                                             }
-                                    %>
-                                    </tbody>
-                                </table>
-                                <hr />
+                                                }
+                                        %>
+                                        </tbody>
+                                    </table>
+                                    <hr />
 
-                                <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
-                                <ul class="pagination">
-                                    <%
-                                        String pagePath="HittersList";
-                                        BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
-                                        out.print(bsbp.getPageBar());
-                                    %>
-                                </ul>
-                                <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+                                    <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+                                    <ul class="pagination">
+                                        <%
+                                            String pagePath="approvalList";
+                                            BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
+                                            out.print(bsbp.getPageBar());
+                                        %>
+                                    </ul>
+                                    <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.col -->
-
+        </section>
     </div>
-    <!-- content-wrapper end-->
-<!-- body end   -->
-
-
+</div>
 </body>
 </html>

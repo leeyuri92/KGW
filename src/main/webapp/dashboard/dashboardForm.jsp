@@ -23,11 +23,11 @@
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
   <!-- fullcalendar 언어 CDN 라이선스 표시 없애기 위해 locale 사용 -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-  <!-- moment-timezone.js 라이브러리 -->
-<%--  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>--%>
   <!-- 부트스트랩 라이브러리 -->
+  <%@include file="/common/bootstrap_common.jsp" %>
   <link rel="stylesheet" href="/css/mainCalendar.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <title>메인페이지</title>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
