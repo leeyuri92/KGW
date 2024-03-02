@@ -122,7 +122,7 @@
                   <button type="button" class="btn btn-danger" onclick="mediaNoticeForm()">작성</button>
                 </div>
               </div>
-              <!-- 미디어게시판목록 시작 -->
+              <!------------------------- [[ 미디어게시판목록 시작 ]] ------------------------->
               <div class='board-list'>
 
                 <%  for(int i = nowPage*numPerPage; i < (nowPage*numPerPage)+numPerPage; i++) {
@@ -135,21 +135,21 @@
                   <div class="row g-0">
 
                     <div class="col-md-4">
-                      <%-- 이미지의 경로를 가져오는 코드--%>
+                      <%------------------------- [[ 이미지의 경로를 가져오는 코드 ]]-------------------------%>
                       <img src="/fileUpload/media/<%=mediaNoticeVO.getFilename()%>/" class="img-fluid rounded-start" alt="...이미지 없음 ">
                     </div>
                     <div class="col-md-8">
 
                       <div class="card-body">
                         <p class="card-link">
-                          <a href="javascript:mediaDetail('<%=mediaNoticeVO.getBoard_no()%>')">
+                          <a href="javascript:mediaDetail('<%=mediaNoticeVO.getBoard_no()%>')" class="link-styled">
                             <%=mediaNoticeVO.getBoard_title()%>
                           </a>
                         </p>
-                        <p class="card-text"><%=mediaNoticeVO.getName()%></p>
-                        <p class="card-text"><%=newFormatString%></p>
+                        <p class="card-text">작성자 : <%=mediaNoticeVO.getName()%></p>
+                        <p class="card-text">작성일 : <%=newFormatString%></p>
                         <p class="card-text">
-                          <small class="text-body-secondary"><%=mediaNoticeVO.getBoard_no()%></small>
+                          <small class="text-body-secondary">조회수 : <%=mediaNoticeVO.getBoard_hit()%></small>
                         </p>
                       </div>
                     </div>

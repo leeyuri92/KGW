@@ -5,7 +5,7 @@
 }
 
 .board_view .info {
-    padding: 15px;
+    padding: 1px;
     border-bottom: 1px solid #999;
     font-size: 0;
 }
@@ -38,7 +38,7 @@
 .board_view .info dl dt,
 .board_view .info dl dd {
     display: inline-block;
-    font-size: 1.4rem;
+    font-size: 13px;
 }
 
 .board_view .info dl dt {
@@ -51,10 +51,11 @@
 }
 
 .board_view .cont {
-    padding: 15px;
-    border-bottom: 1px solid #000;
+    padding: 30px;
+    border-bottom: 1px solid grey;
     line-height: 160%;
     font-size: 1.4rem;
+    min-height: 300px;
 }
 /* 댓글 섹션 전체 */
 .comment-section {

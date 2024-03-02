@@ -24,10 +24,12 @@
         }
 
         const  noticeDelete =() => {
-            let notice_no = <%=noticeVO.getNotice_no()%>;
-            location.href = "/notice/noticeDelete?notice_no="+notice_no;
+            const notice_no = <%=noticeVO.getNotice_no()%>;
+            if (confirm('게시글을 삭제하시겠습니까?'))
+                location.href = "/notice/noticeDelete?notice_no="+notice_no;
             console.log("delete"+notice_no);
         }
+
 
     </script>
 </head>
@@ -69,13 +71,10 @@
                     <div class="box">
                         <div class="container">
                             <div class="box-header">
-                                <h4 style="font-weight: bold; margin-left: 2rem" >상세보기</h4>
+                                <h4 style="font-weight: bold; margin-left: 2rem" ><%=noticeVO.getNotice_title()%></h4>
                                 <hr />
                                 <%--------------------게시글 상세내용---------------------%>
                                 <div class="board_view">
-                                    <div class="title">
-                                        <dd><%=noticeVO.getNotice_title()%></dd>
-                                    </div>
                                     <div class="info">
                                         <dl>
                                             <dt>번호</dt>

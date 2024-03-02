@@ -125,7 +125,7 @@
                                     <thead>
                                     <tr>
                                         <th style="width: 10%;">#</th>
-                                        <th style="width: 32%;">제목</th>
+                                        <th style="width: 45%;">제목</th>
                                         <th style="width: 17%;">작성자</th>
                                         <th style="width: 17%;">작성일</th>
                                         <th style="width: 17%;">조회수</th>

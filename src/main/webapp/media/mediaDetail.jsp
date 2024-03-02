@@ -12,7 +12,7 @@
 
     List<MediaNoticeCommendVO> mediaNoticeCommend = (List)request.getAttribute("commendList");
 
-    out.print(mediaNoticeList);
+//    out.print(mediaNoticeList);
 
 %>
 
@@ -29,7 +29,8 @@
         }
         /*미디어게시글삭제*/
         const  mediaNoticeDelete =()=> {
-            location.href = "/media/mediaDelete?board_no="+<%=mediaVO.getBoard_no()%>;
+            if (confirm('게시글을 삭제하시겠습니까?'))
+                location.href = "/media/mediaDelete?board_no="+<%=mediaVO.getBoard_no()%>;
         }
         /*댓글입력*/
         const commendInsert =()=> {
@@ -38,7 +39,8 @@
         }
         /*댓글삭제*/
         const mediaCommendDelete =(commend_no)=> {
-            location.href = "/media/CommendDelete?commend_no="+commend_no+"&board_no="+<%=mediaVO.getBoard_no()%>
+            if (confirm('게시글을 삭제하시겠습니까?'))
+                location.href = "/media/CommendDelete?commend_no="+commend_no+"&board_no="+<%=mediaVO.getBoard_no()%>
 
         }
     </script>
@@ -81,13 +83,10 @@
                     <div class="box">
                         <div class="container">
                             <div class="box-header">
-                                <h4 style="font-weight: bold; margin-left: 2rem" >상세보기</h4>
+                                <h4 style="font-weight: bold; margin-left: 2rem" ><%=mediaVO.getBoard_title()%></h4>
                                 <hr />
                                 <%--상세조회--%>
                                 <div class="board_view">
-                                    <div class="title">
-                                        <dd><%=mediaVO.getBoard_title()%></dd>
-                                    </div>
                                     <div class="info">
                                         <dl>
                                             <dt>번호</dt>
@@ -118,7 +117,7 @@
 
                                 <div class="d-flex gap-2 justify-content-end mt-2">
                                     <button type="submit" class="btn btn-primary" onclick="mediaNoticeList()">목록</button>
-                                    <%if(sessionVO.getEmp_no() == mediaVO.getEmp_no()){%>
+                                    <% if (sessionVO.getEmp_no() == mediaVO.getEmp_no() || sessionVO.getEmp_access().equals("ROLE_ADMIN")) { %>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mediaMod">수정</button>
                                     <button type="submit" class="btn btn-primary" onclick="mediaNoticeDelete()">삭제</button>
                                     <%}%>
@@ -142,7 +141,7 @@
                                                 <div class="row">
                                                     <p class="comment-date"><%=commendVO.getReg_date()%></p>
                                                 </div>
-                                                <%if(sessionVO.getEmp_no()==commendVO.getEmp_no()){ %>
+                                                <% if (sessionVO.getEmp_no() == mediaVO.getEmp_no() || sessionVO.getEmp_access().equals("ROLE_ADMIN")) { %>
                                                 <button type="button" class="btn btn-primary" onclick="mediaCommendDelete('<%=commendVO.getCommend_no()%>')">삭제</button>
                                                 <%
                                                     }
@@ -158,7 +157,6 @@
                                             <div class="mb-3">
                                                 <label for="commendContent" class="form-label">댓글</label>
                                                 <input type="hidden" class="form-control mb-3" name="board_no" value="<%=mediaVO.getBoard_no()%>">
-                                                <%--                                            <input type="hidden" class="form-control mb-3" name="commend_no" value="<%=mediaNoticeList.get("board_no")%>>">--%>
                                                 <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=sessionVO.getEmp_no()%>" >
                                                 <textarea class="form-control" id="commendContent" rows="3" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
                                             </div>
