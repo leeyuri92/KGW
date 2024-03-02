@@ -95,7 +95,7 @@
 
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <%@include file="/include/KGW_bar.jsp"%>
 <!-- body start    -->
 <div class="content-wrapper">

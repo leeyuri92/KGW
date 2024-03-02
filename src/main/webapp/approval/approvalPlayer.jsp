@@ -12,7 +12,7 @@
 
 
 </head>
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <%@include file="/include/KGW_bar.jsp"%>
     <div class="content-wrapper">

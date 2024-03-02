@@ -31,9 +31,9 @@ public class DocumentController {
 
     //   값을 select 하기
     @GetMapping("/docu")
-    public String DocumentInfo(Model model, @RequestParam Map<String, Object> aMap) {
-        List<Map<String, Object>> list2 = documentService.DocumentInfo(aMap);
-        model.addAttribute("list2", list2);
+    public String DocumentInfo(Model model, ApprovalVO approvalvo) {
+        List<Map<String,Object>> kiwoomList = documentService.DocumentInfo(approvalvo);
+        model.addAttribute("kiwoomList", kiwoomList);
         return "forward:approvalDocu.jsp";
 
     }
@@ -46,14 +46,11 @@ public class DocumentController {
 //        logger.info("ControllerInsert"+approvalVO.toString());
 //    }
 
-    @PostMapping("/approvalList")
-    public String  DocumentInsert( ApprovalVO approvalVO) throws Exception {
-        logger.info("2 Insert"+approvalVO.toString());
-        int result=0;
-
-        result  =documentService.insertDocumentWithApproval(approvalVO);
-
-         return  "redirect:approvalList";
+    @PostMapping("documentInsert")
+    public String  documentInsert( ApprovalVO approvalVO) throws Exception {
+        logger.info("DocumentController :  documentInsert");
+        documentService.documentInsert(approvalVO);
+        return "redirect:approvalList";
     }
 }
 

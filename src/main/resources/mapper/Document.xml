@@ -28,13 +28,62 @@
 </select>
 
 
-    <select id="DocumentInfo" parameterType="map" resultType="com.vo.ApprovalVO">
-        SELECT name, emp_position, dayoff_cnt, emp_no, null as k_no, null as k_name
-        FROM emp where emp_no=1001
-        union
-        SELECT null as name, null as emp_position, null as dayoff_cnt, null as emp_no, k_no, k_name
+    <select id="k_List" parameterType="com.vo.ApprovalVO" resultType="map">
+        SELECT k_no, k_name
         FROM kiwoom
     </select>
+
+
+
+    <insert id="documentInsert" parameterType="com.vo.ApprovalVO">
+        INSERT INTO document (
+            document_no,
+            emp_no,
+            document_title,
+            document_category,
+            submission_date,
+            k_no
+        )
+        VALUES (
+            document_pk_seq.nextval,
+            #{emp_no},
+            #{document_title},
+            #{document_category},
+            to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
+            #{k_no}
+            )
+    </insert>
+
+
+
+
+
+
+
+    <insert id="approvalInsert" parameterType="com.vo.ApprovalVO" >
+        INSERT INTO approval (
+                approval_no,
+                document_no,
+                approval_name,
+                approval_category,
+                rejection_content,
+                middle_approval_date,
+                final_approval_date,
+                middleSign_img,
+                finalSign_img
+        )
+        VALUES (
+                approval_pk_seq.nextval,
+                16,
+                #{approval_emp_no},
+                #{approval_category},
+                #{rejection_content},
+                #{middle_approval_date},
+                #{final_approval_date},
+                EMPTY_BLOB(),
+                EMPTY_BLOB()
+               )
+    </insert>
 
 
 <!--  기안서작성 -->

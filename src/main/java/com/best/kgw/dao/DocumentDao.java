@@ -9,7 +9,7 @@ public interface DocumentDao {
     List<Map<String ,Object>> DocumentList(Map<String, Object> dMap);
 
     //    기안하기정보
-    List<Map<String ,Object>>DocumentInfo(Map<String, Object> aMap);
+    List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo);
 
 
     //사용자 문서 입력
@@ -17,4 +17,6 @@ public interface DocumentDao {
 
     //    문서결재
     int ApprovalInsert(ApprovalVO approvalVO);
+
+    public void documentInsert(ApprovalVO approvalVO) throws Exception;
 }

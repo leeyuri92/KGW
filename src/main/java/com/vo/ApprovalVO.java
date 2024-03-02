@@ -22,7 +22,7 @@ public class ApprovalVO {
         private String contract_term;
 //        문서 끝
         private int approval_no; // 결재 번호
-        private int approval_emp_no; // 결재자 사원 번호
+        private String approval_name; // 결재자
         private String approval_category; // 결재 상태
         private String rejection_content; // 반려 사유
         private String middle_approval_date; // 중간 결재 일시
@@ -43,7 +43,7 @@ public class ApprovalVO {
     @Builder
     public  ApprovalVO(int document_no,int emp_no,String document_title,String  document_category, String  submission_date,String state,
                        String start_date,String  end_date,String  draftday,String  dayoff_content,int  k_no, int salary ,String contract_term,
-                       int approval_no,int approval_emp_no,String  approval_category, String  rejection_content, String  middle_approval_date,
+                       int approval_no,String approval_name,String  approval_category, String  rejection_content, String  middle_approval_date,
                        String  final_approval_date , byte middleSign_img, byte finalSign_img, String name,int dayoff_cnt,String emp_position,
                        int team_no, String k_name, String k_team, int fa_no,String fa_name ){
         super();
@@ -61,7 +61,7 @@ public class ApprovalVO {
         this.salary = salary;
         this.contract_term = contract_term;
         this.approval_no = approval_no;
-        this.approval_emp_no = approval_emp_no;
+        this.approval_name = approval_name;
         this.approval_category = approval_category;
         this.rejection_content = rejection_content;
         this.middle_approval_date = middle_approval_date;

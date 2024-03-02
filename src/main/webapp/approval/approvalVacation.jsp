@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
     <link  rel="stylesheet " href="../css/approval.css">
 </head>
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <%@include file="/include/KGW_bar.jsp"%>
     <div class="content-wrapper">

@@ -6,7 +6,8 @@
 
 
     <select id="kiwoomList" parameterType="com.vo.KChartVO" resultType="com.vo.KChartVO">
-        select * from kiwoom
+        select k_no, k_ss, k_team, k_name, k_num, k_pos, k_birth, K_PHY, k_hire, k_war, k_sal, k_year
+        from kiwoom
         <where>
             <if test="k_no != 0">AND k_no=#{k_no}</if>
             <if test="gubun!=null">
@@ -23,6 +24,7 @@
                 </choose>
             </if>
         </where>
+        order by k_num
     </select>
 
 

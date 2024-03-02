@@ -56,7 +56,7 @@
     <link  rel="stylesheet " href="../css/approvalDocu.css">
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
