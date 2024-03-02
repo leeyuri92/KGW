@@ -1,7 +1,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.vo.CalendarVO" %>
+<%@ page import="com.vo.EmpVO" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Objects" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +26,11 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.1/main.min.css" rel="stylesheet">
 </head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse">
+<div class="wrapper">
+    <%@include file="/include/KGW_bar.jsp"%>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendar1');
@@ -166,7 +173,9 @@
                 events: [
                     <%  List<CalendarVO> vehicleReservationList = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
                         if (vehicleReservationList != null) {
-                            for (CalendarVO vo1 : vehicleReservationList) { %>
+                            for (CalendarVO vo1 : vehicleReservationList) {
+                            if (Objects.equals(sessionVO.getName(), vo1.getName())) {
+                                %>
                     {
                         id: '<%= vo1.getAsset_no() %>', // 이벤트의 고유 ID
                         extendedProps: { reservationNo: '<%= vo1.getReservation_no() %>' }, // 예약 정보를 사용자 정의 속성 extendedProps에 포함 (events 배열에서 각 이벤트 객체의 extendedProps를 설정하여 확장 속성을 추가)
@@ -176,7 +185,7 @@
                         end: '<%= vo1.getReservation_end() %>',
                         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
                     },
-                    <% }} %>
+                    <% }}} %>
                 ]
 
             });
@@ -422,9 +431,6 @@
         }
     }
 </script>
-<body class="hold-transition sidebar-mini sidebar-collapse">
-<div class="wrapper">
-    <%@include file="/include/KGW_bar.jsp"%>
     <div class="content-wrapper">
 
         <div style="width: 100%; height: 100px; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
@@ -539,22 +545,28 @@
                                 <tbody id="reservationTableBody">
                                 <% List<CalendarVO> vehicleReservationList1 = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
                                     if (vehicleReservationList1 != null) {
+                                        int count = 0; // 일정 카운터 변수 추가
                                         for (CalendarVO vo : vehicleReservationList1) {
-                                            String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
-                                            String endDateCheck = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
-                                            String startDate = vo.getReservation_end();
-                                            String endDate = vo.getReservation_end();
-                                            if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
+                                            if (Objects.equals(sessionVO.getName(), vo.getName())) {
+                                                String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
+                                                String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
+                                                String startDate = vo.getCalendar_end();
+                                                String endDate = vo.getCalendar_end();
+                                                // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
+                                                if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) {
+                                                count++; // 카운터 증가
                                 %>
                                 <tr>
-                                    <th scope="row">#</th>
+                                    <th scope="row"><%= count %></th>
                                     <td><%= vo.getAsset_no() %></td>
                                     <td><%= vo.getName() %></td>
                                     <td><%= vo.getReservation_title() %></td>
                                     <td><%= startDate + "~" + endDate %></td>
                                     <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
                                 </tr>
-                                <%          }
+                                <%
+                                }
+                                }
                                 }
                                 }
                                 %>
