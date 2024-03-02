@@ -231,6 +231,7 @@
                             <i class="nav-icon bi bi-heart-fill"></i>
                             <p>
                                 관리자메뉴
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">

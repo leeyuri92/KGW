@@ -125,8 +125,8 @@
             </label>
             <select class="form-control" id="team_no" name="team_no" onblur="validateTeam()">
                 <option value="none" selected>부서를 선택해주세요.</option>
-                <option value="1">운영팀</option>
-                <option value="2">지원팀</option>
+                <option value="1">경영지원팀</option>
+                <option value="2">운영팀</option>
                 <!-- Add more options as needed -->
             </select>
         </div>
@@ -170,7 +170,8 @@
                                 <select class="form-control" id="emp_access" name="emp_access" onblur="validateAccess()">
                                     <option value="0" selected >권한을 선택해주세요.</option>
                                     <option value="ROLE_USER">사원</option>
-                                    <option value="ROLE_LEADER">팀장</option>
+                                    <option value="ROLE_ADMIN">경영지원팀</option>
+                                    <option value="ROLE_MANAGE">운영팀</option>
                                     <!-- Add more options as needed -->
                                 </select>
                             </div>
