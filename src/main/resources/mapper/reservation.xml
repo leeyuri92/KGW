@@ -46,7 +46,7 @@
     <update id="updateReservation" parameterType="com.vo.CalendarVO">
         UPDATE ASSET_RESERVATION
         SET RESERVATION_NO = '${reservation_no}',
-            EMP_NO = 1003,
+            EMP_NO = '${emp_no}',
             ASSET_NO = '${asset_no}',
             RESERVATION_TITLE = '${reservation_title}',
             RESERVATION_CONTENT = '예약',

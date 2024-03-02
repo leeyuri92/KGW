@@ -40,13 +40,13 @@
 
     <insert id="insertVehicleList" parameterType="com.vo.CalendarVO">
         INSERT INTO ASSET_RESERVATION (RESERVATION_NO, EMP_NO, ASSET_NO, RESERVATION_TITLE, RESERVATION_CONTENT, RESERVATION_START, RESERVATION_END)
-        VALUES (reservation_pk_seq.nextval, 1003, '${asset_no}', '${reservation_title}', '예약', '${reservation_start}', '${reservation_end}')
+        VALUES (reservation_pk_seq.nextval, '${emp_no}', '${asset_no}', '${reservation_title}', '예약', '${reservation_start}', '${reservation_end}')
     </insert>
 
     <update id="updateVehicleList" parameterType="com.vo.CalendarVO">
         UPDATE ASSET_RESERVATION
         SET RESERVATION_NO = '${reservation_no}',
-            EMP_NO = 1003,
+            EMP_NO = '${emp_no}',
             ASSET_NO = '${asset_no}',
             RESERVATION_TITLE = '${reservation_title}',
             RESERVATION_CONTENT = '예약',
