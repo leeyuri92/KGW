@@ -19,44 +19,58 @@ public class DocumentDaoImpl implements DocumentDao {
     SqlSessionTemplate sqlSessionTemplate;
 //기안자 문서함 list
     @Override
-    public List<Map<String ,Object>>DocumentList(Map<String,Object>dMap){
-        List<Map<String,Object>>list=new ArrayList<>();
-        list=sqlSessionTemplate.selectList("selectDocument",dMap);
-//        logger.info("DocumentList"+list);
+    public List<ApprovalVO>DocumentList(ApprovalVO approvalVO){
+        List<ApprovalVO >list=new ArrayList<>();
+        list=sqlSessionTemplate.selectList("selectDocument",approvalVO);
         return list;
     }
-//    기안하기정보
+
+
+//결재자 결재함
+    @Override
+    public List<ApprovalVO >ApprovalList(ApprovalVO approvalVO){
+        List<ApprovalVO>list2=new ArrayList<>();
+        list2=sqlSessionTemplate.selectList("approvalDocument",approvalVO);
+        return list2;
+    }
+
+
+
+
+
+    //    기안하기필요한 정보
      @Override
       public List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo){
          List<Map<String,Object>> kiwoomList =sqlSessionTemplate.selectList("k_List", approvalvo);
         return kiwoomList;
     }
 // 문서 입력
-    @Override
-    public int DocumentInsert(ApprovalVO approvalVO) {
-        int result=0;
+//    @Override
+//    public int DocumentInsert(ApprovalVO approvalVO) {
+//        int result=0;
+//
+//        logger.info("=========================DocumentDao : DocumentInsert"+result);
+////        sqlSessionTemplate.insert("insertDocument", approvalVO);
+//        logger.info("============================"+approvalVO.getDocument_no());
+//        return  result;
+//    }
+//
+////    문서결재
 
-        logger.info("=========================DocumentDao : DocumentInsert"+result);
-//        sqlSessionTemplate.insert("insertDocument", approvalVO);
-        logger.info("============================"+approvalVO.getDocument_no());
-        return  result;
-    }
-
-//    문서결재
-    @Override
-    public int ApprovalInsert(ApprovalVO approvalVO){
-        logger.info("==================ApprovalInsert");
-        int result2=0;
-        result2=sqlSessionTemplate.insert("insertApproval",approvalVO);
-        logger.info(String.valueOf(approvalVO.getDocument_no()));
-
-        return result2;
-    }
-
+//
+//    
+    
+//    영입 문서 작성
     @Override
     public void documentInsert(ApprovalVO approvalVO) throws Exception {
         logger.info("==================approvalVO"+ approvalVO);
         sqlSessionTemplate.insert("documentInsert", approvalVO);
+    }
+
+    @Override
+    public void  approvalInsert(ApprovalVO approvalVO) throws  Exception{
+        logger.info("==================ApprovalInsert");
+       sqlSessionTemplate.insert("approvalInsert",approvalVO);
     }
 }
 

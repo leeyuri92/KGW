@@ -5,7 +5,6 @@
 <%@ page import="com.google.gson.Gson" %>
 <%
     List<Map<String,Object>> kiwoomList = (List) request.getAttribute("kiwoomList");
-//    out.print(approvalvo);
 %>
 
 <html lang="ko">
@@ -35,7 +34,8 @@
         });
 
         function docSubmit() {
-            $('#r_document').submit();
+            $('#r_document3').submit();
+            $('#r_document2').submit();
         }
     </script>
     <link  rel="stylesheet " href="../css/approvalDocu.css">
@@ -101,19 +101,21 @@
                                 </div>
                             </nav>
 
-                            <div class="frame " id="do_vocation">   <%--휴가문서--%>
+                            <%--휴가문서--%>
+                            <form id="r_document" name="r_document" action="documentInsert" method="post">
+                            <div class="frame " id="do_vocation">
                                 <div class="document-section">
                                     <div class="item">
                                         <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="pla_depat_no" value="<%=sessionVO.getEmp_no()%>">
+                                        <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                     </div>
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="pla_depart_title" value="휴가관련"  readonly>
+                                        <input type="text" class="value-input" id="document_title" name="document_title" value="휴가관련"  >
                                     </div>
-                                    <div class="item">
+                                    <div class="item" hidden="hidden">
                                         <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="pla_departTitle" value="휴가관련" readonly>
+                                        <input type="text" class="value-input" id="document_category"  name="document_category" value="휴가관련" >
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
@@ -121,11 +123,11 @@
                                     </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="va_applicant" value="자동불러옴" readonly>
+                                        <input type="text" class="value-input" id="name" name="name" value="<%=sessionVO.getName()%>" >
                                     </div>
                                     <div class="item">
-                                        <span class="title">휴가 사유:{insert}</span>
-                                        <select id="leaveReason">
+                                        <span class="title">휴가 사유:</span>
+                                        <select id="vacationReason" name="vacationReason">
                                             <option value="sickLeave">병가</option>
                                             <option value="annualLeave">연차</option>
                                             <option value="familyEvent">경조사</option>
@@ -133,38 +135,45 @@
                                     </div>
                                     <div class="item">
                                         <span class="title">휴가시작일:</span>
-                                        <input type="date" id="startDate" value="2024-01-12">
+                                        <input type="date" id="start_date" name="start_date" value="2024-01-12">
                                     </div>
                                     <div class="item">
                                         <span class="title">휴가만료일：</span>
-                                        <input type="date" id="endDate" value="2024-01-15">
+                                        <input type="date" id="end_date" name="end_date" value="2024-01-15">
                                     </div>
                                     <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
                                 </div>
-                            </div>
+                                <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
+                                    <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
+                                    <button type="button" id="btn_search" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                </div>
+                            </div></form>
 
+
+
+                            <form id="r_document1" name="r_document1" action="documentInsert" method="post">
                             <div class="frame" id="do_pla_a"> <%--계약연장 문서--%>
                                 <div class="document-section">
                                     <!-- Existing items: 부서, 담당자, 신청자 -->
                                     <div class="item">
                                         <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="pla1_depat_no" value="숫자값">
+                                        <input type="text" class="value-input" id="emp_no3"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                     </div>
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="pla1_depart_title" value="선수관련"  readonly>
+                                        <input type="text" class="value-input" id="document_title3" name="document_title" value="선수관련"  >
                                     </div>
-                                    <div class="item">
+                                    <div class="item" hidden="hidden">
                                         <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="pla1_departTitle" value="선수관련" readonly>
+                                        <input type="text" class="value-input" id="document_category3"  name="document_category" value="선수관련" >
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
-                                        <input type="text" class="value-input" id="pla1_manager" value="운영팀장">
+                                        <input type="text" class="value-input" id="approval_name3" name="approval_name" value="운영팀장">
                                     </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="pla1_applicant" value="자동불러옴" readonly>
+                                        <input type="text" class="value-input" id="name3" name="name" value="<%=sessionVO.getName()%>" >
                                     </div>
 
                                     <div class="item">
@@ -184,85 +193,48 @@
                                     <div class="item flex-row">
                                         <div class="flex-item">
                                             <span class="title">연봉:</span>
-                                            <input type="text" class="value-input short-input" id="salary" placeholder="연봉 입력">
+                                            <input type="text" class="value-input short-input" id="salary" name="salary" placeholder="연봉 입력">
                                         </div>
                                         <div class="flex-item">
                                             <span class="title">계약년수:</span>
-                                            <input type="text" class="value-input short-input" id="contractYears" placeholder="계약년수 입력">
+                                            <input type="text" class="value-input short-input" id="contract_term"  name="contract_term" placeholder="계약년수 입력">
                                         </div>
                                     </div>
                                     <div class="text-wrapper-2">상기와 같이 계약연장 희망함</div>
                                 </div>
+                                <div id ="documentButton1 " class="col-md-6 d-flex justify-content-end gap-2">
+                                    <button type="button"  id="btn_docSubmit3" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
+                                    <button type="button" id="btn_search3" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                </div>
                             </div>
+                            </form>
 
-                            <div class="frame" id="do_pla_b"><%-- 방출문서--%>
-                                <div class="document-section">
-                                    <div class="item">
-                                        <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="pla2_depat_no" value="<%=sessionVO.getEmp_no()%>">
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="pla2_depart_title" value="선수관련"  readonly>
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="pla2_departTitle" value="선수관련" readonly>
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">담당자:</span>
-                                        <input type="text" class="value-input" id="pla2_manager" value="운영팀장">
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <span class="title">신청자:</span>
-                                    <input type="text" class="value-input" id="pla2_applicant" value="자동불러옴" readonly>
-                                </div>
-                                <div class="item">
-                                    <span class="title">방출선수:</span>
-                                    <select id="myTeamPlayers">
-                                        <% for (int i = 0; i < kiwoomList.size(); i++) {
-                                            Map<String,Object> KiwoomMap = kiwoomList.get(i);
-                                            if(KiwoomMap != null) {
-                                        %>
-                                        <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
-                                        <%
-                                                }
-                                            }
-                                        %>
-                                        <option value="동적value">testoption</option>
-                                    </select>
-                                </div>
-                                <div class="text-wrapper-2">상기와 같이 방출 희망함</div>
-                            </div>
-
-                            <%-- (r_document)Recruitment document : 영입문서                   --%>
-                            <form id="r_document" name="r_document" action="documentInsert" method="post">
-                                <div class="frame" id="do_pla_c"> <%--영입 문서--%>
+                            <form id="r_document2" name="r_document2" action="documentInsert" method="post">
+                                <div class="frame" id="do_pla_b"> <%--방출 문서--%>
                                     <div class="document-section">
                                         <div class="item">
                                             <span class="title">사원번호:</span>
-                                            <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                            <input type="text" class="value-input" id="emp_no2"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                         </div>
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title" name="document_title" value="선수관련"  >
+                                            <input type="text" class="value-input" id="document_title2" name="document_title" value="선수관련"  >
                                         </div>
-                                        <div class="item">
+                                        <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="document_category"  name="document_category" value="선수관련" >
+                                            <input type="text" class="value-input" id="document_category2"  name="document_category" value="선수관련" >
                                         </div>
                                         <div class="item">
                                             <span class="title">담당자:</span>
-                                            <input type="text" class="value-input" id="approval_emp_no" name=approval_emp_no" value="운영팀장">
+                                            <input type="text" class="value-input" id="approval_name2" name="approval_name" value="운영팀장">
                                         </div>
                                         <div class="item">
                                             <span class="title">신청자:</span>
-                                            <input type="text" class="value-input" id="name" name="name" value="<%=sessionVO.getName()%>" >
+                                            <input type="text" class="value-input" id="name2" name="name" value="<%=sessionVO.getName()%>" >
                                         </div>
                                         <div class="item">
                                             <span class="title">영입 선수:</span>
-                                            <select id="playersList" name="playersList">
+                                            <select id="playersList2" name="playersList">
                                                 <% for (int i = 0; i < kiwoomList.size(); i++) {
                                                     Map<String,Object> KiwoomMap = kiwoomList.get(i);
                                                     if(KiwoomMap != null) {
@@ -274,11 +246,62 @@
                                                 %>
                                             </select>
                                         </div>
-                                        <div class="text-wrapper-2">상기와 같이 영입 희망함</div>
+                                        <div class="text-wrapper-2">상기와 같이 방출 희망함 </div>
                                     </div>
-                                    <div id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
-                                        <button type="button" id="btn_search3" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                    <div id ="documentButton2 " class="col-md-6 d-flex justify-content-end gap-2">
+                                        <button type="button"  id="btn_docSubmit2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
+                                        <button type="button" id="btn_search2" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                    </div>
+                                </div>
+                            </form>
+
+
+
+
+
+                            <%-- (r_document)Recruitment document : 영입문서                   --%>
+                            <form id="r_document3" name="r_document3" action="documentInsert" method="post">
+                                <div class="frame" id="do_pla_c"> <%--영입 문서--%>
+                                    <div class="document-section">
+                                        <div class="item">
+                                            <span class="title">사원번호:</span>
+                                            <input type="text" class="value-input" id="emp_no1"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">문서제목:</span>
+                                            <input type="text" class="value-input" id="document_title1" name="document_title" value="선수관련"  >
+                                        </div>
+                                        <div class="item" hidden="hidden">
+                                            <span class="title">문서타이틀:</span>
+                                            <input type="text" class="value-input" id="document_category1"  name="document_category" value="선수관련" >
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">담당자:</span>
+                                            <input type="text" class="value-input" id="approval_name1" name="approval_name" value="운영팀장">
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">신청자:</span>
+                                            <input type="text" class="value-input" id="name1" name="name" value="<%=sessionVO.getName()%>" >
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">영입 선수:</span>
+                                            <select id="playersList1" name="playersList">
+                                                <% for (int i = 0; i < kiwoomList.size(); i++) {
+                                                    Map<String,Object> KiwoomMap = kiwoomList.get(i);
+                                                    if(KiwoomMap != null) {
+                                                %>
+                                                <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="text-wrapper-2">상기와 같이 영입 희망함 </div>
+                                    </div>
+                                    <div id ="documentButton1" class="col-md-6 d-flex justify-content-end gap-2">
+                                        <button type="button"  id="btn_docSubmit1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
+                                        <button type="button" id="btn_search1" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
                                     </div>
                                 </div>
                             </form>

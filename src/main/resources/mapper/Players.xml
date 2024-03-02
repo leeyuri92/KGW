@@ -3,26 +3,26 @@
 <mapper namespace="com.mybatis.mapper.HitterMapper">
 
 
+
     <select id="selectHitters" parameterType="map"  resultType="com.vo.HittersVO">
         SELECT
-        H_NAME,
-        H_TEAM,
-        H_AVG,
-        H_AB,
-        H_H,
-        H_HR,
-        H_R,
-        H_RBI,
-        H_SO,
-        H_SB,
-        H_OBP,
-        H_SLG,
-        H_WAR,
-        H_OPS
-      FROM HITTER
-    <where>
-            <if test="H_AB!= null AND H_AB>=100" >  AND H_AB>=100> </if>
-    </where>
+            H_NO,
+            H_NAME,
+            H_TEAM,
+            H_AVG,
+            H_AB,
+            H_H,
+            H_HR,
+            H_R,
+            H_RBI,
+            H_SO,
+            H_SB,
+            H_OBP,
+            H_SLG,
+            H_WAR,
+            H_OPS
+        FROM HITTER
+
     </select>
 
 
@@ -37,8 +37,11 @@
 
 
 
-    <select id="SelectPitchers" parameterType="map" resultType="com.vo.PitchersVO">
-    SELECT
+
+
+    <select id="SelectPitchers" parameterType="com.vo.PitchersVO" resultType="com.vo.PitchersVO">
+        SELECT
+        P_NO,
         P_NAME,
         P_TEAM,
         p_ERA,
@@ -51,9 +54,15 @@
         P_BH,
         P_WAR,
         P_WHIP
-    FROM PITCHER
-
+        FROM PITCHER
+        <where>
+            <if test="p_ip != 'all'">
+                AND P_IP > 50
+            </if>
+        </where>
+        order by  P_NO asc
 
     </select>
+
 
 </mapper>

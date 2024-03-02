@@ -1,6 +1,7 @@
 package com.best.kgw.dao.impl;
 
 import com.best.kgw.dao.PlayerDao;
+import com.vo.PitchersVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,10 @@ public class PlayerDaoImpl  implements PlayerDao {
         return  list;
     }
     @Override
-    public  List<Map<String,Object>>pitcherList(Map<String,Object>pMap){
-    List<Map<String,Object>> list2=new ArrayList<>();
-    logger.info("pitcherList");
-    list2=sqlSessionTemplate.selectList("SelectPitchers",pMap);
-    return  list2;
+    public  List<PitchersVO>pitcherList(PitchersVO pitchersVO){
+        List<PitchersVO > list2=new ArrayList<>();
+        logger.info("pitcherList");
+        list2=sqlSessionTemplate.selectList("SelectPitchers",pitchersVO);
+        return  list2;
     }
 }

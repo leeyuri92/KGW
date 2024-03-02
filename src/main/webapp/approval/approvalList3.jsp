@@ -1,13 +1,25 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
-
+<%@ page import="java.util.*,com.util.BSPageBar" %>
+<%@  page import="com.vo.ApprovalVO" %>
+<%
+    List<ApprovalVO>list3=(List)request.getAttribute("list3");
+    int size=0;
+    if(list3!=null){
+        size=list3.size();
+    }
+    int numPerPage=5;
+    int nowPage=0;
+    if(request.getParameter("nowPage")!=null){
+        nowPage=Integer.parseInt(request.getParameter("nowPage"));
+    }
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <%@include file="/common/bootstrap_common.jsp" %>
     <title>문서함{임시보관함}</title>
 
 
@@ -39,7 +51,7 @@
     <%--  </script>--%>
 </head>
 
-<body>
+<body   class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
@@ -95,8 +107,7 @@
 
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">임시보관함</button>
-                                    <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안문서 </button>
+                                    <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안서 작성 </button>
                                 </div>
 
                             <!-- 검색기 끝 -->
@@ -113,42 +124,31 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <%--									<%--%>
-                                    <%--										for(int i=0;i<size;i++){--%>
-                                    <%--											Map<String,Object> rmap = bList.get(i);--%>
-                                    <%--									%>--%>
-                                    <%--									<tr>--%>
-                                    <%--										<td><%=rmap.get("B_NO") %></td>--%>
-                                    <%--										<td>--%>
-                                    <%--											<a href="javascript:boardDetail('<%=rmap.get("B_NO") %>')"> <%=rmap.get("B_TITLE") %></a>--%>
-                                    <%--										</td>--%>
-                                    <%--										<td><%=rmap.get("B_FILE") %>	</td>--%>
-                                    <%--										<td><%=rmap.get("B_WRITER") %></td>--%>
-                                    <%--										<td><%=rmap.get("B_HIT") %></td>--%>
-                                    <%--										<td><%=rmap.get("B_HIT") %></td>--%>
-                                    <%--									</tr>--%>
-                                    <%--									<%--%>
-                                    <%--										}--%>
-                                    <%--									%>--%>
+                                    <%
+                                        for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
+                                            if(i==size)break;
+                                            ApprovalVO approvalVO=list3.get(i);
+                                    %>
+                                    <tr>
+                                        <td><%= approvalVO.getDocument_no()%></td>
+                                        <td><%= approvalVO.getDocument_category()%></td>
+                                        <td><%= approvalVO.getState()%></td>
+                                        <td><a href="#">삭제</a></td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
                                     </tbody>
                                 </table>
                                 <hr />
 
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                                 <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
+                                    <%
+                                        String pagePath="saveList";
+                                        BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
+                                        out.print(bsbp.getPageBar());
+                                    %>
                                 </ul>
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                             </div>

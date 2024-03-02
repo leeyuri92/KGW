@@ -3,7 +3,7 @@
 <%@ page import="java.util.*,com.util.BSPageBar" %>
 <%@  page import="com.vo.ApprovalVO" %>
 <%
-    List<Map<String,Object>>list=(List)request.getAttribute("list");
+    List<ApprovalVO>list=(List)request.getAttribute("list");
     int size=0;
     if(list!=null){
         size=list.size();
@@ -19,7 +19,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>전자결재 문서함</title>
+    <title>전자결재  기안자문서함</title>
+    <%@include file="/common/bootstrap_common.jsp" %>
+
+
+    <script>
+        function boardSearch(){
+            location.href='/approval/docu';
+        }
+
+
+
+    </script>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -74,8 +85,7 @@
 
                                 </div>
                                 			<div class="col-md-6 d-flex justify-content-end gap-2">
-                                				<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">임시보관함</button>
-                                				<button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안문서 </button>
+                                				<button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안서 작성 </button>
                                 			</div>
                                 <!-- 검색기 끝 -->
 
@@ -94,7 +104,6 @@
                                             for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
                                                 if(i==size)break;
                                                 ApprovalVO approvalVO=(ApprovalVO) list.get(i);
-                                                if(!"임시저장".equals(approvalVO.getState())){ // if문 으로 임시저장 구분
                                             %>
                                             <tr>
                                             <td><%= approvalVO.getDocument_no()%></td>
@@ -102,7 +111,6 @@
                                             <td><%= approvalVO.getState()%></td>
                                             </tr>
                                             <%
-                                            }
                                                 }
                                         %>
                                         </tbody>
@@ -112,7 +120,7 @@
                                     <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                                     <ul class="pagination">
                                         <%
-                                            String pagePath="approvalList";
+                                            String pagePath="documentList";
                                             BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
                                             out.print(bsbp.getPageBar());
                                         %>
