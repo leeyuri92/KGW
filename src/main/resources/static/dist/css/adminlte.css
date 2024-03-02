@@ -11641,6 +11641,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
   }
 }
 
+
 @media (min-width: 768px) and (prefers-reduced-motion: reduce) {
   body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper,
   body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer,
@@ -11740,7 +11741,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
 }
 
 .content-wrapper {
-  background-color: #F3F0E8;
+  background-color: #F9EDEE;
 }
 
 .content-wrapper > .content {
@@ -18025,7 +18026,7 @@ body.text-sm .control-sidebar {
 }
 
 .navbar-white {
-  background-color: #e0dfd1;
+  background-color: #e1cdcc;
   color: #1f2d3d;
 }
 
