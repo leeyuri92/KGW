@@ -73,7 +73,7 @@
             <!-- Info boxes -->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box">
+                    <div class="box ">
                         <div class="container">
                             <div class="box-header">
                                 <h4 style="font-weight: bold; margin-left: 2rem">인사정보</h4>
