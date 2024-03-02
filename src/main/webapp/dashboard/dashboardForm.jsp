@@ -26,7 +26,6 @@
   <!-- 부트스트랩 라이브러리 -->
   <%@include file="/common/bootstrap_common.jsp" %>
   <link rel="stylesheet" href="/css/mainCalendar.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <title>메인페이지</title>
 </head>
@@ -202,7 +201,7 @@
               <div class="row" style="margin: auto;">
                 <div class="user-panel">
                   <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>">
-                    <img src="/fileUpload/profile/<%=sessionVO.getProfile_img()%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
+                    <img src="/fileUpload/profile/<%=profileImgUrl%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
                   </a>
                 </div>
               </div>

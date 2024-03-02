@@ -21,13 +21,37 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script type="text/javascript">
-      const empDetailUpdate = () =>{
+      const empDetailUpdate = () => {
           console.log("수정 클릭");
           document.querySelector("#f_member").submit();
       }
 
-      const btn_Cancel = () =>{
+      const btn_Cancel = () => {
           location.href = "/";
+      }
+
+
+      function handleImgClick() {
+          document.getElementById('profileImgInput').click();
+      }
+
+      // 파일 선택 시 이미지 미리보기
+      function preview(event) {
+          var input = event.target;
+          var preview = document.getElementById('previewImage');
+
+          // 파일 업로드가 변경된 경우
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              // 이미지를 미리보기로 읽어들임
+              reader.onload = function(e) {
+                  preview.src = e.target.result;
+              }
+
+              // 파일을 읽어들임
+              reader.readAsDataURL(input.files[0]);
+          }
       }
 
   </script>
@@ -36,7 +60,7 @@
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
   <!-- header start -->
-  <%@include file="/include/KGW_bar.jsp"%>
+  <%@include file="/include/KGW_bar.jsp" %>
   <div class="content-wrapper">
     <!-- 페이지 path start    -->
     <!-- <div class="card"> -->
@@ -74,20 +98,22 @@
           <div class="box-header">
             <h3 style="display: flex; align-items: center; justify-content: center;" ><%=empDetail.getName()%>님 정보</h3>
           </div>
-          <div class="row">
-            <div class="col-2">
-              <div class="signImg" style="border: 2px solid grey; width: 200px; height: 200px">
-                <img id="signImage" src="/fileUpload/sign/<%=empDetail.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
-              </div>
-            </div>
-            <div class="col-8">
-              <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                <img src="/fileUpload/profile/<%=empDetail.getProfile_img()%>" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
-              </div>
-            </div>
-          </div>
 
-          <form  id="f_member" method="get" action="/empDetailUpdate">
+            <div class="row">
+              <div class="col-2">
+                <div class="signImg" style="border: 2px solid grey; width: 200px; height: 200px">
+                  <img id="signImage" src="/fileUpload/sign/<%=empDetail.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
+                  <img src="/fileUpload/profile/<%= profileImgUrl %>" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
+                </div>
+              </div>
+            </div>
+
+          <form  id="f_member" method="post" action="/empDetailUpdate" enctype="multipart/form-data">
+            <input type="file" id="profileImgInput" name="profiles" onchange="preview(event)" style="display: none;">
             <input type="hidden" name="emp_no" value="<%=empDetail.getEmp_no()%>">
             <div class="row">
               <div class="col-6 mb-3 mt-3">

@@ -3,6 +3,7 @@ package com.best.kgw.controller;
 import com.best.kgw.auth.PrincipalDetails;
 import com.best.kgw.service.AttendanceService;
 import com.best.kgw.service.DashboardService;
+import com.best.kgw.service.FileService;
 import com.vo.AttendanceVO;
 import com.vo.EmpVO;
 import jakarta.servlet.ServletContext;
@@ -45,6 +46,8 @@ public class DashboardController{
     Logger logger = LoggerFactory.getLogger(DashboardController.class);
     @Autowired
     private DashboardService dashboardService;
+    @Autowired
+    private FileService fileService;
 
     @Autowired
     private AttendanceService attendanceService;
@@ -93,14 +96,27 @@ public class DashboardController{
      작성일자 : 24.02.24
      기능 : 사원정보 수정
      **********************************************************************************/
-    @GetMapping("empDetailUpdate")
-    public String empDetailUpdate(EmpVO empvo) throws Exception {
+    @PostMapping("empDetailUpdate")
+    public String empDetailUpdate(EmpVO empvo, @RequestParam("profiles") MultipartFile file, HttpServletRequest req) throws Exception {
         logger.info("empDetailUpdate");
-        String rawPassword = empvo.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        empvo.setPassword(encPassword);
-        int result = 0;
-        result = dashboardService.empDetailUpdate(empvo);
+        if (file != null && !file.isEmpty()) {
+            // 파일이 제대로 전달되었을 때의 처리
+            logger.info("File is not null and not empty.");
+            fileService.fileUpload("profile", file, req, empvo);
+            String originalFilename = file.getOriginalFilename(); // 업로드된 파일의 원본 파일 이름
+            String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // 확장자 추출
+            empvo.setProfile_img(empvo.getEmp_no()+"."+extension);
+            String rawPassword = empvo.getPassword();
+            String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+            empvo.setPassword(encPassword);
+            int result = 0;
+            result = dashboardService.empDetailUpdate(empvo);
+            // 파일 업로드 및 처리 로직을 여기에 추가
+        } else {
+            // 파일이 전달되지 않았을 때의 처리
+            logger.info("File is null or empty.");
+        }
+
 
         return "redirect:/";
     }

@@ -67,6 +67,7 @@ public class MediaNoticeController {
     @PostMapping("mediaInsert")
     //키움소식 작성
     public String mediaNoticeInsert(MediaNoticeVO mediaNoticeVO, @RequestParam("files") MultipartFile file, HttpServletRequest req) throws Exception {
+       logger.info("=======================fileUpload :"+ file.getBytes());
         logger.info("mediaNoticeInsert : mediaNoticeInsert");
         //fileService에서 fileUpload 메소드를 호출하여 파일 업로드를 처리. "media"를 매개변수로 전달
         fileService.fileUpload("media", file, req);
