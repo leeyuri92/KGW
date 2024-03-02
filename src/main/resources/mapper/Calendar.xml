@@ -9,6 +9,25 @@
         INNER JOIN emp b ON a.emp_no = b.emp_no
         <where>
             AND a.emp_no = b.emp_no
+            AND a.calendar_id = 1
+        </where>
+    </select>
+
+    <select id= "tList" parameterType="map" resultType="com.vo.CalendarVO">
+        select * from calendar a
+        INNER JOIN emp b ON a.emp_no = b.emp_no
+        <where>
+            AND a.emp_no = b.emp_no
+            AND a.calendar_id = 2
+        </where>
+    </select>
+
+    <select id= "cpList" parameterType="map" resultType="com.vo.CalendarVO">
+        select * from calendar a
+        INNER JOIN emp b ON a.emp_no = b.emp_no
+        <where>
+            AND a.emp_no = b.emp_no
+            AND a.calendar_id = 3
         </where>
     </select>
 
@@ -20,13 +39,14 @@
 
     <insert id="insertCalendar" parameterType="com.vo.CalendarVO">
         INSERT INTO CALENDAR (CALENDAR_NO, EMP_NO, CALENDAR_ID, CALENDAR_TITLE, CALENDAR_CONTENT, CALENDAR_START, CALENDAR_END, REG_DATE, MOD_DATE)
-        VALUES (calendar_pk_seq.nextval, 1003, '${calendar_id}', '${calendar_title}', '일정', '${calendar_start}', '${calendar_end}', to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'), to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'))
+        VALUES (calendar_pk_seq.nextval, '${emp_no}', '${calendar_id}', '${calendar_title}', '일정', '${calendar_start}', '${calendar_end}', to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'), to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'))
     </insert>
 
     <update id="updateCalendar" parameterType="com.vo.CalendarVO">
         UPDATE calendar
         SET calendar_no = '${calendar_no}',
             calendar_title = '${calendar_title}',
+            emp_no = '${emp_no}',
             calendar_id = '${calendar_id}',
             calendar_content = '예약',
             calendar_start = '${calendar_start}',

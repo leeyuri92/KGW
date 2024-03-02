@@ -223,6 +223,7 @@
         let exitBtn = document.getElementById('exitEvent');
         let deleteBtn = document.getElementById('deleteEvent');
         let updateBtn = document.getElementById('updateEvent');
+        let addEventBtn = document.getElementById('addEvent');
         let closeBtnList = document.querySelectorAll('.modal-content .close');
 
         submitBtn.addEventListener('click', handleEventSubmit);
@@ -232,6 +233,10 @@
         exitBtn.addEventListener('click', handleEventUpdate);
         deleteBtn.addEventListener('click', handleEventDelete);
         updateBtn.addEventListener('click', handleEventUpdate);
+        addEventBtn.addEventListener('click', function() {
+            let insertModal = document.getElementById('insertModal');
+            insertModal.style.display = 'block';
+        });
         closeBtnList.forEach(function(closeBtn) {
             closeBtn.addEventListener('click', handleModalClose);
             closeBtn.addEventListener('click', handleEventUpdate);
@@ -247,11 +252,12 @@
             let reservation_title = titleInput.value;
             let reservation_start = startInput.value;
             let reservation_end = endInput.value;
+            let emp_no = <%= sessionVO.getEmp_no() %>;
             let asset_id = resourceIdInput.value;
             let asset_no = assetNoInput.value;
             let url = '/vehicleReservation/insertVehicleList';
 
-            if (reservation_title && reservation_start && reservation_end && asset_id && asset_no) {
+            if (reservation_title && reservation_start && reservation_end && emp_no && asset_id && asset_no) {
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -259,6 +265,7 @@
                         reservation_title: reservation_title,
                         reservation_start: reservation_start,
                         reservation_end: reservation_end,
+                        emp_no: emp_no,
                         asset_id: asset_id,
                         asset_no: asset_no
                     },
@@ -325,11 +332,12 @@
             let reservation_title = titleInput.value;
             let reservation_start = startInput.value;
             let reservation_end = endInput.value;
+            let emp_no = <%= sessionVO.getEmp_no() %>;
             let asset_no = assetNoInput.value;
             let reservation_no = reservationNoInput.value;
             let url = "/vehicleReservation/insertVehicleList";
 
-            if (reservation_title && reservation_start && reservation_end && asset_no && reservation_no) {
+            if (reservation_title && reservation_start && reservation_end && emp_no && asset_no && reservation_no) {
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -337,6 +345,7 @@
                         reservation_title: reservation_title,
                         reservation_start: reservation_start,
                         reservation_end: reservation_end,
+                        emp_no: emp_no,
                         asset_no: asset_no,
                         reservation_no: reservation_no
                     },
@@ -480,7 +489,7 @@
                     <div class="box">
                         <div class="container-fluid1">
                             <h2 class="cal_title">차량 예약 현황</h2>
-                            <button id="addEventBtn" class="btn btn-primary col-md-1">일정 등록</button>
+                            <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-md-1" id="addEvent" name="addEvent" value="일정 등록"/>
                         </div>
                         <hr />
 
@@ -548,13 +557,12 @@
                                         int count = 0; // 일정 카운터 변수 추가
                                         for (CalendarVO vo : vehicleReservationList1) {
                                             if (Objects.equals(sessionVO.getName(), vo.getName())) {
-                                                String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
-                                                String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
-                                                String startDate = vo.getCalendar_end();
-                                                String endDate = vo.getCalendar_end();
-                                                // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
-                                                if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) {
-                                                count++; // 카운터 증가
+                                            String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
+                                            String endDateCheck = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
+                                            String startDate = vo.getReservation_end();
+                                            String endDate = vo.getReservation_end();
+                                            if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
+                                            count++; // 카운터 증가
                                 %>
                                 <tr>
                                     <th scope="row"><%= count %></th>
@@ -565,10 +573,7 @@
                                     <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
                                 </tr>
                                 <%
-                                }
-                                }
-                                }
-                                }
+                                }}}}
                                 %>
                                 </tbody>
                             </table>
@@ -589,6 +594,10 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="insertTitle" name="insertTitle" placeholder="일정명">
                             <label for="insertTitle">예약명</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="insertName" name="insertName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="insertName">예약자</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control rounded-3" id="insertStart" name="insertStart">
@@ -630,6 +639,10 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailTitle" name="detailTitle" placeholder="일정명">
                             <label for="detailTitle">예약명</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="detailName" name="detailName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="detailName">예약자</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailReservationNo" name="detailReservationNo" placeholder="일정명">

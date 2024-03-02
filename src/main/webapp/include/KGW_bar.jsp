@@ -116,19 +116,19 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/calendar/calendarList" class="nav-link">
+                                <a href="/calendar/myCalendarList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>내 일정</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/calendar/calendarList" class="nav-link">
+                                <a href="/calendar/teamCalendarList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>팀 일정</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/calendar/calendarList" class="nav-link">
+                                <a href="/calendar/companyCalendarList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>전사 일정</p>
                                 </a>

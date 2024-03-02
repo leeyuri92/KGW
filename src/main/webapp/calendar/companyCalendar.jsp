@@ -1,23 +1,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.vo.CalendarVO" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="com.vo.EmpVO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.Objects" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
-
-<%
-    List<Map<String, Object>> list = (List) request.getAttribute("list");
-    int size = 0;
-    if (list != null) {
-        size = list.size();
-    }
-
-    int numPerPage = 10;
-    int nowPage = 0;
-    if(request.getParameter("nowPage")!=null){
-        nowPage = Integer.parseInt(request.getParameter("nowPage"));
-    }
-%>
 
 <!DOCTYPE html>
 <html>
@@ -40,6 +28,11 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.1/main.min.css" rel="stylesheet">
 </head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse">
+<div class="wrapper">
+    <%@include file="/include/KGW_bar.jsp"%>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendar');
@@ -112,9 +105,11 @@
                     }
                 },
                 events: [
-                    <%  List<CalendarVO> calendarList = (List<CalendarVO>) request.getAttribute("calendarList");
-                        if (calendarList != null) {
-                            for (CalendarVO vo : calendarList) { %>
+                    <%  List<CalendarVO> companyCalendarList = (List<CalendarVO>) request.getAttribute("companyCalendarList");
+                        if (companyCalendarList != null) {
+                            for (CalendarVO vo : companyCalendarList) {
+                            if (Objects.equals(sessionVO.getName(), vo.getName())) {
+                            %>
                     {
                         extendedProps: { CalendarNo: '<%= vo.getCalendar_no() %>' },
                         id: '<%= vo.getCalendar_id() %>',
@@ -123,7 +118,7 @@
                         end: '<%= vo.getCalendar_end() %>',
                         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
                     },
-                    <% }} %>
+                    <% }}} %>
                 ]
             });
             calendar.render();
@@ -160,6 +155,7 @@
         let exitBtn = document.getElementById('exitEvent');
         let deleteBtn = document.getElementById('deleteEvent');
         let updateBtn = document.getElementById('updateEvent');
+        let addEventBtn = document.getElementById('addEvent');
         let closeBtnList = document.querySelectorAll('.modal-content .close');
 
         submitBtn.addEventListener('click', handleEventSubmit);
@@ -169,6 +165,10 @@
         exitBtn.addEventListener('click', handleEventUpdate);
         deleteBtn.addEventListener('click', handleEventDelete);
         updateBtn.addEventListener('click', handleEventUpdate);
+        addEventBtn.addEventListener('click', function() {
+            let insertModal = document.getElementById('insertModal');
+            insertModal.style.display = 'block';
+        });
         closeBtnList.forEach(function(closeBtn) {
             closeBtn.addEventListener('click', handleModalClose);
             closeBtn.addEventListener('click', handleEventUpdate);
@@ -176,6 +176,7 @@
 
         function handleEventSubmit() {
                 let idInput = document.getElementById('insertCalendarId');
+                let empNoInput = document.getElementById('insertCalendarId');
                 let titleInput = document.getElementById('insertTitle');
                 let startInput = document.getElementById('insertStart');
                 let endInput = document.getElementById('insertEnd');
@@ -184,9 +185,10 @@
                 let calendar_title = titleInput.value;
                 let calendar_start = startInput.value;
                 let calendar_end = endInput.value;
+                let emp_no = <%= sessionVO.getEmp_no() %>;
                 let url = '/calendar/insertCalendar';
 
-            if (calendar_title && calendar_start && calendar_end && calendar_id) {
+            if (calendar_title && calendar_start && calendar_end && emp_no && calendar_id) {
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -194,13 +196,14 @@
                         calendar_title: calendar_title,
                         calendar_start: calendar_start,
                         calendar_end: calendar_end,
+                        emp_no: emp_no,
                         calendar_id: calendar_id
                     },
                     success: function(response) {
                         console.log(response);
                         if (response > 0) {
                             if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/calendarList';
+                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/companyCalendarList';
 
                             alert("일정이 등록되었습니다.");
                         }
@@ -230,7 +233,7 @@
                         console.log(response);
                         if (response > 0) {
                             if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/calendarList';
+                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/companyCalendarList';
 
                             alert("일정이 삭제되었습니다.");
                         }
@@ -252,16 +255,17 @@
             let endInput = document.getElementById('detailEnd');
             let calendarNoInput = document.getElementById('detailCalendarNo');
             let idInput = document.getElementById('detailCalendarId');
-            let existingEvent = calendar.getEventById(updatedEvent.extendedProps); // 기존 이벤트 가져오기
 
             let calendar_title = titleInput.value;
             let calendar_start = startInput.value;
             let calendar_end = endInput.value;
+            let emp_no = <%= sessionVO.getEmp_no() %>;
             let calendar_no = calendarNoInput.value;
             let calendar_id = idInput.value;
+
             let url = "/calendar/updateCalendar";
 
-            if (calendar_title && calendar_start && calendar_end && calendar_no && calendar_id) {
+            if (calendar_title && calendar_start && calendar_end && emp_no && calendar_no && calendar_id) {
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -269,6 +273,7 @@
                         calendar_title: calendar_title,
                         calendar_start: calendar_start,
                         calendar_end: calendar_end,
+                        emp_no: emp_no,
                         calendar_no : calendar_no,
                         calendar_id: calendar_id
                     },
@@ -276,7 +281,7 @@
                         console.log(response);
                         if (response > 0) {
                             if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/calendarList';
+                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/companyCalendarList';
 
                             alert("일정이 수정되었습니다.");
                         }
@@ -292,6 +297,20 @@
             modal.style.display = 'none';
         }
 
+        // 내 일정 체크박스 클릭 시 링크로 이동
+        document.getElementById('myCal').addEventListener('change', function() {
+            if (this.checked) {
+                window.location.href = '../calendar/myCalendarList';
+            }
+        });
+
+        // 팀 일정 체크박스 클릭 시 링크로 이동
+        document.getElementById('teamCal').addEventListener('change', function() {
+            if (this.checked) {
+                window.location.href = '../calendar/teamCalendarList';
+            }
+        });
+
         // 모달 닫기 및 입력 값 초기화 함수
         function closeModalAndClearInputs() {
             let modal = document.getElementById('insertModal');
@@ -306,8 +325,6 @@
             modal1.style.display = 'none';
             modal2.style.display = 'none';
             clearModalInputs();
-            renderCalendarList();
-            updateCalendarList();
         }
 
         // 모달 입력값 초기화 함수
@@ -358,9 +375,6 @@
         }
     }
 </script>
-<body class="hold-transition sidebar-mini sidebar-collapse">
-<div class="wrapper">
-    <%@include file="/include/KGW_bar.jsp"%>
     <div class="content-wrapper">
 
         <div style="width: 100%; height: 100px; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
@@ -372,7 +386,7 @@
                     <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">></div>
                 </div>
                 <div style="justify-content: flex-start; align-items: center; display: flex">
-                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정현황</div>
+                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">전사 일정</div>
                 </div>
             </div>
             <div style="padding-top: 14px; padding-bottom: 6px; justify-content: flex-start; align-items: center; gap: 16px; display: inline-flex">
@@ -380,8 +394,8 @@
                     <div style="width: 13.35px; height: 12.71px; left: 1.45px; top: 1.64px; position: absolute; background: rgba(0, 0, 0, 0.85)"></div>
                 </div>
                 <div style="justify-content: flex-start; align-items: center; gap: 12px; display: flex">
-                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 20px; font-family: Roboto; font-weight: 700; line-height: 28px; word-wrap: break-word">일정현황</div>
-                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">일정현황을 조회할 수 있는 페이지입니다.</div>
+                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 20px; font-family: Roboto; font-weight: 700; line-height: 28px; word-wrap: break-word">전사 일정 현황</div>
+                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">전사 일정 현황을 조회할 수 있는 페이지입니다.</div>
                 </div>
             </div>
         </div>
@@ -391,13 +405,26 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="container-fluid1">
-                            <h2 class="cal_title">일정 현황</h2>
+                            <h2 class="cal_title">전사 일정 현황</h2>
                             <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-md-1" id="addEvent" name="addEvent" value="일정 등록"/>
                         </div>
                         <hr />
 
                         <%-- 캘린더 태그 --%>
                         <div id="calendar"></div>
+                        <div class="checkbox-container">
+                            <div>
+                                <input type="checkbox" class="form-check-input" id="myCal" name="myCal" value="myCal">
+                                <label for="myCal">내 일정</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" class="form-check-input" id="teamCal" name="teamCal" value="teamCal">
+                                <label for="teamCal">팀 일정</label>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -416,7 +443,7 @@
                     <div class="box">
                         <%-- 내 일정 현황 태그 --%>
                         <div class="container-fluid1">
-                            <h2 class="cal_title">오늘 내 일정</h2>
+                            <h2 class="cal_title">오늘 전사 일정</h2>
                             <!-- 검색기 시작 -->
                             <div class="row search">
                                 <div class="col-2">
@@ -448,16 +475,18 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">참석자</th>
+                                    <th scope="col">일정 구분</th>
                                     <th scope="col">일정명</th>
                                     <th scope="col">일정시간</th>
                                     <th scope="col">취소</th>
                                 </tr>
                                 </thead>
                                 <tbody id="calendarTableBody">
-                                <% List<CalendarVO> calendarList1 = (List<CalendarVO>) request.getAttribute("calendarList");
-                                    if (calendarList1 != null) {
+                                <% List<CalendarVO> companyCalendarList1 = (List<CalendarVO>) request.getAttribute("companyCalendarList");
+                                    if (companyCalendarList1 != null) {
                                         int count = 0; // 일정 카운터 변수 추가
-                                        for (CalendarVO vo : calendarList1) {
+                                        for (CalendarVO vo : companyCalendarList1) {
+                                         if (Objects.equals(sessionVO.getName(), vo.getName())) {
                                             String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
                                             String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
                                             String startDate = vo.getCalendar_end();
@@ -468,11 +497,13 @@
                                 <tr>
                                     <th scope="row"><%= ++count %></th> <!-- 일정 번호 출력 -->
                                     <td><%= vo.getName() %></td>
+                                    <td>전사 일정</td>
                                     <td><%= vo.getCalendar_title() %></td>
                                     <td><%= startDate + "~" + endDate %></td>
                                     <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
                                 </tr>
-                                <%          }
+                                <%}
+                                }
                                 }
                                 }
                                 %>
@@ -497,6 +528,10 @@
                             <label for="insertTitle">일정명</label>
                         </div>
                         <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="insertName" name="insertName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="insertName">참석자</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control rounded-3" id="insertStart" name="insertStart">
                             <label for="insertStart">일정 시작</label>
                         </div>
@@ -511,10 +546,6 @@
                             <option value="3">전사일정</option>
                         </select>
                         <br>
-                        <%--                        <div class="form-floating mb-3">--%>
-                        <%--                            <input type="text" class="form-control rounded-3" id="insertCalendarId" name="insertCalendarId" placeholder="일정 ID">--%>
-                        <%--                            <label for="insertCalendarId">일정 ID</label>--%>
-                        <%--                        </div>           --%>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="submitEvent" name="submitEvent" value="등록"/>
                         <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-secondary close" id="exitEvent" name="exitEvent" value="취소"/>
                     </div>
@@ -533,6 +564,10 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailTitle" name="detailTitle" placeholder="일정명">
                             <label for="detailTitle">일정명</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="detailName" name="detailName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="detailName">참석자</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailCalendarNo" name="detailCalendarNo" placeholder="일정 번호">

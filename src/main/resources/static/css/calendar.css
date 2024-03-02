@@ -149,6 +149,16 @@ a {
     text-align: right;
 }
 
+.checkbox-container {
+    display: flex; /* 요소 행 나열 */
+    justify-content: flex-end; /* 요소 오른쪽 정렬 */
+    align-items: center; /* 요소 세로 방향 가운데 정렬 */
+}
+
+.checkbox-container div {
+    margin-right: 10px; /* 체크박스와 라벨 사이 간격을 조절 */
+}
+
 /* 일정 정보 타이틀 */
 .reservation-status{
     margin-top: 40px;

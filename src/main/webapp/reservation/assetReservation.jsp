@@ -217,21 +217,24 @@
 
         // 이벤트 핸들러 등록
         let submitBtn = document.getElementById('submitEvent');
-        // let addReservEventBtn = document.getElementById('addReservEvent');
         let searchBtn = document.getElementById('searchEvent');
         let exitBtn = document.getElementById('exitEvent');
         let deleteBtn = document.getElementById('deleteEvent');
         let updateBtn = document.getElementById('updateEvent');
+        let addEventBtn = document.getElementById('addEvent');
         let closeBtnList = document.querySelectorAll('.modal-content .close');
 
         submitBtn.addEventListener('click', handleEventSubmit);
         submitBtn.addEventListener('click', handleEventUpdate);
-        // addReservEventBtn.addEventListener('click', handleEventSubmit);
         searchBtn.addEventListener('click', calendarSearch);
         exitBtn.addEventListener('click', handleEventSubmit);
         exitBtn.addEventListener('click', handleEventUpdate);
         deleteBtn.addEventListener('click', handleEventDelete);
         updateBtn.addEventListener('click', handleEventUpdate);
+        addEventBtn.addEventListener('click', function() {
+            let insertModal = document.getElementById('insertModal');
+            insertModal.style.display = 'block';
+        });
         closeBtnList.forEach(function(closeBtn) {
             closeBtn.addEventListener('click', handleModalClose);
             closeBtn.addEventListener('click', handleEventUpdate);
@@ -252,7 +255,7 @@
             let asset_no = assetNoInput.value;
             let url = '/assetReservation/insertReservation';
 
-            if (reservation_title && reservation_start && reservation_end && name && asset_id && asset_no) {
+            if (reservation_title && reservation_start && reservation_end && emp_no && asset_id && asset_no) {
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -327,11 +330,12 @@
             let reservation_title = titleInput.value;
             let reservation_start = startInput.value;
             let reservation_end = endInput.value;
+            let emp_no = <%= sessionVO.getEmp_no() %>;
             let asset_no = assetNoInput.value;
             let reservation_no = reservationNoInput.value;
             let url = "/assetReservation/updateReservation";
 
-            if (reservation_title && reservation_start && reservation_end && asset_no && reservation_no) {
+            if (reservation_title && reservation_start && reservation_end && emp_no && asset_no && reservation_no) {
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -339,6 +343,7 @@
                         reservation_title: reservation_title,
                         reservation_start: reservation_start,
                         reservation_end: reservation_end,
+                        emp_no: emp_no,
                         asset_no : asset_no,
                         reservation_no: reservation_no
                     },
@@ -458,7 +463,7 @@
                     <div class="box">
                         <div class="container-fluid1">
                             <h2 class="cal_title">자산 예약 현황</h2>
-                            <input type="button" id="addReservEvent" name="addReservEvent" class="btn btn-primary col-md-1" value="예약 등록">
+                            <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-md-1" id="addEvent" name="addEvent" value="일정 등록"/>
                         </div>
                         <hr />
 
@@ -565,6 +570,10 @@
                             <label for="insertTitle">예약명</label>
                         </div>
                         <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="insertName" name="insertName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="insertName">예약자</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control rounded-3" id="insertStart" name="insertStart">
                             <label for="insertStart">예약 시작</label>
                         </div>
@@ -615,6 +624,10 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailTitle" name="detailTitle" placeholder="일정명">
                             <label for="detailTitle">예약명</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="detailName" name="detailName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <label for="detailName">예약자</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailReservationNo" name="detailReservationNo" placeholder="일정명">
