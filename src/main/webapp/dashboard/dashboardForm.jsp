@@ -11,7 +11,7 @@
 <%
   AttendanceVO attendance = (AttendanceVO) request.getAttribute("attendance");
   List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
-//out.print(attendance);
+//out.print(faList);
 %>
 
 <!DOCTYPE html>
@@ -34,142 +34,6 @@
       <!-- header start -->
       <%@include file="/include/KGW_bar.jsp"%>
       <link rel="stylesheet" href="/css/dashboard.css">
-      <script>
-          const updateTime = () => {
-              let timeString = moment().format('HH:mm:ss');
-              document.querySelector("#clock").textContent = timeString;
-          }
-
-          // 매 초마다 시간을 업데이트
-          setInterval(updateTime, 1000);
-
-          const workStart = () =>{
-              let timeString = moment().format('HH:mm:ss');
-              const data = {
-                  "start_time" : timeString,
-                  "emp_no" : <%=sessionVO.getEmp_no()%>
-              }
-              Swal.fire({
-                  title: "출근하시겠습니까?",
-                  showCancelButton: true,
-                  confirmButtonColor: "#7c1512",
-                  cancelButtonColor: "#868686",
-                  confirmButtonText: "네",
-                  cancelButtonText: "아니요"
-              }).then((result) => {
-                  if (result.isConfirmed) {
-                      $.ajax({
-                          type:"POST",
-                          url: '/attendance/attendanceTime',
-                          data: data,
-                          success: function(response) {
-                              console.log('성공');
-                              Swal.fire({
-                                  title: "출근이 완료되었습니다.",
-                                  text: "좋은 하루 되세요.",
-                                  icon: "success",
-                              });
-                              document.querySelector("#workStart").textContent = timeString;
-                              location.reload();
-                          },
-                          error: function(error) {
-                              console.error('실패:', error);
-                              // 실패한 경우 처리할 내용 추가
-                          }
-                      })
-                  }
-              });
-          }
-          const workEnd = () =>{
-              let timeString = moment().format('HH:mm:ss');
-              let attendace_no = 0;
-              <%
-                if(attendance != null){
-              %>
-              attendace_no = <%=attendance.getAttendance_no()%>;
-
-              const data = {
-                  "start_time" : '<%=attendance.getStart_time()%>',
-                  "end_time" : timeString,
-                  "emp_no" : <%=sessionVO.getEmp_no()%>,
-                  "attendance_no" : attendace_no
-              }
-
-              Swal.fire({
-                  title: "퇴근하시겠습니까?",
-                  showCancelButton: true,
-                  confirmButtonColor: "#7c1512",
-                  cancelButtonColor: "#868686",
-                  confirmButtonText: "네",
-                  cancelButtonText: "아니요"
-              }).then((result) => {
-                  if (result.isConfirmed) {
-                      $.ajax({
-                          type:"POST",
-                          url: '/attendance/attendanceEndTime',
-                          data: data,
-                          success: function(response) {
-                              console.log('성공');
-                              Swal.fire({
-                                  title: "퇴근이 완료되었습니다.",
-                                  text: "오늘 하루 고생하셨습니다.",
-                                  icon: "success",
-                              });
-                              document.querySelector("#workStart").textContent = timeString;
-                              location.reload();
-                          },
-                          error: function(error) {
-                              console.error('실패:', error);
-                              // 실패한 경우 처리할 내용 추가
-                          }
-                      })
-                  }
-              });
-              <%
-              }
-              %>
-          }
-
-          function success (position){
-              const latitude = position.coords.latitude;
-              const longitude = position.coords.longitude;
-
-              getWeather(latitude, longitude);
-          }
-
-
-
-          function getWeather (lat, lon) {
-              const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
-              fetch(
-                  `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${API_KEY}&units=metric&lang=kr`
-              )
-                  .then((response) => {
-                      if (!response.ok) {
-                          throw new Error('날씨 정보를 가져오는 데 실패했습니다.');
-                      }
-                      return response.json();
-                  })
-                  .then((data) => {
-                      const iconSection = document.querySelector('.icon');
-                      const icon = data.weather[0].icon;
-                      console.log(icon)
-                      const iconURL = `http://openweathermap.org/img/wn/\${icon}.png`;
-                      console.log(iconURL)
-                      iconSection.setAttribute('src', iconURL);
-                      iconSection.setAttribute('alt', data.weather[0].description);
-                  })
-                  .catch((error) => {
-                      console.error('Error:', error);
-                  });
-          }
-
-          navigator.geolocation.getCurrentPosition(success);
-
-          const mypage = () =>{
-              location.href = "/mypage?emp_no=<%=sessionVO.getEmp_no()%>";
-          }
-      </script>
 
       <!-- body start    -->
       <div class="content-wrapper">
@@ -196,7 +60,7 @@
 
       <div class="row">
         <div class="col-2 text-center" >
-          <div class="col" style="position:sticky; top:10px;">
+          <div class="col" style="position:sticky; top:30px;">
             <div class="row mainbox" style="background-color: #efc3cc;">
               <div class="row" style="margin: auto;">
                 <div class="user-panel">
@@ -313,36 +177,6 @@
                     }
                   }
                 %>
-<%--                <%--%>
-<%--                  if(attendance != null){--%>
-<%--                    if(attendance.getStart_time() != null){--%>
-<%--                %>--%>
-<%--                    <button id="btn_start" class="btn btn-danger" onclick="workStart()" disabled>출근</button>--%>
-<%--                <%--%>
-<%--                    }else{--%>
-<%--                %>--%>
-<%--                    <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>--%>
-<%--                <%--%>
-<%--                    }--%>
-<%--                %>--%>
-<%--                <%--%>
-<%--                    if(attendance.getEnd_time() != null){--%>
-<%--                %>--%>
-<%--                    <button id="btn_end" class="btn btn-danger" onclick="workEnd()" disabled>퇴근</button>--%>
-<%--                <%--%>
-<%--                  }else{--%>
-<%--                %>--%>
-<%--                    <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>--%>
-<%--                <%--%>
-<%--                    }--%>
-<%--                  }else{--%>
-<%--                %>--%>
-<%--                <button id="btn_start" class="btn btn-danger" onclick="workStart()">출근</button>--%>
-<%--                <button id="btn_end" class="btn btn-danger" onclick="workEnd()">퇴근</button>--%>
-<%--                <%--%>
-<%--                  }--%>
-<%--                %>--%>
-
               </div>
             </div>
             <div class="row mainbox mt-3 p-4 d-grid gap-5  mx-auto" style="background-color: #efc3cc; ">
@@ -351,7 +185,7 @@
           </div>
         </div>
 
-        <div class="col-9">
+        <div class="col-10">
           <div class="row " >
 
             <div class="col mainbox">
@@ -396,27 +230,50 @@
           </div>
 
           <div class="row" >
-            <div class="col mainbox">
-              <div class="mainbox-header d-flex align-items-center pb-0">
-                <div class="d-flex align-items-center">
-                  <span style="font-weight: bold; margin-left: 1.5rem" >공지게시판</span>
-                </div>
-                <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+            <div class="col mr-3">
+              <div class="row">
+                <div class="col mainbox">
+                  <div class="mainbox-header d-flex align-items-center pb-0">
+                    <div class="d-flex align-items-center">
+                      <span style="font-weight: bold; margin-left: 1.5rem" >공지게시판</span>
+                    </div>
+                    <div style="margin-left: auto; margin-right: 1.5rem">
+                      <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                    </div>
+                  </div>
+                  <hr/>
+                  공지게시판 들어가는 부분
                 </div>
               </div>
-              <hr/>
+              <div class="row">
+                <div class="col mainbox">
+                  <div class="mainbox-header d-flex align-items-center pb-0">
+                    <div class="d-flex align-items-center">
+                      <span style="font-weight: bold; margin-left: 1.5rem" >미디어게시판</span>
+                    </div>
+                    <div style="margin-left: auto; margin-right: 1.5rem">
+                      <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                    </div>
+                  </div>
+                  <hr/>
+                  미디어 게시판 들어가는 부분
+                </div>
+              </div>
             </div>
+
             <div class="col mainbox">
               <div class="mainbox-header d-flex align-items-center pb-0">
                 <div class="d-flex align-items-center">
-                  <span style="font-weight: bold; margin-left: 1.5rem" >미디어게시판</span>
+                  <span style="font-weight: bold; margin-left: 1.5rem" >근태관리</span>
                 </div>
                 <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                  <a href="/attendance/attendanceCalendar?emp_no=<%=sessionVO.getEmp_no()%>" class="btn btn-danger" style="border-radius:30px">more</a>
                 </div>
               </div>
               <hr/>
+              <div id='calendar-container'>
+                <%@include file="/include/attendance.jsp"%>
+              </div>
             </div>
           </div>
 
@@ -427,31 +284,162 @@
                   <span style="font-weight: bold; margin-left: 1.5rem" >전략분석 차트</span>
                 </div>
                 <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                  <a href="/manage/FAChart" class="btn btn-danger" style="border-radius:30px">more</a>
                 </div>
               </div>
                 <hr/>
+            <%@include file="/include/icFAchart.jsp"%>
             </div>
-            <div class="col mainbox">
-              <div class="mainbox-header d-flex align-items-center pb-0">
-                <div class="d-flex align-items-center">
-                  <span style="font-weight: bold; margin-left: 1.5rem" >근태관리</span>
-                </div>
-                <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="/attendance/attendanceCalendar?emp_no=<%=sessionVO.getEmp_no()%>" class="btn btn-danger" style="border-radius:30px">more</a>
-                </div>
-              </div>
-                <hr/>
-                <div id='calendar-container'>
-                  <%@include file="/include/attendance.jsp"%>
-                </div>
+          </div>
+          <div class="col" style="text-align: center; ">
+            <div id="btn_top" title="위로">
+                <img src='/images/btn_png/btn_top.png' alt='top' style="cursor: pointer"/>
             </div>
-
           </div>
         </div>
       </div>
     </section>
   </div>
 </div>
+    <script>
+        $("#btn_top").click(function() {  // 버튼 클릭 시
+            $('html,body').scrollTop(0);  // 스크롤탑이 '0'이 된다는 - 스크롤이 제일 위로 올라간다는 의미
+        });
+
+        const updateTime = () => {
+            let timeString = moment().format('HH:mm:ss');
+            document.querySelector("#clock").textContent = timeString;
+        }
+
+        // 매 초마다 시간을 업데이트
+        setInterval(updateTime, 1000);
+
+        const workStart = () =>{
+            let timeString = moment().format('HH:mm:ss');
+            const data = {
+                "start_time" : timeString,
+                "emp_no" : <%=sessionVO.getEmp_no()%>
+            }
+            Swal.fire({
+                title: "출근하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonColor: "#7c1512",
+                cancelButtonColor: "#868686",
+                confirmButtonText: "네",
+                cancelButtonText: "아니요"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type:"POST",
+                        url: '/attendance/attendanceTime',
+                        data: data,
+                        success: function(response) {
+                            console.log('성공');
+                            Swal.fire({
+                                title: "출근이 완료되었습니다.",
+                                text: "좋은 하루 되세요.",
+                                icon: "success",
+                            });
+                            document.querySelector("#workStart").textContent = timeString;
+                            location.reload();
+                        },
+                        error: function(error) {
+                            console.error('실패:', error);
+                            // 실패한 경우 처리할 내용 추가
+                        }
+                    })
+                }
+            });
+        }
+        const workEnd = () =>{
+            let timeString = moment().format('HH:mm:ss');
+            let attendace_no = 0;
+            <%
+              if(attendance != null){
+            %>
+            attendace_no = <%=attendance.getAttendance_no()%>;
+
+            const data = {
+                "start_time" : '<%=attendance.getStart_time()%>',
+                "end_time" : timeString,
+                "emp_no" : <%=sessionVO.getEmp_no()%>,
+                "attendance_no" : attendace_no
+            }
+
+            Swal.fire({
+                title: "퇴근하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonColor: "#7c1512",
+                cancelButtonColor: "#868686",
+                confirmButtonText: "네",
+                cancelButtonText: "아니요"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type:"POST",
+                        url: '/attendance/attendanceEndTime',
+                        data: data,
+                        success: function(response) {
+                            console.log('성공');
+                            Swal.fire({
+                                title: "퇴근이 완료되었습니다.",
+                                text: "오늘 하루 고생하셨습니다.",
+                                icon: "success",
+                            });
+                            document.querySelector("#workStart").textContent = timeString;
+                            location.reload();
+                        },
+                        error: function(error) {
+                            console.error('실패:', error);
+                            // 실패한 경우 처리할 내용 추가
+                        }
+                    })
+                }
+            });
+            <%
+            }
+            %>
+        }
+
+        function success (position){
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            getWeather(latitude, longitude);
+        }
+
+
+
+        function getWeather (lat, lon) {
+            const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
+            fetch(
+                `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${API_KEY}&units=metric&lang=kr`
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('날씨 정보를 가져오는 데 실패했습니다.');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    const iconSection = document.querySelector('.icon');
+                    const icon = data.weather[0].icon;
+                    console.log(icon)
+                    const iconURL = `http://openweathermap.org/img/wn/\${icon}.png`;
+                    console.log(iconURL)
+                    iconSection.setAttribute('src', iconURL);
+                    iconSection.setAttribute('alt', data.weather[0].description);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+        navigator.geolocation.getCurrentPosition(success);
+
+        const mypage = () =>{
+            location.href = "/mypage?emp_no=<%=sessionVO.getEmp_no()%>";
+        }
+    </script>
 </body>
 </html>
