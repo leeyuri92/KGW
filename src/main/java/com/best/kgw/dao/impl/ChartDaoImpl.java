@@ -19,25 +19,48 @@ public class ChartDaoImpl implements ChartDao {
 
     /**********************************************************************************
      작성자 : 이유리
+     작성일자 : 24.02.26
+     기능 : 입/퇴사자 차트
+     **********************************************************************************/
+    @Override
+    public List<Map<String, Object>> hireList(Map<String, Object> hmap) {
+        logger.info("hireList");
+        List<Map<String, Object>> hireList = null;
+        hireList = sqlSessionTemplate.selectList("hireList", hmap);
+        logger.info(hireList.toString());
+        return hireList;
+    }
+
+    @Override
+    public List<Map<String, Object>> retireList(Map<String, Object> rmap) {
+        logger.info("retireList");
+        List<Map<String, Object>> retireList = null;
+        retireList = sqlSessionTemplate.selectList("retireList", rmap);
+        logger.info(retireList.toString());
+        return retireList;
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
      작성일자 : 24.02.18
      기능 : FAchart 페이지 생성 및 리스트, chart 생성
      **********************************************************************************/
     @Override
-    public List<Map<String, Object>> wList(Map<String, Object> wmap) {
-        logger.info("wList");
-        List<Map<String, Object>> wList = null;
-        wList = sqlSessionTemplate.selectList("wList", wmap);
-        logger.info(wList.toString());
-        return wList;
+    public List<Map<String, Object>> warList(Map<String, Object> wmap) {
+        logger.info("warList");
+        List<Map<String, Object>> warList = null;
+        warList = sqlSessionTemplate.selectList("warList", wmap);
+        logger.info(warList.toString());
+        return warList;
     }
 
     @Override
-    public List<Map<String, Object>> pList(Map<String, Object> pmap) {
-        logger.info("pList");
-        List<Map<String, Object>> pList = null;
-        pList = sqlSessionTemplate.selectList("pList", pmap);
-        logger.info(pList.toString());
-        return pList;
+    public List<Map<String, Object>> positionList(Map<String, Object> pmap) {
+        logger.info("positionList");
+        List<Map<String, Object>> positionList = null;
+        positionList = sqlSessionTemplate.selectList("positionList", pmap);
+        logger.info(positionList.toString());
+        return positionList;
     }
 
     @Override
@@ -50,11 +73,11 @@ public class ChartDaoImpl implements ChartDao {
     }
 
     @Override
-    public double kWar(Map<String, Object> kmap) {
-        logger.info("kWar : ");
-        double kWar = sqlSessionTemplate.selectOne("kWar",kmap);
-        logger.info("kWar : " + kWar);
-        return kWar;
+    public double kiwoomWar(Map<String, Object> kmap) {
+        logger.info("kiwoomWar");
+        double kiwoomWar = sqlSessionTemplate.selectOne("kiwoomWar",kmap);
+        logger.info("kiwoomWar : " + kiwoomWar);
+        return kiwoomWar;
     }
 
     /**********************************************************************************
@@ -68,29 +91,6 @@ public class ChartDaoImpl implements ChartDao {
         logger.info(umap.get("FA_NO").toString());
         int result = sqlSessionTemplate.update("faUpdate",umap);
         logger.info("업데이트 성공했니? result : " + result );
-    }
-
-    /**********************************************************************************
-     작성자 : 이유리
-     작성일자 : 24.02.26
-     기능 : 입/퇴사자 차트
-     **********************************************************************************/
-    @Override
-    public List<Map<String, Object>> hList(Map<String, Object> hmap) {
-        logger.info("hireList");
-        List<Map<String, Object>> hList = null;
-        hList = sqlSessionTemplate.selectList("hireList", hmap);
-        logger.info(hList.toString());
-        return hList;
-    }
-
-    @Override
-    public List<Map<String, Object>> rList(Map<String, Object> rmap) {
-        logger.info("retireList");
-        List<Map<String, Object>> rList = null;
-        rList = sqlSessionTemplate.selectList("retireList", rmap);
-        logger.info(rList.toString());
-        return rList;
     }
 
     /**********************************************************************************

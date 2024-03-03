@@ -12,7 +12,7 @@
 
     function drawStuff() {
         const data = new google.visualization.arrayToDataTable(
-            ${wChart}
+            ${warChart}
         );
 
         const options = {
@@ -44,7 +44,7 @@
 
     function drawChart2() {
         var data2 = google.visualization.arrayToDataTable(
-            ${pChart}
+            ${positionChart}
         );
         var options2 = {
             chartArea: {
@@ -91,7 +91,7 @@
             <h4 style="font-weight: bold; margin-left: 1.5rem" >2024년도 FA 선수 현황</h4>
           </div>
           <div class="chart">
-            <div id="top_x_div" style="width: 900px; height: 400px;"></div>
+            <div id="top_x_div" style="width: 100%; height: 400px;"></div>
           </div>
         </div>
       </div>

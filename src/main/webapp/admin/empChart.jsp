@@ -8,13 +8,13 @@
 <%@ page import="java.util.*" %>
 
 <%
-    List<Map<String, Object>> hList = (List)request.getAttribute("hList");
-    int hsize = hList.size();
-    Map<String, Object> hmap = hList.get(hsize-1);
+    List<Map<String, Object>> hireList = (List)request.getAttribute("hireList");
+    int hsize = hireList.size();
+    Map<String, Object> hmap = hireList.get(hsize-1);
 
-    List<Map<String, Object>> rList = (List)request.getAttribute("rList");
-    int rsize = rList.size();
-    Map<String, Object> rmap = rList.get(rsize-1);
+    List<Map<String, Object>> retireList = (List)request.getAttribute("retireList");
+    int rsize = retireList.size();
+    Map<String, Object> rmap = retireList.get(rsize-1);
 %>
 
 <!DOCTYPE html>
@@ -29,7 +29,7 @@
 
         const hireChart =() => {//DataTable()
             const data = google.visualization.arrayToDataTable(
-                ${hChart}
+                ${hireChart}
             );
 
             const options = {
@@ -45,7 +45,7 @@
 
         const retireChart = () => {
             const data = google.visualization.arrayToDataTable(
-                ${rChart}
+                ${retireChart}
             );
 
             const options = {
