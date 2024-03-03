@@ -17,10 +17,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript">
-        const empInfoUpdate = () =>{
-            console.log("수정 클릭");
-            document.querySelector("#f_member").submit();
-        }
+
+
+        const empInfoUpdate = () => {
+            if (validateForm()) {
+                // 유효성 검사 성공 시, 폼을 제출합니다.
+                alert("사원수정 완료!");
+                document.querySelector("#f_member").submit();
+            } else {
+                // 유효성 검사 실패 시, 오류 메시지를 표시하거나 적절한 조치를 취합니다.
+                alert("사원추가 양식을 올바르게 입력해주세요.");
+            }
+        };
 
         const btn_Cancel = () =>{
             location.href = "/admin/empList";
@@ -284,6 +292,26 @@
         const expRoleText = /ROLE/;
         //주소 정규식표현
         const expAddressText = /^[가-힣a-zA-Z0-9-.,\s]{1,60}$/;
+
+
+
+        const validateForm = () => {
+            // 각 입력 필드에 대한 개별 유효성 검사 함수를 호출합니다.
+            const isPasswordValid = validatePassword();
+            const isNameValid = validateName();
+            const isBirthdateValid = validateBirthdate();
+            const isPhoneValid = validatePhone();
+            const isEmailValid = validateEmail();
+            const idHireValid = validateHire();
+            const isAccessValid = validateAccess();
+            const isStateValid = validateState();
+            const isTeamValid = validateTeam();
+            const isAddressValid = validateAddress();
+            const isPositionValid = validatePosition();
+
+            // 모든 검사가 통과되면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+            return isPasswordValid && isNameValid && isBirthdateValid && isPhoneValid && isEmailValid &&idHireValid&& isAccessValid&&isStateValid && isTeamValid && isAddressValid && isPositionValid;
+        }
 
         const validateName = () => {
             const nmSpan = document.getElementById('name_');
