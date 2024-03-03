@@ -1,6 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.AdminSevice;
+import com.best.kgw.service.FileService;
 import com.vo.EmpVO;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -42,6 +43,9 @@ public class AdminController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private FileService fileService;
 
 
     @GetMapping("/registPage")
@@ -102,23 +106,34 @@ public class AdminController {
 
     /**********************************************************************************
      작성자 : 이동건
-     작성일자 : 24.02.19 ,24,02.26
-     기능 : 사원수정,비밀번호암호화적용
+     작성일자 : 24.02.19 ,24,02.26 , 24.03.03
+     기능 : 사원수정,비밀번호암호화적용,이미지업로드사인업로드추가
      **********************************************************************************/
     @PostMapping("empInfoUpdate")
-    public String empInfoUpdate(EmpVO empVO) throws Exception{
-        logger.info("empInfoUpdate");
-        logger.info(empVO.toString());
-        String rawPassword = empVO.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        empVO.setPassword(encPassword);
-
-        int result = 0;
-        result = adminSevice.empInfoUpdate(empVO);
-        logger.info("empInfoUpdate = "+result);
+    public String empInfoUpdate(EmpVO empVO,@RequestParam("profiles") MultipartFile file,HttpServletRequest req) throws Exception{
+        logger.info("empDetailUpdate");
+        if (file != null && !file.isEmpty()) {
+            // 파일이 제대로 전달되었을 때의 처리
+            logger.info("File is not null and not empty.");
+            fileService.fileUpload("profile", file, req, empVO);
+            String originalFilename = file.getOriginalFilename(); // 업로드된 파일의 원본 파일 이름
+            String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // 확장자 추출
+            empVO.setProfile_img(empVO.getEmp_no()+"."+extension);
+            String rawPassword = empVO.getPassword();
+            String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+            empVO.setPassword(encPassword);
+            int result = 0;
+            result = adminSevice.empInfoUpdate(empVO);
+        } else {
+            // 파일이 전달되지 않았을 때의 처리
+            logger.info("File is null or empty.");
+            String rawPassword = empVO.getPassword();
+            String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+            empVO.setPassword(encPassword);
+            int result = 0;
+            result = adminSevice.empInfoUpdate2(empVO);
+        }
 
         return "redirect:/admin/empList";
 }
-
-
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.adminMapper">
 
-    <update id="empInfoUpdate" parameterType="map">
+    <update id="empInfoUpdate" parameterType="com.vo.EmpVO">
         update emp
         set team_no = #{team_no}
           ,emp_access = #{emp_access}
@@ -20,11 +20,32 @@
           ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
           ,address = #{address}
           ,retire_date = #{retire_date}
-          ,profile_img = null
+          ,profile_img = #{profile_img}
         where emp_no = #{emp_no}
     </update>
 
-    <insert id="memberInsert" parameterType="map">
+    <update id="empInfoUpdate2" parameterType="com.vo.EmpVO">
+        update emp
+        set team_no = #{team_no}
+          ,emp_access = #{emp_access}
+          ,emp_position = #{emp_position}
+          ,sign_no = 0
+          ,dayoff_cnt = 0
+          ,emp_year = 0
+          ,hire_date = #{hire_date}
+          ,emp_state = #{emp_state}
+          ,password = #{password}
+          ,name = #{name}
+          ,email = #{email}
+          ,birthdate = #{birthdate}
+          ,phone_num = #{phone_num}
+          ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
+          ,address = #{address}
+          ,retire_date = #{retire_date}
+        where emp_no = #{emp_no}
+    </update>
+
+    <insert id="regist" parameterType="com.vo.EmpVO">
         insert into emp(emp_no,team_no,emp_access,emp_position,sign_no,dayoff_cnt,emp_year,hire_date,emp_state,password,name,email,birthdate,phone_num,address,mod_date,reg_date,retire_date)
         values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD'),NULL)
     </insert>

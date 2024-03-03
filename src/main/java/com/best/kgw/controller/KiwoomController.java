@@ -22,7 +22,11 @@ public class KiwoomController {
 
     @Autowired
     private KiwoomService kiwoomService;
-
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.27
+     기능 : 선수조회 컨트롤러
+     **********************************************************************************/
     @GetMapping("kiwoomList")
     public String kiwoomList(KChartVO kChartVO, Model model) throws Exception{
         logger.info("Controller : kiwoomList 호출");
@@ -31,7 +35,11 @@ public class KiwoomController {
         logger.info(kList.toString());
         return "forward:/kiwoom/kiwoomSearch.jsp";
     }
-
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.27
+     기능 : 선수상세조회 컨트롤러
+     **********************************************************************************/
     @GetMapping("kiwoomDetail")
     public String kiwoomDetail( KChartVO kChartVO , Model model) {
         logger.info("kiwoomDetail");
