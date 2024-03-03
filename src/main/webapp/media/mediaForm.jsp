@@ -80,7 +80,8 @@
                                     });
 
                                     function mediaNoticeList(){
-                                        location.href="/media/mediaNotice";
+                                        if (confirm('지금까지 작성한 내용이 사라집니다. 이 페이지를 나가시겠습니까?'))
+                                            location.href="/media/mediaNotice";
                                     }
                                     const mediaNoticeInsert =()=> {
                                         console.log("작성")

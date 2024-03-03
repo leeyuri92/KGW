@@ -91,7 +91,7 @@
         from MEDIA_BOARD_COMMEND a inner join MEDIA_BOARD b on a.BOARD_NO = b.BOARD_NO
                                    inner join emp c on a.emp_no = c.EMP_NO
         where a.board_no = #{board_no}
-        order by board_no desc
+        order by reg_date desc
     </select>
 
     <insert id="mediaCommendInsert" parameterType="com.vo.MediaNoticeCommendVO">

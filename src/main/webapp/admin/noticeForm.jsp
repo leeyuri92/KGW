@@ -113,7 +113,8 @@
                                     });
 
                                     function noticeList(){
-                                        location.href="/notice/noticeList";
+                                        if (confirm('지금까지 작성한 내용이 사라집니다. 이 페이지를 나가시겠습니까?'))
+                                            location.href="/notice/noticeList";
                                     }
 
                                     const noticeInsert =()=> {

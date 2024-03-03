@@ -39,7 +39,7 @@
         }
         /*댓글삭제*/
         const mediaCommendDelete =(commend_no)=> {
-            if (confirm('게시글을 삭제하시겠습니까?'))
+            if (confirm('댓글을 삭제하시겠습니까?'))
                 location.href = "/media/CommendDelete?commend_no="+commend_no+"&board_no="+<%=mediaVO.getBoard_no()%>
 
         }
@@ -126,6 +126,7 @@
                                 <%--댓글목록--%>
                                 <div class="comment-list">
                                     <div class="comment-list">
+                                        <label for="commendContent" class="form-label">댓글(<%=mediaVO.getCommend_cnt()%>)</label>
                                         <%
                                             int size2 = mediaNoticeCommend.size();
                                             if (size2>0){
@@ -135,7 +136,6 @@
                                         <div class="comment">
                                             <input type="hidden" class="board_no" value="<%=mediaVO.getBoard_no()%>">
                                             <img src="/fileUpload/profile/<%=commendVO.getProfile_img()%>" class="user-avatar" alt="user-avatar">
-                                            <%--                                            <div class="user-avatar"></div> --%>
                                             <div class="comment-content">
                                                 <p class="user-name"><%=commendVO.getName()%></p>
                                                 <p class="comment-text"><%=commendVO.getCommend_content()%></p>
@@ -160,7 +160,6 @@
                                         <%--댓글작성--%>
                                         <form id="commentForm" method="post" action="/media/CommendInsert">
                                             <div class="mb-3">
-                                                <label for="commendContent" class="form-label">댓글</label>
                                                 <input type="hidden" class="form-control mb-3" name="board_no" value="<%=mediaVO.getBoard_no()%>">
                                                 <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=sessionVO.getEmp_no()%>" >
                                                 <textarea class="form-control" id="commendContent" rows="2" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
