@@ -16,6 +16,12 @@ public class KiwoomServiceImpl implements KiwoomService {
 
     @Autowired
     private KiwoomDao kiwoomDao;
+
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.27
+     기능 : 선수조회,상세조회 서비스
+     **********************************************************************************/
     @Override
     public List<KChartVO> kiwoomList(KChartVO kChartVO) {
         List<KChartVO> kiwoomList = kiwoomDao.kiwoomList(kChartVO);

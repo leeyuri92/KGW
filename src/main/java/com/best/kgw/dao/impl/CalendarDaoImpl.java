@@ -20,11 +20,41 @@ public class CalendarDaoImpl implements CalendarDao {
     SqlSessionTemplate sqlSessionTemplate;
 
     @Override
-    public List<Map<String, Object>> calendarList(Map<String, Object> cMap)throws Exception {
-        logger.info("Dao : calendarList 호출");
+    public List<Map<String, Object>> myCalendarList(Map<String, Object> cMap)throws Exception {
+        logger.info("Dao : myCalendarList 호출");
         logger.info(cMap.toString());
         List<Map<String,Object>> list = null;
         list = sqlSessionTemplate.selectList("cList", cMap);
+        logger.info(list.toString());
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> teamCalendarList(Map<String, Object> tMap)throws Exception {
+        logger.info("Dao : teamCalendarList 호출");
+        logger.info(tMap.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("tList", tMap);
+        logger.info(list.toString());
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> companyCalendarList(Map<String, Object> cpMap)throws Exception {
+        logger.info("Dao : companyCalendarList 호출");
+        logger.info(cpMap.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("cpList", cpMap);
+        logger.info(list.toString());
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> calendarDetail(Map<String, Object> cdMap)throws Exception {
+        logger.info("Dao : calendarDetail 호출");
+        logger.info(cdMap.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("cdList", cdMap);
         logger.info(list.toString());
         return list;
     }

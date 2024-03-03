@@ -83,7 +83,7 @@ public class NoticeBoardController {
         noticeModify=noticeBoardService.noticeModify(noticeBoardVO);
         logger.info("noticeModify");
         if(noticeModify ==1) {
-            return "redirect:noticeList";
+            return "redirect:noticeDetail?notice_no="+noticeBoardVO.getNotice_no();
         } else {
             return "error";
         }

@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우리구단소식</title>
+    <title>우리구단소식 상세조회</title>
     <script>
         /*미디에게시글목록*/
         function mediaNoticeList(){
@@ -39,7 +39,7 @@
         }
         /*댓글삭제*/
         const mediaCommendDelete =(commend_no)=> {
-            if (confirm('게시글을 삭제하시겠습니까?'))
+            if (confirm('댓글을 삭제하시겠습니까?'))
                 location.href = "/media/CommendDelete?commend_no="+commend_no+"&board_no="+<%=mediaVO.getBoard_no()%>
 
         }
@@ -70,7 +70,7 @@
                     <div class="position-absolute top-0 start-0"></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">우리구단 소식 상세보기</div>
+                    <div class="fw-bold fs-5">우리구단 소식 상세조회</div>
                     <div class="text-muted ms-3">우리구단 소식을 상세하게 조회할 수 있는 페이지입니다.</div>
                 </div>
             </div>
@@ -126,6 +126,7 @@
                                 <%--댓글목록--%>
                                 <div class="comment-list">
                                     <div class="comment-list">
+                                        <label for="commendContent" class="form-label">댓글 (<%=mediaVO.getCommend_cnt()%>)</label>
                                         <%
                                             int size2 = mediaNoticeCommend.size();
                                             if (size2>0){
@@ -134,18 +135,22 @@
                                         %>
                                         <div class="comment">
                                             <input type="hidden" class="board_no" value="<%=mediaVO.getBoard_no()%>">
-                                            <div class="user-avatar"></div>
+                                            <img src="/fileUpload/profile/<%=commendVO.getProfile_img()%>" class="user-avatar" alt="user-avatar">
                                             <div class="comment-content">
                                                 <p class="user-name"><%=commendVO.getName()%></p>
                                                 <p class="comment-text"><%=commendVO.getCommend_content()%></p>
                                                 <div class="row">
-                                                    <p class="comment-date"><%=commendVO.getReg_date()%></p>
+                                                    <div class="col-9">
+                                                        <p class="comment-date"><%=commendVO.getReg_date()%></p>
+                                                    </div>
+                                                    <% if (sessionVO.getEmp_no() == commendVO.getEmp_no() || sessionVO.getEmp_access().equals("ROLE_ADMIN")) { %>
+                                                    <div class="col-3 justify-content-end">
+                                                        <button type="button" class="btn btn-primary btn-small" onclick="mediaCommendDelete('<%=commendVO.getCommend_no()%>')">삭제</button>
+                                                    </div>
+                                                    <%
+                                                        }
+                                                    %>
                                                 </div>
-                                                <% if (sessionVO.getEmp_no() == mediaVO.getEmp_no() || sessionVO.getEmp_access().equals("ROLE_ADMIN")) { %>
-                                                <button type="button" class="btn btn-primary" onclick="mediaCommendDelete('<%=commendVO.getCommend_no()%>')">삭제</button>
-                                                <%
-                                                    }
-                                                %>
                                             </div>
                                         </div>
                                         <%
@@ -155,10 +160,9 @@
                                         <%--댓글작성--%>
                                         <form id="commentForm" method="post" action="/media/CommendInsert">
                                             <div class="mb-3">
-                                                <label for="commendContent" class="form-label">댓글</label>
                                                 <input type="hidden" class="form-control mb-3" name="board_no" value="<%=mediaVO.getBoard_no()%>">
                                                 <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=sessionVO.getEmp_no()%>" >
-                                                <textarea class="form-control" id="commendContent" rows="3" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
+                                                <textarea class="form-control" id="commendContent" rows="2" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
                                             </div>
                                             <div class="d-flex justify-content-end">
                                                 <button type="button" class="btn btn-primary" onclick="commendInsert()">댓글 작성</button>

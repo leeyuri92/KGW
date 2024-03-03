@@ -21,11 +21,21 @@ public class ReservationDaoImpl implements ReservationDao {
     SqlSessionTemplate sqlSessionTemplate;
 
     @Override
-    public List<Map<String, Object>> assetList(@RequestParam Map<String, Object> aMap)throws Exception {
-        logger.info("Dao : assetList 호출");
-        logger.info(aMap.toString());
+    public List<Map<String, Object>> assetList1(@RequestParam Map<String, Object> aMap1)throws Exception {
+        logger.info("Dao : assetList1 호출");
+        logger.info(aMap1.toString());
         List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("aList", aMap);
+        list = sqlSessionTemplate.selectList("aList1", aMap1);
+        logger.info(list.toString());
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> assetList2(@RequestParam Map<String, Object> aMap2)throws Exception {
+        logger.info("Dao : assetList2 호출");
+        logger.info(aMap2.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("aList2", aMap2);
         logger.info(list.toString());
         return list;
     }

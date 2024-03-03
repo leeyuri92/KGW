@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우리구단소식</title>
+    <title>게시글 작성</title>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -80,7 +80,8 @@
                                     });
 
                                     function mediaNoticeList(){
-                                        location.href="/media/mediaNotice";
+                                        if (confirm('지금까지 작성한 내용이 사라집니다. 이 페이지를 나가시겠습니까?'))
+                                            location.href="/media/mediaNotice";
                                     }
                                     const mediaNoticeInsert =()=> {
                                         console.log("작성")

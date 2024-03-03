@@ -17,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우리구단소식</title>
+    <title>공지사항 상세조회</title>
     <script>
         function noticeList(){
             location.href='/notice/noticeList';
@@ -46,11 +46,7 @@
         <div class="box-header p-4">
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-2">
-                    <a class="text-muted fs-6" href="#">우리구단</a>
-                    <div class="ms-2">></div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">우리구단 소식</div>
+                    <a class="text-muted fs-6" href="#">공지사항</a>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-3">
@@ -58,8 +54,8 @@
                     <div class="position-absolute top-0 start-0"></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">우리구단 소식 상세보기</div>
-                    <div class="text-muted ms-3">우리구단 소식을 상세하게 조회할 수 있는 페이지입니다.</div>
+                    <div class="fw-bold fs-5">공지사항 상세조회</div>
+                    <div class="text-muted ms-3">공지사항을 상세하게 조회할 수 있는 페이지입니다.</div>
                 </div>
             </div>
         </div>

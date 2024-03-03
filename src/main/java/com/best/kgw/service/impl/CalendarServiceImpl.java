@@ -18,15 +18,51 @@ public class CalendarServiceImpl implements CalendarService {
     private CalendarDao calendarDao;
 
     @Override
-    public List<Map<String, Object>> calendarList(Map<String, Object> cMap) {
-        List<Map<String, Object>> calendarList = null;
-        logger.info("Service : calendarList 호출");
+    public List<Map<String, Object>> myCalendarList(Map<String, Object> cMap) {
+        List<Map<String, Object>> myCalendarList = null;
+        logger.info("Service : myCalendarList 호출");
         try {
-            calendarList = calendarDao.calendarList(cMap);
+            myCalendarList = calendarDao.myCalendarList(cMap);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return calendarList;
+        return myCalendarList;
+    }
+
+    @Override
+    public List<Map<String, Object>> teamCalendarList(Map<String, Object> tMap) {
+        List<Map<String, Object>> teamCalendarList = null;
+        logger.info("Service : teamCalendarList 호출");
+        try {
+            teamCalendarList = calendarDao.teamCalendarList(tMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return teamCalendarList;
+    }
+
+    @Override
+    public List<Map<String, Object>> calendarDetail(Map<String, Object> cdMap) {
+        List<Map<String, Object>> calendarDetail = null;
+        logger.info("Service : calendarDetail 호출");
+        try {
+            calendarDetail = calendarDao.calendarDetail(cdMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return calendarDetail;
+    }
+
+    @Override
+    public List<Map<String, Object>> companyCalendarList(Map<String, Object> cpMap) {
+        List<Map<String, Object>> companyCalendarList = null;
+        logger.info("Service : companyCalendarList 호출");
+        try {
+            companyCalendarList = calendarDao.companyCalendarList(cpMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return companyCalendarList;
     }
 
     @Override

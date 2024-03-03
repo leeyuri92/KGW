@@ -2,6 +2,7 @@ package com.best.kgw.controller;
 
 import com.best.kgw.service.CalendarService;
 import com.vo.CalendarVO;
+import com.vo.NoticeBoardVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,43 @@ public class CalendarController {
     @Autowired
     private CalendarService calendarService;
 
-    @GetMapping("calendarList")
-    public String calendarList(@RequestParam Map<String, Object> cMap, @RequestParam Map<String, Object> aMap, @RequestParam Map<String, Object> arMap, Model model){
-        List<Map<String, Object>> calendarList;
-        logger.info("calendarController: calendarList 호출");
-        calendarList = calendarService.calendarList(cMap);
-        logger.info(calendarList.toString());
-        model.addAttribute("calendarList", calendarList);
+    @GetMapping("myCalendarList")
+    public String myCalendarList(@RequestParam Map<String, Object> cMap, Model model){
+        List<Map<String, Object>> myCalendarList;
+        logger.info("calendarController: myCalendarList 호출");
+        myCalendarList = calendarService.myCalendarList(cMap);
+        logger.info(myCalendarList.toString());
+        model.addAttribute("myCalendarList", myCalendarList);
+        return "forward:/calendar/calendar.jsp";
+    }
+
+    @GetMapping("teamCalendarList")
+    public String teamCalendarList(@RequestParam Map<String, Object> tMap, Model model){
+        List<Map<String, Object>> teamCalendarList;
+        logger.info("calendarController: teamCalendarList 호출");
+        teamCalendarList = calendarService.teamCalendarList(tMap);
+        logger.info(teamCalendarList.toString());
+        model.addAttribute("teamCalendarList", teamCalendarList);
+        return "forward:/calendar/teamCalendar.jsp";
+    }
+
+    @GetMapping("companyCalendarList")
+    public String companyCalendarList(@RequestParam Map<String, Object> cpMap, Model model){
+        List<Map<String, Object>> companyCalendarList;
+        logger.info("calendarController: companyCalendarList 호출");
+        companyCalendarList = calendarService.companyCalendarList(cpMap);
+        logger.info(companyCalendarList.toString());
+        model.addAttribute("companyCalendarList", companyCalendarList);
+        return "forward:/calendar/companyCalendar.jsp";
+    }
+
+    @GetMapping("calendarDetail")
+    // 상세조회
+    public String calendarDetail(@RequestParam Map<String, Object> cdMap, Model model) throws Exception {
+        logger.info("calendarDetail");
+        List<Map<String, Object>> calendarDetail = calendarService.calendarDetail(cdMap);
+        model.addAttribute("calendarDetail", calendarDetail);
+        logger.info(calendarDetail.toString());
         return "forward:/calendar/calendar.jsp";
     }
 

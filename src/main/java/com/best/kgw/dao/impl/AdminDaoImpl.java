@@ -27,7 +27,7 @@ public class AdminDaoImpl implements AdminDao {
     public int regist(EmpVO empVO) throws Exception {
         logger.info("AdminDaoImpl 호출");
         int result = 0;
-        result = sqlSessionTemplate.insert("memberInsert",empVO);
+        result = sqlSessionTemplate.insert("regist",empVO);
         return result;
     }
 
@@ -63,12 +63,35 @@ public class AdminDaoImpl implements AdminDao {
         return result;
     }
 
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.23
+     기능 : 사원검색 레포지토리
+     **********************************************************************************/
     @Override
     public List<EmpVO> empSerach(EmpVO empVO) {
         logger.info("Repository : empSerach 호출" + empVO);
         List<EmpVO> empList = sqlSessionTemplate.selectList("empSerach", empVO);
         logger.info(empList.toString());
         return empList;
+    }
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.03.03
+     기능 : 사원수정 레포지토리
+     **********************************************************************************/
+    @Override
+    public int empInfoUpdate2(EmpVO empVO) throws Exception {
+        logger.info("Repository : empInfoUpdate");
+        int result = 0;
+        try {
+            result = sqlSessionTemplate.update("empInfoUpdate2", empVO);
+
+        } catch (Exception e) {
+            logger.info(e.toString());
+        }
+        logger.info(String.valueOf(result));
+        return result;
     }
 
 }

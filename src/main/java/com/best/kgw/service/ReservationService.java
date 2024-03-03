@@ -8,7 +8,9 @@ import java.util.Map;
 
 public interface ReservationService {
 
-    List<Map<String, Object>> assetList(@RequestParam Map<String, Object> aMap);
+    List<Map<String, Object>> assetList1(@RequestParam Map<String, Object> aMap1);
+
+    List<Map<String, Object>> assetList2(@RequestParam Map<String, Object> aMap2);
 
     List<Map<String, Object>> assetReservationList(@RequestParam Map<String, Object> arMap);
 

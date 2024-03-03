@@ -18,7 +18,11 @@ public class KiwoomDaoImpl implements KiwoomDao {
 
     @Autowired
     SqlSessionTemplate sqlSessionTemplate;
-
+    /**********************************************************************************
+     작성자 : 이동건
+     작성일자 : 24.02.27
+     기능 : 선수조회 레포지토리
+     **********************************************************************************/
     @Override
     public List<KChartVO> kiwoomList(KChartVO kChartVO) {
         logger.info("Repository : kiwoomList 호출" + kChartVO);

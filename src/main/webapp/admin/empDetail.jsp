@@ -14,16 +14,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>사원정보</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript">
-        const empInfoUpdate = () =>{
-            console.log("수정 클릭");
-            document.querySelector("#f_member").submit();
-        }
+
+
+        const empInfoUpdate = () => {
+            if (validateForm()) {
+                // 유효성 검사 성공 시, 폼을 제출합니다.
+                alert("사원수정 완료!");
+                document.querySelector("#f_member").submit();
+            } else {
+                // 유효성 검사 실패 시, 오류 메시지를 표시하거나 적절한 조치를 취합니다.
+                alert("사원추가 양식을 올바르게 입력해주세요.");
+            }
+        };
 
         const btn_Cancel = () =>{
             location.href = "/admin/empList";
         }
+        function handleImgClick() {
+            document.getElementById('profileImgInput').click();
+        }
 
+        // 파일 선택 시 이미지 미리보기
+        function preview(event) {
+            var input = event.target;
+            var preview = document.getElementById('previewImage');
+
+            // 파일 업로드가 변경된 경우
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                // 이미지를 미리보기로 읽어들임
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                }
+
+                // 파일을 읽어들임
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
     </script>
 
@@ -76,10 +107,21 @@
                 </div>
 
                 <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                    <img src="/fileUpload/profile/<%=rmap.getEmp_no()%>.png" class="img-circle m-5 " alt="User Image" style=" width: 200px; height: 200px; ">
+
+                    <div class="col-2">
+                        <div class="signImg" style="border: 2px solid grey; width: 200px; height: 200px">
+                            <img id="signImage" src="/fileUpload/sign/<%=rmap.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
+                            <img src="/fileUpload/profile/<%=rmap.getEmp_no()%>.png" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
+                        </div>
+                    </div>
                 </div>
 
-                <form id="f_member" method="post" action="/admin/empInfoUpdate">
+                <form id="f_member" method="post" action="/admin/empInfoUpdate" enctype="multipart/form-data">
+                    <input type="file" id="profileImgInput" name="profiles" onchange="preview(event)" style="display: none;">
                     <input type="hidden" name="emp_no" value="<%=rmap.getEmp_no()%>">
                     <div class="row">
                     <div class="col-6 mb-3 mt-3">
@@ -229,9 +271,8 @@
         </div>
     </div>
 </div>
+
     <script>
-
-
         // 정규표현식 패턴 상수 선언
         //아이디 정규식표현
         const expIdText = /^[A-Za-z0-9]{4,12}$/;
@@ -251,6 +292,26 @@
         const expRoleText = /ROLE/;
         //주소 정규식표현
         const expAddressText = /^[가-힣a-zA-Z0-9-.,\s]{1,60}$/;
+
+
+
+        const validateForm = () => {
+            // 각 입력 필드에 대한 개별 유효성 검사 함수를 호출합니다.
+            const isPasswordValid = validatePassword();
+            const isNameValid = validateName();
+            const isBirthdateValid = validateBirthdate();
+            const isPhoneValid = validatePhone();
+            const isEmailValid = validateEmail();
+            const idHireValid = validateHire();
+            const isAccessValid = validateAccess();
+            const isStateValid = validateState();
+            const isTeamValid = validateTeam();
+            const isAddressValid = validateAddress();
+            const isPositionValid = validatePosition();
+
+            // 모든 검사가 통과되면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+            return isPasswordValid && isNameValid && isBirthdateValid && isPhoneValid && isEmailValid &&idHireValid&& isAccessValid&&isStateValid && isTeamValid && isAddressValid && isPositionValid;
+        }
 
         const validateName = () => {
             const nmSpan = document.getElementById('name_');
@@ -390,7 +451,98 @@
             }
             return isValid;
         }
-
     </script>
+
+    <div class="modal" id="signSelect">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header p-5 pb-0 border-bottom-0" style="margin-bottom: -20px;">
+                    <h1 class="fw-bold  fs-2" >전자서명변경</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-5 pt-0">
+                    <form id="signInsert" method="post" action="/fileSave" enctype="multipart/form-data">
+                        <canvas id="signature-pad" width=400 height=200 style="margin-bottom: 20px; border: 2px solid black"></canvas>
+                        <input type="hidden" id="emp_no" name="emp_no" value="<%=rmap.getEmp_no()%>">
+                        <div>
+                            <button type="button" id="clear" class="btn btn-danger">초기화</button>
+                            <button type="button" id="save" class="btn btn-danger">저장</button>
+                            <button type="button" class="btn btn-danger button save" data-action="save-png">내 pc에 저장</button>
+                        </div>
+                        <script>
+                            let canvas = document.getElementById('signature-pad');
+                            let signaturePad = new SignaturePad(canvas);
+
+
+                            //button clear
+                            document.getElementById('clear').addEventListener('click', function () {
+                                signaturePad.clear();
+                            });
+
+                            // button action save-png  Event부여
+                            document.querySelector('[data-action="save-png"]').addEventListener('click', function () {
+
+                                let dataURL = signaturePad.toDataURL();
+
+                                let downloadLink = document.createElement('a');
+                                downloadLink.href = dataURL;
+                                downloadLink.download = '<%=rmap.getEmp_no()%>.png';
+                                //다운로드 처리
+                                document.body.appendChild(downloadLink);
+                                downloadLink.click();
+                                document.body.removeChild(downloadLink);
+                            });
+
+                            // button save
+                            document.getElementById('save').addEventListener('click', function () {
+                                let canvas = document.getElementById('signature-pad');
+                                let dataURL = canvas.toDataURL('image/png'); // 캔버스 내용을 데이터 URL로 가져옴
+                                // 데이터 URL을 Blob 객체로 변환
+                                let blob = dataURItoBlob(dataURL);
+
+                                // FormData 객체 생성
+                                let formData = new FormData();
+                                formData.append('image', blob, '<%=rmap.getEmp_no()%>.png');
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/fileSave',
+                                    data: formData,
+                                    processData: false, // FormData를 처리하지 않도록 설정
+                                    contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 컨텐츠 타입을 설정하지 않도록 함
+                                    success: function (response) {
+                                        console.log('파일 전송 성공');
+                                        $('.modal').modal('hide');
+                                        document.querySelector("#signImage").src = "/fileUpload/sign/<%=rmap.getEmp_no()%>.png";
+                                        signaturePad.clear();
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error('파일 전송 실패:', error);
+                                        // 실패한 경우 처리할 내용 추가
+                                    }
+                                });
+
+                                // 데이터 URL을 Blob 객체로 변환하는 함수
+                                function dataURItoBlob(dataURI) {
+                                    // Base64 데이터 부분 분리
+                                    let byteString = atob(dataURI.split(',')[1]);
+                                    let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+                                    // Blob 객체 생성
+                                    let arrayBuffer = new ArrayBuffer(byteString.length);
+                                    let intArray = new Uint8Array(arrayBuffer);
+                                    for (let i = 0; i < byteString.length; i++) {
+                                        intArray[i] = byteString.charCodeAt(i);
+                                    }
+                                    return new Blob([arrayBuffer], {type: mimeString});
+                                }
+                            })
+                        </script>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

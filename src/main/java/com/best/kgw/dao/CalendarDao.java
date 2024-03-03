@@ -7,7 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface CalendarDao {
-    public List<Map<String, Object>> calendarList(Map<String, Object> cmap) throws Exception;
+    public List<Map<String, Object>> myCalendarList(Map<String, Object> cmap) throws Exception;
+
+    public List<Map<String, Object>> teamCalendarList(Map<String, Object> tmap) throws Exception;
+
+    public List<Map<String, Object>> companyCalendarList(Map<String, Object> cpmap) throws Exception;
+
+    public List<Map<String, Object>> calendarDetail(Map<String, Object> cdmap) throws Exception;
 
     void deleteCalendar(int calendarNo) throws Exception;
 

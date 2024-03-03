@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우리구단소식</title>
+    <title>공지사항 작성</title>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -25,10 +25,6 @@
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-2">
                     <a class="text-muted fs-6" href="#">공지사항</a>
-                    <div class="ms-2">></div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">공지사항</div>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-3">
@@ -36,7 +32,7 @@
                     <div class="position-absolute top-0 start-0" ></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">게시글 작성</div>
+                    <div class="fw-bold fs-5">공지사항 작성</div>
                     <div class="text-muted ms-3">공지사항을 작성할 수 있는 페이지입니다.</div>
                 </div>
             </div>
@@ -49,7 +45,7 @@
                     <div class="box">
                         <div class="container">
                             <div class="box-header">
-                                <h4 style="font-weight: bold; margin-left: 2rem" >게시글 작성</h4>
+                                <h4 style="font-weight: bold; margin-left: 2rem" >공지사항 작성</h4>
                                 <hr />
                                 <div class="container">
                                     <%@include file="/common/summernote.jsp"%>
@@ -113,7 +109,8 @@
                                     });
 
                                     function noticeList(){
-                                        location.href="/notice/noticeList";
+                                        if (confirm('지금까지 작성한 내용이 사라집니다. 이 페이지를 나가시겠습니까?'))
+                                            location.href="/notice/noticeList";
                                     }
 
                                     const noticeInsert =()=> {

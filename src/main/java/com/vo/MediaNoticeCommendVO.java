@@ -13,6 +13,8 @@ public class MediaNoticeCommendVO {
  private String reg_date;
  private String mod_date;
  private String name;
+ private String profile_img;
+ private Integer commend_cnt;
 
  @Override
  public String toString() {
@@ -24,6 +26,8 @@ public class MediaNoticeCommendVO {
           ", reg_date='" + reg_date + '\'' +
           ", mod_date='" + mod_date + '\'' +
           ", name='" + name + '\'' +
+          ", profile_img='" + profile_img + '\'' +
+          ", commend_cnt=" + commend_cnt +
           '}';
  }
 }
