@@ -350,29 +350,30 @@
         }
     }
 
-    $(document).ready(function() {
-        $('#calendarTable').show();
-        $('#my').hide();
-        $('#team').hide();
-        $('#company').hide();
-        $('#calendarGubun').show();
-    });
+    // $(document).ready(function() {
+    //     $('#calendarTable').show();
+    //     $('#my').hide();
+    //     $('#team').hide();
+    //     $('#company').hide();
+    //     $('#calendarGubun').show();
+    // });
 
-    function calendarSearch() {
-        var gubunValue = document.getElementById('gubun').value;
-        var calendarGubunValue = document.getElementById('calendarGubun').value;
-
-        if (gubunValue === 'my') {
-            if (calendarGubunValue === 'calendarTable') {
-                window.location.href = '/calendar/myList';
-            } else if (gubunValue === 'team ') {
-                if (calendarGubunValue === 'calendarTable') {
-                    window.location.href = '/calendar/teamList';
-                } else {
-                    window.location.href = '/calendar/companyList';
-                }
-            }
+    function searchEnter(event){
+        console.log(window.event.keyCode)
+        if(window.event.keyCode == 13){
+            calendarSearch()
         }
+        event.isComposing//검색후 잔여검색기록 없애는코드
+    }
+    function calendarSearch(){
+        console.log('calendarSearch');
+        const gubun = document.querySelector("#gubun").value;
+        const keyword = document.querySelector("#keyword").value;
+        console.log(`${gubun} , ${keyword}`);
+        location.href="/calendar/calendarList?gubun="+gubun+"&keyword="+keyword;
+    }
+    const calendarDetail= (calendar_no) => {
+        location.href= "/calendar/calendarDetail?calendar_no="+calendar_no;
     }
 </script>
     <div class="content-wrapper">
@@ -448,15 +449,9 @@
                             <div class="row search">
                                 <div class="col-2">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
-                                        <option value="my">내 일정</option>
-                                        <option value="team">팀 일정</option>
-                                        <option value="company">전사 일정</option>
-                                    </select>
-                                </div>
-                                <div class="col-2">
-                                    <select id="calendarGubun" class="form-select" aria-label="분류선택">
-                                        <option value="calendarTable">참석자</option>
-                                        <option value="calendarTable">날짜</option>
+                                        <option value="name">참석자</option>
+                                        <option value="startDate">시작일</option>
+                                        <option value="endDate">종료일</option>
                                     </select>
                                 </div>
                                 <div class="col-6">

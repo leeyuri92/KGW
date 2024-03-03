@@ -2,6 +2,7 @@ package com.best.kgw.controller;
 
 import com.best.kgw.service.CalendarService;
 import com.vo.CalendarVO;
+import com.vo.NoticeBoardVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,16 @@ public class CalendarController {
         logger.info(companyCalendarList.toString());
         model.addAttribute("companyCalendarList", companyCalendarList);
         return "forward:/calendar/companyCalendar.jsp";
+    }
+
+    @GetMapping("calendarDetail")
+    // 상세조회
+    public String calendarDetail(@RequestParam Map<String, Object> cdMap, Model model) throws Exception {
+        logger.info("calendarDetail");
+        List<Map<String, Object>> calendarDetail = calendarService.calendarDetail(cdMap);
+        model.addAttribute("calendarDetail", calendarDetail);
+        logger.info(calendarDetail.toString());
+        return "forward:/calendar/calendar.jsp";
     }
 
     @PostMapping("/insertCalendar")

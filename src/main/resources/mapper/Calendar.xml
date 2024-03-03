@@ -54,7 +54,7 @@
         where calendar_no = '${calendar_no}'
     </update>
 
-    <select id="calList" parameterType="map" resultType="map">
+    <select id="cdList" parameterType="map" resultType="map">
         SELECT
         *
         FROM calendar a
@@ -66,25 +66,15 @@
                     <when test='gubun.equals("name")'>
                         AND b.name LIKE '%'||#{keyword}||'%'
                     </when>
-                    <when test='gubun.equals("calendar_title")'>
-                        AND a.calendar_title LIKE '%'||#{keyword}||'%'
+                    <when test='gubun.equals("startDate")'>
+                        AND a.calendar_start LIKE '%'||#{keyword}||'%'
                     </when>
-                    <when test='gubun.equals("calendar_id")'>
-                        AND a.calendar_id LIKE '%'||#{keyword}||'%'
+                    <when test='gubun.equals("endDate")'>
+                        AND a.calendar_end LIKE '%'||#{keyword}||'%'
                     </when>
                 </choose>
             </if>
         </where>
-        order by a.calendar_no desc
     </select>
 
-    <select id= "myCalList" parameterType="map" resultType="com.vo.CalendarVO">
-        SELECT
-        *
-        FROM calendar
-        INNER JOIN emp b ON a.emp_no = c.emp_no
-        <where>
-            AND a.emp_no = b.emp_no
-        </where>
-    </select>
 </mapper>
