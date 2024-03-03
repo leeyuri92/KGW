@@ -30,7 +30,6 @@
             if(window.event.keyCode === 13){
                 empSearch();
             }
-            event.isComposing//검색후 잔여검색기록 없애는코드
         }
 
         function empSearch(){

@@ -37,11 +37,9 @@
     location.href="/kiwoom/kiwoomList?gubun="+gubun+"&keyword="+keyword;
   }
   function searchEnter(event){
-    console.log(window.event.keyCode)
     if(window.event.keyCode === 13){
       kiwoomSearch();
     }
-    event.isComposing//검색후 잔여검색기록 없애는코드
   }
   </script>
 </head>
