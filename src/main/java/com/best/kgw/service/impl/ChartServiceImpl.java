@@ -19,23 +19,44 @@ public class ChartServiceImpl implements ChartService {
 
     /**********************************************************************************
      작성자 : 이유리
+     작성일자 : 24.02.26
+     기능 : 입/퇴사자 차트
+     **********************************************************************************/
+    @Override
+    public List<Map<String, Object>> hireList(Map<String, Object> hmap) {
+        logger.info("hireList");
+        List<Map<String, Object>> hireList = chartDao.hireList(hmap);
+        logger.info(hireList.toString());
+        return hireList;
+    }
+
+    @Override
+    public List<Map<String, Object>> retireList(Map<String, Object> rmap) {
+        logger.info("retireList");
+        List<Map<String, Object>> retireList = chartDao.retireList(rmap);
+        logger.info(retireList.toString());
+        return retireList;
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
      작성일자 : 24.02.18
      기능 : FAchart 페이지 생성 및 리스트, chart 생성
      **********************************************************************************/
     @Override
-    public List<Map<String, Object>> wList(Map<String, Object> wmap) {
+    public List<Map<String, Object>> warList(Map<String, Object> wmap) {
         logger.info("warList : ");
-        List<Map<String, Object>> wList = chartDao.wList(wmap);
-        logger.info(wList.toString());
-        return wList;
+        List<Map<String, Object>> warList = chartDao.warList(wmap);
+        logger.info(warList.toString());
+        return warList;
     }
 
     @Override
-    public List<Map<String, Object>> pList(Map<String, Object> pmap) {
-        logger.info("pList : ");
-        List<Map<String, Object>> pList = chartDao.pList(pmap);
-        logger.info(pList.toString());
-        return pList;
+    public List<Map<String, Object>> positionList(Map<String, Object> pmap) {
+        logger.info("positionList : ");
+        List<Map<String, Object>> positionList = chartDao.positionList(pmap);
+        logger.info(positionList.toString());
+        return positionList;
     }
 
     @Override
@@ -47,11 +68,11 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public  double kWar(Map<String, Object> kmap) {
-        logger.info("kWar");
-        double kWar = chartDao.kWar(kmap);
-        logger.info("kWar : " + kWar);
-        return kWar;
+    public  double kiwoomWar(Map<String, Object> kmap) {
+        logger.info("kiwoomWar");
+        double kiwoomWar = chartDao.kiwoomWar(kmap);
+        logger.info("kiwoomWar : " + kiwoomWar);
+        return kiwoomWar;
     }
 
     /**********************************************************************************
@@ -63,27 +84,6 @@ public class ChartServiceImpl implements ChartService {
     public void faUpdate(Map<String, Object> FA_NO) {
         logger.info("faUpdate : " + FA_NO);
         chartDao.faUpdate(FA_NO);
-    }
-
-    /**********************************************************************************
-     작성자 : 이유리
-     작성일자 : 24.02.26
-     기능 : 입/퇴사자 차트
-     **********************************************************************************/
-    @Override
-    public List<Map<String, Object>> hList(Map<String, Object> hmap) {
-        logger.info("hList : ");
-        List<Map<String, Object>> hList = chartDao.hList(hmap);
-        logger.info(hList.toString());
-        return hList;
-    }
-
-    @Override
-    public List<Map<String, Object>> rList(Map<String, Object> rmap) {
-        logger.info("rList : ");
-        List<Map<String, Object>> rList = chartDao.rList(rmap);
-        logger.info(rList.toString());
-        return rList;
     }
 
     /**********************************************************************************

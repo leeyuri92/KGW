@@ -25,6 +25,58 @@ public class ChartController {
 
     /**********************************************************************************
      작성자 : 이유리
+     작성일자 : 24.02.26
+     기능 : 입/퇴사자 차트
+     **********************************************************************************/
+    @GetMapping("admin/empChart")
+    public String empChart(Map<String, Object> hmap, Map<String, Object> rmap, Model model) {
+        logger.info("empChart 호출");
+
+        // 1. 입사자 차트
+        List<Map<String, Object>> hireList = chartService.hireList(hmap);
+        logger.info("hireList (받아온 DB data) : " + hireList);
+        model.addAttribute("hireList", hireList);
+
+        // 1차 가공
+        List<Object[]> hireDataList = new ArrayList<>();
+        String[] hs = {"YEAR", "입사자 수"};
+        hireDataList.add(hs);
+        for (Map<String, Object> entry : hireList) {
+            hireDataList.add(new Object[]{entry.get("HIREYEAR").toString(), entry.get("COUNT")});
+        }
+        logger.info("hireDataList : " + hireDataList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
+
+        // 2차 가공
+        Gson g = new Gson();
+        String hireChart = g.toJson(hireDataList);
+        logger.info("hireChart : " + hireChart);
+        model.addAttribute("hireChart", hireChart);
+
+        // 2. 퇴사자 차트
+        List<Map<String, Object>> retireList = chartService.retireList(rmap);
+        logger.info("retireList (받아온 DB data) : " + retireList);
+        model.addAttribute("retireList", retireList);
+
+        // 1차 가공
+        List<Object[]> retireDataList = new ArrayList<>();
+        String[] hs2 = {"YEAR", "퇴사자 수"};
+        retireDataList.add(hs2);
+        for (Map<String, Object> entry : retireList) {
+            retireDataList.add(new Object[]{entry.get("RETIREYEAR").toString(), entry.get("COUNT")});
+        }
+        logger.info("retireDataList : " + retireDataList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
+
+        // 2차 가공
+        g = new Gson();
+        String retireChart = g.toJson(retireDataList);
+        logger.info("retireChart : " + retireChart);
+        model.addAttribute("retireChart", retireChart);
+
+        return "forward:/admin/empChart.jsp";
+    }
+
+    /**********************************************************************************
+     작성자 : 이유리
      작성일자 : 24.02.18
      기능 : FAchart 페이지 생성 및 리스트, chart 생성
      **********************************************************************************/
@@ -33,38 +85,38 @@ public class ChartController {
         logger.info("faPage 호출");
 
         // 1. FA 선수 현황 -  WAR차트
-        List<Map<String, Object>> wList = chartService.wList(wmap);
-        logger.info("wList (받아온 DB data) : " + wList);
+        List<Map<String, Object>> warList = chartService.warList(wmap);
+        logger.info("warList (받아온 DB data) : " + warList);
         // 1차 가공
-        List<Object[]> dataList = new ArrayList<>();
+        List<Object[]> warDataList = new ArrayList<>();
         String[] hs = {"NAME", "WAR"};
-        dataList.add(hs);
-        for (Map<String, Object> entry : wList) {
-            dataList.add(new Object[]{entry.get("FA_NAME"), entry.get("FA_WAR")});
+        warDataList.add(hs);
+        for (Map<String, Object> entry : warList) {
+            warDataList.add(new Object[]{entry.get("FA_NAME"), entry.get("FA_WAR")});
         }
-        logger.info("dataList : " + dataList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
+        logger.info("warDataList : " + warDataList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
         // 2차 가공
         Gson g = new Gson();
-        String wChart = g.toJson(dataList);
-        logger.info("wChart : " + wChart);
-        model.addAttribute("wChart", wChart);
+        String warChart = g.toJson(warDataList);
+        logger.info("warChart : " + warChart);
+        model.addAttribute("warChart", warChart);
 
         // 2. FA 선수 현황 -  포지션별 차트
-        List<Map<String, Object>> pList = chartService.pList(pmap);
-        logger.info("pList (받아온 DB data) : " + pList);
+        List<Map<String, Object>> positionList = chartService.positionList(pmap);
+        logger.info("positionList (받아온 DB data) : " + positionList);
         // 1차 가공
         List<Object[]> pieList = new ArrayList<>();
         String[] hs2 = {"FA_POS", "COUNT"};
         pieList.add(hs2);
-        for (Map<String, Object> entry : pList) {
+        for (Map<String, Object> entry : positionList) {
             pieList.add(new Object[]{entry.get("FA_POS"), entry.get("COUNT")});
         }
         logger.info("pieList : " + pieList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
         // 2차 가공
         g = new Gson();
-        String pChart = g.toJson(pieList);
-        logger.info("pChart : " + pChart);
-        model.addAttribute("pChart", pChart);
+        String positionChart = g.toJson(pieList);
+        logger.info("positionChart : " + positionChart);
+        model.addAttribute("positionChart", positionChart);
 
         // 3. FA 선수 명단
         List<Map<String, Object>> faList = chartService.faList(fmap);
@@ -72,9 +124,9 @@ public class ChartController {
         model.addAttribute("faList", faList);
 
         // 4. FA 선수 명단 - WAR 비교차트_키움
-        double kWar = chartService.kWar(kmap);
-        logger.info("kWar : " + kWar);
-        model.addAttribute("kWar", kWar);
+        double kiwoomWar = chartService.kiwoomWar(kmap);
+        logger.info("kiwoomWar : " + kiwoomWar);
+        model.addAttribute("kiwoomWar", kiwoomWar);
 
         return "forward:/strategy/FAchart.jsp";
     }
@@ -95,61 +147,9 @@ public class ChartController {
     @ResponseBody // Ajax 처리 시 값을 넘길 때 필요
     public double faWar(Map<String, Object> fmap) {
         // fa 선수 추가했을 시 WAR 평균값 불러오기
-        double faWar = chartService.kWar(fmap);
+        double faWar = chartService.kiwoomWar(fmap);
         logger.info("faWar : " + faWar);
         return faWar ;
-    }
-
-    /**********************************************************************************
-     작성자 : 이유리
-     작성일자 : 24.02.26
-     기능 : 입/퇴사자 차트
-     **********************************************************************************/
-    @GetMapping("admin/empChart")
-    public String hnrPage(Map<String, Object> hmap, Map<String, Object> rmap, Model model) {
-        logger.info("hnrPage 호출");
-
-        // 1. 입사자 차트
-        List<Map<String, Object>> hList = chartService.hList(hmap);
-        logger.info("hList (받아온 DB data) : " + hList);
-        model.addAttribute("hList", hList);
-
-        // 1차 가공
-        List<Object[]> dataList = new ArrayList<>();
-        String[] hs = {"YEAR", "입사자 수"};
-        dataList.add(hs);
-        for (Map<String, Object> entry : hList) {
-            dataList.add(new Object[]{entry.get("HIREYEAR").toString(), entry.get("COUNT")});
-        }
-        logger.info("dataList : " + dataList);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
-
-        // 2차 가공
-        Gson g = new Gson();
-        String hChart = g.toJson(dataList);
-        logger.info("hChart : " + hChart);
-        model.addAttribute("hChart", hChart);
-
-        // 2. 퇴사자 차트
-        List<Map<String, Object>> rList = chartService.rList(rmap);
-        logger.info("rList (받아온 DB data) : " + rList);
-        model.addAttribute("rList", rList);
-
-        // 1차 가공
-        List<Object[]> dataList2 = new ArrayList<>();
-        String[] hs2 = {"YEAR", "퇴사자 수"};
-        dataList2.add(hs2);
-        for (Map<String, Object> entry : rList) {
-            dataList2.add(new Object[]{entry.get("RETIREYEAR").toString(), entry.get("COUNT")});
-        }
-        logger.info("dataList2 : " + dataList2);  // 객체[]라서 주소값으로 나올것 -> Json으로 바꿔야 값이 나옴(2차 가공)
-
-        // 2차 가공
-        g = new Gson();
-        String rChart = g.toJson(dataList2);
-        logger.info("rChart : " + rChart);
-        model.addAttribute("rChart", rChart);
-
-        return "forward:/admin/empChart.jsp";
     }
 
     /**********************************************************************************

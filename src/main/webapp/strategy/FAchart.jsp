@@ -68,7 +68,7 @@
 
         function drawStuff() {
             const data = new google.visualization.arrayToDataTable(
-                ${wChart}
+                ${warChart}
             );
 
             const options = {
@@ -100,7 +100,7 @@
 
         function drawChart2() {
             var data2 = google.visualization.arrayToDataTable(
-                ${pChart}
+                ${positionChart}
             );
             var options2 = {
                 chartArea: {
@@ -170,12 +170,12 @@
         google.charts.load('current', {'packages': ['bar']}); // 구글 지원하는 막대그래프 로딩
         google.charts.setOnLoadCallback(drawChart); // 막대그래프 그리려면 데이터가 필요함 - 함수호출
 
-        function drawChart(fWar) {
+        function drawChart(faWar) {
             var data = google.visualization.arrayToDataTable([
                 [' ', 'WAR'],
                 [' ', null],
-                ['우리구단 WAR', ${kWar}],
-                ['FA선수포함', fWar],
+                ['우리구단 WAR', ${kiwoomWar}],
+                ['FA선수포함', faWar],
                 [' ', null]
             ]);
             var options = {
@@ -197,13 +197,13 @@
         google.charts.load('current', {'packages':['table']});
         google.charts.setOnLoadCallback(drawTable);
 
-        function drawTable(fWar) {
+        function drawTable(faWar) {
             var data = new google.visualization.DataTable();
             data.addColumn('string', '');
             data.addColumn('number', '평균 WAR 값');
             data.addRows([
-                ['키움구단 선수 평균 WAR',  ${kWar}],
-                [' FA 선수 포함 평균 WAR',  fWar]
+                ['키움구단 선수 평균 WAR',  ${kiwoomWar}],
+                [' FA 선수 포함 평균 WAR',  faWar]
             ]);
 
             var options = {
