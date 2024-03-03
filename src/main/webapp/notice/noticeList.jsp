@@ -24,7 +24,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>공지사항</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/certificate.css" />
     <script type="text/javascript">
@@ -66,11 +66,7 @@
         <div class="box-header p-4">
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-2">
-                    <a class="text-muted fs-6" href="#">관리자페이지</a>
-                    <div class="ms-2">></div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">공지사항</div>
+                    <a class="text-muted fs-6" href="#">공지사항</a>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-3">

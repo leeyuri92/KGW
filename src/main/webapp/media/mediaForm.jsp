@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우리구단소식</title>
+    <title>게시글 작성</title>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">

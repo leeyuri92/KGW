@@ -264,7 +264,7 @@
                 </div>
                 <div class="d-flex align-items-center ms-2">
                     <div class="fw-bold fs-5">FA선수현황</div>
-                    <div class="text-muted ms-3">사원 정보를 검색할 수 있는 페이지입니다.</div>
+                    <div class="text-muted ms-3">FA 선수 현황을 볼 수 있는 페이지입니다.</div>
                 </div>
             </div>
         </div>

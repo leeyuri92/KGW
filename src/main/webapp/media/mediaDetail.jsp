@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우리구단소식</title>
+    <title>우리구단소식 상세조회</title>
     <script>
         /*미디에게시글목록*/
         function mediaNoticeList(){
@@ -70,7 +70,7 @@
                     <div class="position-absolute top-0 start-0"></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">우리구단 소식 상세보기</div>
+                    <div class="fw-bold fs-5">우리구단 소식 상세조회</div>
                     <div class="text-muted ms-3">우리구단 소식을 상세하게 조회할 수 있는 페이지입니다.</div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                                 <%--댓글목록--%>
                                 <div class="comment-list">
                                     <div class="comment-list">
-                                        <label for="commendContent" class="form-label">댓글(<%=mediaVO.getCommend_cnt()%>)</label>
+                                        <label for="commendContent" class="form-label">댓글 (<%=mediaVO.getCommend_cnt()%>)</label>
                                         <%
                                             int size2 = mediaNoticeCommend.size();
                                             if (size2>0){

@@ -75,7 +75,7 @@
       <div class="d-flex align-items-center">
         <div class="d-flex align-items-center me-2">
           <a class="text-muted fs-6" href="#">우리구단</a>
-          <div class="ms-2"></div>
+          <div class="ms-2">></div>
         </div>
         <div class="d-flex align-items-center">
           <div class="text-dark fs-6">우리구단 소식</div>
@@ -142,7 +142,7 @@
                       <div class="card-body">
                         <p class="card-link">
                           <a href="javascript:mediaDetail('<%=mediaNoticeVO.getBoard_no()%>')" class="link-styled">
-                            <%=mediaNoticeVO.getBoard_title()%>[<%=mediaNoticeVO.getCommend_cnt()%>]
+                            <%=mediaNoticeVO.getBoard_title()%> [<%=mediaNoticeVO.getCommend_cnt()%>]
                           </a>
                         </p>
                         <p class="card-text">작성자 : <%=mediaNoticeVO.getName()%></p>
