@@ -50,6 +50,16 @@ public class CalendarDaoImpl implements CalendarDao {
     }
 
     @Override
+    public List<Map<String, Object>> calendarDetail(Map<String, Object> cdMap)throws Exception {
+        logger.info("Dao : calendarDetail 호출");
+        logger.info(cdMap.toString());
+        List<Map<String,Object>> list = null;
+        list = sqlSessionTemplate.selectList("cdList", cdMap);
+        logger.info(list.toString());
+        return list;
+    }
+
+    @Override
     public void insertCalendar(CalendarVO calendarVO) throws Exception {
         logger.info("Dao : insertCalendar 호출");
         try {

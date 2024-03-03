@@ -13,6 +13,8 @@ public interface CalendarDao {
 
     public List<Map<String, Object>> companyCalendarList(Map<String, Object> cpmap) throws Exception;
 
+    public List<Map<String, Object>> calendarDetail(Map<String, Object> cdmap) throws Exception;
+
     void deleteCalendar(int calendarNo) throws Exception;
 
     void updateCalendar(CalendarVO calendarVO) throws Exception;

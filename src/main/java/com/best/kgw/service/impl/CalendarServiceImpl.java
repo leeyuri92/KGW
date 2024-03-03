@@ -42,6 +42,18 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
+    public List<Map<String, Object>> calendarDetail(Map<String, Object> cdMap) {
+        List<Map<String, Object>> calendarDetail = null;
+        logger.info("Service : calendarDetail 호출");
+        try {
+            calendarDetail = calendarDao.calendarDetail(cdMap);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return calendarDetail;
+    }
+
+    @Override
     public List<Map<String, Object>> companyCalendarList(Map<String, Object> cpMap) {
         List<Map<String, Object>> companyCalendarList = null;
         logger.info("Service : companyCalendarList 호출");
