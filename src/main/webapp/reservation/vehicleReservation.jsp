@@ -359,48 +359,47 @@
                     }
                 });
             }
-
-            let cancelTodayButton = document.querySelectorAll('.cancel-button');
-
-            cancelTodayButton.forEach(function(cancelButton) {
-                cancelButton.addEventListener('click', function() {
-                    let reservationNoInput = document.getElementById('reservNo');
-                    if (reservationNoInput !== null) {
-                        let reservation_no = reservationNoInput.textContent;
-
-                        if (reservation_no) {
-                            // 사용자에게 삭제 여부를 물어보는 경고창
-                            if (confirm("예약을 삭제하시겠습니까?")) {
-                                // 사용자가 확인을 누르면 삭제 요청
-                                let url = "<%=request.getContextPath()%>/vehicleReservation/deleteTodayVReservation";
-
-                                $.ajax({
-                                    type: "POST",
-                                    url: url,
-                                    data: { reservation_no: reservation_no },
-                                    success: function(response) {
-                                        console.log(response);
-                                        if (response > 0) {
-                                            if (window.opener) window.opener.location.reload(true);
-                                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
-                                            alert("예약이 삭제되었습니다.");
-                                        }
-                                    },
-                                    error: function(request, status, error) {
-                                        console.error("오류 발생 >> " + error);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
-            });
-
-        closeModalAndClearInputs();
+            closeModalAndClearInputs();
             // 모달 숨기기
             let modal = document.getElementById('detailModal');
             modal.style.display = 'none';
         }
+
+        let cancelTodayButton = document.querySelectorAll('.cancel-button');
+
+        cancelTodayButton.forEach(function(cancelButton) {
+            cancelButton.addEventListener('click', function() {
+                let reservationNoInput = document.getElementById('reservNo');
+                if (reservationNoInput !== null) {
+                    let reservation_no = reservationNoInput.textContent;
+
+                    if (reservation_no) {
+                        // 사용자에게 삭제 여부를 물어보는 경고창
+                        if (confirm("예약을 삭제하시겠습니까?")) {
+                            // 사용자가 확인을 누르면 삭제 요청
+                            let url = "<%=request.getContextPath()%>/vehicleReservation/deleteTodayVReservation";
+
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: { reservation_no: reservation_no },
+                                success: function(response) {
+                                    console.log(response);
+                                    if (response > 0) {
+                                        if (window.opener) window.opener.location.reload(true);
+                                        window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+                                        alert("예약이 삭제되었습니다.");
+                                    }
+                                },
+                                error: function(request, status, error) {
+                                    console.error("오류 발생 >> " + error);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        });
 
         // 모달 닫기 및 입력 값 초기화 함수
         function closeModalAndClearInputs() {
@@ -468,25 +467,23 @@
 </script>
     <div class="content-wrapper">
 
-        <div style="width: 100%; height: 100px; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-            <div style="justify-content: flex-end; align-items: center; display: inline-flex; flex-direction: row-reverse;">
-                <div style="justify-content: flex-start; align-items: center; display: flex">
-                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">예약</div>
+        <div class="box-header p-4">
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center me-2">
+                    <a class="text-muted fs-6" href="/">예약현황</a>
+                    <div class="ms-2">></div>
                 </div>
-                <div style="padding-left: 8px; padding-right: 8px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 10px; display: inline-flex">
-                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">></div>
-                </div>
-                <div style="justify-content: flex-start; align-items: center; display: flex">
-                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">예약현황</div>
+                <div class="d-flex align-items-center">
+                    <div class="text-dark fs-6">예약</div>
                 </div>
             </div>
-            <div style="padding-top: 14px; padding-bottom: 6px; justify-content: flex-start; align-items: center; gap: 16px; display: inline-flex">
-                <div style="width: 16.25px; height: 16px; position: relative">
-                    <div style="width: 13.35px; height: 12.71px; left: 1.45px; top: 1.64px; position: absolute; background: rgba(0, 0, 0, 0.85)"></div>
+            <div class="d-flex align-items-center mt-3">
+                <div class="position-relative">
+                    <div class="position-absolute top-0 start-0"></div>
                 </div>
-                <div style="justify-content: flex-start; align-items: center; gap: 12px; display: flex">
-                    <div style="color: rgba(0, 0, 0, 0.85); font-size: 20px; font-family: Roboto; font-weight: 700; line-height: 28px; word-wrap: break-word">예약현황</div>
-                    <div style="color: rgba(0, 0, 0, 0.45); font-size: 14px; font-family: Roboto; font-weight: 400; line-height: 22px; word-wrap: break-word">예약현황을 조회할 수 있는 페이지입니다.</div>
+                <div class="d-flex align-items-center ms-2">
+                    <div class="fw-bold fs-5">차량예약 현황</div>
+                    <div class="text-muted ms-3">차량예약 현황을 조회할 수 있는 페이지입니다.</div>
                 </div>
             </div>
         </div>
@@ -542,25 +539,24 @@
                             <h2 class="cal_title">내 예약 현황</h2>
                             <!-- 검색기 시작 -->
                             <div class="row search">
-                                <div class="col-2">
+                                <div class="col-2 col-sm-2">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
-                                        <option value="my">내 일정</option>
-                                        <option value="team">팀 일정</option>
-                                        <option value="company">전사 일정</option>
+                                        <option value="asset">자산 예약</option>
+                                        <option value="vehicle">차량 예약</option>
                                     </select>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-2 col-sm-2">
                                     <select id="calendarGubun" class="form-select" aria-label="분류선택">
-                                        <option value="calendarTable">참석자</option>
-                                        <option value="calendarTable">날짜</option>
+                                        <option value="date">일정</option>
+                                        <option value="name">예약자</option>
                                     </select>
                                 </div>
-                                <div class="col-7">
+                                <div class="col-7 col-sm-6">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                                            aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
-                                <div class="col-1">
-                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" onclick="calendarSearch()"/>
+                                <div class="col-1 col-sm-2">
+                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" style="border-radius: 3px;" onclick="calendarSearch()"/>
                                 </div>
                             </div>
                         </div>
@@ -599,7 +595,7 @@
                                         <td><%= vo.getReservation_title() %></td>
                                         <td><%= startDate%></td>
                                         <td><%= endDate %></td>
-                                        <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" style="background-color: #652C2C;" value="취소"/></td>
+                                        <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" value="취소"/></td>
                                     </tr>
                                 <%
                                 }}}}

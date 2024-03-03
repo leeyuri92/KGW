@@ -95,32 +95,29 @@
                                 <hr/>
                             </div>
 
-                            <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
-                            <div class="row">
-                                <div class="col-2">
+                            <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->                            <!-- 검색기 시작 -->
+                            <div class="row search">
+                                <div class="col-2 col-sm-2">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
-                                        <option value="none">분류선택</option>
-                                        <option value="notice_title">일정명</option>
-                                        <option value="emp_no">참석자</option>
+                                        <option value="my">자산 예약</option>
+                                        <option value="team">차량 예약</option>
                                     </select>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2 col-sm-2">
+                                    <select id="calendarGubun" class="form-select" aria-label="분류선택">
+                                        <option value="date">일정</option>
+                                        <option value="name">예약자</option>
+                                    </select>
+                                </div>
+                                <div class="col-7 col-sm-6">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
-                                           aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
+                                           aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
-                                <div class="col-1">
-                                    <button id="btn_search" class="btn btn-danger" onclick="calendarSearch()">검색</button>
-                                </div>
-                                <div class="col-md-6 d-flex justify-content-end gap-2">
-                                    <%
-                                        if (sessionVO.getEmp_access().equals("ROLE_ADMIN") ) {
-                                    %>
-                                    <button type="button" class="btn btn-danger" onclick="calendarForm()">작성</button>
-                                    <%
-                                        }
-                                    %>
+                                <div class="col-1 col-sm-2">
+                                    <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" style="border-radius: 3px;" onclick="calendarSearch()"/>
                                 </div>
                             </div>
+                        </div>
                             <div class='board-list'>
                                 <table class="table table-hover text-center ">
                                     <thead>
