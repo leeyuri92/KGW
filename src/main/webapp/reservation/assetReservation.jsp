@@ -154,25 +154,41 @@
                         insertEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
                     }
                 },
-
                 resources: [
-                    <%  List<CalendarVO> assetList1 = (List<CalendarVO>) request.getAttribute("assetList");
-                        if (assetList1 != null) {
+                    <%
+                        int team_no_value = sessionVO.getTeam_no(); // 기존에 선언된 변수를 사용하도록 수정
+                        System.out.println("assetReservation="+team_no_value);
+                        List<CalendarVO> assetList1 = (List<CalendarVO>) request.getAttribute("assetList1");
+                        List<CalendarVO> assetList2 = (List<CalendarVO>) request.getAttribute("assetList2");
+                        if (team_no_value == 2 && assetList1 != null) {
                             for (CalendarVO vo : assetList1) {
-                                if (vo != null) {
                     %>
                     {
                         id: '<%= vo.getAsset_id()%>',
                         title : '<%= vo.getAsset_name() %>',
                         eventColor: '#' + Math.round(Math.random() * 0xffffff).toString(16)
                     },
-                    <% }}} %>
+                    <%
+                            }
+                        } else if (team_no_value != 2 && assetList2 != null) {
+                            for (CalendarVO vo : assetList2) {
+                    %>
+                    {
+                        id: '<%= vo.getAsset_id()%>',
+                        title : '<%= vo.getAsset_name() %>',
+                        eventColor: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+                    },
+                    <%
+                            }
+                        }
+                    %>
                 ],
                 events: [
-                    <%  List<CalendarVO> assetReservationList = (List<CalendarVO>) request.getAttribute("assetReservationList");
-                        if (assetReservationList != null) {
-                            for (CalendarVO vo1 : assetReservationList) {
-                            if (Objects.equals(sessionVO.getName(), vo1.getName())) {
+                    <%
+                        List<CalendarVO> assetReservationList = (List<CalendarVO>) request.getAttribute("assetReservationList");
+                         if (assetReservationList != null) {
+                           for (CalendarVO vo1 : assetReservationList) {
+                               if (Objects.equals(sessionVO.getName(), vo1.getName())) {
                     %>
                     {
                         id: '<%= vo1.getAsset_no() %>', // 이벤트의 고유 ID
@@ -183,10 +199,14 @@
                         end: '<%= vo1.getReservation_end() %>',
                         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
                     },
-                    <% }}} %>
+                    <%
+                        }
+                    }
+                }
+                %>
                 ]
-
             });
+            console.log(<%= sessionVO.getEmp_no() %>);
             calendar.render();
         } else {
             console.error('calendarEl = NULL');

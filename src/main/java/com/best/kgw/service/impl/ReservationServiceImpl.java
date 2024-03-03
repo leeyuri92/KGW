@@ -21,15 +21,27 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationDao reservationDao;
 
     @Override
-    public List<Map<String, Object>> assetList(@RequestParam Map<String, Object> aMap) {
-        List<Map<String, Object>> assetList = null;
-        logger.info("Service : assetList 호출");
+    public List<Map<String, Object>> assetList1(@RequestParam Map<String, Object> aMap1) {
+        List<Map<String, Object>> assetList1 = null;
+        logger.info("Service : assetList1 호출");
         try {
-            assetList = reservationDao.assetList(aMap);
+            assetList1 = reservationDao.assetList1(aMap1);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return assetList;
+        return assetList1;
+    }
+
+    @Override
+    public List<Map<String, Object>> assetList2(@RequestParam Map<String, Object> aMap2) {
+        List<Map<String, Object>> assetList2 = null;
+        logger.info("Service : assetList2 호출");
+        try {
+            assetList2 = reservationDao.assetList2(aMap2);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return assetList2;
     }
 
     @Override
