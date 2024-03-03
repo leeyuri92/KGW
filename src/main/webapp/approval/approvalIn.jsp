@@ -1,6 +1,29 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="com.vo.ApprovalVO"%>
+<%@ page import="com.vo.EmpVO" %>
+
+<%
+
+
+    String noStr = request.getParameter("document_no");
+    int noParam = Integer.parseInt(noStr);
+
+    List<ApprovalVO> list = (List<ApprovalVO>)request.getAttribute("approvalDetail");
+    ApprovalVO selected = null;
+
+    if (list != null) {
+        for (ApprovalVO document : list) {
+            if (document.getDocument_no() == noParam) {
+                selected = document;
+                break;
+            }
+        }
+    }
+%>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -47,33 +70,35 @@
                                 <hr />
                             </div>
                             <!-- Document Sections -->
+                            <% if (selected!=null){ %>
                                 <div class="frame" id="frame_tool">
                                     <div class="document-section">
                                         <div class="item">
                                             <span class="title">부서:</span>
-                                            <span class="value">자동불러옴</span>
+                                            <span class="value"><%=sessionVO.getTeam_name()%></span>
                                         </div>
                                         <div class="item">
                                             <span class="title">담당자:</span>
-                                            <span class="value">자동불러옴</span>
+                                            <span class="value"><%=selected.getApproval_name()%></span>
                                         </div>
                                         <div class="item">
                                             <span class="title">신청자:</span>
-                                            <span class="value">자동불러옴</span>
+                                            <span class="value"><%=selected.getName()%></span>
                                         </div>
 
                                         <div class="item">
                                             <span class="title">영입 희망선수:</span>
-                                            <span class="value">[여기에 동적으로 영입선수 표시]</span>
+                                            <span class="value"><%=selected.getK_name()%></span>
                                         </div>
                                         <div class="text-wrapper-2">상기와 같이 영입 희망함</div>
                                     </div>
                                     <div class="signature-section">
-                                        <img src="your_image_path_here" alt="Sign Image 기안자 자동생성" >
+<%--                                        <img id="signImage" src="/fileUpload/sign/<%=empDetail.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">--%>
                                         <div class="sign blank" id="blank_sign_1">Sign Here 관리자</div>
                                         <div class="sign blank" id="blank_sign_2">Sign Here 구단주 </div>
                                     </div>
                                 </div>
+                                <% } %>
                             </div>
 
 

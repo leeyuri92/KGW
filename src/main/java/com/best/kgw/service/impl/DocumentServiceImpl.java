@@ -52,6 +52,15 @@ public class DocumentServiceImpl implements DocumentService {
 
     }
 
+
+    @Transactional
+    @Override
+    public void updateApprovalAndDocument(ApprovalVO approvalVO) throws Exception {
+        documentDao.approvalMiddleModify(approvalVO);
+        documentDao.documentModify(approvalVO);
+    }
+
+
 }
 
 

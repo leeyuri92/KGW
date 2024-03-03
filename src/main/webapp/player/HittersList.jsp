@@ -10,7 +10,7 @@
 <%@ page import="com.vo.HittersVO" %>
 
 <%
-    List<Map<String, Object>> list = (List) request.getAttribute("list");
+    List<HittersVO> list = (List) request.getAttribute("list");
     int size = 0;
     if (list != null) {
         size = list.size();
@@ -36,15 +36,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
     <script type="text/javascript">
-        // when onclick action to search different table
-        $(document).ready(function() {
-            // 티폴트 는 타자 로 선택
-            $('#hitterTable').show();
-            $('#pitcherTable').hide();
-            $('#gubunHitters').show();
-            $('#gubunPitcher').hide()
 
-        });
 
 
         window.onload = function() {
@@ -83,13 +75,9 @@
 
 
 
-
-    /*
-
-    * */
-
-        // h_ab>100 result;
-
+        let  HitterDetail= (h_no) => {
+            location.href= "/player/HitterDetail?h_no="+h_no;
+        }
 
     </script>
 
@@ -180,8 +168,12 @@
                                 HittersVO hittersVO  = (HittersVO) list.get(i);
                             %>
                             <tr>
-                                <td></td>
-                                <td><%= hittersVO.getH_name()%></td>
+                                <td><%= hittersVO.getH_no()%></td>
+                                <td>
+                                    <a href="javascript:HitterDetail('<%=hittersVO.getH_no()%>')">
+                                        <%= hittersVO.getH_name()%>
+                                    </a>
+                                </td>
                                 <td><%= hittersVO.getH_team()%></td>
                                 <td><%= hittersVO.getH_avg()%></td>
                                 <td ><%= hittersVO.getH_ab()%></td>

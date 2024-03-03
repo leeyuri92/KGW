@@ -2,6 +2,7 @@ package com.best.kgw.service.impl;
 
 import com.best.kgw.dao.PlayerDao;
 import com.best.kgw.service.PlayerService;
+import com.vo.HittersVO;
 import com.vo.PitchersVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +20,10 @@ public class PlayerServiceImpl  implements PlayerService {
     PlayerDao playerDao;
 
     @Override
-    public List<Map<String,Object>> hitterList(Map<String,Object>hMap){
-        List<Map<String,Object>>list=new ArrayList<>();
-        list=playerDao.hitterList(hMap);
-        logger.info("hMap"+hMap);
+    public List<HittersVO> hitterList(HittersVO hittersVO){
+        List<HittersVO >list=new ArrayList<>();
+        list=playerDao.hitterList(hittersVO);
+        logger.info("hMap"+hittersVO);
         return list;
     }
     @Override

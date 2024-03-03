@@ -1,6 +1,7 @@
 package com.best.kgw.controller;
 
 import com.best.kgw.service.PlayerService;
+import com.vo.HittersVO;
 import com.vo.PitchersVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +25,19 @@ public class PlayersController {
     Logger logger = LoggerFactory.getLogger("PlayersController".getClass());
 
     @GetMapping("/HittersList")
-    public String hitterList(Model model, @RequestParam Map<String, Object> hMap   ) {
-        List<Map<String, Object>> list = playerService.hitterList(hMap);
+    public String hitterList(Model model, HittersVO hittersVO)  throws  Exception{
+        List<HittersVO> list = playerService.hitterList(hittersVO);
         model.addAttribute("list", list);
-//        model.addAttribute("H_AB",hab);
         return "forward:HittersList.jsp";
 
     }
+    @GetMapping("/HitterDetail")
+    public String hitterDetail(Model model, HittersVO hittersVO) throws  Exception {
+    List<HittersVO> hitterDetail = playerService.hitterList(hittersVO);
+    model.addAttribute("hitterDetail", hitterDetail);
+    return "forward:HitterDetail.jsp";
 
+}
 
     @GetMapping("/PitchersList")
     public String pitcherList(Model model, PitchersVO pitchersVO)  throws  Exception {
@@ -44,21 +50,9 @@ public class PlayersController {
     @GetMapping("/PitcherDetail")
 // 상세조회
     public String pitcherDetail(PitchersVO pitchersVO, Model model) throws Exception {
-        logger.info("noticeDetail");
         List<PitchersVO>  pitcherDetail = playerService.pitcherList(pitchersVO);
         model.addAttribute("pitcherDetail", pitcherDetail);
         return "forward:PitcherDetail.jsp";
     }
 
 }
-
-
-/* 원본
-*  @GetMapping("/PitchersList")
-    public String pitcherList(Model model,@RequestParam Map<String ,Object>pMap){
-        List<Map<String ,Object>> list2=playerService.pitcherList(pMap);
-        logger.info("투수 리스트 잘나오는지 테스트 삽입 문구"+list2);
-        model.addAttribute("list2",list2);
-        return "forward:PitchersList.jsp";
-    }
-* */

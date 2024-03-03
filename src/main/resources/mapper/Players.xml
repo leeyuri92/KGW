@@ -4,7 +4,7 @@
 
 
 
-    <select id="selectHitters" parameterType="map"  resultType="com.vo.HittersVO">
+    <select id="selectHitters" parameterType="com.vo.HittersVO"  resultType="com.vo.HittersVO">
         SELECT
             H_NO,
             H_NAME,
@@ -22,7 +22,7 @@
             H_WAR,
             H_OPS
         FROM HITTER
-
+        order by  H_NO asc
     </select>
 
 

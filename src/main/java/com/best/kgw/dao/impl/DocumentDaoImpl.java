@@ -44,21 +44,6 @@ public class DocumentDaoImpl implements DocumentDao {
          List<Map<String,Object>> kiwoomList =sqlSessionTemplate.selectList("k_List", approvalvo);
         return kiwoomList;
     }
-// 문서 입력
-//    @Override
-//    public int DocumentInsert(ApprovalVO approvalVO) {
-//        int result=0;
-//
-//        logger.info("=========================DocumentDao : DocumentInsert"+result);
-////        sqlSessionTemplate.insert("insertDocument", approvalVO);
-//        logger.info("============================"+approvalVO.getDocument_no());
-//        return  result;
-//    }
-//
-////    문서결재
-
-//
-//    
     
 //    영입 문서 작성
     @Override
@@ -66,11 +51,33 @@ public class DocumentDaoImpl implements DocumentDao {
         logger.info("==================approvalVO"+ approvalVO);
         sqlSessionTemplate.insert("documentInsert", approvalVO);
     }
-
     @Override
     public void  approvalInsert(ApprovalVO approvalVO) throws  Exception{
         logger.info("==================ApprovalInsert");
        sqlSessionTemplate.insert("approvalInsert",approvalVO);
     }
+//    중간결재
+@Override
+public int approvalMiddleModify(ApprovalVO approvalVO) throws Exception {
+    int middleModify=0;
+    middleModify=sqlSessionTemplate.update("approvalMiddleModify",approvalVO);
+    return middleModify;
+}
+
+//    최종결재
+    public int approvalFinalModify(ApprovalVO approvalVO) throws Exception {
+        int finalModify=0;
+        finalModify=sqlSessionTemplate.update("approvalFinalModify",approvalVO);
+        return finalModify;
+    }
+
+//    문서 업데이트처리
+    @Override
+    public int documentModify(ApprovalVO approvalVO) throws Exception {
+        int documentModify=0;
+        documentModify=sqlSessionTemplate.update("documentStateModify",approvalVO);
+        return documentModify;
+    }
+
 }
 

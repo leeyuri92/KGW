@@ -1,6 +1,7 @@
 package com.best.kgw.service;
 
 import com.vo.ApprovalVO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -18,4 +19,6 @@ public interface DocumentService {
     public void documentInsert(ApprovalVO approvalVO) throws Exception;
 
 
+    @Transactional
+    void updateApprovalAndDocument(ApprovalVO approvalVO) throws Exception;
 }

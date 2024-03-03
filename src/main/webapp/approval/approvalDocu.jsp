@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="item" hidden="hidden">
                                         <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="document_category"  name="document_category" value="휴가관련" >
+                                        <input type="text" class="value-input" id="document_category"  name="document_category" value="휴가" >
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
@@ -154,7 +154,6 @@
                             <form id="r_document1" name="r_document1" action="documentInsert" method="post">
                             <div class="frame" id="do_pla_a"> <%--계약연장 문서--%>
                                 <div class="document-section">
-                                    <!-- Existing items: 부서, 담당자, 신청자 -->
                                     <div class="item">
                                         <span class="title">사원번호:</span>
                                         <input type="text" class="value-input" id="emp_no3"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
@@ -165,7 +164,7 @@
                                     </div>
                                     <div class="item" hidden="hidden">
                                         <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="document_category3"  name="document_category" value="선수관련" >
+                                        <input type="text" class="value-input" id="document_category3"  name="document_category" value="계약" >
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
@@ -222,7 +221,7 @@
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="document_category2"  name="document_category" value="선수관련" >
+                                            <input type="text" class="value-input" id="document_category2"  name="document_category" value="방출" >
                                         </div>
                                         <div class="item">
                                             <span class="title">담당자:</span>
@@ -273,7 +272,7 @@
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="document_category1"  name="document_category" value="선수관련" >
+                                            <input type="text" class="value-input" id="document_category1"  name="document_category" value="영입" >
                                         </div>
                                         <div class="item">
                                             <span class="title">담당자:</span>

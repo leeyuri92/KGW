@@ -25,7 +25,7 @@
     <title>전자결재 결재자 문서함</title>
     <%@include file="/common/bootstrap_common.jsp" %>
 
-    <%--  <script type="text/javascript">--%>
+      <script type="text/javascript">
 
     <%--	const searchEnter = (event)=> {--%>
     <%--		console.log('searchEnter')--%>
@@ -34,23 +34,21 @@
     <%--			boardSearch(); // 재사용성 ---%>
     <%--		}--%>
     <%--	}--%>
-    <%--	const boardSearch = () => {--%>
-    <%--		console.log('boardSearch');--%>
-    <%--		const gubun = document.querySelector("#gubun").value;--%>
-    <%--		const keyword = document.querySelector("#keyword").value;--%>
-    <%--		console.log(`${gubun} , ${keyword}`);--%>
-    <%--		location.href="/board/boardList?gubun="+gubun+"&keyword="+keyword;--%>
-    <%--	}--%>
-    <%--  	const boardList = () => {--%>
-    <%--  		location.href="/board/boardList";--%>
-    <%--  	}--%>
-    <%--  	const boardInsert = () => {--%>
-    <%--  		document.querySelector("#f_board").submit(); // form태그에 묶인 컴포넌트 값들이 전송됨--%>
-    <%--  	}--%>
-    <%--	const boardDetail = (b_no) => {--%>
-    <%--		location.href = "/board/boardDetail?b_no="+b_no;--%>
-    <%--	}--%>
-    <%--  </script>--%>
+
+    const ApprovalDetail = (document_no, document_category) => {
+        let url = "/approval/approvalDetail?document_no=" + document_no;
+        if (document_category === '영입') {
+            url = "/approval/approvalDetail1?document_no=" + document_no;
+        } else if (document_category === '방출') {
+            url = "/approval/approvalDetail2?document_no=" + document_no;
+        } else if (document_category === '계약') {
+            url = "/approval/approvalDetail3?document_no=" + document_no;
+        }else if (document_category === '휴가') {
+            url = "/approval/approvalDetail4?document_no=" + document_no;
+        }
+        location.href = url;
+    };
+      </script>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -60,7 +58,7 @@
     <!-- header end    -->
 
     <!-- body start    -->
-    <div class="content-wrapper">
+    <sec class="content-wrapper">
         <!-- 페이지 path start    -->
         <%--		<div class="card" >--%>
         <div class="box-header p-4" >
@@ -118,7 +116,7 @@
                                     <tr>
                                         <th width="10%" >문서ID</th>
                                         <th width="10%">종류</th>
-                                        <th width="15%">부서</th>
+                                        <th width="15%">상태</th>
                                         <th width="15%">기안자</th>
                                         <th width="15%">기안시간</th>
                                     </tr>
@@ -131,10 +129,14 @@
                                     %>
                                     <tr>
                                         <td><%= approvalVO.getDocument_no()%></td>
-                                        <td><%= approvalVO.getDocument_category()%></td>
+                                        <td>
+                                            <a href="javascript:ApprovalDetail('<%= approvalVO.getDocument_no() %>', '<%= approvalVO.getDocument_category() %>')">
+                                                <%= approvalVO.getDocument_title()%>
+                                            </a>
+                                        </td>
                                         <td><%= approvalVO.getState()%></td>
-                                        <td>여기는 기안자 성함</td>
-                                        <td>여기는 가안문서 시간</td>
+                                        <td><%= sessionVO.getName()%></td>
+                                        <td><%= approvalVO.getSubmission_date()%></td>
                                     </tr>
                                     <%
 
@@ -159,54 +161,10 @@
                     </div>
                 </div>
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.col -->
-
-    </div>
-    <!-- content-wrapper end-->
-<!-- body end   -->
 
 
-
-<!-- ========================== [[ 게시판 Modal ]] ========================== -->
-<%--	<div class="modal" id="boardForm">--%>
-<%--  		<div class="modal-dialog modal-dialog-centered">--%>
-<%--	<div class="modal-content">--%>
-
-<%--	  <!-- Modal Header -->--%>
-<%--	  <div class="modal-header">--%>
-<%--		<h4 class="modal-title">게시판</h4>--%>
-<%--		<button type="button" class="btn-close" data-bs-dismiss="modal"></button>--%>
-<%--	  </div>--%>
-<%--	  <!-- Modal body -->--%>
-<%--	  <div class="modal-body">--%>
-<%--		<!-- <form id="f_board" method="get" action="./boardInsert"> -->--%>
-<%--		<form id="f_board" method="post" enctype="multipart/form-data" action="./boardInsert">--%>
-<%--		  <input type="hidden" name="method" value="boardInsert">--%>
-<%--		  <div class="form-floating mb-3 mt-3">--%>
-<%--			<input type="text"  class="form-control" id="b_title" name="b_title" placeholder="Enter 제목" />--%>
-<%--			<label for="b_title">제목</label>--%>
-<%--		  </div>--%>
-<%--		  <div class="form-floating mb-3 mt-3">--%>
-<%--			<input type="text"  class="form-control" id="b_writer" name="b_writer" placeholder="Enter 작성자" />--%>
-<%--			<label for="b_writer">작성자</label>--%>
-<%--		  </div>--%>
-<%--		  <div class="form-floating mb-3 mt-3">--%>
-<%--			<textarea rows="5" class="form-control h-25" aria-label="With textarea" id="b_content" name="b_content"></textarea>--%>
-<%--		  </div>--%>
-<%--		  <div class="input-group mb-3">--%>
-<%--			  <input type="file" class="form-control" id="b_file" name="b_file">--%>
-<%--			  <label class="input-group-text" for="b_file">Upload</label>--%>
-<%--		  </div>--%>
-<%--		</form>--%>
-<%--	  </div>--%>
-<%--	  <div class="modal-footer">--%>
-<%--		<input type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="boardInsert()"  value="저장">--%>
-<%--		<input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="닫기">--%>
-<%--	  </div>--%>
-<!-- ========================== [[ 게시판 Modal ]] ========================== -->
+            </div>
+        </section>
+        <!-- body end   -->
 </body>
 </html>

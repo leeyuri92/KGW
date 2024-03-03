@@ -82,15 +82,14 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            <div>
                                 <div id="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
                                     <button type="button" class="btn btn-danger">승인</button>
                                     <button class="btn btn-danger">반려</button>
                                 </div>
-                            </div>
-                        </div>
+
+
+
+                    </div>
                     </div>
                 </div>
         </section>

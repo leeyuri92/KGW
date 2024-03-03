@@ -56,6 +56,7 @@
             document_title,
             document_category,
             k_no,
+            k_name,
             start_date,
             end_date,
             dayoff_content,
@@ -68,6 +69,7 @@
                #{document_title},
                #{document_category},
                #{k_no},
+               #{k_name},
                TO_DATE(#{start_date,jdbcType=VARCHAR}, 'YYYY-MM-DD'),
                TO_DATE(#{end_date,jdbcType=VARCHAR}, 'YYYY-MM-DD'),
                #{dayoff_content,jdbcType=INTEGER},
@@ -86,10 +88,52 @@
     </insert>
 
 
+<!--insert 끝 -->
+
+
+    <update id="approvalMiddleModify" parameterType="com.vo.ApprovalVO">
+        update approval
+        set
+           approval_category = #{approval_category},
+            rejection_content = #{rejection_content,jdbcType=VARCHAR},
+            middle_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
+            final_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
+            middleSign_img=#{middleSign_img, jdbcType=BLOB},
+            finalSign_img=#{finalSign_img, jdbcType=BLOB}
+        where approval_no = #{approval_no}
+    </update>
+
+
+    <update id="approvalFinalModify" parameterType="com.vo.ApprovalVO">
+        UPDATE approval
+        SET
+            final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS'),
+            finalSign_img = #{finalSignImg, jdbcType=BLOB},
+            approval_category = #{approvalCategory, jdbcType=VARCHAR},
+            rejection_content = #{rejectionContent, jdbcType=VARCHAR},
+            finalSign_img=#{finalSign_img, jdbcType=BLOB}
+        WHERE approval_no = #{approvalNo}
+          AND middle_approval_date IS NOT NULL
+    </update>
+
+
+    <update id="documentStateModify" parameterType="com.vo.ApprovalVO">
+        UPDATE document
+        SET state = #{state}
+        WHERE document_no = #{documentNo}
+    </update>
 
 
 
-
+<!--    1	approval_no	결재번호
+2	document_no	문서번호
+3	approval_name	결재자
+4	approval_category	결재상태
+5	rejection_content	반려사유
+6	middle_approval_date	중간결재일시
+7	final_approval_date	최종결재일시
+8	middleSign_img	중간결재사인이미지
+9	FinalSign_img	최종결재사인이미지-->
 <!--    INSERT INTO document (-->
 <!--    document_no,-->
 <!--    emp_no,-->

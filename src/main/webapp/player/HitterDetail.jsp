@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import="com.vo.PitchersVO" %>
+<%@ page import="com.vo.HittersVO" %>
 
 <%
     String pNoParamStr = request.getParameter("p_no");
     int pNoParam = Integer.parseInt(pNoParamStr);
 
-    List<PitchersVO> list = (List<PitchersVO>)request.getAttribute("pitcherDetail");
-    PitchersVO selectedPitcher = null;
+    List<HittersVO> list = (List<HittersVO>)request.getAttribute("hitterDetail");
+    HittersVO selectedHitter = null;
 
     if (list != null) {
-        for (PitchersVO pitcher : list) {
-            if (pitcher.getP_no() == pNoParam) {
-                selectedPitcher = pitcher;
+        for (HittersVO hitter : list) {
+            if (hitter.getH_no() == pNoParam) {
+                selectedHitter = hitter;
                 break;
             }
         }
@@ -27,7 +27,7 @@
     <title>선수 상세</title>
     <script>
         function noticeList(){
-            location.href='/player/PitchersList';
+            location.href='/player/HittersList';
         }
 
 
@@ -75,40 +75,42 @@
                                 <h4 style="font-weight: bold; margin-left: 2rem" >선수명</h4>
                                 <hr />
                                 <%--------------------게시글 상세내용---------------------%>
-                                <% if (selectedPitcher != null) { %>
+                                <% if ( selectedHitter != null) { %>
                                 <div class="board_view">
                                     <div class="title">
-                                        <dd><%=selectedPitcher.getP_name()%></dd>
+                                        <dd><%= selectedHitter.getH_name()%></dd>
                                     </div>
                                     <div class="info">
                                         <dl>
                                             <dt>팀명</dt>
-                                            <dd><%=selectedPitcher.getP_team()%></dd>
+                                            <dd><%= selectedHitter.getH_team()%></dd>
                                         </dl>
                                         <dl>
-                                            <dt>평균자책점 era</dt>
-                                            <dd><%=selectedPitcher.getP_era()%></dd>
+                                            <dt>타율</dt>
+                                            <dd><%= selectedHitter.getH_avg()%></dd>
                                         </dl>
                                         <dl>
-                                            <dt>이닝 ip</dt>
-                                            <dd><%=selectedPitcher.getP_ip()%></dd>                                        </dl>
+                                            <dt>타수</dt>
+                                            <dd><%= selectedHitter.getH_ab()%></dd>                                        </dl>
                                         <dl>
-                                            <dt>승 win</dt>
-                                            <dd><%=selectedPitcher.getP_win()%></dd>                                        </dl>
+                                            <dt>안타</dt>
+                                            <dd><%= selectedHitter.getH_h()%></dd>                                        </dl>
                                         <dl>
-                                            <dt>패</dt>
-                                            <dd><%=selectedPitcher.getP_lose()%></dd>                                        </dl>
+                                            <dt>홈련</dt>
+                                            <dd><%= selectedHitter.getH_hr()%></dd>                                        </dl>
                                         <dl>
-                                            <dt>세이브</dt>
-                                            <dd><%=selectedPitcher.getP_save()%></dd>                                        </dl>
-                                        <dt>피안타율 h</dt>
-                                        <dd><%=selectedPitcher.getP_h()%></dd>                                        </dl>
+                                            <dt>득점</dt>
+                                            <dd><%= selectedHitter.getH_r()%></dd>                                        </dl>
+                                        <dt>삼진</dt>
+                                        <dd><%= selectedHitter.getH_so()%></dd>
+                                        <dt>장타율</dt>
+                                        <dd><%= selectedHitter.getH_slg()%></dd>
                                         <dl>
-                                            <dt>피출루율 ob</dt>
-                                            <dd><%=selectedPitcher.getP_ob()%></dd>                                        </dl>
+                                            <dt>출루율</dt>
+                                            <dd><%= selectedHitter.getH_obp()%></dd>                                        </dl>
                                         <dl>
-                                            <dt>승이리여도 war</dt>
-                                            <dd><%=selectedPitcher.getP_war()%></dd>                                        </dl>
+                                            <dt>승이리여도</dt>
+                                            <dd><%= selectedHitter.getH_war()%></dd>                                        </dl>
                                     </div>
                                 </div>
                                 <% } %>

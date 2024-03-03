@@ -22,4 +22,10 @@ public interface DocumentDao {
 
 // 결재문서 정보 insert
     void  approvalInsert(ApprovalVO approvalVO) throws  Exception;
+
+    //    중간결재
+    int approvalMiddleModify(ApprovalVO approvalVO) throws Exception;
+
+    //    문서 업데이트처리
+    int documentModify(ApprovalVO approvalVO) throws Exception;
 }
