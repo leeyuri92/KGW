@@ -3,31 +3,39 @@
 <mapper namespace="com.example.mapper.DocumentMapper">
 
     <select id="selectDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
-    SELECT * FROM document   LEFT JOIN approval ON document.document_no = approval.document_no
-        <where>
-            <if test="gubun !=null">
-                <choose>
-                    <when test='gubun.equals("true")'>
-                        AND document.state = '임시저장'
-                    </when>
-                    <when test='gubun.equals("false")'>
-                        AND document.state != '임시저장'
-                    </when>
-                </choose>
-            </if>
-        </where>
-        order by document.document_no asc
+        SELECT *
+        FROM document LEFT JOIN approval
+            ON document.document_no = approval.document_no
+            <where>
+                <if test="gubun !=null">
+                    <choose>
+                        <when test='gubun.equals("true")'>
+                            AND document.state = '임시저장'
+                        </when>
+                        <when test='gubun.equals("false")'>
+                            AND document.state != '임시저장'
+                        </when>
+                    </choose>
+                </if>
+            </where>
+            order by document.document_no asc
         </select>
 
 
         <!--   결재자 select -->
     <select id="approvalDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
         SELECT
-            d.*, a.*
+            e.name, t.team_name , d.*, a.*
         FROM
-            document d
-                INNER JOIN
-            approval a ON d.document_no = a.document_no
+            document d INNER JOIN approval a
+                                  ON d.document_no = a.document_no
+                       INNER JOIN emp e
+                                  ON d.emp_no = e.emp_no
+                       INNER JOIN  team t
+                                   ON e.team_no = t.team_no
+        <where>
+            <if test="document_no !=0"> AND d.document_no = #{document_no}</if>
+        </where>
     </select>
 
 
@@ -55,7 +63,6 @@
             emp_no,
             document_title,
             document_category,
-            k_no,
             k_name,
             start_date,
             end_date,
@@ -68,11 +75,10 @@
                #{emp_no},
                #{document_title},
                #{document_category},
-               #{k_no},
                #{k_name},
-               TO_DATE(#{start_date,jdbcType=VARCHAR}, 'YYYY-MM-DD'),
-               TO_DATE(#{end_date,jdbcType=VARCHAR}, 'YYYY-MM-DD'),
-               #{dayoff_content,jdbcType=INTEGER},
+               #{start_date,jdbcType=VARCHAR},
+               #{end_date,jdbcType=VARCHAR},
+               #{dayoff_content,jdbcType=VARCHAR},
                #{salary,jdbcType=INTEGER},
                #{contract_term,jdbcType=VARCHAR}
                )
@@ -81,10 +87,10 @@
 
     <insert id="approvalInsert" parameterType="com.vo.ApprovalVO" >
         INSERT INTO approval (
-        approval_no, document_no, approval_name, approval_category,
-        rejection_content, middle_approval_date, final_approval_date, middleSign_img, finalSign_img)
-        VALUES (approval_pk_seq.nextval, #{document_no}, #{approval_name, jdbcType=VARCHAR}, #{approval_category,jdbcType=VARCHAR},
-                #{rejection_content, jdbcType=VARCHAR}, #{middle_approval_date, jdbcType=VARCHAR}, #{final_approval_date, jdbcType=VARCHAR},  #{middleSign_img, jdbcType=VARCHAR}, #{finalSign_img, jdbcType=VARCHAR})
+        approval_no, document_no, approval_name,
+        rejection_content, middle_approval_date, final_approval_date, middleSign_name, finalSign_name)
+        VALUES (approval_pk_seq.nextval, #{document_no}, #{approval_name, jdbcType=VARCHAR},
+                #{rejection_content, jdbcType=VARCHAR}, #{middle_approval_date, jdbcType=VARCHAR}, #{final_approval_date, jdbcType=VARCHAR},  #{middleSign_name, jdbcType=VARCHAR}, #{finalSign_name, jdbcType=VARCHAR})
     </insert>
 
 
@@ -97,9 +103,7 @@
            approval_category = #{approval_category},
             rejection_content = #{rejection_content,jdbcType=VARCHAR},
             middle_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-            final_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-            middleSign_img=#{middleSign_img, jdbcType=BLOB},
-            finalSign_img=#{finalSign_img, jdbcType=BLOB}
+            middlesign_name=#{middlesign_name}
         where approval_no = #{approval_no}
     </update>
 
@@ -107,11 +111,10 @@
     <update id="approvalFinalModify" parameterType="com.vo.ApprovalVO">
         UPDATE approval
         SET
-            final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS'),
-            finalSign_img = #{finalSignImg, jdbcType=BLOB},
             approval_category = #{approvalCategory, jdbcType=VARCHAR},
             rejection_content = #{rejectionContent, jdbcType=VARCHAR},
-            finalSign_img=#{finalSign_img, jdbcType=BLOB}
+            final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS'),
+            finalSign_name=#{finalSign_name, jdbcType=BLOB}
         WHERE approval_no = #{approvalNo}
           AND middle_approval_date IS NOT NULL
     </update>

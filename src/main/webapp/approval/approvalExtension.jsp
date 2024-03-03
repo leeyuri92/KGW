@@ -87,8 +87,6 @@
                                     <button class="btn btn-danger">반려</button>
                                 </div>
 
-
-
                     </div>
                     </div>
                 </div>

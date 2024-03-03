@@ -4,6 +4,7 @@
 <%@  page import="com.vo.ApprovalVO" %>
 <%
     List<ApprovalVO>list2=(List)request.getAttribute("list2");
+//    out.print(list2);
     int size=0;
     if(list2!=null){
         size=list2.size();
@@ -36,9 +37,9 @@
     <%--	}--%>
 
     const ApprovalDetail = (document_no, document_category) => {
-        let url = "/approval/approvalDetail?document_no=" + document_no;
+        let url = "";
         if (document_category === '영입') {
-            url = "/approval/approvalDetail1?document_no=" + document_no;
+            url = "/approval/approvalDetail?document_no=" + document_no;
         } else if (document_category === '방출') {
             url = "/approval/approvalDetail2?document_no=" + document_no;
         } else if (document_category === '계약') {
@@ -58,7 +59,7 @@
     <!-- header end    -->
 
     <!-- body start    -->
-    <sec class="content-wrapper">
+    <div class="content-wrapper">
         <!-- 페이지 path start    -->
         <%--		<div class="card" >--%>
         <div class="box-header p-4" >
@@ -97,24 +98,21 @@
 
                             <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
                             <div class="row">
-
                                 <div class="col-3">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                                            aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
                                 <div class="col-1 ">
                                     <button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>
-
                                 </div>
-
+                            </div>
                             <!-- 검색기 끝 -->
-
                             <!-- 회원목록 시작 -->
                             <div class='board-list'>
                                 <table class="table table-hover text-center ">
                                     <thead>
                                     <tr>
-                                        <th width="10%" >문서ID</th>
+                                        <th width="10%">문서ID</th>
                                         <th width="10%">종류</th>
                                         <th width="15%">상태</th>
                                         <th width="15%">기안자</th>
@@ -131,11 +129,11 @@
                                         <td><%= approvalVO.getDocument_no()%></td>
                                         <td>
                                             <a href="javascript:ApprovalDetail('<%= approvalVO.getDocument_no() %>', '<%= approvalVO.getDocument_category() %>')">
-                                                <%= approvalVO.getDocument_title()%>
+                                                <%= approvalVO.getDocument_category()%>
                                             </a>
                                         </td>
-                                        <td><%= approvalVO.getState()%></td>
-                                        <td><%= sessionVO.getName()%></td>
+                                        <td><%= approvalVO.getApproval_category()%></td>
+                                        <td><%= approvalVO.getName()%></td>
                                         <td><%= approvalVO.getSubmission_date()%></td>
                                     </tr>
                                     <%
@@ -145,7 +143,6 @@
                                     </tbody>
                                 </table>
                                 <hr />
-
                                 <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                                 <ul class="pagination">
                                     <%
@@ -163,8 +160,8 @@
             </div>
 
 
-            </div>
         </section>
-        <!-- body end   -->
+    </div>
+</div>
 </body>
 </html>

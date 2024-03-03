@@ -21,4 +21,6 @@ public interface DocumentService {
 
     @Transactional
     void updateApprovalAndDocument(ApprovalVO approvalVO) throws Exception;
+
+    void approvalUpdate(ApprovalVO approvalvo) throws Exception;
 }

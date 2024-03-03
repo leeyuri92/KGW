@@ -20,6 +20,7 @@ public class ApprovalVO {
         private  int salary;
         private  int k_no;
         private String contract_term;
+        private String team_name;
 //        문서 끝
         private int approval_no; // 결재 번호
         private String approval_name; // 결재자
@@ -27,8 +28,8 @@ public class ApprovalVO {
         private String rejection_content; // 반려 사유
         private String middle_approval_date; // 중간 결재 일시
         private String final_approval_date; // 최종 결재 일시
-        private byte[] middleSign_img; // 중간 결재 사인 이미지
-        private byte[] finalSign_img; // 최종 결재 사인 이미지
+        private String middlesign_name; // 중간 결재 사인 이미지
+        private String finalsign_name; // 최종 결재 사인 이미지
 //      결재 끝
         private  String name; //직원이름
         private  int dayoff_cnt;// 잔여 연차
@@ -44,9 +45,9 @@ public class ApprovalVO {
 //        select 받아논 데이터 끝
     @Builder
     public  ApprovalVO(int document_no,int emp_no,String document_title,String  document_category, String  submission_date,String state,
-                       String start_date,String  end_date,String  draftday,String  dayoff_content,int  k_no, int salary ,String contract_term,
+                       String start_date,String  end_date,String  draftday,String  dayoff_content,int  k_no, int salary ,String contract_term, String team_name,
                        int approval_no,String approval_name,String  approval_category, String  rejection_content, String  middle_approval_date,
-                       String  final_approval_date , byte middleSign_img, byte finalSign_img, String name,int dayoff_cnt,String emp_position,
+                       String  final_approval_date , String middlesign_name, String finalsign_name, String name,int dayoff_cnt,String emp_position,
                        int team_no, String k_name, String k_team, int fa_no,String fa_name ){
         super();
         this.document_no=document_no;
@@ -62,14 +63,15 @@ public class ApprovalVO {
         this.k_no = k_no;
         this.salary = salary;
         this.contract_term = contract_term;
+        this.team_name = team_name;
         this.approval_no = approval_no;
         this.approval_name = approval_name;
         this.approval_category = approval_category;
         this.rejection_content = rejection_content;
         this.middle_approval_date = middle_approval_date;
         this.final_approval_date = final_approval_date;
-        this.middleSign_img = new byte[]{middleSign_img};
-        this.finalSign_img = new byte[]{finalSign_img};
+        this.middlesign_name = middlesign_name;
+        this.finalsign_name = finalsign_name;
         this.name = name;
         this.dayoff_cnt = dayoff_cnt;
         this.emp_position = emp_position;

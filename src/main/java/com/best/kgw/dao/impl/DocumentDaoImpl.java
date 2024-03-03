@@ -20,7 +20,7 @@ public class DocumentDaoImpl implements DocumentDao {
 //기안자 문서함 list
     @Override
     public List<ApprovalVO>DocumentList(ApprovalVO approvalVO){
-        List<ApprovalVO >list=new ArrayList<>();
+        List<ApprovalVO >list;
         list=sqlSessionTemplate.selectList("selectDocument",approvalVO);
         return list;
     }
@@ -29,7 +29,7 @@ public class DocumentDaoImpl implements DocumentDao {
 //결재자 결재함
     @Override
     public List<ApprovalVO >ApprovalList(ApprovalVO approvalVO){
-        List<ApprovalVO>list2=new ArrayList<>();
+        List<ApprovalVO>list2;
         list2=sqlSessionTemplate.selectList("approvalDocument",approvalVO);
         return list2;
     }
@@ -77,6 +77,11 @@ public int approvalMiddleModify(ApprovalVO approvalVO) throws Exception {
         int documentModify=0;
         documentModify=sqlSessionTemplate.update("documentStateModify",approvalVO);
         return documentModify;
+    }
+
+    @Override
+    public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
+        sqlSessionTemplate.update("approvalMiddleModify", approvalvo);
     }
 
 }

@@ -39,10 +39,6 @@ public class DocumentController {
         return "forward:approvalList.jsp";
     }
 
-
-
-
-
     //    결재 함
     @GetMapping("/approvalList")
     public String ApprovalList(Model model, ApprovalVO approvalVO) {
@@ -104,14 +100,19 @@ public class DocumentController {
 
     }
 
-
-    @PostMapping("middleModify")
-    public void middleModify(ApprovalVO approvalVO, @RequestParam("files") MultipartFile file, HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        byte[] signImageData = file.getBytes();
-        approvalVO.setMiddleSign_img(approvalVO.getMiddleSign_img());
-        documentService.updateApprovalAndDocument(approvalVO);
-        resp.sendRedirect("/approvalList");
+    @PostMapping("/approvalUpdate")
+    public String approvalUpdate(ApprovalVO approvalvo) throws Exception {
+        documentService.approvalUpdate(approvalvo);
+        return "redirect:./approvalList";
     }
+
+//    @PostMapping("middleModify")
+//    public void middleModify(ApprovalVO approvalVO, @RequestParam("files") MultipartFile file, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+//        byte[] signImageData = file.getBytes();
+//        approvalVO.setMiddleSign_img(approvalVO.getMiddleSign_img());
+//        documentService.updateApprovalAndDocument(approvalVO);
+//        resp.sendRedirect("/approvalList");
+//    }
 
 
 }
