@@ -98,6 +98,26 @@ public class ReservationController {
         return entity;
     }
 
+    @PostMapping("/deleteTodayReservation")
+    @ResponseBody
+    public ResponseEntity<String> deleteTodayReservation(CalendarVO calendarVO) {
+        logger.info("삭제 컨트롤러 호출");
+        logger.info(Integer.toString(calendarVO.getReservation_no()));
+        int reservation_no = calendarVO.getReservation_no();
+        ResponseEntity<String> entity = null;
+
+        try {
+            reservationService.deleteTodayReservation(reservation_no);
+            logger.info("삭제 DB 연결 시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 삭제 DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
+    }
+
 
     @GetMapping("reservList")
     public String reservList(@RequestParam Map<String, Object> reservMap, Model model){

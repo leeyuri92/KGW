@@ -60,6 +60,13 @@
         where reservation_no = ${reservation_no}
     </update>
 
+    <delete id="deleteTodayReservation" parameterType="int">
+        DELETE FROM ASSET_RESERVATION
+        <where>
+            RESERVATION_NO = '${reservation_no}'
+        </where>
+    </delete>
+
     <select id="reservList" parameterType="map" resultType="map">
         SELECT
         a.reservation_no,

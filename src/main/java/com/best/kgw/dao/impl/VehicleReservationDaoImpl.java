@@ -63,6 +63,12 @@ public class VehicleReservationDaoImpl implements VehicleReservationDao {
     }
 
     @Override
+    public void deleteTodayVReservation(int reservationNo) throws Exception {
+        logger.info("Dao : deleteTodayVReservation 호출");
+        sqlSessionTemplate.delete("deleteTodayVReservation", reservationNo);
+    }
+
+    @Override
     public List<Map<String, Object>> vehicleReservList(@RequestParam Map<String, Object> reservMap)throws Exception {
         logger.info("Dao : vehicleReservList 호출");
         logger.info(reservMap.toString());

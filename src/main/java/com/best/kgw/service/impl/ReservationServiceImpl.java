@@ -88,6 +88,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public void deleteTodayReservation(int reservationNo) {
+        logger.info("Service : deleteTodayReservation 호출");
+        try {
+            reservationDao.deleteTodayReservation(reservationNo);
+        } catch (Exception e) {
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
+        }
+    }
+
+    @Override
     public List<Map<String, Object>> reservList(@RequestParam Map<String, Object> reservMap) {
         List<Map<String, Object>> reservList = null;
         logger.info("Service : reservList 호출");

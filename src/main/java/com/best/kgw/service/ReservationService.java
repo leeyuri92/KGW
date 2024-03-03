@@ -20,6 +20,8 @@ public interface ReservationService {
 
     public void updateReservation(CalendarVO calendarVO);
 
+    public void deleteTodayReservation(int reservationNo);
+
     List<Map<String, Object>> reservList(@RequestParam Map<String, Object> reservMap);
 
     List<Map<String, Object>> myReservList(@RequestParam Map<String, Object> myReservMap);

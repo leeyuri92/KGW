@@ -19,6 +19,8 @@ public interface CalendarDao {
 
     void updateCalendar(CalendarVO calendarVO) throws Exception;
 
+    void deleteTodayCalendar(int calendarNo) throws Exception;
+
     void insertCalendar(CalendarVO calendarVO) throws Exception;
 
     List<Map<String, Object>> calList(Map<String, Object> calMap) throws Exception;

@@ -54,27 +54,15 @@
         where calendar_no = '${calendar_no}'
     </update>
 
+    <delete id="deleteTodayCalendar" parameterType="int">
+        DELETE FROM calendar
+        WHERE calendar_no = #{calendar_no}
+    </delete>
+
     <select id="cdList" parameterType="map" resultType="map">
         SELECT
         *
-        FROM calendar a
-        INNER JOIN emp b ON b.emp_name = '${name}'
-        <where>
-            <if test="calendar_no!=null">AND b.calendar_no=#{calendar_no}</if>
-            <if test="gubun!=null">
-                <choose>
-                    <when test='gubun.equals("name")'>
-                        AND b.name LIKE '%'||#{keyword}||'%'
-                    </when>
-                    <when test='gubun.equals("startDate")'>
-                        AND a.calendar_start LIKE '%'||#{keyword}||'%'
-                    </when>
-                    <when test='gubun.equals("endDate")'>
-                        AND a.calendar_end LIKE '%'||#{keyword}||'%'
-                    </when>
-                </choose>
-            </if>
-        </where>
+        FROM calendar
     </select>
 
 </mapper>

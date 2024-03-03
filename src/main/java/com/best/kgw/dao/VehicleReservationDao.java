@@ -18,7 +18,10 @@ public interface VehicleReservationDao {
 
     void updateVehicleList(CalendarVO calendarVO)throws Exception;
 
+    void deleteTodayVReservation(int reservationNo)throws Exception;
+
     List<Map<String, Object>> vehicleReservList(Map<String, Object> reservMap)throws Exception;
 
     List<Map<String, Object>> myVehicleReservList(Map<String, Object> myReservMap)throws Exception;
+
 }

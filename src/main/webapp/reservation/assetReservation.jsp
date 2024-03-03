@@ -226,15 +226,6 @@
             }
         }
 
-        //내 예약 현황 취소 버튼
-        let cancelButtonList = document.querySelectorAll('.cancel-button');
-        cancelButtonList.forEach(function (cancelButton) {
-            cancelButton.addEventListener('click', function () {
-                let modal = document.getElementById('detailModal');
-                modal.style.display = 'block';
-            }, { passive: true }); // passive 옵션 추가
-        });
-
         // 이벤트 핸들러 등록
         let submitBtn = document.getElementById('submitEvent');
         let searchBtn = document.getElementById('searchEvent');
@@ -293,7 +284,7 @@
                             if (window.opener) window.opener.location.reload(true);
                             window.location.href = '${pageContext.request.contextPath}' + '/assetReservation/assetReservationList';
 
-                            alert("일정이 등록되었습니다.");
+                            alert("예약이 등록되었습니다.");
                         }
                     },
                     error: function(request, status, error) {
@@ -326,7 +317,7 @@
                             if (window.opener) window.opener.location.reload(true);
                             window.location.href = '${pageContext.request.contextPath}' + '/assetReservation/assetReservationList';
 
-                            alert("일정이 삭제되었습니다.");
+                            alert("예약이 삭제되었습니다.");
                         }
                     },
                     error: function(request, status, error) {
@@ -340,7 +331,7 @@
             modal.style.display = 'none';
         }
 
-        function handleEventUpdate(updatedEvent) {
+        function handleEventUpdate() {
             let titleInput = document.getElementById('detailTitle');
             let startInput = document.getElementById('detailStart');
             let endInput = document.getElementById('detailEnd');
@@ -373,7 +364,7 @@
                             if (window.opener) window.opener.location.reload(true);
                             window.location.href = '${pageContext.request.contextPath}' + '/assetReservation/assetReservationList';
 
-                            alert("일정이 수정되었습니다.");
+                            alert("예약이 수정되었습니다.");
                         }
                     },
                     error: function(request, status, error) {
@@ -386,6 +377,42 @@
             let modal = document.getElementById('detailModal');
             modal.style.display = 'none';
         }
+
+        let cancelTodayButton = document.querySelectorAll('.cancel-button');
+
+        cancelTodayButton.forEach(function(cancelButton) {
+            cancelButton.addEventListener('click', function() {
+                let reservationNoInput = document.getElementById('reservNo');
+                if (reservationNoInput !== null) {
+                    let reservation_no = reservationNoInput.textContent;
+
+                    if (reservation_no) {
+                        // 사용자에게 삭제 여부를 물어보는 경고창
+                        if (confirm("예약을 삭제하시겠습니까?")) {
+                            // 사용자가 확인을 누르면 삭제 요청
+                            let url = "<%=request.getContextPath()%>/assetReservation/deleteTodayReservation";
+
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: { reservation_no: reservation_no },
+                                success: function(response) {
+                                    console.log(response);
+                                    if (response > 0) {
+                                        if (window.opener) window.opener.location.reload(true);
+                                        window.location.href = '${pageContext.request.contextPath}' + '/assetReservation/assetReservationList';
+                                        alert("예약이 삭제되었습니다.");
+                                    }
+                                },
+                                error: function(request, status, error) {
+                                    console.error("오류 발생 >> " + error);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        });
 
         // 모달 닫기 및 입력 값 초기화 함수
         function closeModalAndClearInputs() {
@@ -483,7 +510,7 @@
                     <div class="box">
                         <div class="container-fluid1">
                             <h2 class="cal_title">자산 예약 현황</h2>
-                            <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-md-1" id="addEvent" name="addEvent" value="일정 등록"/>
+                            <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-md-1" id="addEvent" name="addEvent" value="예약 등록"/>
                         </div>
                         <hr />
 
@@ -512,15 +539,14 @@
                             <div class="row search">
                                 <div class="col-2">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
-                                        <option value="my">내 일정</option>
-                                        <option value="team">팀 일정</option>
-                                        <option value="company">전사 일정</option>
+                                        <option value="my">자산 예약</option>
+                                        <option value="team">차량 예약</option>
                                     </select>
                                 </div>
                                 <div class="col-2">
                                     <select id="calendarGubun" class="form-select" aria-label="분류선택">
-                                        <option value="calendarTable">참석자</option>
-                                        <option value="calendarTable">날짜</option>
+                                        <option value="date">일정</option>
+                                        <option value="name">예약자</option>
                                     </select>
                                 </div>
                                 <div class="col-7">
@@ -541,14 +567,15 @@
                                     <th scope="col">예약자산</th>
                                     <th scope="col">예약자</th>
                                     <th scope="col">예약명</th>
-                                    <th scope="col">예약시간</th>
+                                    <th scope="col">시작시간</th>
+                                    <th scope="col">종료시간</th>
                                     <th scope="col">취소</th>
                                 </tr>
                                 </thead>
                                 <tbody id="reservationTableBody">
                                 <% List<CalendarVO> assetReservationList1 = (List<CalendarVO>) request.getAttribute("assetReservationList");
                                     if (assetReservationList1 != null) {
-                                        int count = 0; // 일정 카운터 변수 추가
+                                        int count = 0; // 예약 카운터 변수 추가
                                         for (CalendarVO vo : assetReservationList1) {
                                             if (Objects.equals(sessionVO.getName(), vo.getName())) {
                                             String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
@@ -556,15 +583,17 @@
                                             String startDate = vo.getReservation_end();
                                             String endDate = vo.getReservation_end();
                                             if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
-                                            count++; // 카운터 증가
                                 %>
                                 <tr>
-                                    <th scope="row"><%= count %></th>
+                                    <th scope="row"><%= ++count %></th>
+                                    <%-- 화면엔 필요없지만 서버에 전송할 데이터 --%>
+                                    <td class="reservNo" id="reservNo" style="display: none;"><%= vo.getReservation_no() %></td>
                                     <td><%= vo.getAsset_no() %></td>
                                     <td><%= vo.getName() %></td>
                                     <td><%= vo.getReservation_title() %></td>
-                                    <td><%= startDate + "~" + endDate %></td>
-                                    <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
+                                    <td><%= startDate%></td>
+                                    <td><%= endDate %></td>
+                                    <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" style="background-color: #652C2C;" value="취소"/></td>
                                 </tr>
                                 <%
                                 }}}}
@@ -586,11 +615,11 @@
                     </div>
                     <div class="modal-body p-5 pt-0">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="insertTitle" name="insertTitle" placeholder="일정명">
+                            <input type="text" class="form-control rounded-3" id="insertTitle" name="insertTitle" placeholder="예약명">
                             <label for="insertTitle">예약명</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="insertName" name="insertName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <input type="text" class="form-control rounded-3" id="insertName" name="insertName" placeholder="예약자" value="<%=sessionVO.getName()%>">
                             <label for="insertName">예약자</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -606,6 +635,7 @@
                             <label for="insertResourceId">시설 ID</label>
                         </div>
                         <select class="form-control" id="insertAssetNo" name="insertAssetNo">
+                            <% if(sessionVO.getTeam_no() == 2){ %>
                             <option value="0" selected>자산을 선택하세요.</option>
                             <option value="101">대회의실 A</option>
                             <option value="102">대회의실 B</option>
@@ -620,7 +650,18 @@
                             <option value="111">물리치료실A</option>
                             <option value="112">물리치료실B</option>
                             <option value="113">물리치료실C</option>
+                            <% } else { %>
+                            <option value="0" selected>자산을 선택하세요.</option>
+                            <option value="101">대회의실 A</option>
+                            <option value="102">대회의실 B</option>
+                            <option value="103">소회의실 A</option>
+                            <option value="104">소회의실 B</option>
+                            <option value="105">소회의실 C</option>
+                            <option value="106">미팅룸 A</option>
+                            <option value="107">미팅룸 B</option>
+                            <% } %>
                         </select>
+
                         <br>
 <%--                        <div class="form-floating mb-3">--%>
 <%--                            <input type="text" class="form-control rounded-3" id="insertAssetNo" name="insertAssetNo" placeholder="시설 고유ID">--%>
@@ -633,7 +674,7 @@
             </div>
         </div>
 
-        <!-- 일정 수정/삭제 모달 -->
+        <!-- 예약 수정/삭제 모달 -->
         <div class="modal " id="detailModal">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content rounded-4 shadow">
@@ -642,15 +683,15 @@
                     </div>
                     <div class="modal-body p-5 pt-0">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="detailTitle" name="detailTitle" placeholder="일정명">
+                            <input type="text" class="form-control rounded-3" id="detailTitle" name="detailTitle" placeholder="예약명">
                             <label for="detailTitle">예약명</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="detailName" name="detailName" placeholder="참석자" value="<%=sessionVO.getName()%>">
+                            <input type="text" class="form-control rounded-3" id="detailName" name="detailName" placeholder="예약자" value="<%=sessionVO.getName()%>">
                             <label for="detailName">예약자</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="detailReservationNo" name="detailReservationNo" placeholder="일정명">
+                            <input type="text" class="form-control rounded-3" id="detailReservationNo" name="detailReservationNo" placeholder="예약 번호">
                             <label for="detailReservationNo">예약 번호</label>
                         </div>
                         <div class="form-floating mb-3">

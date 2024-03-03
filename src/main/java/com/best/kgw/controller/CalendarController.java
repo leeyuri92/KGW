@@ -120,6 +120,25 @@ public class CalendarController {
         return entity;
     }
 
+    @PostMapping("/deleteTodayCalendar")
+    @ResponseBody
+    public ResponseEntity<String> deleteTodayCalendar(CalendarVO calendarVO) {
+        logger.info("삭제 컨트롤러 호출");
+        logger.info(Integer.toString(calendarVO.getCalendar_no()));
+        int calendar_no = calendarVO.getCalendar_no();
+        ResponseEntity<String> entity = null;
+
+        try {
+            calendarService.deleteTodayCalendar(calendar_no);
+            logger.info("삭제 DB 연결 시도");
+            entity = new ResponseEntity<>("1", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("예외 발생 삭제 DB 처리 못함");
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return entity;
+    }
 
     @GetMapping("calList")
     public String calList(@RequestParam Map<String, Object> calMap, Model model){

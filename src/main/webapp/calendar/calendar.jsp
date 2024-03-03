@@ -140,15 +140,6 @@
             }
         }
 
-        //내 예약 현황 취소 버튼
-        let cancelButtonList = document.querySelectorAll('.cancel-button');
-        cancelButtonList.forEach(function (cancelButton) {
-            cancelButton.addEventListener('click', function () {
-                let modal = document.getElementById('detailModal');
-                modal.style.display = 'block';
-            }, { passive: true }); // passive 옵션 추가
-        });
-
         // 이벤트 핸들러 등록
         let submitBtn = document.getElementById('submitEvent');
         let searchBtn = document.getElementById('searchEvent');
@@ -249,7 +240,7 @@
             modal.style.display = 'none';
         }
 
-        function handleEventUpdate(updatedEvent) {
+        function handleEventUpdate() {
             let titleInput = document.getElementById('detailTitle');
             let startInput = document.getElementById('detailStart');
             let endInput = document.getElementById('detailEnd');
@@ -296,6 +287,43 @@
             let modal = document.getElementById('detailModal');
             modal.style.display = 'none';
         }
+
+
+        let cancelTodayButton = document.querySelectorAll('.cancel-button');
+
+        cancelTodayButton.forEach(function(cancelButton) {
+            cancelButton.addEventListener('click', function() {
+                let calendarNoInput = document.getElementById('calNo');
+                if (calendarNoInput !== null) {
+                    let calendar_no = calendarNoInput.textContent;
+
+                    if (calendar_no) {
+                        // 사용자에게 삭제 여부를 물어보는 경고창
+                        if (confirm("일정을 삭제하시겠습니까?")) {
+                            // 사용자가 확인을 누르면 삭제 요청
+                            let url = "<%=request.getContextPath()%>/calendar/deleteTodayCalendar";
+
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: { calendar_no: calendar_no },
+                                success: function(response) {
+                                    console.log(response);
+                                    if (response > 0) {
+                                        if (window.opener) window.opener.location.reload(true);
+                                        window.location.href = '${pageContext.request.contextPath}' + '/calendar/myCalendarList';
+                                        alert("일정이 삭제되었습니다.");
+                                    }
+                                },
+                                error: function(request, status, error) {
+                                    console.error("오류 발생 >> " + error);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        });
 
         // 팀 일정 체크박스 클릭 시 링크로 이동
         document.getElementById('teamCal').addEventListener('change', function() {
@@ -349,14 +377,6 @@
             modal2.style.display = 'none';
         }
     }
-
-    // $(document).ready(function() {
-    //     $('#calendarTable').show();
-    //     $('#my').hide();
-    //     $('#team').hide();
-    //     $('#company').hide();
-    //     $('#calendarGubun').show();
-    // });
 
     function searchEnter(event){
         console.log(window.event.keyCode)
@@ -472,7 +492,8 @@
                                     <th scope="col">참석자</th>
                                     <th scope="col">일정 구분</th>
                                     <th scope="col">일정명</th>
-                                    <th scope="col">일정시간</th>
+                                    <th scope="col">시작시간</th>
+                                    <th scope="col">종료시간</th>
                                     <th scope="col">취소</th>
                                 </tr>
                                 </thead>
@@ -484,23 +505,25 @@
                                          if (Objects.equals(sessionVO.getName(), vo.getName())) {
                                             String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
                                             String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
-                                            String startDate = vo.getCalendar_end();
+                                            String startDate = vo.getCalendar_start();
                                             String endDate = vo.getCalendar_end();
                                             // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
                                             if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) {
                                 %>
                                 <tr>
-                                    <th scope="row"><%= ++count %></th> <!-- 일정 번호 출력 -->
+                                    <th scope="row"><%= ++count %></th>
+                                    <%-- 화면엔 필요없지만 서버에 전송할 데이터 --%>
+                                    <td class="calNo" id="calNo" style="display: none;"><%= vo.getCalendar_no() %></td>
                                     <td><%= vo.getName() %></td>
                                     <td>내 일정</td>
                                     <td><%= vo.getCalendar_title() %></td>
-                                    <td><%= startDate + "~" + endDate %></td>
-                                    <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
+                                    <td><%= startDate%></td>
+                                    <td><%= endDate %></td>
+                                    <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" style="background-color: #652C2C;" value="취소"/></td>
                                 </tr>
-                                <%}
-                                }
-                                }
-                                }
+
+                                <%
+                                }}}}
                                 %>
                                 </tbody>
                             </table>
@@ -523,8 +546,8 @@
                             <label for="insertTitle">일정명</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="insertName" name="insertName" placeholder="참석자" value="<%=sessionVO.getName()%>">
-                            <label for="insertName">참석자</label>
+                            <input type="text" class="form-control rounded-3" id="name" name="name" placeholder="생성자" value="<%=sessionVO.getName()%>">
+                            <label for="name">생성자</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control rounded-3" id="insertStart" name="insertStart">
@@ -536,7 +559,7 @@
                         </div>
                         <select class="form-control" id="insertCalendarId" name="insertCalendarId">
                             <option value="0" selected>일정을 선택하세요.</option>
-                            <option value="1">내일정</option>
+                            <option value="1" selected>내일정</option>
                             <option value="2">팀일정</option>
                             <option value="3">전사일정</option>
                         </select>
@@ -559,10 +582,6 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailTitle" name="detailTitle" placeholder="일정명">
                             <label for="detailTitle">일정명</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3" id="detailName" name="detailName" placeholder="참석자" value="<%=sessionVO.getName()%>">
-                            <label for="detailName">참석자</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control rounded-3" id="detailCalendarNo" name="detailCalendarNo" placeholder="일정 번호">

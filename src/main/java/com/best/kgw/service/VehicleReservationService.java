@@ -17,8 +17,11 @@ public interface VehicleReservationService {
 
     void updateVehicleList(CalendarVO calendarVO);
 
+    void deleteTodayVReservation(int reservationNo);
+
     List<Map<String, Object>> vehicleReservList(Map<String, Object> reservMap);
 
     List<Map<String, Object>> myVehicleReservList(Map<String, Object> myReservMap);
+
 }
 
