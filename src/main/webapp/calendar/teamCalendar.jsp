@@ -459,11 +459,11 @@
                                         <option value="calendarTable">날짜</option>
                                     </select>
                                 </div>
-                                <div class="col-7">
+                                <div class="col-6">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                                            aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-2">
                                     <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" onclick="calendarSearch()"/>
                                 </div>
                             </div>

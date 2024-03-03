@@ -4,9 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgw.ticket.dao.ReservationDao">
 
-    <select id= "aList" parameterType="map" resultType="com.vo.CalendarVO">
+    <select id= "aList1" parameterType="map" resultType="com.vo.CalendarVO">
         SELECT * FROM asset
         WHERE asset_category != '차량'
+    </select>
+
+    <select id= "aList2" parameterType="map" resultType="com.vo.CalendarVO">
+        SELECT * FROM asset
+        WHERE asset_category != '차량' AND team_no!=2
     </select>
 
     <select id= "arList" parameterType="map" resultType="com.vo.CalendarVO">

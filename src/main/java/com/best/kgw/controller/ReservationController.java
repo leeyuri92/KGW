@@ -22,16 +22,21 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @GetMapping("assetReservationList")
-    public String assetReservationList(@RequestParam Map<String, Object> aMap, @RequestParam Map<String, Object> arMap, Model model){
-        List<Map<String, Object>> assetList;
+    public String assetReservationList(@RequestParam Map<String, Object> aMap1,@RequestParam Map<String, Object> aMap2, @RequestParam Map<String, Object> arMap, Model model){
+        List<Map<String, Object>> assetList1;
+        List<Map<String, Object>> assetList2;
         List<Map<String, Object>> assetReservationList;
-        logger.info("ReservationController: assetList 호출");
+        logger.info("ReservationController: assetList1 호출");
+        logger.info("ReservationController: assetList2 호출");
         logger.info("ReservationController: assetReservationList 호출");
-        assetList = reservationService.assetList(aMap);
+        assetList1 = reservationService.assetList1(aMap1);
+        assetList2 = reservationService.assetList2(aMap2);
         assetReservationList = reservationService.assetReservationList(arMap);
-        model.addAttribute("assetList", assetList);
+        model.addAttribute("assetList1", assetList1);
+        model.addAttribute("assetList2", assetList2);
         model.addAttribute("assetReservationList", assetReservationList);
-        logger.info(assetList.toString());
+        logger.info(assetList1.toString());
+        logger.info(assetList2.toString());
         logger.info(assetReservationList.toString());
         return "forward:/reservation/assetReservation.jsp";
     }
