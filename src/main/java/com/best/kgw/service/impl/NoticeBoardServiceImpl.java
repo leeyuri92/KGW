@@ -57,4 +57,10 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         List<NoticeBoardVO> noticeList=noticeBoardDao.noticeList(noticeBoardVO);
         return noticeList;
     }
+
+    @Override
+    public List<NoticeBoardVO> noticePinList(NoticeBoardVO noticeboardVO) throws Exception {
+        List<NoticeBoardVO> noticePinList=noticeBoardDao.noticePinList(noticeboardVO);
+        return noticePinList;
+    }
 }

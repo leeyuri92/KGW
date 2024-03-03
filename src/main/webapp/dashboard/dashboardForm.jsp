@@ -6,12 +6,13 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import="com.vo.EmpVO" %>
-<%@ page import="com.vo.AttendanceVO" %>
+<%@ page import="com.vo.EmpVO, com.vo.AttendanceVO, com.vo.NoticeBoardVO, com.vo.MediaNoticeVO" %>
 <%
   AttendanceVO attendance = (AttendanceVO) request.getAttribute("attendance");
   List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
-//out.print(faList);
+  List<NoticeBoardVO> noticeList = (List)request.getAttribute("noticeList");
+  List<MediaNoticeVO> mediaNoticeList = (List)request.getAttribute("mediaNoticeList");
+  //out.print(faList);
 %>
 
 <!DOCTYPE html>
@@ -238,25 +239,25 @@
                       <span style="font-weight: bold; margin-left: 1.5rem" >공지게시판</span>
                     </div>
                     <div style="margin-left: auto; margin-right: 1.5rem">
-                      <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                      <a href="/notice/noticeList" class="btn btn-danger" style="border-radius:30px">more</a>
                     </div>
                   </div>
                   <hr/>
-                  공지게시판 들어가는 부분
+                  <%@include file="/include/icNotice.jsp"%>
                 </div>
               </div>
               <div class="row">
-                <div class="col mainbox">
+                <div class="col mainbox" style="height: 300px">
                   <div class="mainbox-header d-flex align-items-center pb-0">
                     <div class="d-flex align-items-center">
                       <span style="font-weight: bold; margin-left: 1.5rem" >미디어게시판</span>
                     </div>
                     <div style="margin-left: auto; margin-right: 1.5rem">
-                      <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
+                      <a href="/media/mediaNotice" class="btn btn-danger" style="border-radius:30px">more</a>
                     </div>
                   </div>
                   <hr/>
-                  미디어 게시판 들어가는 부분
+                  <%@include file="/include/icMedia.jsp"%>
                 </div>
               </div>
             </div>
@@ -272,7 +273,7 @@
               </div>
               <hr/>
               <div id='calendar-container'>
-                <%@include file="/include/attendance.jsp"%>
+                <%@include file="/include/icAttendance.jsp"%>
               </div>
             </div>
           </div>
