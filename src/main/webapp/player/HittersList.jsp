@@ -30,15 +30,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>전략분석패이지</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-
     <script type="text/javascript">
-
-
-
         window.onload = function() {
             // 행 태이블 선택
             let rows = document.querySelectorAll("table tr");
@@ -49,11 +41,6 @@
                 firstCell.textContent = i;
             }
         };
-
-
-
-
-
 
         function PlayersSearch() {
             var gubunValue = document.getElementById('gubun').value;// select1 value option
@@ -73,17 +60,14 @@
             }
         }
 
-
-
         let  HitterDetail= (h_no) => {
             location.href= "/player/HitterDetail?h_no="+h_no;
         }
-
     </script>
-
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
+<div class="wrapper">
 <%@include file="/include/KGW_bar.jsp"%>
 <!-- body start    -->
 <div class="content-wrapper">
@@ -204,6 +188,7 @@
             </div>
         </div>
     </div>
+</div>
     <script>  <%-- toolTips function 사용--%>
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     tooltipTriggerList.forEach(function (tooltipTriggerEl) {

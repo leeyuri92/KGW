@@ -3,7 +3,7 @@
 <%@ page import="java.util.*,com.util.BSPageBar" %>
 <%
   Map<String, Object> attendanceModMap = (Map) request.getAttribute("attendanceModMap");
-  out.print(attendanceModMap);
+//  out.print(attendanceModMap);
 %>
 <!DOCTYPE html>
 <html lang="ko">

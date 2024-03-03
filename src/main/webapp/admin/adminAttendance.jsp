@@ -80,7 +80,7 @@
           </div>
           <div class="col-3">
             <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
-                   aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
+                   aria-label="검색어를 입력하세요." aria-describedby="btn_search" />
           </div>
           <div class="col-1">
             <button id="btn_search" class="btn btn-danger" onclick="attendanceSearch()">검색</button>
