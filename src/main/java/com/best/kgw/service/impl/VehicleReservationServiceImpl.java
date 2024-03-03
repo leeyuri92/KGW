@@ -74,6 +74,16 @@ public class VehicleReservationServiceImpl implements VehicleReservationService 
     }
 
     @Override
+    public void deleteTodayVReservation(int reservationNo) {
+        logger.info("Service : deleteTodayVReservation 호출");
+        try {
+            vehicleReservationDao.deleteTodayVReservation(reservationNo);
+        } catch (Exception e) {
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
+        }
+    }
+
+    @Override
     public List<Map<String, Object>> vehicleReservList(Map<String, Object> reservMap) {
         List<Map<String, Object>> vehicleReservList = null;
         logger.info("Service : vehicleReservList 호출");

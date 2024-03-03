@@ -20,7 +20,10 @@ public interface ReservationDao {
 
     void updateReservation(CalendarVO calendarVO) throws Exception;
 
+    void deleteTodayReservation(int reservationNo)  throws Exception;
+
     List<Map<String, Object>> reservList(@RequestParam Map<String, Object> reservMap) throws Exception;
 
     List<Map<String, Object>> myReservList(@RequestParam Map<String, Object> myReservMap) throws Exception;
+
 }

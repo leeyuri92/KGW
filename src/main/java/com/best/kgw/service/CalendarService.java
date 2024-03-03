@@ -21,6 +21,8 @@ public interface CalendarService {
 
     public void updateCalendar(CalendarVO calendarVO);
 
+    public void deleteTodayCalendar(int calendarNo);
+
 
     List<Map<String, Object>> calList(Map<String, Object> calMap);
 

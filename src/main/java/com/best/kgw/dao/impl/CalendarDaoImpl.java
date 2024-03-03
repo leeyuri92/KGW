@@ -86,6 +86,11 @@ public class CalendarDaoImpl implements CalendarDao {
     }
 
     @Override
+    public void deleteTodayCalendar(int calendarNo) throws Exception {
+        logger.info("Dao : deleteTodayCalendar 호출");
+        sqlSessionTemplate.delete("deleteTodayCalendar", calendarNo);
+    }
+    @Override
     public List<Map<String, Object>> calList(@RequestParam Map<String, Object> calMap)throws Exception {
         logger.info("Dao : calList 호출");
         logger.info(calMap.toString());

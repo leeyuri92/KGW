@@ -97,6 +97,16 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
+    public void deleteTodayCalendar(int calendarNo) {
+        logger.info("Service : deleteTodayCalendar 호출");
+        try {
+            calendarDao.deleteTodayCalendar(calendarNo);
+        } catch (Exception e) {
+            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
+        }
+    }
+
+    @Override
     public List<Map<String, Object>> calList(Map<String, Object> calMap) {
         List<Map<String, Object>> calList = null;
         logger.info("Service : calList 호출");

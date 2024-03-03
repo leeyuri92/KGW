@@ -208,15 +208,6 @@
             }
         }
 
-        //내 예약 현황 취소 버튼
-        let cancelButtonList = document.querySelectorAll('.cancel-button');
-        cancelButtonList.forEach(function (cancelButton) {
-            cancelButton.addEventListener('click', function () {
-                let modal = document.getElementById('detailModal');
-                modal.style.display = 'block';
-            }, { passive: true }); // passive 옵션 추가
-        });
-
         // 이벤트 핸들러 등록
         let submitBtn = document.getElementById('submitEvent');
         let searchBtn = document.getElementById('searchEvent');
@@ -368,7 +359,42 @@
                     }
                 });
             }
-        
+
+            let cancelTodayButton = document.querySelectorAll('.cancel-button');
+
+            cancelTodayButton.forEach(function(cancelButton) {
+                cancelButton.addEventListener('click', function() {
+                    let reservationNoInput = document.getElementById('reservNo');
+                    if (reservationNoInput !== null) {
+                        let reservation_no = reservationNoInput.textContent;
+
+                        if (reservation_no) {
+                            // 사용자에게 삭제 여부를 물어보는 경고창
+                            if (confirm("예약을 삭제하시겠습니까?")) {
+                                // 사용자가 확인을 누르면 삭제 요청
+                                let url = "<%=request.getContextPath()%>/vehicleReservation/deleteTodayVReservation";
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    data: { reservation_no: reservation_no },
+                                    success: function(response) {
+                                        console.log(response);
+                                        if (response > 0) {
+                                            if (window.opener) window.opener.location.reload(true);
+                                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+                                            alert("예약이 삭제되었습니다.");
+                                        }
+                                    },
+                                    error: function(request, status, error) {
+                                        console.error("오류 발생 >> " + error);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            });
 
         closeModalAndClearInputs();
             // 모달 숨기기
@@ -539,22 +565,23 @@
                             </div>
                         </div>
 
-                        <div class="container-fluid">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">예약차량</th>
-                                    <th scope="col">예약자</th>
-                                    <th scope="col">예약명</th>
-                                    <th scope="col">예약시간</th>
-                                    <th scope="col">취소</th>
-                                </tr>
-                                </thead>
-                                <tbody id="reservationTableBody">
-                                <% List<CalendarVO> vehicleReservationList1 = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
+                            <div class="container-fluid">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">예약차량</th>
+                                        <th scope="col">예약자</th>
+                                        <th scope="col">예약명</th>
+                                        <th scope="col">시작시간</th>
+                                        <th scope="col">종료시간</th>
+                                        <th scope="col">취소</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="reservationTableBody">
+                                        <% List<CalendarVO> vehicleReservationList1 = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
                                     if (vehicleReservationList1 != null) {
-                                        int count = 0; // 일정 카운터 변수 추가
+                                        int count = 0; // 예약 카운터 변수 추가
                                         for (CalendarVO vo : vehicleReservationList1) {
                                             if (Objects.equals(sessionVO.getName(), vo.getName())) {
                                             String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
@@ -562,16 +589,18 @@
                                             String startDate = vo.getReservation_end();
                                             String endDate = vo.getReservation_end();
                                             if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
-                                            count++; // 카운터 증가
                                 %>
-                                <tr>
-                                    <th scope="row"><%= count %></th>
-                                    <td><%= vo.getAsset_no() %></td>
-                                    <td><%= vo.getName() %></td>
-                                    <td><%= vo.getReservation_title() %></td>
-                                    <td><%= startDate + "~" + endDate %></td>
-                                    <td><button class="btn btn-danger cancel-button" style="background-color: #652C2C;">취소</button></td>
-                                </tr>
+                                    <tr>
+                                        <th scope="row"><%= ++count %></th>
+                                        <%-- 화면엔 필요없지만 서버에 전송할 데이터 --%>
+                                        <td class="reservNo" id="reservNo" style="display: none;"><%= vo.getReservation_no() %></td>
+                                        <td><%= vo.getAsset_no() %></td>
+                                        <td><%= vo.getName() %></td>
+                                        <td><%= vo.getReservation_title() %></td>
+                                        <td><%= startDate%></td>
+                                        <td><%= endDate %></td>
+                                        <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" style="background-color: #652C2C;" value="취소"/></td>
+                                    </tr>
                                 <%
                                 }}}}
                                 %>
