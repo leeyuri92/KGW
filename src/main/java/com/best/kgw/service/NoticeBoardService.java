@@ -13,4 +13,6 @@ public interface NoticeBoardService {
     public int noticeModify(NoticeBoardVO noticeBoardVO)throws Exception;
 
     public List<NoticeBoardVO> noticeDetail(NoticeBoardVO noticeboardVO) throws Exception;
+
+    List<NoticeBoardVO> noticePinList(NoticeBoardVO noticeboardVO) throws Exception;
 }

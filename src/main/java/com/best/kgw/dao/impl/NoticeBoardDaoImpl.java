@@ -50,4 +50,10 @@ public class NoticeBoardDaoImpl implements NoticeBoardDao {
     public void hitUpdate(NoticeBoardVO noticeBoardVO) {
         sqlSessionTemplate.update("hitUpdate",noticeBoardVO);
     }
+
+    @Override
+    public List<NoticeBoardVO> noticePinList(NoticeBoardVO noticeboardVO) throws Exception {
+        List<NoticeBoardVO> noticePinList =sqlSessionTemplate.selectList("noticePinList",noticeboardVO);
+        return noticePinList;
+    }
 }

@@ -40,6 +40,26 @@
         order by a.notice_pin desc, a.notice_no desc
     </select>
 
+    <select id="noticePinList" parameterType="com.vo.NoticeBoardVO" resultType="com.vo.NoticeBoardVO">
+        select
+            a.notice_no,
+            a.emp_no,
+            a.notice_title,
+            a.notice_content,
+            a.category,
+            a.notice_hit,
+            a.notice_pin,
+            a.pin_start,
+            a.pin_end,
+            a.reg_date,
+            a.mod_date,
+            b.emp_no,
+            b.name
+        from notice a join emp b on a.EMP_NO = b.EMP_NO
+        where notice_pin = 1
+        order by reg_date desc
+    </select>
+
     <insert id="noticeInsert" parameterType="com.vo.NoticeBoardVO">
         INSERT INTO notice (
             notice_no,

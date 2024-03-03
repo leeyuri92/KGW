@@ -71,7 +71,7 @@
         </div>
         <hr />
         <div id='calendar-container' >
-          <%@include file="/include/attendance.jsp"%>
+          <%@include file="/include/icAttendance.jsp"%>
         </div>
       </div>
     </section>
