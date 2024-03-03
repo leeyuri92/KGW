@@ -144,7 +144,7 @@
           <div class="form-floating m-3">
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label for="name">작성자</label></div>
-              <div class="col-10" ><input type="text" class="form-control" id="name" name="name" value="[[이유리]]" disabled></div>
+              <div class="col-10" ><input type="text" class="form-control" id="name" name="name" value="<%=sessionVO.getName()%>" disabled></div>
             </div>
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label for="name">수정요청일</label></div>
