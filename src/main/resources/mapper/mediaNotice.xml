@@ -5,20 +5,32 @@
 <mapper namespace="com.mybatis.mapper.KiwoomNoticeMapper">
 
     <select id="mediaNoticeList" parameterType="com.vo.MediaNoticeVO" resultType="com.vo.MediaNoticeVO">
-        select a.BOARD_NO,
-        a.EMP_NO,
-        a.BOARD_TITLE,
-        a.BOARD_HIT,
-        a.REG_DATE,
-        a.MOD_DATE,
-        a.BOARD_CONTENT,
-        a.FILENAME,
-        b.EMP_NO,
-        b.TEAM_NO,
-        b.NAME
-        from media_board a join emp b on a.EMP_NO = b.EMP_NO
+        SELECT
+        mb.board_no,
+        mb.emp_no,
+        mb.board_title,
+        mb.board_hit,
+        mb.reg_date,
+        mb.mod_date,
+        mb.board_content,
+        mb.filename,
+        NVL(cnt.commend_cnt, 0) as commend_cnt,
+        e.name,
+        e.profile_img
+        FROM
+        MEDIA_BOARD mb
+        LEFT JOIN (
+        SELECT
+        BOARD_NO,
+        COUNT(COMMEND_NO) as commend_cnt
+        FROM
+        MEDIA_BOARD_COMMEND
+        GROUP BY
+        BOARD_NO
+        ) cnt ON mb.board_no = cnt.BOARD_NO
+        LEFT JOIN EMP e ON mb.emp_no = e.emp_no
         <where>
-            <if test="board_no != null">AND a.board_no=#{board_no}</if>
+            <if test="board_no != null">AND mb.board_no=#{board_no}</if>
             <if test="gubun != null">
                 <choose>
                     <when test='gubun.equals("board_title")'>
@@ -29,7 +41,6 @@
                     </when>
                 </choose>
             </if>
-
         </where>
         order by board_no desc
     </select>
@@ -75,7 +86,8 @@
                a.COMMEND_CONTENT,
                a.COMMEND_NO,
                a.REG_DATE,
-               c.NAME
+               c.NAME,
+               c.PROFILE_IMG
         from MEDIA_BOARD_COMMEND a inner join MEDIA_BOARD b on a.BOARD_NO = b.BOARD_NO
                                    inner join emp c on a.emp_no = c.EMP_NO
         where a.board_no = #{board_no}

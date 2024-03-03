@@ -17,6 +17,8 @@ public class MediaNoticeVO {
     private String gubun;
     private String keyword;
     private String name;
+    private String profile_img;
+    private Integer commend_cnt;
 
     @Override
     public String toString() {
@@ -32,6 +34,8 @@ public class MediaNoticeVO {
                 ", gubun='" + gubun + '\'' +
                 ", keyword='" + keyword + '\'' +
                 ", name='" + name + '\'' +
+                ", profile_img='" + profile_img + '\'' +
+                ", commend_cnt=" + commend_cnt +
                 '}';
     }
 }

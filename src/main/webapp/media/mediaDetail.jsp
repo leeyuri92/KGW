@@ -134,18 +134,23 @@
                                         %>
                                         <div class="comment">
                                             <input type="hidden" class="board_no" value="<%=mediaVO.getBoard_no()%>">
-                                            <div class="user-avatar"></div>
+                                            <img src="/fileUpload/profile/<%=commendVO.getProfile_img()%>" class="user-avatar" alt="user-avatar">
+                                            <%--                                            <div class="user-avatar"></div> --%>
                                             <div class="comment-content">
                                                 <p class="user-name"><%=commendVO.getName()%></p>
                                                 <p class="comment-text"><%=commendVO.getCommend_content()%></p>
                                                 <div class="row">
-                                                    <p class="comment-date"><%=commendVO.getReg_date()%></p>
+                                                    <div class="col-9">
+                                                        <p class="comment-date"><%=commendVO.getReg_date()%></p>
+                                                    </div>
+                                                    <% if (sessionVO.getEmp_no() == commendVO.getEmp_no() || sessionVO.getEmp_access().equals("ROLE_ADMIN")) { %>
+                                                    <div class="col-3 justify-content-end">
+                                                        <button type="button" class="btn btn-primary btn-small" onclick="mediaCommendDelete('<%=commendVO.getCommend_no()%>')">삭제</button>
+                                                    </div>
+                                                    <%
+                                                        }
+                                                    %>
                                                 </div>
-                                                <% if (sessionVO.getEmp_no() == mediaVO.getEmp_no() || sessionVO.getEmp_access().equals("ROLE_ADMIN")) { %>
-                                                <button type="button" class="btn btn-primary" onclick="mediaCommendDelete('<%=commendVO.getCommend_no()%>')">삭제</button>
-                                                <%
-                                                    }
-                                                %>
                                             </div>
                                         </div>
                                         <%
@@ -158,7 +163,7 @@
                                                 <label for="commendContent" class="form-label">댓글</label>
                                                 <input type="hidden" class="form-control mb-3" name="board_no" value="<%=mediaVO.getBoard_no()%>">
                                                 <input type="hidden" class="form-control mb-3" name="emp_no" value="<%=sessionVO.getEmp_no()%>" >
-                                                <textarea class="form-control" id="commendContent" rows="3" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
+                                                <textarea class="form-control" id="commendContent" rows="2" name="commend_content" placeholder='댓글을 입력해주세요.' required></textarea>
                                             </div>
                                             <div class="d-flex justify-content-end">
                                                 <button type="button" class="btn btn-primary" onclick="commendInsert()">댓글 작성</button>

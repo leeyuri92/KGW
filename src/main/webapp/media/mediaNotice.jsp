@@ -139,11 +139,10 @@
                       <img src="/fileUpload/media/<%=mediaNoticeVO.getFilename()%>/" class="img-fluid rounded-start" alt="...이미지 없음 ">
                     </div>
                     <div class="col-md-8">
-
                       <div class="card-body">
                         <p class="card-link">
                           <a href="javascript:mediaDetail('<%=mediaNoticeVO.getBoard_no()%>')" class="link-styled">
-                            <%=mediaNoticeVO.getBoard_title()%>
+                            <%=mediaNoticeVO.getBoard_title()%>[<%=mediaNoticeVO.getCommend_cnt()%>]
                           </a>
                         </p>
                         <p class="card-text">작성자 : <%=mediaNoticeVO.getName()%></p>
