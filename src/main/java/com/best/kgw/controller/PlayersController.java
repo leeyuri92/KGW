@@ -35,6 +35,7 @@ public class PlayersController {
     public String hitterDetail(Model model, HittersVO hittersVO) throws  Exception {
     List<HittersVO> hitterDetail = playerService.hitterList(hittersVO);
     model.addAttribute("hitterDetail", hitterDetail);
+    logger.info("DetailHitter");
     return "forward:HitterDetail.jsp";
 
 }

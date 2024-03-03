@@ -4,7 +4,7 @@
 <%@ page import="com.vo.HittersVO" %>
 
 <%
-    String pNoParamStr = request.getParameter("p_no");
+    String pNoParamStr = request.getParameter("h_no");
     int pNoParam = Integer.parseInt(pNoParamStr);
 
     List<HittersVO> list = (List<HittersVO>)request.getAttribute("hitterDetail");
