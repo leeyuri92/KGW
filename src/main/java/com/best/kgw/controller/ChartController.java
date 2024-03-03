@@ -157,7 +157,7 @@ public class ChartController {
      작성일자 : 24.02.27
      기능 : 검색기 비동기 처리
      **********************************************************************************/
-    @GetMapping("searchFA")
+    @GetMapping("/manage/searchFA")
     @ResponseBody
     public String searchFA (@RequestParam Map<String, Object> smap) {
         logger.info("searchFA 호출");

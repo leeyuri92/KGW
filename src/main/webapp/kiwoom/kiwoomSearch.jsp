@@ -93,7 +93,7 @@
                   <select id="gubun" class="form-select" aria-label="분류선택">
                     <option value="none">분류선택</option>
                     <option value="k_name">이름</option>
-                    <option value="k_no">등번호</option>
+                    <option value="k_num">등번호</option>
                     <option value="k_pos">포지션</option>
                   </select>
                 </div>

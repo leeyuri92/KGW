@@ -30,11 +30,9 @@
     <link rel="stylesheet" href="/css/certificate.css" />
     <script type="text/javascript">
         function searchEnter(event){
-            console.log(window.event.keyCode)
             if(window.event.keyCode == 13){
                 noticeSearch()
             }
-            event.isComposing//검색후 잔여검색기록 없애는코드
         }
         function noticeSearch(){
             console.log('noticeSearch');

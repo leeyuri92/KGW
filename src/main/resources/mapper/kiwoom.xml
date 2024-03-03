@@ -16,7 +16,7 @@
                         AND k_name LIKE '%'||#{keyword}||'%'
                     </when>
                     <when test='gubun.equals("k_num")'>
-                        AND k_num LIKE '%'||#{keyword}||'%'
+                        AND k_num LIKE #{keyword}
                     </when>
                     <when test='gubun.equals("k_pos")'>
                         AND k_pos LIKE '%'||#{keyword}||'%'

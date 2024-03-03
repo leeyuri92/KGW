@@ -34,10 +34,10 @@
             <if test="gubun != null">
                 <choose>
                     <when test='gubun.equals("board_title")'>
-                        AND a.board_title LIKE '%'||#{keyword}||'%'
+                        AND mb.board_title LIKE '%'||#{keyword}||'%'
                     </when>
-                    <when test='gubun.equals("emp_no")'>
-                        AND b.name LIKE '%'||#{keyword}||'%'
+                    <when test='gubun.equals("name")'>
+                        AND e.name LIKE '%'||#{keyword}||'%'
                     </when>
                 </choose>
             </if>

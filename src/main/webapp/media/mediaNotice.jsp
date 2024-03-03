@@ -34,13 +34,12 @@
   <!-- Google Font: Source Sans Pro -->
 </head>
 <script type="text/javascript">
-  function searchEnter(event){
-    console.log(window.event.keyCode)
-    if(window.event.keyCode == 13){
-      NoticeSearch()
+    function searchEnter(event) {
+        if (window.event.keyCode === 13) {
+            mediaNoticeSearch();
+        }
     }
-    event.isComposing//검색후 잔여검색기록 없애는코드
-  }
+
   function mediaNoticeSearch(){
     console.log('mediaNoticeSearch');
     const gubun = document.querySelector("#gubun").value;
@@ -108,7 +107,7 @@
                   <select id="gubun" class="form-select" aria-label="분류선택">
                     <option value="none">분류선택</option>
                     <option value="board_title">제목</option>
-                    <option value="emp_no">작성자</option>
+                    <option value="name">작성자</option>
                   </select>
                 </div>
                 <div class="col-3">

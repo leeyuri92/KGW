@@ -461,6 +461,12 @@
         $('#calendarGubun').show();
     });
 
+    function searchEnter(event) {
+        if (window.event.keyCode === 13) {
+            calendarSearch();
+        }
+    }
+
     function calendarSearch() {
         var gubunValue = document.getElementById('gubun').value;
         var calendarGubunValue = document.getElementById('calendarGubun').value;
