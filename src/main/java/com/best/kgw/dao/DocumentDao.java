@@ -28,4 +28,6 @@ public interface DocumentDao {
 
     //    문서 업데이트처리
     int documentModify(ApprovalVO approvalVO) throws Exception;
+
+    void approvalUpdate(ApprovalVO approvalvo) throws Exception;
 }

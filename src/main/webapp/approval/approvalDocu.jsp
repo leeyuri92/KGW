@@ -35,7 +35,7 @@
 
         function docSubmit() {
             $('#r_document3').submit();
-            $('#r_document2').submit();
+            // $('#r_document2').submit();
         }
     </script>
     <link  rel="stylesheet " href="../css/approvalDocu.css">
@@ -284,7 +284,7 @@
                                         </div>
                                         <div class="item">
                                             <span class="title">영입 선수:</span>
-                                            <select id="playersList1" name="playersList">
+                                            <select id="playersList1" name="k_name">
                                                 <% for (int i = 0; i < kiwoomList.size(); i++) {
                                                     Map<String,Object> KiwoomMap = kiwoomList.get(i);
                                                     if(KiwoomMap != null) {

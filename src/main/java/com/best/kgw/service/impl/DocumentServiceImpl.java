@@ -60,6 +60,12 @@ public class DocumentServiceImpl implements DocumentService {
         documentDao.documentModify(approvalVO);
     }
 
+    @Override
+    public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
+        approvalvo.setApproval_category("최종결재대기");
+        documentDao.approvalUpdate(approvalvo);
+    }
+
 
 }
 
