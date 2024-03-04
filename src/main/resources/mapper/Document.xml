@@ -9,10 +9,11 @@
             <where>
                 <if test="gubun !=null">
                     <choose>
-                        <when test='gubun.equals("true")'>
+                        <when test='gubun == "true"'>
                             AND document.state = '임시저장'
+                            <if test="document_no != null"> AND document.document_no = 123</if>
                         </when>
-                        <when test='gubun.equals("false")'>
+                        <when test='gubun=="false"'>
                             AND document.state != '임시저장'
                         </when>
                     </choose>
@@ -20,6 +21,7 @@
             </where>
             order by document.document_no asc
         </select>
+
 
 
         <!--   결재자 select -->
@@ -68,7 +70,9 @@
             end_date,
             dayoff_content,
             salary,
-            contract_term
+            contract_term,
+            state,
+            draftday
         )
         VALUES (
                document_pk_seq.nextval,
@@ -80,7 +84,9 @@
                #{end_date,jdbcType=VARCHAR},
                #{dayoff_content,jdbcType=VARCHAR},
                #{salary,jdbcType=INTEGER},
-               #{contract_term,jdbcType=VARCHAR}
+               #{contract_term,jdbcType=VARCHAR},
+               #{state},
+               to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
                )
     </insert>
 
@@ -127,41 +133,6 @@
 
 
 
-<!--    1	approval_no	결재번호
-2	document_no	문서번호
-3	approval_name	결재자
-4	approval_category	결재상태
-5	rejection_content	반려사유
-6	middle_approval_date	중간결재일시
-7	final_approval_date	최종결재일시
-8	middleSign_img	중간결재사인이미지
-9	FinalSign_img	최종결재사인이미지-->
-<!--    INSERT INTO document (-->
-<!--    document_no,-->
-<!--    emp_no,-->
-<!--    document_title,-->
-<!--    document_category,-->
-<!--    k_no,-->
-<!--    start_date,-->
-<!--    end_date,-->
-<!--    dayoff_content,-->
-<!--    salary,-->
-<!--    contract_term-->
-
-<!--    )-->
-<!--    VALUES (-->
-<!--    document_pk_seq.nextval,-->
-<!--    #{emp_no},-->
-<!--    #{document_title},-->
-<!--    #{document_category},-->
-<!--    #{k_no},-->
-<!--    #{start_date},-->
-<!--    #{end_date},-->
-<!--    #{dayoff_content},-->
-<!--    #{salary},-->
-<!--    #{contract_term},-->
-
-<!--    )-->
 </mapper>
 
 

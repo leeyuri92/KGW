@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>기안 문서</title>
     <%@include file="/common/bootstrap_common.jsp" %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelectorAll('.navbar-nav .nav-link'); //nav 링크전채 확보
@@ -33,10 +34,82 @@
             }));
         });
 
-        function docSubmit() {
-            $('#r_document3').submit();
-            // $('#r_document2').submit();
+
+        function docSubmitScout() {
+            $('#r_documentScout').submit();
         }
+        function docSaveSubmitScout() {//영입 문서 임시저장
+            let state = document.getElementById('stateScout');
+            state.value = '임시저장';
+            let now = new Date();
+            let draftday = now.toISOString();
+            document.getElementById('draftdayScout').value =draftday;
+            $('#r_documentScout').submit();
+            console.log("임시저장성공");
+        }
+
+
+        function docSubmitRelease() {
+            $('#r_documentRelease').submit();
+        }
+        function docSaveSubmitRelease() {//방출 문서 임시저장
+            let state = document.getElementById('stateRelease');
+            state.value = '임시저장';
+            let now = new Date();
+            let draftday = now.toISOString();
+            document.getElementById('draftdayRelease').value =draftday;
+            $('#r_documentRelease').submit();
+            console.log("임시저장성공");
+        }
+
+
+        function docSubmitOffer() {
+            let salaryValue = document.getElementById('salary').value;
+            let contract_term = document.getElementById('contract_term').value;
+            $('#salary').val(salaryValue);
+            $('#contract_term').val(contract_term);
+            $('#r_documentOffer').submit();
+        }
+        function docSaveSubmitOffer() {
+
+            $('#stateOffer').val('임시저장');
+
+          // value =" "경우  jquery 사용
+            let salaryValue = document.getElementById('salary').value;
+            let contract_term = document.getElementById('contract_term').value;
+            $('#salary').val(salaryValue);
+            $('#contract_term').val(contract_term);
+
+            let now = new Date();
+            let draftday = now.toISOString();
+            $('#draftdayOffer').val(draftday);
+
+            $('#r_documentOffer').submit(); //재출
+
+        }
+
+
+        function docSubmitVacation() {
+            $('#r_documentVacation').submit();
+        }
+
+
+
+        function docSaveSubmitVacation() {//휴가 문서 임시저장 jquery date tyep input String 형전환 필요
+            let state = document.getElementById('stateVacation');
+            state.value = '임시저장';
+
+            let now = new Date();
+            let draftday = now.toISOString();
+            document.getElementById('draftdayVacation').value =draftday;
+            $('#r_documentVacation').submit();
+            console.log("임시저장성공");
+        }
+
+
+
+
+
     </script>
     <link  rel="stylesheet " href="../css/approvalDocu.css">
 </head>
@@ -102,13 +175,16 @@
                             </nav>
 
                             <%--휴가문서--%>
-                            <form id="r_document" name="r_document" action="documentInsert" method="post">
-                            <div class="frame " id="do_vocation">
+                            <form id="r_documentVacation" name="r_documentVacation" action="documentInsert" method="post">
+                                <div class="frame " id="do_vocation">
                                 <div class="document-section">
                                     <div class="item">
                                         <span class="title">사원번호:</span>
                                         <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                     </div>
+                                    <input type="hidden" id="stateVacation" name="state"    value="대기" >
+                                    <input type="hidden" id="draftdayVacation" name="draftday"    value="" >
+
                                     <div class="item">
                                         <span class="title">문서제목:</span>
                                         <input type="text" class="value-input" id="document_title" name="document_title" value="휴가관련"  >
@@ -119,45 +195,45 @@
                                     </div>
                                     <div class="item">
                                         <span class="title">담당자:</span>
-                                        <input type="text" class="value-input" id="pla_manager" value="경영지원팀장">
+                                        <input type="text" class="value-input" id="approval_name" name="approval_name" value="경영지원팀장">
                                     </div>
                                     <div class="item">
                                         <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="name" name="name" value="<%=sessionVO.getName()%>" >
+                                        <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" >
                                     </div>
                                     <div class="item">
                                         <span class="title">휴가 사유:</span>
-                                        <select id="vacationReason" name="vacationReason">
-                                            <option value="sickLeave">병가</option>
-                                            <option value="annualLeave">연차</option>
-                                            <option value="familyEvent">경조사</option>
-                                        </select>
+                                        <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >
                                     </div>
                                     <div class="item">
                                         <span class="title">휴가시작일:</span>
-                                        <input type="date" id="start_date" name="start_date" value="2024-01-12">
+                                        <input type="date" id="start_date" name="start_date"   value="2024-03-03">
                                     </div>
                                     <div class="item">
                                         <span class="title">휴가만료일：</span>
-                                        <input type="date" id="end_date" name="end_date" value="2024-01-15">
+                                        <input type="date" id="end_date" name="end_date"  value="2024-03-04">
                                     </div>
                                     <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
                                 </div>
                                 <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
-                                    <button type="button" id="btn_search" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                    <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitVacation()" >제출</button>
+                                    <button type="button" id="btn_search" class="btn btn-danger" onclick="docSaveSubmitVacation()">임시보관 </button>
                                 </div>
-                            </div></form>
+                                </div>
+                            </form>
 
 
 
-                            <form id="r_document1" name="r_document1" action="documentInsert" method="post">
+                            <form id="r_documentOffer" name="r_documentOffer" action="documentInsert" method="post">
                             <div class="frame" id="do_pla_a"> <%--계약연장 문서--%>
                                 <div class="document-section">
                                     <div class="item">
                                         <span class="title">사원번호:</span>
                                         <input type="text" class="value-input" id="emp_no3"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                     </div>
+                                    <input type="hidden" id="stateOffer" name="state"    value="대기" >
+                                    <input type="hidden" id="draftdayOffer" name="draftday"    value="" >
+
                                     <div class="item">
                                         <span class="title">문서제목:</span>
                                         <input type="text" class="value-input" id="document_title3" name="document_title" value="선수관련"  >
@@ -166,6 +242,7 @@
                                         <span class="title">문서타이틀:</span>
                                         <input type="text" class="value-input" id="document_category3"  name="document_category" value="계약" >
                                     </div>
+
                                     <div class="item">
                                         <span class="title">담당자:</span>
                                         <input type="text" class="value-input" id="approval_name3" name="approval_name" value="운영팀장">
@@ -177,7 +254,7 @@
 
                                     <div class="item">
                                         <span class="title">계약연장  선수:</span>
-                                        <select id="playersList3" name="playersList3">
+                                        <select id="playersList3" name="k_name">
                                                  <% for (int i = 0; i < kiwoomList.size(); i++) {
                                                    Map<String,Object> KiwoomMap = kiwoomList.get(i);
                                                    if(KiwoomMap != null) {
@@ -192,29 +269,33 @@
                                     <div class="item flex-row">
                                         <div class="flex-item">
                                             <span class="title">연봉:</span>
-                                            <input type="text" class="value-input short-input" id="salary" name="salary" placeholder="연봉 입력">
+                                            <input type="text" class="value-input short-input" id="salary" name="salary" placeholder="연봉 입력" value=""　>
                                         </div>
                                         <div class="flex-item">
                                             <span class="title">계약년수:</span>
-                                            <input type="text" class="value-input short-input" id="contract_term"  name="contract_term" placeholder="계약년수 입력">
+                                            <input type="text" class="value-input short-input" id="contract_term"  name="contract_term" placeholder="계약년수 입력" value="">
                                         </div>
                                     </div>
                                     <div class="text-wrapper-2">상기와 같이 계약연장 희망함</div>
                                 </div>
                                 <div id ="documentButton1 " class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button"  id="btn_docSubmit3" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
-                                    <button type="button" id="btn_search3" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                    <button type="button"  id="btn_docSubmit3" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitOffer()" >제출</button>
+                                    <button type="button" id="btn_search3" class="btn btn-danger" onclick="docSaveSubmitOffer()">임시보관 </button>
                                 </div>
                             </div>
                             </form>
 
-                            <form id="r_document2" name="r_document2" action="documentInsert" method="post">
+
+
+                            <form id="r_documentRelease" name="r_documentRelease" action="documentInsert" method="post">
                                 <div class="frame" id="do_pla_b"> <%--방출 문서--%>
                                     <div class="document-section">
                                         <div class="item">
                                             <span class="title">사원번호:</span>
                                             <input type="text" class="value-input" id="emp_no2"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                         </div>
+                                        <input type="hidden" id="stateRelease" name="state"    value="대기" >
+                                        <input type="hidden" id="draftdayRelease" name="draftday"    value="" >
                                         <div class="item">
                                             <span class="title">문서제목:</span>
                                             <input type="text" class="value-input" id="document_title2" name="document_title" value="선수관련"  >
@@ -233,7 +314,7 @@
                                         </div>
                                         <div class="item">
                                             <span class="title">영입 선수:</span>
-                                            <select id="playersList2" name="playersList">
+                                            <select id="playersList2" name="k_name">
                                                 <% for (int i = 0; i < kiwoomList.size(); i++) {
                                                     Map<String,Object> KiwoomMap = kiwoomList.get(i);
                                                     if(KiwoomMap != null) {
@@ -248,8 +329,8 @@
                                         <div class="text-wrapper-2">상기와 같이 방출 희망함 </div>
                                     </div>
                                     <div id ="documentButton2 " class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
-                                        <button type="button" id="btn_search2" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                        <button type="button"  id="btn_docSubmit2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitRelease()" >제출</button>
+                                        <button type="button" id="btn_search2" class="btn btn-danger" onclick="docSaveSubmitRelease()">임시보관 </button>
                                     </div>
                                 </div>
                             </form>
@@ -259,13 +340,16 @@
 
 
                             <%-- (r_document)Recruitment document : 영입문서                   --%>
-                            <form id="r_document3" name="r_document3" action="documentInsert" method="post">
+                            <form id="r_documentScout" name="r_documentScout" action="documentInsert" method="post">
                                 <div class="frame" id="do_pla_c"> <%--영입 문서--%>
                                     <div class="document-section">
                                         <div class="item">
                                             <span class="title">사원번호:</span>
                                             <input type="text" class="value-input" id="emp_no1"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                         </div>
+                                        <input type="hidden" id="stateScout" name="state"    value="대기" >
+                                        <input type="hidden" id="draftdayScout" name="draftday"    value="" >
+
                                         <div class="item">
                                             <span class="title">문서제목:</span>
                                             <input type="text" class="value-input" id="document_title1" name="document_title" value="선수관련"  >
@@ -299,8 +383,8 @@
                                         <div class="text-wrapper-2">상기와 같이 영입 희망함 </div>
                                     </div>
                                     <div id ="documentButton1" class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmit()" >제출</button>
-                                        <button type="button" id="btn_search1" class="btn btn-danger" onclick="boardSearch()">임시보관 </button>
+                                        <button type="button"  id="btn_docSubmit1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitScout()" >제출</button>
+                                        <button type="button" id="btn_search1" class="btn btn-danger" onclick="docSaveSubmitScout()">임시보관 </button>
                                     </div>
                                 </div>
                             </form>

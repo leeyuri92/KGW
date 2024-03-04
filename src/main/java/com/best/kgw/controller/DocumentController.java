@@ -84,35 +84,47 @@ public class DocumentController {
     }
 //임시보관함 조회
     @GetMapping("/saveList")
-    public String SaveList(Model model, ApprovalVO approvalVO) {
+    public String SaveList(Model model, ApprovalVO approvalVO) throws  Exception{
         approvalVO.setGubun("true");
         List<ApprovalVO> list3 = documentService.DocumentList(approvalVO);
+        logger.info("saveLIst"+list3);
         model.addAttribute("list3", list3);
+        logger.info("saveLIst"+list3);
         return "forward:approvalList3.jsp";
     }
+//임시저장함 상세
+    @GetMapping("/saveDetail")
+    public String SaveDetail(Model model, ApprovalVO approvalVO) throws  Exception{
+        approvalVO.setGubun("true");
+        List<ApprovalVO> saveDetail = documentService.DocumentList(approvalVO);
+        model.addAttribute("saveDetail", saveDetail);
+        return "forward:approvalList3Detail.jsp";
+    }
 
-    //   값을 select 하기
+//    추후 insert 임시저장  기능 있음
+
+
+
+    //  기안문서 할떄   값을 select 하기
     @GetMapping("/docu")
-    public String DocumentInfo(Model model, ApprovalVO approvalvo) {
+    public String DocumentInfo(Model model, ApprovalVO approvalvo) throws  Exception {
         List<Map<String,Object>> kiwoomList = documentService.DocumentInfo(approvalvo);
         model.addAttribute("kiwoomList", kiwoomList);
         return "forward:approvalDocu.jsp";
 
     }
 
+
+
+
+
+    //결재 파트 업데이트 처리
     @PostMapping("/approvalUpdate")
     public String approvalUpdate(ApprovalVO approvalvo) throws Exception {
         documentService.approvalUpdate(approvalvo);
         return "redirect:./approvalList";
     }
 
-//    @PostMapping("middleModify")
-//    public void middleModify(ApprovalVO approvalVO, @RequestParam("files") MultipartFile file, HttpServletRequest req, HttpServletResponse resp) throws Exception {
-//        byte[] signImageData = file.getBytes();
-//        approvalVO.setMiddleSign_img(approvalVO.getMiddleSign_img());
-//        documentService.updateApprovalAndDocument(approvalVO);
-//        resp.sendRedirect("/approvalList");
-//    }
 
 
 }
