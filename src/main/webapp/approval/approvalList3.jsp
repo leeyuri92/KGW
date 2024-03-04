@@ -13,6 +13,7 @@
     if(request.getParameter("nowPage")!=null){
         nowPage=Integer.parseInt(request.getParameter("nowPage"));
     }
+    out.print(list3);
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -23,7 +24,12 @@
     <title>문서함{임시보관함}</title>
 
 
-    <%--  <script type="text/javascript">--%>
+      <script type="text/javascript">
+
+          const saveDetail= (document_no) => {
+              location.href= "/approval/saveDetail?document_no="+document_no ;
+          }
+
 
     <%--	const searchEnter = (event)=> {--%>
     <%--		console.log('searchEnter')--%>
@@ -48,7 +54,7 @@
     <%--	const boardDetail = (b_no) => {--%>
     <%--		location.href = "/board/boardDetail?b_no="+b_no;--%>
     <%--	}--%>
-    <%--  </script>--%>
+      </script>
 </head>
 
 <body   class="hold-transition sidebar-mini sidebar-collapse">
@@ -117,9 +123,10 @@
                                 <table class="table table-hover text-center ">
                                     <thead>
                                     <tr>
-                                        <th width="10%" >문서ID</th>
+                                        <th width="10%" >문서문서번호</th>
                                         <th width="10%">종류</th>
-                                        <th width="15%">결재자</th>
+                                        <th width="15%">중간결재자 </th>
+                                        <th width="15%">저장시간</th>
                                         <th width="10%">삭제</th>
                                     </tr>
                                     </thead>
@@ -130,9 +137,14 @@
                                             ApprovalVO approvalVO=list3.get(i);
                                     %>
                                     <tr>
-                                        <td><%= approvalVO.getDocument_no()%></td>
+                                        <td>
+                                            <a href="javascript:saveDetail('<%=approvalVO.getDocument_no()%>')">
+                                                <%= approvalVO.getDocument_no()%>
+                                            </a>
+                                        </td>
                                         <td><%= approvalVO.getDocument_category()%></td>
-                                        <td><%= approvalVO.getState()%></td>
+                                        <td><%= approvalVO.getApproval_name()%></td>
+                                        <td><%= approvalVO.getDraftday()%></td>
                                         <td><a href="#">삭제</a></td>
                                     </tr>
                                     <%

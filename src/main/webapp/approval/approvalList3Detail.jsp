@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="com.vo.ApprovalVO" %>
 
+
+<%--<%--%>
+<%--    List<ApprovalVO> saveDetail = (List<ApprovalVO>) request.getAttribute("saveDetail");--%>
+<%--    if (saveDetail != null && !saveDetail.isEmpty()) {--%>
+<%--        ApprovalVO approvalVO = saveDetail.get(0);--%>
+<%--        out.print(saveDetail);--%>
+<%--%>--%>
+<%--<%}%>--%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,32 +20,9 @@
     <title>{임시보관함 상세} -휴가</title>
 
 
-    <%--  <script type="text/javascript">--%>
+    <script>
 
-    <%--	const searchEnter = (event)=> {--%>
-    <%--		console.log('searchEnter')--%>
-    <%--		console.log(window.event.keyCode); // 13--%>
-    <%--		if(window.event.keyCode==13){--%>
-    <%--			boardSearch(); // 재사용성 ---%>
-    <%--		}--%>
-    <%--	}--%>
-    <%--	const boardSearch = () => {--%>
-    <%--		console.log('boardSearch');--%>
-    <%--		const gubun = document.querySelector("#gubun").value;--%>
-    <%--		const keyword = document.querySelector("#keyword").value;--%>
-    <%--		console.log(`${gubun} , ${keyword}`);--%>
-    <%--		location.href="/board/boardList?gubun="+gubun+"&keyword="+keyword;--%>
-    <%--	}--%>
-    <%--  	const boardList = () => {--%>
-    <%--  		location.href="/board/boardList";--%>
-    <%--  	}--%>
-    <%--  	const boardInsert = () => {--%>
-    <%--  		document.querySelector("#f_board").submit(); // form태그에 묶인 컴포넌트 값들이 전송됨--%>
-    <%--  	}--%>
-    <%--	const boardDetail = (b_no) => {--%>
-    <%--		location.href = "/board/boardDetail?b_no="+b_no;--%>
-    <%--	}--%>
-    <%--  </script>--%>
+    </script>
 </head>
 
 <body>
@@ -90,93 +76,84 @@
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">임시보관함</button>
                                     <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안문서 </button>
                                 </div>
-                                <div class="frame " id="do_vocation">   <%--휴가문서--%>
+
+                                <form id="saveDocumentPost" name="saveDocumentPost" method="post" action="#"> </form>
+                                <div class="frame " id="save_document">
                                     <div class="document-section">
+                                        <%
+                                            List<ApprovalVO> saveDetail = (List<ApprovalVO>) request.getAttribute("saveDetail");
+                                            if (saveDetail != null && !saveDetail.isEmpty()) {
+                                                ApprovalVO approvalVO = saveDetail.get(0);
+                                        %>
+
                                         <div class="item">
-                                            <span class="title">부서:</span>
-                                            <input type="text" class="value-input" id="va_department" value="자동불러옴" readonly>
+                                            <span class="title">가태고리 :</span>
+                                            <select id="playersList1" name="document_category">
+                                                <option value="document_category">선수관련 </option>
+                                                <option value="document_category">휴가관련 </option>
+                                            </select>
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">타이틀 :</span>
+                                            <input type="text" class="value-input" id="document_title" name=" document_title" value=" <%=approvalVO.getDocument_title()%>" >
                                         </div>
                                         <div class="item">
                                             <span class="title">담당자:</span>
-                                            <input type="text" class="value-input" id="va_manager" value="자동불러옴" readonly>
+                                            <input type="text" class="value-input" id="approval_name" name= "approval_name" value="<%=approvalVO.getApproval_name()%>" >
                                         </div>
                                         <div class="item">
                                             <span class="title">신청자:</span>
-                                            <input type="text" class="value-input" id="va_applicant" value="자동불러옴" readonly>
+                                            <input type="text" class="value-input" id="name" name="name"  value="<%=sessionVO.getName()%>" >
                                         </div>
                                         <div class="item">
-                                            <span class="title">휴가 사유:{insert}</span>
-                                            <select id="leaveReason">
+                                            <span class="title">휴가 사유:</span>
+                                            <select id="leaveReason" name="dayoff_content">
+                                                <option> </option>
                                                 <option value="sickLeave">병가</option>
                                                 <option value="annualLeave">연차</option>
                                                 <option value="familyEvent">경조사</option>
                                             </select>
                                         </div>
                                         <div class="item">
-                                            <span class="title">휴가시작일:{insert}</span>
-                                            <input type="date" id="startDate" value="2024-01-12">
+                                            <span class="title">휴가시작일</span>
+                                            <input type="date" id="startDate"  name="start_date" value="<%=approvalVO.getStart_date()%>">
                                         </div>
                                         <div class="item">
-                                            <span class="title">휴가만료일:{insert}</span>
-                                            <input type="date" id="endDate" value="2024-01-15">
+                                            <span class="title">휴가만료일</span>
+                                            <input type="date" id="endDate"  name="end_date"  value="<%=approvalVO.getEnd_date()%>">
                                         </div>
-                                        <div    class="text-wrapper-2">상기와 같이 휴가  희망함</div>
+
+                                        <div class="item">
+                                            <span class="title">선수</span>
+                                            <input type="text" id="k_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                        </div>
+
+                                        <div class="item">
+                                            <span class="title">계약금액 </span>
+                                            <input type="text" id="salary"  name="salary"  value="<%=approvalVO.getSalary()%>">
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">계약년수 </span>
+                                            <input type="date" id="contract_term"  name="contract_term"  value="<%=approvalVO.getContract_term()%>">
+                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
-
-
                                 <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">재출</button>
-                                    <button id="btn_search3" class="btn btn-danger" onclick="Search()">삭제 </button>
                                 </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
 
-
+        </section>
     </div>
     <!-- content-wrapper end-->
 <!-- body end   -->
 
 
 
-<!-- ========================== [[ 게시판 Modal ]] ========================== -->
-<%--	<div class="modal" id="boardForm">--%>
-<%--  		<div class="modal-dialog modal-dialog-centered">--%>
-<%--	<div class="modal-content">--%>
-
-<%--	  <!-- Modal Header -->--%>
-<%--	  <div class="modal-header">--%>
-<%--		<h4 class="modal-title">게시판</h4>--%>
-<%--		<button type="button" class="btn-close" data-bs-dismiss="modal"></button>--%>
-<%--	  </div>--%>
-<%--	  <!-- Modal body -->--%>
-<%--	  <div class="modal-body">--%>
-<%--		<!-- <form id="f_board" method="get" action="./boardInsert"> -->--%>
-<%--		<form id="f_board" method="post" enctype="multipart/form-data" action="./boardInsert">--%>
-<%--		  <input type="hidden" name="method" value="boardInsert">--%>
-<%--		  <div class="form-floating mb-3 mt-3">--%>
-<%--			<input type="text"  class="form-control" id="b_title" name="b_title" placeholder="Enter 제목" />--%>
-<%--			<label for="b_title">제목</label>--%>
-<%--		  </div>--%>
-<%--		  <div class="form-floating mb-3 mt-3">--%>
-<%--			<input type="text"  class="form-control" id="b_writer" name="b_writer" placeholder="Enter 작성자" />--%>
-<%--			<label for="b_writer">작성자</label>--%>
-<%--		  </div>--%>
-<%--		  <div class="form-floating mb-3 mt-3">--%>
-<%--			<textarea rows="5" class="form-control h-25" aria-label="With textarea" id="b_content" name="b_content"></textarea>--%>
-<%--		  </div>--%>
-<%--		  <div class="input-group mb-3">--%>
-<%--			  <input type="file" class="form-control" id="b_file" name="b_file">--%>
-<%--			  <label class="input-group-text" for="b_file">Upload</label>--%>
-<%--		  </div>--%>
-<%--		</form>--%>
-<%--	  </div>--%>
-<%--	  <div class="modal-footer">--%>
-<%--		<input type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="boardInsert()"  value="저장">--%>
-<%--		<input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="닫기">--%>
-<%--	  </div>--%>
-<!-- ========================== [[ 게시판 Modal ]] ========================== -->
 </body>
 </html>
