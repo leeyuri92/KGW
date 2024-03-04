@@ -107,6 +107,9 @@ h1 {
     border-color: #652C2C;
 }
 
+.swal2-small {
+    font-size: 12px;
+}
 
 /* 모달창 투명도 */
 /*.modal-content {*/

@@ -35,13 +35,31 @@
                 success: function (data) {
                     console.log("받아온 data 값 : " + data);
                     if (data === "loginError"){
-                        alert("일치하는 정보가 없습니다. 로그인에 실패하였습니다.");
+                        Swal.fire({
+                            title: '로그인에 실패하였습니다.',
+                            icon: 'warning',
+                            confirmButtonColor: '#800000',
+                            customClass: {
+                                popup: 'swal2-small'
+                            }
+                        })
                     } else {
-                        alert("로그인에 성공하였습니다");
-                        location.href="/";
+                        Swal.fire({
+                            title: '로그인에 성공하였습니다',
+                            icon: 'success',
+                            confirmButtonColor: '#800000',
+                            customClass:{
+                                popup : 'swal2-small'
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // 확인 버튼을 클릭한 경우 다음 화면으로 이동
+                                window.location.href = '/';
+                            }
+                        })
                     }
                 }
-            });
+            })
         }
 
         const findId = () => {
@@ -55,12 +73,26 @@
                 success: function (data) {
                     console.log("받아온 data 값 : " + data);
                     if (data != "") {
-                        alert("사원번호는 " + data + " 입니다.");
+                        Swal.fire({
+                            title: "사원번호는 " + data + " 입니다.",
+                            icon: false,
+                            confirmButtonColor: '#800000',
+                            customClass: {
+                                popup: 'swal2-small'
+                            }
+                        })
                     } else {
-                        alert("일치하는 정보가 없습니다.");
+                        Swal.fire({
+                            title: '일치하는 정보가 없습니다.',
+                            icon: 'warning',
+                            confirmButtonColor: '#800000',
+                            customClass: {
+                                popup: 'swal2-small'
+                            }
+                        })
                     }
-                },
-            });
+                }
+            })
         }
 
         const findPw = () => {
@@ -76,7 +108,14 @@
                     if (data != "") {
                         sendEmail(data);
                     } else {
-                        alert("일치하는 정보가 없습니다.");
+                        Swal.fire({
+                            title: '일치하는 정보가 없습니다.',
+                            icon: 'warning',
+                            confirmButtonColor: '#800000',
+                            customClass: {
+                                popup: 'swal2-small'
+                            }
+                        })
                     }
                 }
             });
@@ -90,7 +129,14 @@
                 data: {email: email},
                 success: function (resource) {
                     console.log("성공여부 : " + resource);
-                    alert("이메일로 임시비밀번호를 보내드렸습니다.");
+                    Swal.fire({
+                        title: '이메일로 임시비밀번호를 보내드렸습니다.',
+                        icon: 'success',
+                        confirmButtonColor: '#800000',
+                        customClass:{
+                            popup : 'swal2-small'
+                        }
+                    })
                 }
             });
         }
