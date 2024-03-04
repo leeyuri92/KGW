@@ -76,7 +76,6 @@
                             <i class="nav-icon bi bi-bell-fill"></i>
                             <p>
                                 공지사항
-                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                     </li>
@@ -117,7 +116,7 @@
                             <i class="nav-icon bi bi-calendar-heart"></i>
                             <p>
                                 일정
-                                <span class="badge badge-info right">2</span>
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -146,7 +145,7 @@
                             <i class="nav-icon bi bi-list-stars"></i>
                             <p>
                                 예약
-                                <span class="badge badge-info right">2</span>
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
