@@ -36,7 +36,8 @@
 }
 
 .mainbox .btn:hover {
-    background-color: #494747;
+    background-color: #7c1512;
+    color: white;
     border: none;
 }
 
@@ -47,10 +48,10 @@
     border-radius: 5px;
 }
 
-.custom-col .approval{
-    background-color: #868686;
-    color: #ffffff;
-    border: 2px solid #6c6b6b;
+.custom-col .approval {
+    background-color: #e1cdcc;
+    color: black;
+    border: 2px solid #e1cdcc;
 }
 
 #btn_top {
