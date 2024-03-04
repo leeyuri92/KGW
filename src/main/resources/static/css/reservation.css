@@ -13,8 +13,9 @@
     margin: 30px 15px 10px 10px;
 }
 
-cal_title {
-    font-size: 1.5rem;
+.cal_title{
+    font-weight: bold;
+    margin-left: 1.5rem;
 }
 
 .search{
@@ -36,17 +37,19 @@ cal_title {
 #searchEvent,
 #exitEvent2,
 #addEvent,
-#addEventBtn,
 #deleteEvent,
+#updateEvent,
 #cancel-button,
-#updateEvent{
+#close{
+    font-family: Roboto !important;
     background-color: #7c1512 !important;
-    color: white;!important;
-    font-weight: normal !important;
+    color: white; !important;
     font-size: small !important;
-    cursor: pointer;!important;
+    cursor: pointer; !important;
     border-radius: 3px;!important;
-    padding: 0.5rem;!important;
+    padding: 0.5rem; !important;
+    border: none;!important;
+    font-weight: bold;!important;
 }
 
 .btn-primary{
@@ -117,7 +120,7 @@ cal_title {
 }
 
 
-/* 타임라인 헤더툴바 버튼 색상 */
+/* 헤더툴바 버튼 색상 */
 .fc-toolbar .fc-resourceTimelineMonth-button,
 .fc-toolbar .fc-resourceTimelineWeek-button,
 .fc-toolbar .fc-resourceTimelineDay-button,
@@ -129,7 +132,8 @@ cal_title {
 .fc-toolbar .fc-next-button,
 .fc-toolbar .fc-today-button {
     background-color: #7c1512 !important;
-    border: #7c1512 2px solid; !important;
+    border: #7c1512 1px solid; !important;
+    font-weight: bold;!important;
 }
 
 element.style {

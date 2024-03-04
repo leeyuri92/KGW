@@ -9,7 +9,8 @@
 }
 
 .cal_title{
-    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 1.5rem;
 }
 
 .container-fluid {
@@ -48,11 +49,12 @@
     font-family: Roboto !important;
     background-color: #7c1512 !important;
     color: white; !important;
-    font-weight: normal !important;
     font-size: small !important;
     cursor: pointer; !important;
     border-radius: 3px;!important;
     padding: 0.5rem; !important;
+    border: none;!important;
+    font-weight: bold;!important;
 }
 
 .btn-primary{
@@ -116,7 +118,8 @@
 .fc-toolbar .fc-next-button,
 .fc-toolbar .fc-today-button {
     background-color: #7c1512 !important;
-    border: #7c1512 2px solid; !important;
+    border: #7c1512 1px solid; !important;
+    font-weight: bold;!important;
 }
 
 /* 글씨 속성 */
