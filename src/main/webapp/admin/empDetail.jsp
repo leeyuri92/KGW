@@ -22,11 +22,15 @@
         const empInfoUpdate = () => {
             if (validateForm()) {
                 // 유효성 검사 성공 시, 폼을 제출합니다.
-                alert("사원수정 완료!");
-                document.querySelector("#f_member").submit();
+                Swal.fire("사원수정 완료!", "", "success")
+                    .then((result) => {
+                        if (result.isConfirmed || result.isDismissed) {
+                            document.querySelector("#f_member").submit();
+                        }
+                    });
             } else {
                 // 유효성 검사 실패 시, 오류 메시지를 표시하거나 적절한 조치를 취합니다.
-                alert("사원추가 양식을 올바르게 입력해주세요.");
+                Swal.fire("오류!", "사원수정 양식을 올바르게 입력해주세요.", "error");
             }
         };
 

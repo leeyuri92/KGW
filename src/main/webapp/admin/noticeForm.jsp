@@ -62,10 +62,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-5 mb-3 mt-3">
-                                                <input type="date" class="form-control" id="pin_start"  name="pin_start">
+                                                <input type="date" class="form-control" id="pin_start" name="pin_start">
                                             </div>
                                             <div class="col-5 mb-3 mt-3">
-                                                <input type="date" class="form-control" id="pin_end"  name="pin_end">
+                                                <input type="date" class="form-control" id="pin_end" name="pin_end">
                                             </div>
                                         </div>
                                         <textarea id="summernote" name="notice_content"></textarea>
