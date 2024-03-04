@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ApprovalVO {
-        private int document_no;
+        private Integer document_no;
         private int emp_no;
         private String document_title;
         private String document_category;
@@ -44,7 +44,7 @@ public class ApprovalVO {
         
 //        select 받아논 데이터 끝
     @Builder
-    public  ApprovalVO(int document_no,int emp_no,String document_title,String  document_category, String  submission_date,String state,
+    public  ApprovalVO(Integer document_no,int emp_no,String document_title,String  document_category, String  submission_date,String state,
                        String start_date,String  end_date,String  draftday,String  dayoff_content,int  k_no, int salary ,String contract_term, String team_name,
                        int approval_no,String approval_name,String  approval_category, String  rejection_content, String  middle_approval_date,
                        String  final_approval_date , String middlesign_name, String finalsign_name, String name,int dayoff_cnt,String emp_position,

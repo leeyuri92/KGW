@@ -13,7 +13,6 @@
     if(request.getParameter("nowPage")!=null){
         nowPage=Integer.parseInt(request.getParameter("nowPage"));
     }
-    out.print(list3);
 %>
 <!DOCTYPE html>
 <html lang="ko">

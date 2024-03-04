@@ -89,6 +89,8 @@
         }
 
 
+
+        //  휴가 부분  재출시 error 발생 (임시저장도)
         function docSubmitVacation() {
             $('#r_documentVacation').submit();
         }
@@ -175,50 +177,55 @@
                             <%--휴가문서--%>
                             <form id="r_documentVacation" name="r_documentVacation" action="documentInsert" method="post">
                                 <div class="frame " id="do_vocation">
-                                <div class="document-section">
-                                    <div class="item">
-                                        <span class="title">사원번호:</span>
-                                        <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
-                                    </div>
-                                    <input type="hidden" id="stateVacation" name="state"    value="대기" >
-                                    <input type="hidden" id="draftdayVacation" name="draftday"    value="" >
+                                    <div class="document-section">
+                                        <div class="item">
+                                            <span class="title">사원번호:</span>
+                                            <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                        </div>
+                                        <%--                                    <input type="hidden" id="stateVacation" name="state"    value="대기" >--%>
+                                        <%--                                    <input type="hidden" id="draftdayVacation" name="draftday"    value="" >--%>
 
-                                    <div class="item">
-                                        <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="document_title" name="document_title" value="휴가관련"  >
+                                        <div class="item">
+                                            <span class="title">문서제목:</span>
+                                            <input type="text" class="value-input" id="document_title" name="document_title" value="휴가관련"  >
+                                        </div>
+                                        <div class="item" hidden="hidden">
+                                            <span class="title">문서타이틀:</span>
+                                            <input type="text" class="value-input" id="document_category"  name="document_category" value="휴가" >
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">담당자:</span>
+                                            <input type="text" class="value-input" id="approval_name" name="approval_name" value="경영지원팀장">
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">신청자:</span>
+                                            <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" >
+                                        </div>
+                                        <%--                                    <div class="item">--%>
+                                        <%--                                        <span class="title">휴가 사유:</span>--%>
+                                        <%--                                        <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >--%>
+                                        <%--                                    </div>--%>
+                                        <%--                                    <div class="item">--%>
+                                        <%--                                        <span class="title">휴가시작일:</span>--%>
+                                        <%--                                        <input type="date" id="start_date" name="start_date"   value="2024-03-03">--%>
+                                        <%--                                    </div>--%>
+                                        <%--                                    <div class="item">--%>
+                                        <%--                                        <span class="title">휴가만료일：</span>--%>
+                                        <%--                                        <input type="date" id="end_date" name="end_date"  value="2024-03-04">--%>
+                                        <%--                                    </div>--%>
+                                        <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
                                     </div>
-                                    <div class="item" hidden="hidden">
-                                        <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="document_category"  name="document_category" value="휴가" >
+                                    <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
+                                        <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitVacation()" >제출</button>
+                                        <button type="button" id="btn_search" class="btn btn-danger" onclick="docSaveSubmitVacation()">임시보관 </button>
                                     </div>
-                                    <div class="item">
-                                        <span class="title">담당자:</span>
-                                        <input type="text" class="value-input" id="approval_name" name="approval_name" value="경영지원팀장">
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">신청자:</span>
-                                        <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" >
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">휴가 사유:</span>
-                                        <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">휴가시작일:</span>
-                                        <input type="date" id="start_date" name="start_date"   value="2024-03-03">
-                                    </div>
-                                    <div class="item">
-                                        <span class="title">휴가만료일：</span>
-                                        <input type="date" id="end_date" name="end_date"  value="2024-03-04">
-                                    </div>
-                                    <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
-                                </div>
-                                <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitVacation()" >제출</button>
-                                    <button type="button" id="btn_search" class="btn btn-danger" onclick="docSaveSubmitVacation()">임시보관 </button>
-                                </div>
                                 </div>
                             </form>
+
+
+
+
+
 
 
 

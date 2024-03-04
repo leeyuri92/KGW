@@ -11,7 +11,7 @@
                     <choose>
                         <when test='gubun == "true"'>
                             AND document.state = '임시저장'
-                            <if test="document_no != null"> AND document.document_no = 123</if>
+                            <if test="document_no != null"> AND document.document_no = ${document_no}</if>
                         </when>
                         <when test='gubun=="false"'>
                             AND document.state != '임시저장'
