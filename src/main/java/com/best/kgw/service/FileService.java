@@ -66,7 +66,7 @@ public class FileService {
         // 파일 이름 설정
         String originalFilename = file.getOriginalFilename();
         String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-        String fileName = empvo.getEmp_no() + "." + extension;
+        String fileName = empvo.getEmp_no() + ".png" ;
         String filePath = realFolder + fileName;
 
         // 업로드된 파일 저장

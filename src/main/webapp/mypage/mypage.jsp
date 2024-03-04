@@ -119,7 +119,7 @@
               </div>
               <div class="col-8">
                 <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                  <img src="/fileUpload/profile/<%= profileImgUrl %>" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
+                  <img src="/fileUpload/profile/<%= empDetail.getProfile_img() %>" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
                 </div>
               </div>
             </div>

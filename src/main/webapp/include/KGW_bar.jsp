@@ -103,7 +103,7 @@
                     <div class="nav-link mt-1" style="font-weight: bold">자동 로그아웃 시간  <i class="bi bi-clock"></i> &nbsp; <span id="time" style="font-size: 18px">05:00</span></div>
                     <div class="info">
                         <%
-                            String profileImgUrl = sessionVO.getProfile_img();
+                            String profileImgUrl = sessionVO.getEmp_no()+".png";
                             if (profileImgUrl == null || profileImgUrl.isEmpty()) {
                                 profileImgUrl = "K1.png"; // 기본 이미지 파일 경로 설정
                             }
