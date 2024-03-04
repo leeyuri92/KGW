@@ -108,7 +108,6 @@
                     <%  List<CalendarVO> companyCalendarList = (List<CalendarVO>) request.getAttribute("companyCalendarList");
                         if (companyCalendarList != null) {
                             for (CalendarVO vo : companyCalendarList) {
-                            if (Objects.equals(sessionVO.getName(), vo.getName())) {
                             %>
                     {
                         extendedProps: { CalendarNo: '<%= vo.getCalendar_no() %>' },
@@ -118,7 +117,7 @@
                         end: '<%= vo.getCalendar_end() %>',
                         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
                     },
-                    <% }}} %>
+                    <% }} %>
                 ]
             });
             calendar.render();
@@ -517,7 +516,6 @@
                                     if (companyCalendarList1 != null) {
                                         int count = 0; // 일정 카운터 변수 추가
                                         for (CalendarVO vo : companyCalendarList1) {
-                                         if (Objects.equals(sessionVO.getName(), vo.getName())) {
                                             String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
                                             String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
                                             String startDate = vo.getCalendar_start();
@@ -537,7 +535,7 @@
                                     <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" value="취소"/></td>
                                 </tr>
                                 <%
-                                }}}}
+                                }}}
                                 %>
                                 </tbody>
                             </table>
