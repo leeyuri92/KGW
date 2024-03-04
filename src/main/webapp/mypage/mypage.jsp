@@ -220,29 +220,16 @@
                   <!-- Add more options as needed -->
                 </select>
               </div>
-
             </div>
             <br>
             <br>
             <br>
             <div class="row">
               <div class="col-6 mb-3 mt-3" style="display: flex; align-items: center; justify-content: center;">
-                <input
-                        type="button"
-                        class="btn btn-primary float-right"
-                        onclick="btn_Cancel()"
-                        value="취소"
-                />
-
+                <input type="button" class="btn btn-primary float-right" onclick="btn_Cancel()" value="취소"/>
               </div>
               <div class="col-6 mb-3 mt-3" style="display: flex; align-items: center; justify-content: center;">
-                <input
-                        type="button"
-                        class="btn btn-primary float-right"
-                        onclick="empDetailUpdate()"
-                        value="수정"
-                />
-
+                <input type="button" class="btn btn-primary float-right" onclick="empDetailUpdate()" value="수정"/>
               </div>
             </div>
           </form>
@@ -418,7 +405,6 @@
                 })
             </script>
           </form>
-
         </div>
       </div>
     </div>
