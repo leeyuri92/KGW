@@ -57,6 +57,10 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
                         .permitAll())
+                .sessionManagement(session -> session
+                        .maximumSessions(1) // 최대 세션 수 설정
+                        .maxSessionsPreventsLogin(false) // 새로운 세션 로그인 방지
+                        .expiredUrl("/login")) // 세션이 만료된 경우 이동할 URL 설정
                 .exceptionHandling(exception -> exception.accessDeniedPage("/access-denied"));
 
         return http.build();
