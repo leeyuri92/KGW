@@ -192,7 +192,7 @@
             <div class="col mainbox">
               <div class="mainbox-header d-flex align-items-center pb-0">
                 <div class="d-flex align-items-center">
-                  <span style="font-weight: bold; margin-left: 1.5rem" >전자결재진행현황</span>
+                  <span style="font-weight: bold; margin-left: 1.5rem" >전자결재 진행 현황</span>
                 </div>
                 <div style="margin-left: auto; margin-right: 1.5rem">
                   <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
@@ -203,22 +203,22 @@
                 <div class="row mb-3">
                   <div class="custom-col" >
 <%--                    <i class="bi bi-pause-fill custom-i"></i>--%>
-                    <button id="btn_approval_wait" class="approval btn btn-danger">결재대기 <p>[0]</p></button>
+                    <button id="btn_approval_wait" class="approval btn btn-danger">결재대기 [0]</button>
                   </div>
 
                   <div class="custom-col" >
 <%--                    <i class="bi bi-play-fill custom-i"></i>--%>
-                    <button id="btn_approval_progress" class="approval btn btn-danger">결재진행 <p>[0]</p></button>
+                    <button id="btn_approval_progress" class="approval btn btn-danger">결재진행 [0]</button>
                   </div>
 
                   <div class="custom-col" >
 <%--                    <i class="bi bi-check-lg custom-i"></i>--%>
-                    <button id="btn_approval_complete" class="approval btn btn-danger">결재완료 <p>[0]</p></button>
+                    <button id="btn_approval_complete" class="approval btn btn-danger">결재완료 [0]</button>
                   </div>
 
                   <div class="custom-col" >
 <%--                    <i class="bi bi-repeat custom-i"></i>--%>
-                    <button id="btn_approval_companion" class="approval btn btn-danger">결재반려 <p>[0]</p></button>
+                    <button id="btn_approval_companion" class="approval btn btn-danger">결재반려 [0]</button>
                   </div>
 
                   <div class="custom-col">

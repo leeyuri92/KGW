@@ -166,41 +166,56 @@
         });
 
         function handleEventSubmit() {
-                let idInput = document.getElementById('insertCalendarId');
-                let empNoInput = document.getElementById('insertCalendarId');
-                let titleInput = document.getElementById('insertTitle');
-                let startInput = document.getElementById('insertStart');
-                let endInput = document.getElementById('insertEnd');
+            let idInput = document.getElementById('insertCalendarId');
+            let empNoInput = document.getElementById('insertCalendarId');
+            let titleInput = document.getElementById('insertTitle');
+            let startInput = document.getElementById('insertStart');
+            let endInput = document.getElementById('insertEnd');
 
-                let calendar_id = idInput.value;
-                let calendar_title = titleInput.value;
-                let calendar_start = startInput.value;
-                let calendar_end = endInput.value;
-                let emp_no = <%= sessionVO.getEmp_no() %>;
-                let url = '/calendar/insertCalendar';
+            let calendar_id = idInput.value;
+            let calendar_title = titleInput.value;
+            let calendar_start = startInput.value;
+            let calendar_end = endInput.value;
+            let emp_no = <%= sessionVO.getEmp_no() %>;
+            let url = '/calendar/insertCalendar';
 
             if (calendar_title && calendar_start && calendar_end && emp_no && calendar_id) {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        calendar_title: calendar_title,
-                        calendar_start: calendar_start,
-                        calendar_end: calendar_end,
-                        emp_no: emp_no,
-                        calendar_id: calendar_id
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response > 0) {
-                            if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/teamCalendarList';
+                Swal.fire({
+                    title: "일정을 등록하시겠습니까?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '등록',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                calendar_title: calendar_title,
+                                calendar_start: calendar_start,
+                                calendar_end: calendar_end,
+                                emp_no: emp_no,
+                                calendar_id: calendar_id
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if (response > 0) {
+                                    if (window.opener) window.opener.location.reload(true);
+                                    window.location.href = '${pageContext.request.contextPath}' + '/calendar/teamCalendarList';
 
-                            alert("일정이 등록되었습니다.");
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.error("오류 발생 >> " + error);
+                                    Swal.fire({
+                                        title: "일정이 등록되었습니다.",
+                                        icon: "success",
+                                    });
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.error("오류 발생 >> " + error);
+                            }
+                        });
                     }
                 });
             }
@@ -216,21 +231,36 @@
             let url = "<%=request.getContextPath()%>/calendar/deleteCalendar";
 
             if (calendar_no) {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: { calendar_no: calendar_no },
-                    success: function(response) {
-                        console.log(response);
-                        if (response > 0) {
-                            if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/teamCalendarList';
+                Swal.fire({
+                    title: "일정을 삭제하시겠습니까?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '삭제',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: { calendar_no: calendar_no },
+                            success: function(response) {
+                                console.log(response);
+                                if (response > 0) {
+                                    if (window.opener) window.opener.location.reload(true);
+                                    window.location.href = '${pageContext.request.contextPath}' + '/calendar/teamCalendarList';
 
-                            alert("일정이 삭제되었습니다.");
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.error("오류 발생 >> " + error);
+                                    Swal.fire({
+                                        title: "일정이 삭제되었습니다.",
+                                        icon: "success",
+                                    });
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.error("오류 발생 >> " + error);
+                            }
+                        });
                     }
                 });
             }
@@ -240,7 +270,7 @@
             modal.style.display = 'none';
         }
 
-        function handleEventUpdate(updatedEvent) {
+        function handleEventUpdate() {
             let titleInput = document.getElementById('detailTitle');
             let startInput = document.getElementById('detailStart');
             let endInput = document.getElementById('detailEnd');
@@ -257,28 +287,43 @@
             let url = "/calendar/updateCalendar";
 
             if (calendar_title && calendar_start && calendar_end && emp_no && calendar_no && calendar_id) {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        calendar_title: calendar_title,
-                        calendar_start: calendar_start,
-                        calendar_end: calendar_end,
-                        emp_no: emp_no,
-                        calendar_no : calendar_no,
-                        calendar_id: calendar_id
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response > 0) {
-                            if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/teamCalendarList';
+                Swal.fire({
+                    title: "일정을 수정하시겠습니까?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '수정',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                calendar_title: calendar_title,
+                                calendar_start: calendar_start,
+                                calendar_end: calendar_end,
+                                emp_no: emp_no,
+                                calendar_no : calendar_no,
+                                calendar_id: calendar_id
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if (response > 0) {
+                                    if (window.opener) window.opener.location.reload(true);
+                                    window.location.href = '${pageContext.request.contextPath}' + '/calendar/teamCalendarList';
 
-                            alert("일정이 수정되었습니다.");
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.error("오류 발생 >> " + error);
+                                    Swal.fire({
+                                        title: "일정이 수정되었습니다.",
+                                        icon: "success",
+                                    });
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.error("오류 발생 >> " + error);
+                            }
+                        });
                     }
                 });
             }
@@ -289,6 +334,53 @@
         }
 
         let cancelTodayButton = document.querySelectorAll('.cancel-button');
+
+        cancelTodayButton.forEach(function(cancelButton) {
+            cancelButton.addEventListener('click', function() {
+                let calendarNoInput = document.getElementById('calNo');
+                if (calendarNoInput !== null) {
+                    let calendar_no = calendarNoInput.textContent;
+
+                    if (calendar_no) {
+                        // SweetAlert로 삭제 여부 확인
+                        Swal.fire({
+                            title: "일정을 삭제하시겠습니까?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: '삭제',
+                            cancelButtonText: '취소'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // 사용자가 삭제를 선택한 경우, AJAX를 통해 삭제 요청
+                                let url = "<%=request.getContextPath()%>/calendar/deleteTodayCalendar";
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    data: { calendar_no: calendar_no },
+                                    success: function(response) {
+                                        console.log(response);
+                                        if (response > 0) {
+                                            if (window.opener) window.opener.location.reload(true);
+                                            window.location.href = '${pageContext.request.contextPath}' + '/calendar/teamCalendarList';
+                                            Swal.fire({
+                                                title: "일정이 삭제되었습니다.",
+                                                icon: "success",
+                                            });
+                                        }
+                                    },
+                                    error: function(request, status, error) {
+                                        console.error("오류 발생 >> " + error);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+        });
 
         cancelTodayButton.forEach(function(cancelButton) {
             cancelButton.addEventListener('click', function() {
@@ -533,8 +625,8 @@
                                                 if (Objects.equals(sessionVO.getTeam_no(), vo.getTeam_no())) {
                                                     String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
                                                     String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
-                                                    String startDate = vo.getCalendar_start();
-                                                    String endDate = vo.getCalendar_end();
+                                                    String startDate = vo.getCalendar_start().replace("T", "&nbsp;"); // T를 공백으로 대체
+                                                    String endDate = vo.getCalendar_end().replace("T", "&nbsp;"); // T를 공백으로 대체
                                                     // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
                                                     if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) {
                                     %>

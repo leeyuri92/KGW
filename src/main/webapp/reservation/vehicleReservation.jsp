@@ -249,28 +249,44 @@
             let url = '/vehicleReservation/insertVehicleList';
 
             if (reservation_title && reservation_start && reservation_end && emp_no && asset_id && asset_no) {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        reservation_title: reservation_title,
-                        reservation_start: reservation_start,
-                        reservation_end: reservation_end,
-                        emp_no: emp_no,
-                        asset_id: asset_id,
-                        asset_no: asset_no
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response > 0) {
-                            if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+                // SweetAlert로 등록 여부 확인
+                Swal.fire({
+                    title: "일정을 등록하시겠습니까?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '등록',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                reservation_title: reservation_title,
+                                reservation_start: reservation_start,
+                                reservation_end: reservation_end,
+                                emp_no: emp_no,
+                                asset_id: asset_id,
+                                asset_no: asset_no
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if (response > 0) {
+                                    if (window.opener) window.opener.location.reload(true);
+                                    window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
 
-                            alert("일정이 등록되었습니다.");
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.error("오류 발생 >> " + error);
+                                    Swal.fire({
+                                        title: "일정이 등록되었습니다.",
+                                        icon: "success",
+                                    });
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.error("오류 발생 >> " + error);
+                            }
+                        });
                     }
                 });
             }
@@ -280,30 +296,47 @@
             closeModalAndClearInputs();
         }
 
+
         function handleEventDelete() {
             let reservationNoInput = document.getElementById('detailReservationNo');
             let reservation_no = reservationNoInput.value;
             let url = '<%=request.getContextPath()%>/vehicleReservation/deleteVehicleList';
 
             if (reservation_no) {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        reservation_no: reservation_no,
-                        // asset_no: asset_no
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response > 0) {
-                            if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';v
+                // SweetAlert로 삭제 여부 확인
+                Swal.fire({
+                    title: "일정을 삭제하시겠습니까?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '삭제',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                reservation_no: reservation_no,
+                                // asset_no: asset_no
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if (response > 0) {
+                                    if (window.opener) window.opener.location.reload(true);
+                                    window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
 
-                            alert("일정이 삭제되었습니다.");
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.error("오류 발생 >> " + error);
+                                    Swal.fire({
+                                        title: "일정이 삭제되었습니다.",
+                                        icon: "success",
+                                    });
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.error("오류 발생 >> " + error);
+                            }
+                        });
                     }
                 });
             }
@@ -313,7 +346,8 @@
             modal.style.display = 'none';
         }
 
-        function handleEventUpdate(updatedEvent) {
+
+        function handleEventUpdate() {
             let titleInput = document.getElementById('detailTitle');
             let startInput = document.getElementById('detailStart');
             let endInput = document.getElementById('detailEnd');
@@ -329,33 +363,49 @@
             let url = "/vehicleReservation/insertVehicleList";
 
             if (reservation_title && reservation_start && reservation_end && emp_no && asset_no && reservation_no) {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        reservation_title: reservation_title,
-                        reservation_start: reservation_start,
-                        reservation_end: reservation_end,
-                        emp_no: emp_no,
-                        asset_no: asset_no,
-                        reservation_no: reservation_no
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response > 0) {
-                            if (window.opener) window.opener.location.reload(true);
-                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+                // SweetAlert로 수정 여부 확인
+                Swal.fire({
+                    title: "일정을 수정하시겠습니까?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '수정',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                reservation_title: reservation_title,
+                                reservation_start: reservation_start,
+                                reservation_end: reservation_end,
+                                emp_no: emp_no,
+                                asset_no: asset_no,
+                                reservation_no: reservation_no
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if (response > 0) {
+                                    if (window.opener) window.opener.location.reload(true);
+                                    window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
 
-                            // 업데이트된 내용이 성공적으로 처리된 후 기존 일정 제거
-                            // 기존 일정 요소를 선택하여 삭제
-                            let existingEventElement = document.getElementById('existingEvent');
-                            existingEventElement.remove();
+                                    // 업데이트된 내용이 성공적으로 처리된 후 기존 일정 제거
+                                    // 기존 일정 요소를 선택하여 삭제
+                                    let existingEventElement = document.getElementById('existingEvent');
+                                    existingEventElement.remove();
 
-                            alert("일정이 수정되었습니다.");
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.error("오류 발생 >> " + error);
+                                    Swal.fire({
+                                        title: "일정이 수정되었습니다.",
+                                        icon: "success",
+                                    });
+                                }
+                            },
+                            error: function(request, status, error) {
+                                console.error("오류 발생 >> " + error);
+                            }
+                        });
                     }
                 });
             }
@@ -364,6 +414,7 @@
             let modal = document.getElementById('detailModal');
             modal.style.display = 'none';
         }
+
 
         let cancelTodayButton = document.querySelectorAll('.cancel-button');
 
@@ -600,8 +651,8 @@
                                             if (Objects.equals(sessionVO.getName(), vo.getName())) {
                                             String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
                                             String endDateCheck = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
-                                            String startDate = vo.getReservation_end();
-                                            String endDate = vo.getReservation_end();
+                                            String startDate = vo.getReservation_start().replace("T", "&nbsp;"); // T를 공백으로 대체
+                                            String endDate = vo.getReservation_end().replace("T", "&nbsp;"); // T를 공백으로 대체
                                             if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
                                 %>
                                     <tr>
