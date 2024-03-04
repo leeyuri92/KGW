@@ -185,8 +185,8 @@
                     title: "일정을 등록하시겠습니까?",
                     icon: "question",
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#7c1512',
+                    cancelButtonColor: '#7c1512',
                     confirmButtonText: '등록',
                     cancelButtonText: '취소'
                 }).then((result) => {
@@ -237,8 +237,8 @@
                     title: "일정을 삭제하시겠습니까?",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#7c1512',
+                    cancelButtonColor: '#7c1512',
                     confirmButtonText: '삭제',
                     cancelButtonText: '취소'
                 }).then((result) => {
@@ -294,8 +294,8 @@
                     title: "일정을 수정하시겠습니까?",
                     icon: "question",
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#7c1512',
+                    cancelButtonColor: '#7c1512',
                     confirmButtonText: '수정',
                     cancelButtonText: '취소'
                 }).then((result) => {
@@ -350,8 +350,8 @@
                             title: "일정을 삭제하시겠습니까?",
                             icon: "warning",
                             showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
+                            confirmButtonColor: '#7c1512',
+                            cancelButtonColor: '#7c1512',
                             confirmButtonText: '삭제',
                             cancelButtonText: '취소'
                         }).then((result) => {
@@ -445,16 +445,40 @@
             calendarSearch()
         }
     }
-    function calendarSearch(){
+
+    function calendarSearch() {
         console.log('calendarSearch');
         const gubun = document.querySelector("#gubun").value;
         const keyword = document.querySelector("#keyword").value;
+
         console.log(`${gubun} , ${keyword}`);
-        location.href="/calendar/calendarList?gubun="+gubun+"&keyword="+keyword;
+
+        let searchURL = "/calendar/myCalendarList?gubun=" + gubun;
+
+        if (keyword.trim() === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: '검색어를 입력하세요',
+                text: '검색어를 입력하지 않으면 검색할 수 없습니다.',
+                confirmButtonText: '확인'
+            });
+        } else {
+            Swal.fire({
+                icon: 'question',
+                title: '검색 하시겠습니까?',
+                text: '검색하시려면 확인을 누르세요.',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    searchURL += "&keyword=" + keyword;
+                    location.href = searchURL;
+                }
+            });
+        }
     }
-    const calendarDetail= (calendar_no) => {
-        location.href= "/calendar/calendarDetail?calendar_no="+calendar_no;
-    }
+
 </script>
     <div class="content-wrapper">
 
@@ -484,7 +508,7 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="container-fluid1">
-                            <h2 class="cal_title">내 일정 현황</h2>
+                            <h4 class="cal_title">내 일정 현황</h4>
                             <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary col-sm-1" id="addEvent" name="addEvent" value="일정 등록"/>
                         </div>
                         <hr />
@@ -522,27 +546,22 @@
                     <div class="box">
                         <%-- 내 일정 현황 태그 --%>
                         <div class="container-fluid1">
-                            <h2 class="cal_title">오늘 내 일정</h2>
+                            <h4 class="cal_title">오늘 내 일정</h4>
                             <!-- 검색기 시작 -->
                             <div class="row search">
-                                <div class="col-2 col-sm-2">
+                                <div class="col-3">
                                     <select id="gubun" class="form-select" aria-label="분류선택">
-                                        <option value="my">내 일정</option>
-                                        <option value="team">팀 일정</option>
-                                        <option value="company">전사 일정</option>
+                                        <option value="name">작성자</option>
+                                        <option value="calendar_title">일정명</option>
+                                        <option value="calendar_start">시작일</option>
+                                        <option value="calendar_end">종료일</option>
                                     </select>
                                 </div>
-                                <div class="col-2 col-sm-2">
-                                    <select id="calendarGubun" class="form-select" aria-label="분류선택">
-                                        <option value="date">일정</option>
-                                        <option value="name">예약자</option>
-                                    </select>
-                                </div>
-                                <div class="col-7 col-sm-6">
+                                <div class="col-7">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                                            aria-label="검색어를 입력하세요" aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
-                                <div class="col-1 col-sm-2">
+                                <div class="col-2">
                                     <input type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="searchEvent" name="searchEvent" value="검색" style="border-radius: 3px;" onclick="calendarSearch()"/>
                                 </div>
                             </div>

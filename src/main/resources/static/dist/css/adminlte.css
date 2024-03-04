@@ -53004,11 +53004,20 @@ a.text-muted:hover {
     /* SweetAlert2 컨테이너 스타일 */
 }
 
+.swal2-styled.swal2-cancel{
+    border: 0;
+    border-radius: .25em;
+    background: initial;
+    background-color: #7c1512;!important;
+    color: #fff;
+    font-size: 1em;
+}
+
 .swal2-styled.swal2-confirm {
     border: 0;
     border-radius: .25em;
     background: initial;
-    background-color: #800000;
+    background-color: #7c1512;!important;
     color: #fff;
     font-size: 1em;
 }

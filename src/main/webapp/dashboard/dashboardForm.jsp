@@ -78,7 +78,7 @@
                 </div>
                 <div class="row mb-5" style="margin: auto;">
                   <div class="text text-bold text-lg">
-                    <%=sessionVO.getName()%> 사원
+                    <%=sessionVO.getName()%> <%=sessionVO.getEmp_position()%>
                   </div>
                 </div>
               </div>

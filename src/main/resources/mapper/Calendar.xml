@@ -10,20 +10,75 @@
         <where>
             AND a.emp_no = b.emp_no
             AND a.calendar_id = 1
+
+            <if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("calendar_title")'>
+                        AND calendar_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("calendar_start")'>
+                        AND calendar_start LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("calendar_end")'>
+                        AND calendar_end LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("name")'>
+                        AND name LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
         </where>
     </select>
 
     <select id= "tList" parameterType="map" resultType="com.vo.CalendarVO">
         select * from calendar a
+        INNER JOIN emp b ON a.emp_no = b.emp_no
         <where>
+            AND a.emp_no = b.emp_no
             AND a.calendar_id = 2
+
+            <if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("calendar_title")'>
+                        AND calendar_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("calendar_start")'>
+                        AND calendar_start LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("calendar_end")'>
+                        AND calendar_end LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("name")'>
+                        AND name LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
         </where>
     </select>
 
     <select id= "cpList" parameterType="map" resultType="com.vo.CalendarVO">
         select * from calendar a
+        INNER JOIN emp b ON a.emp_no = b.emp_no
         <where>
+            AND a.emp_no = b.emp_no
             AND a.calendar_id = 3
+
+            <if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("calendar_title")'>
+                        AND calendar_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("calendar_start")'>
+                        AND calendar_start LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("calendar_end")'>
+                        AND calendar_end LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("name")'>
+                        AND name LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
         </where>
     </select>
 
