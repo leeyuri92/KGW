@@ -32,6 +32,22 @@
             AND a.asset_no = b.asset_no
             AND a.emp_no = c.emp_no
             AND b.asset_category != '차량'
+            <if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("reservation_title")'>
+                        AND a.reservation_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("reservation_start")'>
+                        AND a.reservation_start LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("reservation_end")'>
+                        AND a.reservation_end LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("name")'>
+                        AND c.name LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
+            </if>
         </where>
     </select>
 
