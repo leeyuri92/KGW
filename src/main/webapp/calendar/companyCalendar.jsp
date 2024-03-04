@@ -517,7 +517,6 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">참석자</th>
                                         <th scope="col">일정 구분</th>
                                         <th scope="col">일정명</th>
                                         <th scope="col">시작시간</th>
@@ -530,6 +529,7 @@
                                     if (companyCalendarList1 != null) {
                                         int count = 0; // 일정 카운터 변수 추가
                                         for (CalendarVO vo : companyCalendarList1) {
+                                            if (vo.getCalendar_id() == 3) {
                                             String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
                                             String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
                                             String startDate = vo.getCalendar_start();
@@ -541,15 +541,14 @@
                                     <th scope="row"><%= ++count %></th>
                                     <%-- 화면엔 필요없지만 서버에 전송할 데이터 --%>
                                     <td class="calNo" id="calNo" style="display: none;"><%= vo.getCalendar_no() %></td>
-                                    <td><%= vo.getName() %></td>
-                                    <td>내 일정</td>
+                                    <td>전사 일정</td>
                                     <td><%= vo.getCalendar_title() %></td>
                                     <td><%= startDate%></td>
                                     <td><%= endDate %></td>
                                     <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" value="취소"/></td>
                                 </tr>
                                 <%
-                                }}}
+                                }}}}
                                 %>
                                 </tbody>
                             </table>

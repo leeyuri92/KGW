@@ -518,7 +518,6 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">참석자</th>
                                         <th scope="col">일정 구분</th>
                                         <th scope="col">일정명</th>
                                         <th scope="col">시작시간</th>
@@ -543,8 +542,7 @@
                                         <th scope="row"><%= ++count %></th>
                                         <%-- 화면엔 필요없지만 서버에 전송할 데이터 --%>
                                         <td class="calNo" id="calNo" style="display: none;"><%= vo.getCalendar_no() %></td>
-                                        <td><%= vo.getName() %></td>
-                                        <td>내 일정</td>
+                                        <td>팀 일정</td>
                                         <td><%= vo.getCalendar_title() %></td>
                                         <td><%= startDate%></td>
                                         <td><%= endDate %></td>
