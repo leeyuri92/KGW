@@ -22,7 +22,65 @@
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script type="text/javascript">
+    // 카운트 다운 함수
+    function startCountdown(duration, display) {
+        var timer = duration, minutes, seconds;
 
+        // 타이머 호출 함수
+        function countdown() {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            // 1분 남았을 때 연장 여부 확인
+            if (timer === 60) {
+                var extend = confirm("1분 남았습니다. 연장하시겠습니까?");
+                if (extend) {
+                    // 세션 시간 연장 요청
+                    extendSessionTime(function(newSessionTimeout) {
+                        // 새로운 세션 시간으로 카운트 다운을 업데이트
+                        timer = newSessionTimeout;
+                    });
+                }
+            }
+
+            // 카운트 다운 종료
+            if (--timer < 0) {
+                clearInterval(countdownInterval);
+                display.textContent = "00:00";
+            }
+        }
+
+        var countdownInterval = setInterval(countdown, 1000); // 타이머 시작
+    }
+
+    // 세션 시간 연장 요청 함수
+    function extendSessionTime(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/extendSessionTime", true); // 세션 시간 연장을 처리하는 서버 엔드포인트
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // 세션 시간을 성공적으로 연장한 경우
+                var newSessionTimeout = parseInt(xhr.responseText);
+                // 새로운 세션 시간을 콜백 함수에 전달
+                callback(newSessionTimeout);
+            }
+        };
+        xhr.send();
+    }
+
+    // 페이지 로드 후 실행
+    window.onload = function () {
+        var sessionTimeout = <%= session.getMaxInactiveInterval() %>;
+        var display = document.querySelector('#time');
+        startCountdown(sessionTimeout, display);
+    };
+</script>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -41,7 +99,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <div class="user-panel d-flex" >
-
+                    <div class="nav-link mt-1" style="font-weight: bold">자동 로그아웃 시간  <i class="bi bi-clock"></i> &nbsp; <span id="time" style="font-size: 18px">05:00</span></div>
                     <div class="info">
                         <%
                             String profileImgUrl = sessionVO.getProfile_img();
@@ -49,7 +107,7 @@
                                 profileImgUrl = "K1.png"; // 기본 이미지 파일 경로 설정
                             }
                         %>
-                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>"><img src="/fileUpload/profile/<%=profileImgUrl%>" class="img-circle" alt="User Image"> <%=sessionVO.getName()%></a>
+                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link"><img src="/fileUpload/profile/<%=profileImgUrl%>" class="img-circle" alt="User Image">&nbsp;<%=sessionVO.getName()%></a>
                     </div>
                 </div>
             </li>
@@ -211,12 +269,6 @@
                                 <a href="../player/PitchersList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>전체선수조회</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../tables/data.html" class="nav-link">
-                                    <i class="bi bi-record nav-icon"></i>
-                                    <p>DataTables</p>
                                 </a>
                             </li>
                             <li class="nav-item">

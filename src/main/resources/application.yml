@@ -9,7 +9,7 @@ server:
       enabled: true
       force: true
     session:
-      timeout: 1800
+      timeout: 300
 spring:
   output:
     ansi:
