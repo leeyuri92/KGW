@@ -93,8 +93,6 @@
             $('#r_documentVacation').submit();
         }
 
-
-
         function docSaveSubmitVacation() {//휴가 문서 임시저장 jquery date tyep input String 형전환 필요
             let state = document.getElementById('stateVacation');
             state.value = '임시저장';
