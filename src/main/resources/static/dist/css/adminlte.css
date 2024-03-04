@@ -52999,4 +52999,17 @@ a.text-muted:hover {
 .dark-mode .border-dark {
   border-color: #4b545c !important;
 }
+
+.swal2-container {
+    /* SweetAlert2 컨테이너 스타일 */
+}
+
+.swal2-styled.swal2-confirm {
+    border: 0;
+    border-radius: .25em;
+    background: initial;
+    background-color: #652C2C;
+    color: #fff;
+    font-size: 1em;
+}
 /*# sourceMappingURL=adminlte.css.map */

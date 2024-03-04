@@ -29,8 +29,22 @@
         }
         /*미디어게시글삭제*/
         const  mediaNoticeDelete =()=> {
-            if (confirm('게시글을 삭제하시겠습니까?'))
-                location.href = "/media/mediaDelete?board_no="+<%=mediaVO.getBoard_no()%>;
+            Swal.fire({
+                title: '게시글 삭제',
+                text: '게시글을 삭제하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 확인을 눌렀을 때의 동작
+                    location.href = "/media/mediaDelete?board_no="+<%=mediaVO.getBoard_no()%>;
+                } else {
+                    // 취소를 눌렀을 때의 동작
+                    console.log("삭제 취소");
+                }
+            });
         }
         /*댓글입력*/
         const commendInsert =()=> {
@@ -39,9 +53,22 @@
         }
         /*댓글삭제*/
         const mediaCommendDelete =(commend_no)=> {
-            if (confirm('댓글을 삭제하시겠습니까?'))
-                location.href = "/media/CommendDelete?commend_no="+commend_no+"&board_no="+<%=mediaVO.getBoard_no()%>
-
+            Swal.fire({
+                title: '게시글 삭제',
+                text: '게시글을 삭제하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 확인을 눌렀을 때의 동작
+                    location.href = "/media/CommendDelete?commend_no="+commend_no+"&board_no="+<%=mediaVO.getBoard_no()%>
+                } else {
+                    // 취소를 눌렀을 때의 동작
+                    console.log("삭제 취소");
+                }
+            });
         }
     </script>
 </head>

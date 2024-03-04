@@ -19,18 +19,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>공지사항 상세조회</title>
     <script>
+        /*게시글 목록*/
         function noticeList(){
             location.href='/notice/noticeList';
         }
-
-        const  noticeDelete =() => {
-            const notice_no = <%=noticeVO.getNotice_no()%>;
-            if (confirm('게시글을 삭제하시겠습니까?'))
-                location.href = "/notice/noticeDelete?notice_no="+notice_no;
-            console.log("delete"+notice_no);
+        /*게시글 삭제*/
+        const noticeDelete = () => {
+            Swal.fire({
+                title: '게시글 삭제',
+                text: '게시글을 삭제하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 확인을 눌렀을 때의 동작
+                    location.href = "/notice/noticeDelete?notice_no=" + <%=noticeVO.getNotice_no()%>
+                } else {
+                    // 취소를 눌렀을 때의 동작
+                    console.log("삭제 취소");
+                }
+            });
         }
-
-
     </script>
 </head>
 

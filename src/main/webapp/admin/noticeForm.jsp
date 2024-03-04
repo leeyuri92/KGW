@@ -62,10 +62,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-5 mb-3 mt-3">
-                                                <input type="date" class="form-control" id="pin_start" name="pin_start">
+                                                <input type="date" class="form-control" id="pin_start"  name="pin_start">
                                             </div>
                                             <div class="col-5 mb-3 mt-3">
-                                                <input type="date" class="form-control" id="pin_end" name="pin_end">
+                                                <input type="date" class="form-control" id="pin_end"  name="pin_end">
                                             </div>
                                         </div>
                                         <textarea id="summernote" name="notice_content"></textarea>
@@ -109,25 +109,102 @@
                                     });
 
                                     function noticeList(){
-                                        if (confirm('지금까지 작성한 내용이 사라집니다. 이 페이지를 나가시겠습니까?'))
-                                            location.href="/notice/noticeList";
+                                        Swal.fire({
+                                            title: '페이지 나가기',
+                                            text: '지금까지 작성한 내용이 사라집니다. 이 페이지를 나가시겠습니까?',
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonText: '나가기',
+                                            cancelButtonText: '취소',
+                                            customClass: {
+                                                confirmButton: 'swal2-styled swal2-confirm'
+                                            }
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                // 확인을 눌렀을 때의 동작
+                                                location.href = "/notice/noticeList";
+                                            } else {
+                                                // 취소를 눌렀을 때의 동작
+                                                console.log("나가기 취소");
+                                            }
+                                        });
                                     }
 
+
                                     const noticeInsert =()=> {
-                                        console.log("작성")
+                                        //     console.log("작성")
+                                        //
+                                        //     const id_subject = document.querySelector('#subject');
+                                        //     const markupStr = $('#summernote').summernote('code');
+                                        //
+                                        //     if (id_subject.value == '') {
+                                        //         alert('제목을 입력하세요.');
+                                        //         id_subject.focus();
+                                        //     }else if(markupStr === '<p><br></p>'){
+                                        //         alert('내용을 입력하세요.');
+                                        //         //summernote 에디터에 포커스 추가(내용 미작성시 알림창과 마우스커서를 텍스트로 보냄)
+                                        //         $('#summernote').summernote('focus');
+                                        //     }else{
+                                        //         document.querySelector('#insert').submit();
+                                        //     }
+                                        // };
+                                        console.log("작성");
 
                                         const id_subject = document.querySelector('#subject');
                                         const markupStr = $('#summernote').summernote('code');
 
                                         if (id_subject.value == '') {
-                                            alert('제목을 입력하세요.');
-                                            id_subject.focus();
-                                        }else if(markupStr === '<p><br></p>'){
-                                            alert('내용을 입력하세요.');
-                                            //summernote 에디터에 포커스 추가(내용 미작성시 알림창과 마우스커서를 텍스트로 보냄)
-                                            $('#summernote').summernote('focus');
-                                        }else{
-                                            document.querySelector('#insert').submit();
+                                            Swal.fire({
+                                                title: '알림',
+                                                text: '제목을 입력하세요.',
+                                                icon: 'warning',
+                                                confirmButtonText: '확인',
+                                                customClass: {
+                                                    confirmButton: 'swal2-styled swal2-confirm'
+                                                },
+                                                didOpen: () => {
+                                                    // 알림창이 열린 후에 실행될 함수
+                                                    id_subject.focus();
+                                                },
+                                                didClose: () => {
+                                                    // 알림창이 닫힌 후에 실행될 함수
+                                                    // 마우스 커서를 특정 입력 필드로 이동
+                                                    id_subject.focus();
+                                                }
+                                            });
+                                        } else if (markupStr === '<p><br></p>') {
+                                            Swal.fire({
+                                                title: '알림',
+                                                text: '내용을 입력하세요.',
+                                                icon: 'warning',
+                                                confirmButtonText: '확인',
+                                                customClass: {
+                                                    confirmButton: 'swal2-styled swal2-confirm'
+                                                },
+                                                didOpen: () => {
+                                                    // 알림창이 열린 후에 실행될 함수
+                                                    $('#summernote').summernote('focus');
+                                                },
+                                                didClose: () => {
+                                                    // 알림창이 닫힌 후에 실행될 함수
+                                                    // 마우스 커서를 특정 입력 필드로 이동
+                                                    $('#summernote').summernote('focus');
+                                                }
+                                            });
+                                        } else {
+                                            // 성공 시 알림창 띄우기
+                                            Swal.fire({
+                                                title: '알림',
+                                                text: '작성이 성공적으로 완료되었습니다.',
+                                                icon: 'success',
+                                                confirmButtonText: '확인',
+                                                customClass: {
+                                                    confirmButton: 'swal2-styled swal2-confirm'
+                                                }
+                                            }).then(() => {
+                                                // 알림창이 닫힌 후에 실행될 함수
+                                                document.querySelector('#insert').submit();
+                                            });
                                         }
                                     };
                                 </script>
