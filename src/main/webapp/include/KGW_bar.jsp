@@ -10,6 +10,7 @@
     PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     EmpVO sessionVO = principalDetails.getEmpVO();
     session.setMaxInactiveInterval(300);
+
 %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -54,6 +55,7 @@
             if (--timer < 0) {
                 clearInterval(countdownInterval);
                 display.textContent = "00:00";
+                location.href='/logout';
             }
         }
 

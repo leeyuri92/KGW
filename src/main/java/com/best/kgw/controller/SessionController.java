@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SessionController {
-
+    /**********************************************************************************
+     작성자 : 이유리
+     작성일자 : 24.03.03
+     기능 : 세션시간 설정
+     **********************************************************************************/
     @GetMapping("/extendSessionTime")
     public int extendSessionTime(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);

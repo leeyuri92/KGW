@@ -413,7 +413,7 @@
 
         function getWeather (lat, lon) {
             const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
-            fetch(
+            fetch(git
                 `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${API_KEY}&units=metric&lang=kr`
             )
                 .then((response) => {

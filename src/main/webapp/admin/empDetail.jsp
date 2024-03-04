@@ -113,7 +113,7 @@
                     <h3 style="display: flex; align-items: center; justify-content: center;" ><%=rmap.getName()%>님 정보</h3>
                 </div>
 
-                <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
+                <div class="box-header" style="display: flex;">
 
                     <div class="col-2">
                         <div class="signImg" style="border: 2px solid grey; width: 200px; height: 200px">

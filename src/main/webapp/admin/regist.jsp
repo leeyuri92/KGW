@@ -84,9 +84,6 @@
                                 </div>
                              </div>
 
-
-
-
                             <div class="row">
                                 <div class="col-6 mb-3 mt-3">
             <label for="birthdate">생년월일 <span class="text-danger">*</span>
