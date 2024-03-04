@@ -88,9 +88,9 @@
     <insert id="approvalInsert" parameterType="com.vo.ApprovalVO" >
         INSERT INTO approval (
         approval_no, document_no, approval_name,
-        rejection_content, middle_approval_date, final_approval_date, middleSign_name, finalSign_name)
+        rejection_content, middle_approval_date, final_approval_date, middlesign_name, finalsign_name)
         VALUES (approval_pk_seq.nextval, #{document_no}, #{approval_name, jdbcType=VARCHAR},
-                #{rejection_content, jdbcType=VARCHAR}, #{middle_approval_date, jdbcType=VARCHAR}, #{final_approval_date, jdbcType=VARCHAR},  #{middleSign_name, jdbcType=VARCHAR}, #{finalSign_name, jdbcType=VARCHAR})
+                #{rejection_content, jdbcType=VARCHAR}, #{middle_approval_date, jdbcType=VARCHAR}, #{final_approval_date, jdbcType=VARCHAR},  #{middlesign_name, jdbcType=VARCHAR}, #{finalsign_name, jdbcType=VARCHAR})
     </insert>
 
 
@@ -111,19 +111,18 @@
     <update id="approvalFinalModify" parameterType="com.vo.ApprovalVO">
         UPDATE approval
         SET
-            approval_category = #{approvalCategory, jdbcType=VARCHAR},
-            rejection_content = #{rejectionContent, jdbcType=VARCHAR},
+            approval_category = #{approval_category},
+            rejection_content = #{rejection_content, jdbcType=VARCHAR},
             final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS'),
-            finalSign_name=#{finalSign_name, jdbcType=BLOB}
-        WHERE approval_no = #{approvalNo}
-          AND middle_approval_date IS NOT NULL
+            finalsign_name=#{finalsign_name}
+        WHERE approval_no = #{approval_no}
     </update>
 
 
     <update id="documentStateModify" parameterType="com.vo.ApprovalVO">
         UPDATE document
         SET state = #{state}
-        WHERE document_no = #{documentNo}
+        WHERE document_no = #{document_No}
     </update>
 
 

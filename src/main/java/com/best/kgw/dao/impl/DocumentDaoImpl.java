@@ -81,7 +81,12 @@ public int approvalMiddleModify(ApprovalVO approvalVO) throws Exception {
 
     @Override
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
-        sqlSessionTemplate.update("approvalMiddleModify", approvalvo);
+        if(approvalvo.getApproval_category().equals("중간결재대기")){
+            sqlSessionTemplate.update("approvalMiddleModify", approvalvo);
+        }else{
+            sqlSessionTemplate.update("approvalFinalModify", approvalvo);
+        }
+
     }
 
 }
