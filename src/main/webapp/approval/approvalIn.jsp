@@ -99,9 +99,13 @@
                                 <input type="hidden" id="middlesign_name" name="middlesign_name" value="<%=approvalVO.getApproval_no()%>_middleSign.png">
                                 <input type="hidden" id="approval_no" name="approval_no" value="<%=approvalVO.getApproval_no()%>">
                               <%
-                                }else if (approvalVO.getApproval_category().equals("최종결재대기"))
+                                }else if (approvalVO.getApproval_category().equals("최종결재대기")){
                               %>
                               <input type="hidden" id="finalsign_name" name="finalsign_name" value="<%=approvalVO.getApproval_no()%>_finalSign.png">
+                              <input type="hidden" id="approval_no" name="approval_no" value="<%=approvalVO.getApproval_no()%>">
+                              <%
+                                }
+                              %>
                             </form>
                             <div>
                                 <div id="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
