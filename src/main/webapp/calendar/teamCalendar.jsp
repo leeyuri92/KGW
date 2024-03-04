@@ -108,7 +108,7 @@
                     <%  List<CalendarVO> teamCalendarList = (List<CalendarVO>) request.getAttribute("teamCalendarList");
                         if (teamCalendarList != null) {
                             for (CalendarVO vo : teamCalendarList) {
-                            if (Objects.equals(sessionVO.getName(), vo.getName())) {
+                            if (Objects.equals(sessionVO.getTeam_no(), vo.getTeam_no())) {
                             %>
                     {
                         extendedProps: { CalendarNo: '<%= vo.getCalendar_no() %>' },
@@ -512,7 +512,7 @@
                                         if (teamCalendarList1 != null) {
                                             int count = 0; // 일정 카운터 변수 추가
                                             for (CalendarVO vo : teamCalendarList1) {
-                                                if (Objects.equals(sessionVO.getName(), vo.getName())) {
+                                                if (Objects.equals(sessionVO.getTeam_no(), vo.getTeam_no())) {
                                                     String startDateCheck = vo.getCalendar_start().split("T")[0]; // 일정 시작일자만 추출
                                                     String endDateCheck = vo.getCalendar_end().split("T")[0]; // 일정 종료일자만 추출
                                                     String startDate = vo.getCalendar_start();

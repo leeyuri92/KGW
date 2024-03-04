@@ -62,7 +62,7 @@
       <div class="row">
         <div class="col-2 text-center" >
           <div class="col" style="position:sticky; top:30px;">
-            <div class="row mainbox" style="background-color: #efc3cc;">
+            <div class="row mainbox" style="background-color: #e1cdcc;">
               <div class="row" style="margin: auto;">
                 <div class="user-panel">
                   <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>">
@@ -84,7 +84,7 @@
               </div>
             </div>
 
-            <div class="row mainbox mt-3 pt-5" style="background-color: #efc3cc; ">
+            <div class="row mainbox mt-3 pt-5" style="background-color: #e1cdcc; ">
                 <div class="row text-bold text-lg" style="margin: auto;">
                   <div class="text col-6 ">
                     <label>현재 시간  </label>
@@ -180,7 +180,7 @@
                 %>
               </div>
             </div>
-            <div class="row mainbox mt-3 p-4 d-grid gap-5  mx-auto" style="background-color: #efc3cc; ">
+            <div class="row mainbox mt-3 p-4 d-grid gap-5  mx-auto" style="background-color: #e1cdcc; ">
               <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>" class="btn btn-danger">프로필정보수정</a>
             </div>
           </div>

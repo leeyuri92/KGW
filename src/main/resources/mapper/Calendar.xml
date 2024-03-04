@@ -15,18 +15,14 @@
 
     <select id= "tList" parameterType="map" resultType="com.vo.CalendarVO">
         select * from calendar a
-        INNER JOIN emp b ON a.emp_no = b.emp_no
         <where>
-            AND a.emp_no = b.emp_no
             AND a.calendar_id = 2
         </where>
     </select>
 
     <select id= "cpList" parameterType="map" resultType="com.vo.CalendarVO">
         select * from calendar a
-        INNER JOIN emp b ON a.emp_no = b.emp_no
         <where>
-            AND a.emp_no = b.emp_no
             AND a.calendar_id = 3
         </where>
     </select>
