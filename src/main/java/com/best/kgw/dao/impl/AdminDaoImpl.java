@@ -75,23 +75,6 @@ public class AdminDaoImpl implements AdminDao {
         logger.info(empList.toString());
         return empList;
     }
-    /**********************************************************************************
-     작성자 : 이동건
-     작성일자 : 24.03.03
-     기능 : 사원수정 레포지토리
-     **********************************************************************************/
-    @Override
-    public int empInfoUpdate2(EmpVO empVO) throws Exception {
-        logger.info("Repository : empInfoUpdate");
-        int result = 0;
-        try {
-            result = sqlSessionTemplate.update("empInfoUpdate2", empVO);
 
-        } catch (Exception e) {
-            logger.info(e.toString());
-        }
-        logger.info(String.valueOf(result));
-        return result;
-    }
 
 }

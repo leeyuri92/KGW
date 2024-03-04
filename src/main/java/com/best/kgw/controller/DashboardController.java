@@ -163,6 +163,11 @@ public class DashboardController{
         } else {
             // 파일이 전달되지 않았을 때의 처리
             logger.info("File is null or empty.");
+            String rawPassword = empvo.getPassword();
+            String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+            empvo.setPassword(encPassword);
+            int result = 0;
+            result = dashboardService.empDetailUpdate(empvo);
         }
 
 

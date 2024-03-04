@@ -21,10 +21,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script type="text/javascript">
+
+      // 직원 정보 수정 함수
       const empDetailUpdate = () => {
-          console.log("수정 클릭");
-          document.querySelector("#f_member").submit();
-      }
+        if (validateForm()) {
+          // 유효성 검사 성공 시, SweetAlert를 사용하여 성공 메시지 표시 후 폼 제출
+          Swal.fire("사원수정 완료!", "", "success")
+                  .then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                      document.querySelector("#f_member").submit();
+                    }
+                  });
+        } else {
+          // 유효성 검사 실패 시, SweetAlert를 사용하여 오류 메시지 표시
+          Swal.fire("오류!", "사원수정 양식을 올바르게 입력해주세요.", "error");
+        }
+      };
 
       const btn_Cancel = () => {
           location.href = "/";
@@ -280,6 +292,18 @@
       const expEmailText = /^[a-zA-Z0-9._+=-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
       //주소 정규식표현
       const expAddressText = /^[가-힣a-zA-Z0-9-.,\s]{1,60}$/;
+
+      // 각 입력 필드의 유효성을 검사하는 함수
+      const validateForm = () => {
+        // 각 입력 필드에 대한 유효성 검사 함수 호출
+        const isPasswordValid = validatePassword();
+        const isPhoneValid = validatePhone();
+        const isEmailValid = validateEmail();
+        const isAddressValid = validateAddress();
+
+        // 모든 검사가 통과되면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+        return isPasswordValid &&  isPhoneValid && isEmailValid && isAddressValid;
+      }
 
       const validatePassword = () => {
           const pwSpan = document.getElementById('password_');

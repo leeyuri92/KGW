@@ -62,18 +62,7 @@ public class AdminServiceImpl implements AdminSevice {
         result = adminDao.empInfoUpdate(empVO);
         return result;
     }
-    /**********************************************************************************
-     작성자 : 이동건
-     작성일자 : 24.03.03
-     기능 : 사원수정 서비스
-     **********************************************************************************/
-    @Override
-    public int empInfoUpdate2(EmpVO empVO) throws Exception {
-        logger.info("Service empInfoUpdate");
-        int result = 0;
-        result = adminDao.empInfoUpdate2(empVO);
-        return result;
-    }
+
     /**********************************************************************************
      작성자 : 이동건
      작성일자 : 24.02.23

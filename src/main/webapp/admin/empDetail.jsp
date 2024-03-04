@@ -19,9 +19,10 @@
     <script type="text/javascript">
 
 
+        // 직원 정보 수정 함수
         const empInfoUpdate = () => {
             if (validateForm()) {
-                // 유효성 검사 성공 시, 폼을 제출합니다.
+                // 유효성 검사 성공 시, SweetAlert를 사용하여 성공 메시지 표시 후 폼 제출
                 Swal.fire("사원수정 완료!", "", "success")
                     .then((result) => {
                         if (result.isConfirmed || result.isDismissed) {
@@ -29,19 +30,22 @@
                         }
                     });
             } else {
-                // 유효성 검사 실패 시, 오류 메시지를 표시하거나 적절한 조치를 취합니다.
+                // 유효성 검사 실패 시, SweetAlert를 사용하여 오류 메시지 표시
                 Swal.fire("오류!", "사원수정 양식을 올바르게 입력해주세요.", "error");
             }
         };
 
+        // 취소 버튼 클릭 시, 사원 목록 페이지로 이동하는 함수
         const btn_Cancel = () =>{
             location.href = "/admin/empList";
         }
+
+        // 이미지 클릭 시 파일 업로드 input 클릭 이벤트를 발생시키는 함수
         function handleImgClick() {
             document.getElementById('profileImgInput').click();
         }
 
-        // 파일 선택 시 이미지 미리보기
+        // 파일 선택 시 이미지 미리보기 함수
         function preview(event) {
             var input = event.target;
             var preview = document.getElementById('previewImage');
@@ -59,7 +63,6 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
     </script>
 
 </head>
@@ -278,29 +281,37 @@
 
     <script>
         // 정규표현식 패턴 상수 선언
-        //아이디 정규식표현
+
+        // 아이디 정규식표현
         const expIdText = /^[A-Za-z0-9]{4,12}$/;
-        //비밀번호 정규식표현
+
+        // 비밀번호 정규식표현
         const expPwText = /^[A-Za-z0-9]{4,12}$/;
-        //이름 정규식표현
+
+        // 이름 정규식표현
         const expNameText = /^[가-힣]{2,5}$/;
-        //핸드폰 정규식표현
+
+        // 핸드폰 정규식표현
         const expPhoneText = /^\d{3}-\d{3,4}-\d{4}$/;
-        //생년월일 정규식표현
+
+        // 생년월일 정규식표현
         const expDateText = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-        //이메일 정규실표현
+
+        // 이메일 정규식표현
         const expEmailText = /^[a-zA-Z0-9._+=-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
-        //부서 정규식표현
+
+        // 부서 정규식표현
         const expTeamText = /^[1-9]{1,2}$/;
-        //권한 정규식표현
+
+        // 권한 정규식표현
         const expRoleText = /ROLE/;
-        //주소 정규식표현
+
+        // 주소 정규식표현
         const expAddressText = /^[가-힣a-zA-Z0-9-.,\s]{1,60}$/;
 
-
-
+        // 각 입력 필드의 유효성을 검사하는 함수
         const validateForm = () => {
-            // 각 입력 필드에 대한 개별 유효성 검사 함수를 호출합니다.
+            // 각 입력 필드에 대한 유효성 검사 함수 호출
             const isPasswordValid = validatePassword();
             const isNameValid = validateName();
             const isBirthdateValid = validateBirthdate();
@@ -314,14 +325,16 @@
             const isPositionValid = validatePosition();
 
             // 모든 검사가 통과되면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
-            return isPasswordValid && isNameValid && isBirthdateValid && isPhoneValid && isEmailValid &&idHireValid&& isAccessValid&&isStateValid && isTeamValid && isAddressValid && isPositionValid;
+            return isPasswordValid && isNameValid && isBirthdateValid && isPhoneValid && isEmailValid && idHireValid && isAccessValid && isStateValid && isTeamValid && isAddressValid && isPositionValid;
         }
 
+        // 이름 유효성 검사 함수
         const validateName = () => {
             const nmSpan = document.getElementById('name_');
             const mbrNmInput = document.getElementById('name');
             const isValid = expNameText.test(mbrNmInput.value);
 
+            // 유효성에 따라 오류 메시지 표시 여부 결정
             if (isValid) {
                 nmSpan.style.display = 'none';
             } else {
@@ -330,11 +343,14 @@
             return isValid;
         }
 
+        // 비밀번호 유효성 검사 함수
         const validatePassword = () => {
+            // 오류 메시지를 표시할 span 요소 및 비밀번호 input 요소 가져오기
             const pwSpan = document.getElementById('password_');
             const mbrPwInput = document.getElementById('password');
             const isValid = expPwText.test(mbrPwInput.value);
 
+            // 유효성에 따라 오류 메시지 표시 여부 결정
             if (isValid) {
                 pwSpan.style.display = 'none';
             } else {
@@ -343,12 +359,14 @@
             return isValid;
         }
 
-
+        // 생년월일 유효성 검사 함수
         const validateBirthdate = () => {
+            // 오류 메시지를 표시할 span 요소 및 생년월일 input 요소 가져오기
             const dateSpan = document.getElementById('birthdate_');
             const mbrBirthdateInput = document.getElementById('birthdate');
             const isValid = expDateText.test(mbrBirthdateInput.value);
 
+            // 유효성에 따라 오류 메시지 표시 여부 결정
             if (isValid) {
                 dateSpan.style.display = 'none';
             } else {
@@ -357,11 +375,14 @@
             return isValid;
         }
 
+        // 핸드폰 번호 유효성 검사 함수
         const validatePhone = () => {
+            // 오류 메시지를 표시할 span 요소 및 핸드폰 번호 input 요소 가져오기
             const numberSpan = document.getElementById('phone_num_');
             const mbrPhoneInput = document.getElementById('phone_num');
             const isValid = expPhoneText.test(mbrPhoneInput.value);
 
+            // 유효성에 따라 오류 메시지 표시 여부 결정
             if (isValid) {
                 numberSpan.style.display = 'none';
             } else {
@@ -370,11 +391,14 @@
             return isValid;
         }
 
+        // 이메일 유효성 검사 함수
         const validateEmail = () => {
+            // 오류 메시지를 표시할 span 요소 및 이메일 input 요소 가져오기
             const emailSpan = document.getElementById('email_');
             const mbrEmailInput = document.getElementById('email');
             const isValid = expEmailText.test(mbrEmailInput.value);
 
+            // 유효성에 따라 오류 메시지 표시 여부 결정
             if (isValid) {
                 emailSpan.style.display = 'none';
             } else {
@@ -382,11 +406,15 @@
             }
             return isValid;
         }
+
+        // 부서 유효성 검사 함수
         const validateTeam = () => {
+            // 오류 메시지를 표시할 span 요소 및 부서 input 요소 가져오기
             const teamSpan = document.getElementById('team_no_');
             const mbrNmInput = document.getElementById('team_no');
             const isValid = expTeamText.test(mbrNmInput.value);
 
+            // 유효성에 따라 오류 메시지 표시 여부 결정
             if (isValid) {
                 teamSpan.style.display = 'none';
             } else {
@@ -395,65 +423,79 @@
             return isValid;
         }
 
+        // 직위(직책) 유효성 검사 함수
         const validatePosition = () => {
-            const positionSpan = document.getElementById('emp_position_');
-            const mbrNmInput = document.getElementById('emp_position');
-            const isValid = expNameText.test(mbrNmInput.value);
+            const positionSpan = document.getElementById('emp_position_'); // 오류 메시지를 표시할 span 요소 가져오기
+            const mbrNmInput = document.getElementById('emp_position'); // 직위 입력 필드 가져오기
+            const isValid = expNameText.test(mbrNmInput.value); // 정규식 패턴을 사용하여 입력값을 검사
 
+            // 유효한 경우 오류 메시지를 숨기고, 그렇지 않은 경우 표시
             if (isValid) {
                 positionSpan.style.display = 'none';
             } else {
                 positionSpan.style.display = 'inline';
             }
-            return isValid;
+            return isValid; // 유효성 여부 반환
         }
 
+        // 상태(재직/퇴직) 유효성 검사 함수
         const validateState  = () => {
-            const stateSpan = document.getElementById('emp_state_');
-            const mbrNmInput = document.getElementById('emp_state');
-            const isValid = expTeamText.test(mbrNmInput.value);
+            const stateSpan = document.getElementById('emp_state_'); // 오류 메시지를 표시할 span 요소 가져오기
+            const mbrNmInput = document.getElementById('emp_state'); // 상태 입력 필드 가져오기
+            const isValid = expTeamText.test(mbrNmInput.value); // 정규식 패턴을 사용하여 입력값을 검사
 
+            // 유효한 경우 오류 메시지를 숨기고, 그렇지 않은 경우 표시
             if (isValid) {
                 stateSpan.style.display = 'none';
             } else {
                 stateSpan.style.display = 'inline';
             }
-            return isValid;
+            return isValid; // 유효성 여부 반환
         }
 
+        // 권한 유효성 검사 함수
         const validateAccess  = () => {
-            const acSpan = document.getElementById('emp_access_');
-            const mbrNmInput = document.getElementById('emp_access');
-            const isValid = expRoleText.test(mbrNmInput.value);
+            const acSpan = document.getElementById('emp_access_'); // 오류 메시지를 표시할 span 요소 가져오기
+            const mbrNmInput = document.getElementById('emp_access'); // 권한 입력 필드 가져오기
+            const isValid = expRoleText.test(mbrNmInput.value); // 정규식 패턴을 사용하여 입력값을 검사
+
+            // 유효한 경우 오류 메시지를 숨기고, 그렇지 않은 경우 표시
             if (isValid) {
                 acSpan.style.display = 'none';
             } else {
                 acSpan.style.display = 'inline';
             }
-            return isValid;
+            return isValid; // 유효성 여부 반환
         }
+
+        // 입사일 유효성 검사 함수
         const validateHire  = () => {
-            const hireSpan = document.getElementById('hire_date_');
-            const mbrNmInput = document.getElementById('hire_date');
-            const isValid = expDateText.test(mbrNmInput.value);
+            const hireSpan = document.getElementById('hire_date_'); // 오류 메시지를 표시할 span 요소 가져오기
+            const mbrNmInput = document.getElementById('hire_date'); // 입사일 입력 필드 가져오기
+            const isValid = expDateText.test(mbrNmInput.value); // 정규식 패턴을 사용하여 입력값을 검사
+
+            // 유효한 경우 오류 메시지를 숨기고, 그렇지 않은 경우 표시
             if (isValid) {
                 hireSpan.style.display = 'none';
             } else {
                 hireSpan.style.display = 'inline';
             }
-            return isValid;
+            return isValid; // 유효성 여부 반환
         }
 
+        // 주소 유효성 검사 함수
         const validateAddress  = () => {
-            const addressSpan = document.getElementById('address_');
-            const mbrNmInput = document.getElementById('address');
-            const isValid = expAddressText.test(mbrNmInput.value);
+            const addressSpan = document.getElementById('address_'); // 오류 메시지를 표시할 span 요소 가져오기
+            const mbrNmInput = document.getElementById('address'); // 주소 입력 필드 가져오기
+            const isValid = expAddressText.test(mbrNmInput.value); // 정규식 패턴을 사용하여 입력값을 검사
+
+            // 유효한 경우 오류 메시지를 숨기고, 그렇지 않은 경우 표시
             if (isValid) {
                 addressSpan.style.display = 'none';
             } else {
                 addressSpan.style.display = 'inline';
             }
-            return isValid;
+            return isValid; // 유효성 여부 반환
         }
     </script>
 
@@ -474,40 +516,42 @@
                             <button type="button" class="btn btn-danger button save" data-action="save-png">내 pc에 저장</button>
                         </div>
                         <script>
+                            // 캔버스 및 서명 패드 생성
                             let canvas = document.getElementById('signature-pad');
                             let signaturePad = new SignaturePad(canvas);
 
-
-                            //button clear
+                            // Clear 버튼 클릭 이벤트
                             document.getElementById('clear').addEventListener('click', function () {
-                                signaturePad.clear();
+                                signaturePad.clear(); // 서명 지우기
                             });
 
-                            // button action save-png  Event부여
+                            // PNG로 저장 버튼 클릭 이벤트
                             document.querySelector('[data-action="save-png"]').addEventListener('click', function () {
-
-                                let dataURL = signaturePad.toDataURL();
+                                let dataURL = signaturePad.toDataURL(); // 서명을 데이터 URL로 변환
 
                                 let downloadLink = document.createElement('a');
                                 downloadLink.href = dataURL;
-                                downloadLink.download = '<%=rmap.getEmp_no()%>.png';
-                                //다운로드 처리
+                                downloadLink.download = '<%=rmap.getEmp_no()%>.png'; // 다운로드할 파일 이름 설정
+
+                                // 다운로드 링크 생성 및 클릭하여 다운로드
                                 document.body.appendChild(downloadLink);
                                 downloadLink.click();
                                 document.body.removeChild(downloadLink);
                             });
 
-                            // button save
+                            // 서명 저장 버튼 클릭 이벤트
                             document.getElementById('save').addEventListener('click', function () {
                                 let canvas = document.getElementById('signature-pad');
                                 let dataURL = canvas.toDataURL('image/png'); // 캔버스 내용을 데이터 URL로 가져옴
+
                                 // 데이터 URL을 Blob 객체로 변환
                                 let blob = dataURItoBlob(dataURL);
 
                                 // FormData 객체 생성
                                 let formData = new FormData();
-                                formData.append('image', blob, '<%=rmap.getEmp_no()%>.png');
+                                formData.append('image', blob, '<%=rmap.getEmp_no()%>.png'); // 이미지 파일 및 이름 설정
 
+                                // 서명 이미지를 서버로 전송
                                 $.ajax({
                                     type: 'POST',
                                     url: '/fileSave',
@@ -516,9 +560,9 @@
                                     contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 컨텐츠 타입을 설정하지 않도록 함
                                     success: function (response) {
                                         console.log('파일 전송 성공');
-                                        $('.modal').modal('hide');
-                                        document.querySelector("#signImage").src = "/fileUpload/sign/<%=rmap.getEmp_no()%>.png";
-                                        signaturePad.clear();
+                                        $('.modal').modal('hide'); // 모달 숨기기
+                                        document.querySelector("#signImage").src = "/fileUpload/sign/<%=rmap.getEmp_no()%>.png"; // 서명 이미지 업데이트
+                                        signaturePad.clear(); // 서명 지우기
                                     },
                                     error: function (xhr, status, error) {
                                         console.error('파일 전송 실패:', error);
@@ -539,7 +583,8 @@
                                     }
                                     return new Blob([arrayBuffer], {type: mimeString});
                                 }
-                            })
+                            });
+
                         </script>
                     </form>
 

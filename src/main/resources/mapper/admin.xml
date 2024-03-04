@@ -20,28 +20,7 @@
           ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
           ,address = #{address}
           ,retire_date = #{retire_date}
-          ,profile_img = #{profile_img}
-        where emp_no = #{emp_no}
-    </update>
-
-    <update id="empInfoUpdate2" parameterType="com.vo.EmpVO">
-        update emp
-        set team_no = #{team_no}
-          ,emp_access = #{emp_access}
-          ,emp_position = #{emp_position}
-          ,sign_no = 0
-          ,dayoff_cnt = 0
-          ,emp_year = 0
-          ,hire_date = #{hire_date}
-          ,emp_state = #{emp_state}
-          ,password = #{password}
-          ,name = #{name}
-          ,email = #{email}
-          ,birthdate = #{birthdate}
-          ,phone_num = #{phone_num}
-          ,mod_date = to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
-          ,address = #{address}
-          ,retire_date = #{retire_date}
+          ,profile_img = #{profile_img , jdbcType=VARCHAR}
         where emp_no = #{emp_no}
     </update>
 

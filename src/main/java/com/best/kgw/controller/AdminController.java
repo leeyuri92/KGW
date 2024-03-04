@@ -131,7 +131,7 @@ public class AdminController {
             String encPassword = bCryptPasswordEncoder.encode(rawPassword);
             empVO.setPassword(encPassword);
             int result = 0;
-            result = adminSevice.empInfoUpdate2(empVO);
+            result = adminSevice.empInfoUpdate(empVO);
         }
 
         return "redirect:/admin/empList";

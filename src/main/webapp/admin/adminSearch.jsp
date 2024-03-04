@@ -26,49 +26,53 @@
     <script type="text/javascript">
 
         function searchEnter(event){
-            console.log(window.event.keyCode)
+            // Enter 키 입력 시 검색 수행
             if(window.event.keyCode === 13){
                 empSearch();
             }
         }
 
         function empSearch(){
-            console.log('empSearch');
+            // 검색 기능 수행
             const gubun = document.querySelector("#gubun").value;
             const keyword = document.querySelector("#keyword").value;
-            console.log(`${gubun} , ${keyword}`);
             location.href="/admin/empList?gubun="+gubun+"&keyword="+keyword;
         }
 
         const empDetail= (emp_no)=>{
+            // 사원 상세 페이지로 이동
             location.href= "/admin/empDetail?emp_no="+emp_no;
         }
 
         const empCertificate= (emp_no)=>{
+            // 재직증명서 발급 페이지로 이동
             location.href= "/empCertificate?emp_no="+emp_no;
         }
 
         const retireCertificate= (emp_no)=>{
+            // 퇴직증명서 발급 페이지로 이동
             location.href= "/retireCertificate?emp_no="+emp_no;
         }
 
         var tdNo= "";
         function check(){
+            // 체크박스 선택 시 처리
             const checkbox = $("input[name=checkboxName]:checked");
             checkbox.each(function (i) {
                 var tr = checkbox.parent().parent().eq(i);
                 var td = tr.children();
                 tdNo = td.eq(1).text();
             });
-            console.log(tdNo);
         }
 
         const empSelectDown= ()=>{
+            // 선택한 사원 정보 다운로드
             check();
             location.href= "/selectDownLoadExel?emp_no="+tdNo;
         }
 
         const empAllDown= ()=>{
+            // 모든 사원 정보 다운로드
             check();
             location.href= "/allDownLoadExel";
         }

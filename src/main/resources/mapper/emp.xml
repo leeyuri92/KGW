@@ -19,8 +19,9 @@
           ,phone_num = #{phone_num}
           ,mod_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
           ,address = #{address}
-          ,profile_img = #{profile_img}
+          ,profile_img = #{profile_img, jdbcType=VARCHAR}
         where emp_no = #{emp_no}
     </update>
+
 
 </mapper>

@@ -4,11 +4,15 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.vo.EmpVO" %>
 <%
+    // 현재 날짜를 가져와서 형식을 지정하여 문자열로 변환
     Date date = new Date();
     SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
     String strDate = simpleDate.format(date);
+
+    // 사원 정보를 받아옴
     List<EmpVO> empList = (List) request.getAttribute("empList");
-    EmpVO rmap = empList.get(0);
+    EmpVO rmap = empList.get(0); // 첫 번째 사원 정보를 사용 (증명서는 개별 사원 정보를 표시하기 때문에 첫 번째 사원 정보만 사용)
+
 %>
 <html>
 <head>
