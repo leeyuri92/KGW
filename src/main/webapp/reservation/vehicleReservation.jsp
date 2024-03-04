@@ -374,28 +374,40 @@
                     let reservation_no = reservationNoInput.textContent;
 
                     if (reservation_no) {
-                        // 사용자에게 삭제 여부를 물어보는 경고창
-                        if (confirm("예약을 삭제하시겠습니까?")) {
-                            // 사용자가 확인을 누르면 삭제 요청
-                            let url = "<%=request.getContextPath()%>/vehicleReservation/deleteTodayVReservation";
+                        // SweetAlert로 삭제 여부 확인
+                        Swal.fire({
+                            title: "일정을 삭제하시겠습니까?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: '삭제',
+                            cancelButtonText: '취소'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // 사용자가 삭제를 선택한 경우, AJAX를 통해 삭제 요청
+                                let url = "<%=request.getContextPath()%>/vehicleReservation/deleteTodayReservation";
 
-                            $.ajax({
-                                type: "POST",
-                                url: url,
-                                data: { reservation_no: reservation_no },
-                                success: function(response) {
-                                    console.log(response);
-                                    if (response > 0) {
-                                        if (window.opener) window.opener.location.reload(true);
-                                        window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
-                                        alert("예약이 삭제되었습니다.");
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    data: { calendar_no: calendar_no },
+                                    success: function(response) {
+                                        console.log(response);
+                                        if (response > 0) {
+                                            if (window.opener) window.opener.location.reload(true);
+                                            window.location.href = '${pageContext.request.contextPath}' +'/vehicleReservation/assetReservationList';                                     Swal.fire({
+                                                title: "일정이 삭제되었습니다.",
+                                                icon: "success",
+                                            });
+                                        }
+                                    },
+                                    error: function(request, status, error) {
+                                        console.error("오류 발생 >> " + error);
                                     }
-                                },
-                                error: function(request, status, error) {
-                                    console.error("오류 발생 >> " + error);
-                                }
-                            });
-                        }
+                                });
+                            }
+                        });
                     }
                 }
             });
