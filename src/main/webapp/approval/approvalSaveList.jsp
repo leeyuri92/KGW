@@ -30,11 +30,24 @@
           }
 
 
-          const saveDelete = (document_no) => {
-              if (!confirm('确定要删除这条记录吗？')) {
+          function saveDelete(document_no) {
+              if (!confirm('삭제확인하시겠습니까？')) {
                   return;
               }
 
+              $.ajax({
+                  url: '/approval/saveList/' + document_no,
+                  type: 'DELETE',
+                  success: function(result) {
+                      alert('삭제성공');
+                      window.location.href = '/approval/documentList';
+                  },
+                  error: function(xhr, status, error) {
+                      console.error(error);
+                      location.reload();
+                  }
+              });
+          }
 
 
           <%--	const boardSearch = () => {--%>

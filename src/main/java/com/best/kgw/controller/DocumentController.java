@@ -141,7 +141,7 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
 //delete부분 
     @DeleteMapping("/saveList/{document_no}")
     //게시글 삭제
-    public String saveDelete(int document_no) throws Exception {
+    public String saveDelete(@PathVariable("document_no") Integer document_no) throws Exception {
         int documentDelete = 0;
        documentDelete = documentService.saveDelete(document_no);
         if (documentDelete == 1) {
@@ -150,8 +150,6 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
             return "error";
         }
     }
-
-
 
 
 }
