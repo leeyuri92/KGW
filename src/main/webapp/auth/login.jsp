@@ -150,7 +150,7 @@
             <p class="mb-4">KIWOOM 구단에 오신 것을 환영합니다.</p>
             <div class="mb-1">
                 <label for="emp_no" class="form-label">사원번호</label>
-                <input type="text" id="emp_no" name="emp_no" class="form-control" placeholder="사원번호를 입력하세요.">
+                <input type="text" id="emp_no" name="emp_no" class="form-control" placeholder="사원번호를 입력하세요." onkeyup="loginEnter()">
             </div>
             <div class="m-2 login-options">
                 <input type="checkbox" id="remember-me" class="form-check-input">

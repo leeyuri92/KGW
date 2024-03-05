@@ -37,7 +37,7 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = minutes + ":" + seconds;f
+            display.textContent = minutes + ":" + seconds;
 
             // 1분 남았을 때 연장 여부 확인
             if (timer === 60) {
