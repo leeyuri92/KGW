@@ -216,6 +216,12 @@
                         });
                     }
                 });
+            } else {
+                // 필수 값이 입력되지 않은 경우 알림 표시
+                Swal.fire({
+                    title: "필수 항목을 모두 입력해주세요.",
+                    icon: "warning",
+                });
             }
             // 모달 숨기기
             let modal = document.getElementById('insertModal');
