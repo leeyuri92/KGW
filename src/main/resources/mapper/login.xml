@@ -9,7 +9,7 @@
     -->
     <select id="login" parameterType="String" resultType="com.vo.EmpVO">
         SELECT
-            emp_no, team_no, team_name, emp_access, emp_position, sign_no, dayoff_cnt, emp_year, hire_date, retire_date, emp_state,
+            emp_no, team_no, team_name, emp_access, emp_position, dayoff_yn, dayoff_cnt, emp_year, hire_date, retire_date, emp_state,
             password, name, email, birthdate, phone_num, address, reg_date, mod_date, profile_img
         from emp natural join team
         WHERE emp_no=#{value}

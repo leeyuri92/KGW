@@ -34,4 +34,6 @@ public class EmpController {
         model.addAttribute("empList", empList);
         return "forward:/empinfo/empInfo.jsp";
     }
+
+
 }

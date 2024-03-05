@@ -19,9 +19,9 @@ public class EmpVO {
     private String team_name;
     private String emp_access;
     private String emp_position;
-    private int sign_no;
+    private String dayoff_yn;
     private int dayoff_cnt;
-    private int emp_year;
+    private String emp_year;
     private String hire_date;
     private String retire_date;
     private String emp_state;
@@ -39,16 +39,15 @@ public class EmpVO {
 
     @Override
     public String toString() {
-
         return "EmpVO{" +
                 "emp_no=" + emp_no +
                 ", team_no=" + team_no +
                 ", team_name='" + team_name + '\'' +
                 ", emp_access='" + emp_access + '\'' +
                 ", emp_position='" + emp_position + '\'' +
-                ", sign_no=" + sign_no +
+                ", dayoff_yn='" + dayoff_yn + '\'' +
                 ", dayoff_cnt=" + dayoff_cnt +
-                ", emp_year=" + emp_year +
+                ", emp_year='" + emp_year + '\'' +
                 ", hire_date='" + hire_date + '\'' +
                 ", retire_date='" + retire_date + '\'' +
                 ", emp_state='" + emp_state + '\'' +
@@ -64,6 +63,5 @@ public class EmpVO {
                 ", gubun='" + gubun + '\'' +
                 ", keyword='" + keyword + '\'' +
                 '}';
-
     }
 }
