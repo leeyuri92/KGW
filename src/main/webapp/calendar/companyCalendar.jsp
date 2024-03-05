@@ -464,19 +464,8 @@
                 confirmButtonText: '확인'
             });
         } else {
-            Swal.fire({
-                icon: 'question',
-                title: '검색 하시겠습니까?',
-                text: '검색하시려면 확인을 누르세요.',
-                showCancelButton: true,
-                confirmButtonText: '확인',
-                cancelButtonText: '취소'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    searchURL += "&keyword=" + keyword;
-                    location.href = searchURL;
-                }
-            });
+            searchURL += "&keyword=" + keyword;
+            location.href = searchURL;
         }
     }
 </script>

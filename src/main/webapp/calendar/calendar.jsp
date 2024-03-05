@@ -462,6 +462,7 @@
         let searchURL = "/calendar/myCalendarList?gubun=" + gubun;
 
         if (keyword.trim() === '') {
+            // SweetAlert로 검색어를 입력하라는 알림 표시
             Swal.fire({
                 icon: 'warning',
                 title: '검색어를 입력하세요',
@@ -469,21 +470,18 @@
                 confirmButtonText: '확인'
             });
         } else {
-            Swal.fire({
-                icon: 'question',
-                title: '검색 하시겠습니까?',
-                text: '검색하시려면 확인을 누르세요.',
-                showCancelButton: true,
-                confirmButtonText: '확인',
-                cancelButtonText: '취소'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    searchURL += "&keyword=" + keyword;
-                    location.href = searchURL;
-                }
-            });
+            searchURL += "&keyword=" + keyword;
+            location.href = searchURL;
         }
     }
+
+    // 엔터 키 눌렀을 때 검색 함수 호출
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            calendarSearch();
+        }
+    });
+
 
 </script>
     <div class="content-wrapper">
