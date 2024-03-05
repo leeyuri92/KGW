@@ -33,4 +33,8 @@ public interface DocumentDao {
 
     // 임시저장 업데이트
     int saveModify(ApprovalVO approvalVO) throws Exception;
+
+    //임시저장 삭제
+    int saveDocumentDelete(int document_no) throws Exception;
+
 }

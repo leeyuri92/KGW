@@ -4,13 +4,6 @@
 <%@ page import="com.vo.ApprovalVO" %>
 
 
-<%--<%--%>
-<%--    List<ApprovalVO> saveDetail = (List<ApprovalVO>) request.getAttribute("saveDetail");--%>
-<%--    if (saveDetail != null && !saveDetail.isEmpty()) {--%>
-<%--        ApprovalVO approvalVO = saveDetail.get(0);--%>
-<%--        out.print(saveDetail);--%>
-<%--%>--%>
-<%--<%}%>--%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,13 +12,40 @@
 
     <title>{임시보관함 상세} -휴가</title>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+        const saveUpdate=()=>{
+            let document_no=document.getElementById('document_no').value;
+            let document_category=document.getElementById('document_category').value;
+            let document_title=document.getElementById('document_title').value;
+            let salary = document.getElementById('salary').value;
+            let contract_term = document.getElementById('contract_term').value;
+            let start_date=document.getElementById('start_date').value;
+            let end_date=document.getElementById('end_date').value;
+            let k_name=document.getElementById('k_name').value;
+            let state=document.getElementById('state').value;
 
+
+            $('#document_no').val(document_no);
+            $('#document_category').val(document_category);
+            $('#document_title').val(document_title);
+            $('#salary').val(salary);
+            $('#contract_term').val(contract_term);
+            $('#start_date').val(start_date);
+            $('#end_date').val(end_date);
+            $('#k_name').val(k_name);
+            $('#state').val(state);
+
+            $('#saveDocumentPost').submit();
+        }
     </script>
+
+    <link  rel="stylesheet " href="../css/approvalDocu.css">
+
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
@@ -38,7 +58,7 @@
         <div class="box-header p-4" >
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-2">
-                    <a class="text-muted fs-6" href="#">전자결재</a>
+                    <a class="text-muted fs-6" href="../approval/documentList">전자결재</a>
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
@@ -73,89 +93,86 @@
                             <div class="row">
 
                                 <div class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">임시보관함</button>
-                                    <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안문서 </button>
+                                    <button id="btn_search2" class="btn btn-danger" herf="#">기안문서 </button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm" href="#">임시보관함</button>
                                 </div>
 
-                                <form id="saveDocumentPost" name="saveDocumentPost" method="post" action="saveDetailUpdate">
-                                <div class="frame " id="save_document">
+
+
+                                <form id="saveDocumentPost" name="saveDocumentPost" action="saveDetailUpdate" method="post">
+                                    <div class="frame " id="do_vocation">
                                     <div class="document-section">
-                                        <%
-                                            List<ApprovalVO> saveDetail = (List<ApprovalVO>) request.getAttribute("saveDetail");
-                                            if (saveDetail != null && !saveDetail.isEmpty()) {
-                                                ApprovalVO approvalVO = saveDetail.get(0);
-                                        %>
+                                 <%  List<ApprovalVO> saveDetail = (List<ApprovalVO>) request.getAttribute("saveDetail");
+                                    if (saveDetail != null && !saveDetail.isEmpty()) {
+                                        ApprovalVO approvalVO = saveDetail.get(0);
+                                %>
 
+                                        <input type="text" hidden="hidden" name="document_no" id="document_no" value="<%=approvalVO.getDocument_no()%>">
                                         <div class="item">
-                                            <span class="title">가태고리 :</span>
-                                            <select id="playersList1" name="document_category">
-                                                <option value="document_category">선수관련 </option>
-                                                <option value="document_category">휴가관련 </option>
-                                            </select>
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">타이틀 :</span>
-                                            <input type="text" class="value-input" id="document_title" name=" document_title" value=" <%=approvalVO.getDocument_title()%>" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">담당자:</span>
-                                            <input type="text" class="value-input" id="approval_name" name= "approval_name" value="<%=approvalVO.getApproval_name()%>" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">신청자:</span>
-                                            <input type="text" class="value-input" id="name" name="name"  value="<%=sessionVO.getName()%>" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">휴가 사유:</span>
-                                          <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="<%=approvalVO.getDayoff_content()%>" >
-                                        </div>
-<%--                                        <input type="hidden" id="state" name="state"    value="대기" >--%>
-                                        <div class="item">
-                                            <span class="title">휴가시작일</span>
-                                            <input type="date" id="startDate"  name="start_date" value="<%=approvalVO.getStart_date()%>">
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">휴가만료일</span>
-                                            <input type="date" id="endDate"  name="end_date"  value="<%=approvalVO.getEnd_date()%>">
-                                        </div>
+                                                <span class="title">사원번호:</span>
+                                                <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                            </div>
+                                            <div class="item" hidden="hidden">
+                                                <span class="title">상태값:</span>
+                                            <input type="text" id="state" name="state"    value="대기" >
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">문서제목:</span>
+                                                <input type="text" class="value-input" id="document_title" name="document_title" value="<%=approvalVO.getDocument_title()%>"  >
+                                            </div>
+                                            <div class="item" >
+                                                <span class="title">문서타이틀:</span>
+                                                <input type="text" class="value-input" id="document_category"  name="document_category" value="<%=approvalVO.getDocument_category()%>" >
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">담당자:</span>
+                                                <input type="text" class="value-input" id="approval_name" name="approval_name" value="<%=approvalVO.getApproval_name()%>">
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">신청자:</span>
+                                                <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%> " >
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">휴가 사유:</span>
+                                                <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="<%=approvalVO.getDayoff_content()%>" >
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">휴가시작일:</span>
+                                                <input type="date" id="start_date" name="start_date"   value="<%=approvalVO.getStart_date()%>">
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">휴가만료일：</span>
+                                                <input type="date" id="end_date" name="end_date"  value="<%=approvalVO.getEnd_date()%>">
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">선수</span>
+                                                <input type="text" id="k_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                            </div>
 
-                                        <div class="item">
-                                            <span class="title">선수</span>
-                                            <input type="text" id="k_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                            <div class="item">
+                                                <span class="title">계약금액 </span>
+                                                <input type="text" id="salary"  name="salary"  value="<%=approvalVO.getSalary()%>">
+                                            </div>
+                                            <div class="item">
+                                                <span class="title">계약년수 </span>
+                                                <input type="text" id="contract_term"  name="contract_term"  value="<%=approvalVO.getContract_term()%>">
+                                            </div>
+                                            <%}%>
                                         </div>
-
-                                        <div class="item">
-                                            <span class="title">계약금액 </span>
-                                            <input type="text" id="salary"  name="salary"  value="<%=approvalVO.getSalary()%>">
+                                        <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
+                                            <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="saveUpdate()" >제출</button>
                                         </div>
-                                        <div class="item">
-                                            <span class="title">계약년수 </span>
-                                            <input type="date" id="contract_term"  name="contract_term"  value="<%=approvalVO.getContract_term()%>">
-                                        </div>
-                                        <%}%>
                                     </div>
-                                </div>
-                                <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm" onclick="saveUpdate()">재출</button>
-                                </div>
                                 </form>
-                        </div>
+                             </div>
+
                     </div>
                 </div>
             </div>
             </div>
-
         </section>
-    </div>
+        </div>
 
-
-    <script>
-        <%--수정처리 --%>
-        const saveUpdate=()=>{
-            console.log("update처리");
-            document.querySelector("#saveDocumentPost").submit();
-        }
-    </script>
 
     </body>
     </html>

@@ -75,6 +75,13 @@ public int saveModify(ApprovalVO approvalVO) throws Exception {
     return saveModify;
 }
 
+    @Override
+    public int saveDelete(int document_no) throws Exception {
+        int  documentDelete =0;
+        documentDelete = documentDao.saveDocumentDelete(document_no);
+        return documentDelete;
+    }
+
 }
 
 
