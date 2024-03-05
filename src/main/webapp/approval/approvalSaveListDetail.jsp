@@ -77,7 +77,7 @@
                                     <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안문서 </button>
                                 </div>
 
-                                <form id="saveDocumentPost" name="saveDocumentPost" method="post" action="#"> </form>
+                                <form id="saveDocumentPost" name="saveDocumentPost" method="post" action="saveDetailUpdate">
                                 <div class="frame " id="save_document">
                                     <div class="document-section">
                                         <%
@@ -107,13 +107,9 @@
                                         </div>
                                         <div class="item">
                                             <span class="title">휴가 사유:</span>
-                                            <select id="leaveReason" name="dayoff_content">
-                                                <option> </option>
-                                                <option value="sickLeave">병가</option>
-                                                <option value="annualLeave">연차</option>
-                                                <option value="familyEvent">경조사</option>
-                                            </select>
+                                          <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="<%=approvalVO.getDayoff_content()%>" >
                                         </div>
+<%--                                        <input type="hidden" id="state" name="state"    value="대기" >--%>
                                         <div class="item">
                                             <span class="title">휴가시작일</span>
                                             <input type="date" id="startDate"  name="start_date" value="<%=approvalVO.getStart_date()%>">
@@ -140,8 +136,9 @@
                                     </div>
                                 </div>
                                 <div  id ="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm">재출</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm" onclick="saveUpdate()">재출</button>
                                 </div>
+                                </form>
                         </div>
                     </div>
                 </div>
@@ -150,10 +147,15 @@
 
         </section>
     </div>
-    <!-- content-wrapper end-->
-<!-- body end   -->
 
 
+    <script>
+        <%--수정처리 --%>
+        const saveUpdate=()=>{
+            console.log("update처리");
+            document.querySelector("#saveDocumentPost").submit();
+        }
+    </script>
 
-</body>
-</html>
+    </body>
+    </html>

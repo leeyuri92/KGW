@@ -36,7 +36,7 @@
                        INNER JOIN  team t
                                    ON e.team_no = t.team_no
         <where>
-            <if test="document_no !=0"> AND d.document_no = #{document_no}</if>
+            <if test="document_no !=null"> AND d.document_no = #{document_no}</if>
         </where>
     </select>
 
@@ -79,7 +79,7 @@
                #{emp_no},
                #{document_title},
                #{document_category},
-               #{k_name},
+               #{k_name,jdbcType=VARCHAR},
                #{start_date,jdbcType=VARCHAR},
                #{end_date,jdbcType=VARCHAR},
                #{dayoff_content,jdbcType=VARCHAR},
@@ -130,6 +130,28 @@
         SET state = #{state}
         WHERE document_no = #{document_No}
     </update>
+
+
+
+
+<!--    임시정장부분  update 처리  500 error 수정필요  -->
+    <update id="saveModify" parameterType="com.vo.ApprovalVO">
+    update document
+    set
+        SET
+        document_category = #{document_category},
+        document_title = #{document_title},
+        start_date = #{start_date,jdbcType=VARCHAR},
+        end_date = #{end_date,jdbcType=VARCHAR},
+        dayoff_content = #{dayoff_content,jdbcType=VARCHAR},
+        k_name = #{k_name,jdbcType=VARCHAR},
+        salary = #{salary,jdbcType=INTEGER},
+        contract_term = #{contract_term,jdbcType=VARCHAR},
+        state = '대기'
+    where document_no = #{document_no}
+</update>
+
+
 
 
 

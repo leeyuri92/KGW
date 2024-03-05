@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ page import="java.util.*,com.util.BSPageBar" %>
+<%@ page import="java.util.*  ,com.util.BSPageBar" %>
 <%@  page import="com.vo.ApprovalVO" %>
 <%
-    List<ApprovalVO>list=(List)request.getAttribute("list");
+    List<ApprovalVO>list2=(List)request.getAttribute("list2");
+//    out.print(list2);
     int size=0;
-    if(list!=null){
-        size=list.size();
+    if(list2!=null){
+        size=list2.size();
     }
     int numPerPage=5;
     int nowPage=0;
@@ -14,28 +15,50 @@
         nowPage=Integer.parseInt(request.getParameter("nowPage"));
     }
 %>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>전자결재  기안자문서함</title>
+
+    <title>전자결재 결재자 문서함</title>
     <%@include file="/common/bootstrap_common.jsp" %>
 
+      <script type="text/javascript">
 
-    <script>
-        function boardSearch(){
-            location.href='/approval/docu';
+    <%--	const searchEnter = (event)=> {--%>
+    <%--		console.log('searchEnter')--%>
+    <%--		console.log(window.event.keyCode); // 13--%>
+    <%--		if(window.event.keyCode==13){--%>
+    <%--			boardSearch(); // 재사용성 ---%>
+    <%--		}--%>
+    <%--	}--%>
+
+    const ApprovalDetail = (document_no, document_category) => {
+        let url = "";
+        if (document_category === '영입') {
+            url = "/approval/approvalDetail?document_no=" + document_no;
+        } else if (document_category === '방출') {
+            url = "/approval/approvalDetail2?document_no=" + document_no;
+        } else if (document_category === '계약') {
+            url = "/approval/approvalDetail3?document_no=" + document_no;
+        }else if (document_category === '휴가') {
+            url = "/approval/approvalDetail4?document_no=" + document_no;
         }
-
-
-
-    </script>
+        location.href = url;
+    };
+      </script>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
+    <!-- header start -->
     <%@include file="/include/KGW_bar.jsp"%>
+    <!-- header end    -->
+
+    <!-- body start    -->
     <div class="content-wrapper">
         <!-- 페이지 path start    -->
         <%--		<div class="card" >--%>
@@ -46,7 +69,7 @@
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">문서함</div>
+                    <div class="text-dark fs-6">결재함</div>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-2">
@@ -54,7 +77,7 @@
                     <div class="position-absolute top-0 start-0" ></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">문서함</div>
+                    <div class="fw-bold fs-5">결재함</div>
                     <div class="text-muted ms-3">결재문서 정보 조회할수 있는 페이지입니다.</div>
                 </div>
             </div>
@@ -69,69 +92,74 @@
                     <div class="box">
                         <div class="container">
                             <div class="box-header">
-                                <h4 style="font-weight: bold; margin-left: 1.5rem" >기안자 문서함</h4>
+                                <h4 style="font-weight: bold; margin-left: 1.5rem" >결재자 문서함</h4>
                                 <hr />
                             </div>
 
                             <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
                             <div class="row">
-
                                 <div class="col-3">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                                            aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
                                 </div>
                                 <div class="col-1 ">
                                     <button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>
-
-                                </div>
-                                			<div class="col-md-6 d-flex justify-content-end gap-2">
-                                				<button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안서 작성 </button>
-                                			</div>
-                                <!-- 검색기 끝 -->
-
-                                <!-- 회원목록 시작 -->
-                                <div class='board-list'>
-                                    <table class="table table-hover text-center ">
-                                        <thead>
-                                            <tr>
-                                                <th width="10%" >문서ID</th>
-                                                <th width="10%">종류</th>
-                                                <th width="15%">결재상태</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%
-                                            for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
-                                                if(i==size)break;
-                                                ApprovalVO approvalVO=(ApprovalVO) list.get(i);
-                                            %>
-                                            <tr>
-                                            <td><%= approvalVO.getDocument_no()%></td>
-                                            <td><%= approvalVO.getDocument_category()%></td>
-                                            <td><%= approvalVO.getState()%></td>
-                                            </tr>
-                                            <%
-                                                }
-                                        %>
-                                        </tbody>
-                                    </table>
-                                    <hr />
-
-                                    <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
-                                    <ul class="pagination">
-                                        <%
-                                            String pagePath="documentList";
-                                            BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
-                                            out.print(bsbp.getPageBar());
-                                        %>
-                                    </ul>
-                                    <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
                                 </div>
                             </div>
+                            <!-- 검색기 끝 -->
+                            <!-- 회원목록 시작 -->
+                            <div class='board-list'>
+                                <table class="table table-hover text-center ">
+                                    <thead>
+                                    <tr>
+                                        <th width="10%">문서ID</th>
+                                        <th width="10%">종류</th>
+                                        <th width="15%">상태</th>
+                                        <th width="15%">기안자</th>
+                                        <th width="15%">기안시간</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <%
+                                        for(int i =nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
+                                            if(i==size)break;
+                                            ApprovalVO approvalVO=(ApprovalVO) list2.get(i);
+                                    %>
+                                    <tr>
+                                        <td><%= approvalVO.getDocument_no()%></td>
+                                        <td>
+                                            <a href="javascript:ApprovalDetail('<%= approvalVO.getDocument_no() %>', '<%= approvalVO.getDocument_category() %>')">
+                                                <%= approvalVO.getDocument_category()%>
+                                            </a>
+                                        </td>
+                                        <td><%= approvalVO.getApproval_category()%></td>
+                                        <td><%= approvalVO.getName()%></td>
+                                        <td><%= approvalVO.getSubmission_date()%></td>
+                                    </tr>
+                                    <%
+
+                                        }
+                                    %>
+                                    </tbody>
+                                </table>
+                                <hr />
+                                <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+                                <ul class="pagination">
+                                    <%
+                                        String pagePath="approvalList";
+                                        BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
+                                        out.print(bsbp.getPageBar());
+                                    %>
+                                </ul>
+                                <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+                            </div>
+                            <!-- 회원목록   끝  -->
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </section>
     </div>
 </div>

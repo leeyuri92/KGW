@@ -23,4 +23,7 @@ public interface DocumentService {
     void updateApprovalAndDocument(ApprovalVO approvalVO) throws Exception;
 
     void approvalUpdate(ApprovalVO approvalvo) throws Exception;
+
+    //    임시저장 업데이트 처리
+    int saveModify(ApprovalVO approvalVO) throws Exception;
 }

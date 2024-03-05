@@ -36,7 +36,7 @@ public class DocumentController {
         approvalVO.setGubun("false");
         List<ApprovalVO> list = documentService.DocumentList(approvalVO);
         model.addAttribute("list", list);
-        return "forward:approvalList.jsp";
+        return "forward:documentList.jsp";
     }
 
     //    결재 함
@@ -44,7 +44,7 @@ public class DocumentController {
     public String ApprovalList(Model model, ApprovalVO approvalVO) {
         List<ApprovalVO> list2 = documentService.ApprovalList(approvalVO);
         model.addAttribute("list2", list2);
-        return "forward:approvalList2.jsp";
+        return "forward:approvalList.jsp";
     }
 
     @GetMapping("/approvalDetail")
@@ -90,7 +90,7 @@ public class DocumentController {
         logger.info("saveLIst"+list3);
         model.addAttribute("list3", list3);
         logger.info("saveLIst"+list3);
-        return "forward:approvalList3.jsp";
+        return "forward:approvalSaveList.jsp";
     }
 //임시저장함 상세
     @GetMapping("/saveDetail")
@@ -98,7 +98,7 @@ public class DocumentController {
         approvalVO.setGubun("true");
         List<ApprovalVO> saveDetail = documentService.DocumentList(approvalVO);
         model.addAttribute("saveDetail", saveDetail);
-        return "forward:approvalList3Detail.jsp";
+        return "forward:approvalSaveListDetail.jsp";
     }
 
 //    추후 insert 임시저장  기능 있음
@@ -125,9 +125,23 @@ public class DocumentController {
         return "redirect:./approvalList";
     }
 
-
+//    임시저장 파트 업데이트 처리
+@PostMapping("/saveDetailUpdate")
+public String saveModify (ApprovalVO approvalVO) throws Exception {
+    logger.info("saveModify");
+    int saveModify=0;
+    saveModify=documentService.saveModify(approvalVO);
+    logger.info("noticeModify");
+    if(saveModify ==1) {
+        return "redirect:documentList";
+    } else {
+        return "error";
+    }
+}
 
 }
+
+
 
 
 
