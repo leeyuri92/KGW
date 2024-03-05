@@ -19,10 +19,9 @@
               <thead>
               <tr>
                 <th style="width: 10%;">#</th>
-                <th style="width: 40%;">제목</th>
+                <th style="width: 56%;">제목</th>
                 <th style="width: 17%;">작성자</th>
-                <th style="width: 17%;">작성일</th>
-                <th style="width: 20%;">조회수</th>
+                <th style="width: 17%; padding: 7px">작성일</th>
               </tr>
               </thead>
               <tbody>
@@ -54,7 +53,6 @@
                 </td>
                 <td><%=noticeVO.getName()%></td>
                 <td><%=newFormatString%></td>
-                <td><%=noticeVO.getNotice_hit()%></td>
                 <td></td>
               </tr>
               <%
