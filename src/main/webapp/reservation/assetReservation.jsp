@@ -188,7 +188,6 @@
                         List<CalendarVO> assetReservationList = (List<CalendarVO>) request.getAttribute("assetReservationList");
                          if (assetReservationList != null) {
                            for (CalendarVO vo1 : assetReservationList) {
-                               if (Objects.equals(sessionVO.getName(), vo1.getName())) {
                     %>
                     {
                         id: '<%= vo1.getAsset_no() %>', // 이벤트의 고유 ID
@@ -200,10 +199,8 @@
                         color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
                     },
                     <%
-                        }
-                    }
-                }
-                %>
+                    }}
+                    %>
                 ]
             });
             console.log(<%= sessionVO.getEmp_no() %>);
@@ -266,6 +263,7 @@
             let asset_no = assetNoInput.value;
             let url = '/assetReservation/insertReservation';
 
+            // 필수 값이 모두 입력되었는지 확인
             if (reservation_title && reservation_start && reservation_end && emp_no && asset_id && asset_no) {
                 // SweetAlert로 등록 여부 확인
                 Swal.fire({
@@ -307,7 +305,14 @@
                         });
                     }
                 });
+            } else {
+                // 필수 값이 입력되지 않은 경우 알림 표시
+                Swal.fire({
+                    title: "필수 항목을 모두 입력해주세요.",
+                    icon: "warning",
+                });
             }
+
             // 모달 숨기기
             let modal = document.getElementById('insertModal');
             modal.style.display = 'none';
@@ -475,6 +480,13 @@
             });
         });
 
+        // 자산 예약 체크박스 클릭 시 링크로 이동
+        document.getElementById('assetReserv').addEventListener('change', function() {
+            if (this.checked) {
+                window.location.href = '../assetReservation/assetReservationList';
+            }
+        });
+
         // 모달 닫기 및 입력 값 초기화 함수
         function closeModalAndClearInputs() {
             let modal = document.getElementById('insertModal');
@@ -590,10 +602,16 @@
 
                         <%-- 캘린더 태그 --%>
                         <div id="calendar1"></div>
+                        <div class="checkbox-container">
+                        <div>
+                            <input type="checkbox" class="form-check-input" id="assetReserv" name="assetReserv" value="assetReserv">
+                            <label for="assetReserv">차량 예약</label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
         <%
             // 현재 날짜 가져오기
@@ -608,7 +626,7 @@
                     <div class="box">
                         <%-- 내 예약 현황 태그 --%>
                         <div class="container-fluid1">
-                            <h4 class="cal_title">내 예약 현황</h4>
+                            <h4 class="cal_title">나의 예약 현황</h4>
                             <!-- 검색기 시작 -->
                             <div class="row search">
                                 <div class="col-3">

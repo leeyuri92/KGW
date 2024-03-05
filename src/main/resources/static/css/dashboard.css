@@ -37,7 +37,7 @@
 
 .mainbox .btn:hover{
     background-color: #7c1512;
-    color: black;
+    color: white;
     border: none;
 }
 
@@ -50,7 +50,7 @@
 
 .custom-col .approval {
     background-color: #e1cdcc;
-    color: white;
+    color: black;
     border: 2px solid #e1cdcc;
 }
 
