@@ -7,7 +7,7 @@
         set team_no = #{team_no}
           ,emp_access = #{emp_access}
           ,emp_position = #{emp_position}
-          ,dayoff_cnt = 0
+          ,dayoff_cnt = #{dayoff_cnt}
           ,emp_year = 0
           ,hire_date = #{hire_date}
           ,emp_state = #{emp_state}

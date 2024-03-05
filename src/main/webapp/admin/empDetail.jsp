@@ -164,7 +164,7 @@
                         <input type="email" class="form-control" id="email" name="email" onblur="validateEmail()" value="<%=rmap.getEmail()%>">
                     </div>
                     <div class="col-6 mb-3 mt-3">
-                        <label for="address">주소
+                        <label for="address">주소<span class="text-danger">*</span>
                             <span id="address_" class="text-danger" style="display:none"  >주소형식이 아닙니다.</span>
                         </label>
                         <div class="input-group">
@@ -178,7 +178,7 @@
 
                     <div class="row">
                         <div class="col-6 mb-3 mt-3">
-                        <label for="team_no">부서
+                        <label for="team_no">부서<span class="text-danger">*</span>
                             <span id="team_no_" class="text-danger" style="display:none">부서형식이 아닙니다.</span>
                         </label>
                         <select class="form-control" id="team_no" name="team_no" onblur="validateTeam()">
@@ -190,7 +190,7 @@
                         </select>
                     </div>
                     <div class="col-6 mb-3 mt-3">
-                        <label for="emp_position">직급
+                        <label for="emp_position">직급<span class="text-danger">*</span>
                             <span id="emp_position_" class="text-danger" style="display:none">직급형식이 아닙니다.</span>
                         </label>
                         <select class="form-control" id="emp_position" name="emp_position" onblur="validatePosition()">
@@ -214,13 +214,12 @@
                                 <span id="retire_date_" class="text-danger" style="display:none"  >형식이 아닙니다.</span> </label>
                             <input type="date" class="form-control" id="retire_date" name="retire_date" onblur="validate()" value="<%=rmap.getRetire_date()%>">
                         </div>
-
                     </div>
 
 
                     <div class="row">
                         <div class="col-6 mb-3 mt-3">
-                            <label for="emp_state">상태
+                            <label for="emp_state">상태<span class="text-danger">*</span>
                                 <span id="emp_state_" class="text-danger" style="display:none">형식이 아닙니다.</span>
                             </label>
                             <select class="form-control" id="emp_state" name="emp_state" >
@@ -237,7 +236,7 @@
                             </select>
                         </div>
                         <div class="col-6 mb-3 mt-3">
-                            <label for="emp_access">권한
+                            <label for="emp_access">권한<span class="text-danger">*</span>
                                 <span id="emp_access_" class="text-danger" style="display:none">형식이 아닙니다.</span>
                             </label>
                             <select class="form-control" id="emp_access" name="emp_access" >
@@ -249,6 +248,15 @@
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
+                        <div class="row">
+                            <div class="col-6 mb-3 mt-3">
+                                <label for="dayoff_cnt">잔여연차<span class="text-danger">*</span>
+                                    <span id="dayoff_cnt_" class="text-danger" style="display:none"  >형식이 아닙니다.</span> </label>
+                                <input type="text" class="form-control" id="dayoff_cnt" name="dayoff_cnt" onblur="validateCnt()" value="<%=rmap.getDayoff_cnt()%>">
+                            </div>
+                        </div>
+
+
                     </div>
                     <br>
                     <br>
@@ -323,9 +331,10 @@
             const isTeamValid = validateTeam();
             const isAddressValid = validateAddress();
             const isPositionValid = validatePosition();
+            const isCntValid = validateCnt();
 
             // 모든 검사가 통과되면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
-            return isPasswordValid && isNameValid && isBirthdateValid && isPhoneValid && isEmailValid && idHireValid && isAccessValid && isStateValid && isTeamValid && isAddressValid && isPositionValid;
+            return isPasswordValid && isNameValid && isBirthdateValid && isPhoneValid && isEmailValid && idHireValid && isAccessValid && isStateValid && isTeamValid && isAddressValid && isPositionValid && isCntValid;
         }
 
         // 이름 유효성 검사 함수
@@ -497,6 +506,22 @@
             }
             return isValid; // 유효성 여부 반환
         }
+
+        // 연차 유효성 검사 함수
+        const validateCnt  = () => {
+            const stateSpan = document.getElementById('dayoff_cnt_'); // 오류 메시지를 표시할 span 요소 가져오기
+            const mbrNmInput = document.getElementById('dayoff_cnt'); // 상태 입력 필드 가져오기
+            const isValid = expTeamText.test(mbrNmInput.value); // 정규식 패턴을 사용하여 입력값을 검사
+
+            // 유효한 경우 오류 메시지를 숨기고, 그렇지 않은 경우 표시
+            if (isValid) {
+                stateSpan.style.display = 'none';
+            } else {
+                stateSpan.style.display = 'inline';
+            }
+            return isValid; // 유효성 여부 반환
+        }
+
     </script>
 
     <div class="modal" id="signSelect">

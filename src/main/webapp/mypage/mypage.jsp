@@ -119,7 +119,7 @@
               </div>
               <div class="col-8">
                 <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                  <img src="/fileUpload/profile/<%= empDetail.getProfile_img() %>" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
+                  <img src="/fileUpload/profile/<%=empDetail.getProfile_img()%>" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
                 </div>
               </div>
             </div>
@@ -231,6 +231,12 @@
                   <option value="ROLE_READER">팀장</option>
                   <!-- Add more options as needed -->
                 </select>
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3 mt-3">
+                  <label for="dayoff_cnt">잔여연차</label>
+                  <input type="text" class="form-control" id="dayoff_cnt" name="dayoff_cnt" value="<%=empDetail.getDayoff_cnt()%>" disabled>
+                </div>
               </div>
             </div>
             <br>
