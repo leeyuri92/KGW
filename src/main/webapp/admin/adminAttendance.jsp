@@ -9,7 +9,7 @@
     size = attendanceModList.size();
   }
   //페이지처리
-  int numPerPage = 5;
+  int numPerPage = 10;
   int nowPage = 0;
   if(request.getParameter("nowPage")!=null){
     nowPage = Integer.parseInt(request.getParameter("nowPage"));
@@ -114,7 +114,19 @@
             <tr>
               <td><%=attendancemodifyvo.getAttendancemod_no()%></td>
               <td><a href="/attendance/adminModAttendance?attendancemod_no=<%=attendancemodifyvo.getAttendancemod_no()%>"><%=attendancemodifyvo.getName()%></a></td>
-              <td><%=attendancemodifyvo.getReg_date()%></td>
+              <td>
+                <%
+                if (attendancemodifyvo.getReg_date() != null){
+                %>
+                <%=attendancemodifyvo.getReg_date()%>
+                <%
+                  }else{
+                %>
+                -
+                <%
+                  }
+                %>
+              </td>
               <td><%=attendancemodifyvo.getMod_date()%></td>
               <td><%=attendancemodifyvo.getOriginal_state()%></td>
               <td><%=attendancemodifyvo.getState()%></td>

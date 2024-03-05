@@ -12,19 +12,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>인사정보</title>
   <script type="text/javascript">
-      const adminattendanceList = () =>{
-          location.href = "/attendance/adminAttendance";
-      }
+    const adminattendanceList = () =>{
+      location.href = "/attendance/adminAttendance";
+    }
 
-      const signOn = () =>{
-          document.getElementById('state').value = "승인";
-          document.querySelector('#attendanceModUpdate').submit();
-      }
+    const signOn = () =>{
+      document.getElementById('state').value = "승인";
+      document.querySelector('#attendanceModUpdate').submit();
+    }
 
-      const signOff = () =>{
-          document.getElementById('state').value = "반려";
-          document.querySelector('#attendanceModUpdate').submit();
-      }
+    const signOff = () =>{
+      document.getElementById('state').value = "반려";
+      document.querySelector('#attendanceModUpdate').submit();
+    }
   </script>
 </head>
 
@@ -91,12 +91,30 @@
             <hr/>
             <div class="row m-4" >
               <div class="col-6"><label>출근시간</label></div>
+              <%if (attendanceModMap.get("START_TIME")!=null){%>
               <div class="col-6"><%=attendanceModMap.get("START_TIME")%></div>
+              <%
+              }else{
+              %>
+              <div class="col-6">-</div>
+              <%
+                }
+              %>
             </div>
             <hr/>
             <div class="row m-4" >
               <div class="col-6"><label>퇴근시간</label></div>
+              <%
+                if (attendanceModMap.get("END_TIME") != null) {
+              %>
               <div class="col-6"><%=attendanceModMap.get("END_TIME")%></div>
+              <%
+              }else{
+              %>
+              <div class="col-6">-</div>
+              <%
+                }
+              %>
             </div>
             <hr/>
             <div class="row m-4" >
