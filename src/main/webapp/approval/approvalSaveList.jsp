@@ -22,7 +22,7 @@
     <%@include file="/common/bootstrap_common.jsp" %>
     <title>문서함{임시보관함}</title>
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script type="text/javascript">
 
           const saveDetail= (document_no) => {
@@ -30,29 +30,21 @@
           }
 
 
-    <%--	const searchEnter = (event)=> {--%>
-    <%--		console.log('searchEnter')--%>
-    <%--		console.log(window.event.keyCode); // 13--%>
-    <%--		if(window.event.keyCode==13){--%>
-    <%--			boardSearch(); // 재사용성 ---%>
-    <%--		}--%>
-    <%--	}--%>
-    <%--	const boardSearch = () => {--%>
+          const saveDelete = (document_no) => {
+              if (!confirm('确定要删除这条记录吗？')) {
+                  return;
+              }
+
+
+
+          <%--	const boardSearch = () => {--%>
     <%--		console.log('boardSearch');--%>
     <%--		const gubun = document.querySelector("#gubun").value;--%>
     <%--		const keyword = document.querySelector("#keyword").value;--%>
     <%--		console.log(`${gubun} , ${keyword}`);--%>
     <%--		location.href="/board/boardList?gubun="+gubun+"&keyword="+keyword;--%>
     <%--	}--%>
-    <%--  	const boardList = () => {--%>
-    <%--  		location.href="/board/boardList";--%>
-    <%--  	}--%>
-    <%--  	const boardInsert = () => {--%>
-    <%--  		document.querySelector("#f_board").submit(); // form태그에 묶인 컴포넌트 값들이 전송됨--%>
-    <%--  	}--%>
-    <%--	const boardDetail = (b_no) => {--%>
-    <%--		location.href = "/board/boardDetail?b_no="+b_no;--%>
-    <%--	}--%>
+
       </script>
 </head>
 
@@ -144,7 +136,7 @@
                                         <td><%= approvalVO.getDocument_category()%></td>
                                         <td><%= approvalVO.getApproval_name()%></td>
                                         <td><%= approvalVO.getDraftday()%></td>
-                                        <td><a href="#">삭제</a></td>
+                                        <td><a href="javascript:saveDelete('<%= approvalVO.getDocument_no() %>')">삭제</a></td>
                                     </tr>
                                     <%
                                         }

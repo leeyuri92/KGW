@@ -128,16 +128,31 @@ public class DocumentController {
 //    임시저장 파트 업데이트 처리
 @PostMapping("/saveDetailUpdate")
 public String saveModify (ApprovalVO approvalVO) throws Exception {
-    logger.info("saveModify");
     int saveModify=0;
     saveModify=documentService.saveModify(approvalVO);
-    logger.info("noticeModify");
     if(saveModify ==1) {
+        logger.info("saveModify");
         return "redirect:documentList";
     } else {
         return "error";
     }
+
 }
+//delete부분 
+    @DeleteMapping("/saveList/{document_no}")
+    //게시글 삭제
+    public String saveDelete(int document_no) throws Exception {
+        int documentDelete = 0;
+       documentDelete = documentService.saveDelete(document_no);
+        if (documentDelete == 1) {
+            return "redirect:documentList";
+        } else {
+            return "error";
+        }
+    }
+
+
+
 
 }
 

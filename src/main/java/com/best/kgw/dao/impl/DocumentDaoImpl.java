@@ -97,5 +97,19 @@ public int saveModify(ApprovalVO approvalVO) throws Exception {
 }
 
 
+
+
+//임시저장 삭제
+    @Override
+public int saveDocumentDelete(int document_no) throws Exception {
+    int documentDelete=0;
+   documentDelete=sqlSessionTemplate.delete("documentDelete",document_no);
+    return documentDelete;
+}
+
+
+
+
+
 }
 

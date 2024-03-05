@@ -26,4 +26,6 @@ public interface DocumentService {
 
     //    임시저장 업데이트 처리
     int saveModify(ApprovalVO approvalVO) throws Exception;
+
+    int saveDelete(int document_no) throws Exception;
 }
