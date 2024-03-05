@@ -67,6 +67,14 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
 
+//    임시저장 업데이트 처리
+@Override
+public int saveModify(ApprovalVO approvalVO) throws Exception {
+    int saveModify =0;
+    saveModify= documentDao.saveModify(approvalVO);
+    return saveModify;
+}
+
 }
 
 

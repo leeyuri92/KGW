@@ -90,7 +90,7 @@
 
 
 
-        //  휴가 부분  재출시 error 발생 (임시저장도)
+        // 수정됨
         function docSubmitVacation() {
             $('#r_documentVacation').submit();
         }
@@ -127,11 +127,11 @@
         <div class="box-header p-4" >
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-2">
-                    <a class="text-muted fs-6" href="#">전자결재</a>
+                    <a class="text-muted fs-6" href="../approval/documentList">전자결재</a>
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">문서함</div>
+                    <div class="text-dark fs-6">문서기안하기</div>
                 </div>
 
             </div>
@@ -182,8 +182,8 @@
                                             <span class="title">사원번호:</span>
                                             <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                         </div>
-                                        <%--                                    <input type="hidden" id="stateVacation" name="state"    value="대기" >--%>
-                                        <%--                                    <input type="hidden" id="draftdayVacation" name="draftday"    value="" >--%>
+                                         <input type="hidden" id="stateVacation" name="state"    value="대기" >
+                                         <input type="hidden" id="draftdayVacation" name="draftday"    value="" >
 
                                         <div class="item">
                                             <span class="title">문서제목:</span>
@@ -201,18 +201,18 @@
                                             <span class="title">신청자:</span>
                                             <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" >
                                         </div>
-                                        <%--                                    <div class="item">--%>
-                                        <%--                                        <span class="title">휴가 사유:</span>--%>
-                                        <%--                                        <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >--%>
-                                        <%--                                    </div>--%>
-                                        <%--                                    <div class="item">--%>
-                                        <%--                                        <span class="title">휴가시작일:</span>--%>
-                                        <%--                                        <input type="date" id="start_date" name="start_date"   value="2024-03-03">--%>
-                                        <%--                                    </div>--%>
-                                        <%--                                    <div class="item">--%>
-                                        <%--                                        <span class="title">휴가만료일：</span>--%>
-                                        <%--                                        <input type="date" id="end_date" name="end_date"  value="2024-03-04">--%>
-                                        <%--                                    </div>--%>
+                                                                            <div class="item">
+                                                                                <span class="title">휴가 사유:</span>
+                                                                                <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >
+                                                                            </div>
+                                                                            <div class="item">
+                                                                                <span class="title">휴가시작일:</span>
+                                                                                <input type="date" id="start_date" name="start_date"   value="2024-03-03">
+                                                                            </div>
+                                                                            <div class="item">
+                                                                                <span class="title">휴가만료일：</span>
+                                                                                <input type="date" id="end_date" name="end_date"  value="2024-03-04">
+                                                                            </div>
                                         <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
                                     </div>
                                     <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
@@ -393,9 +393,6 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                        <div id ="delBtn" class="col-md-6 d-flex justify-content-end gap-2">
-                            <button id="btn_search5" class="btn btn-danger" onclick="Search()">삭제 </button>
                         </div>
                     </div>
                 </div>

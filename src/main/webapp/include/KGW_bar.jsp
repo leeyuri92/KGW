@@ -37,7 +37,7 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = minutes + ":" + seconds;
+            display.textContent = minutes + ":" + seconds;f
 
             // 1분 남았을 때 연장 여부 확인
             if (timer === 60) {
@@ -248,7 +248,7 @@
                             <li class="nav-item">
                                 <a href="../approval/saveList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>임시저장함 {아직}</p>
+                                    <p>임시저장함 </p>
                                 </a>
                             </li>
                             <li class="nav-item">

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -88,6 +87,15 @@ public int approvalMiddleModify(ApprovalVO approvalVO) throws Exception {
         }
 
     }
+// 임시저장 업데이트
+@Override
+public int saveModify(ApprovalVO approvalVO) throws Exception {
+    logger.info("saveModify");
+    int saveModify=0;
+   saveModify=sqlSessionTemplate.update("saveModify",approvalVO);
+    return saveModify;
+}
+
 
 }
 
