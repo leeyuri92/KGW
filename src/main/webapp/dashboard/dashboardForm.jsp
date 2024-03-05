@@ -194,8 +194,9 @@
                 <%
                     }else{
                 %>
-                  <button id="btn_start" class="btn btn-danger" onclick="workStart()" disabled>출근</button>
-                  <button id="btn_end" class="btn btn-danger" onclick="workEnd()" disabled>퇴근</button>
+                  <p class="text-bold text-lg">오늘 하루도</p>
+                  <p class="text-bold text-lg">수고하셨습니다</p>
+                  <p class="text-bold text-lg">♡⸜(ˆᗜˆ˵ )⸝♡</p>
                 <%
                     }
                   }

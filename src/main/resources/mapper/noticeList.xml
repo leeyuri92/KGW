@@ -56,8 +56,8 @@
             b.emp_no,
             b.name
         from notice a join emp b on a.EMP_NO = b.EMP_NO
-        where notice_pin = 1
         order by reg_date desc
+        fetch first 5 rows only
     </select>
 
     <insert id="noticeInsert" parameterType="com.vo.NoticeBoardVO">
