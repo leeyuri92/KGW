@@ -155,12 +155,14 @@
                   <%
                     for(int i = 0; i < attendanceList.size(); i++) {
                       AttendanceVO attendancevo = attendanceList.get(i);
-                      if (attendancevo.getState().equals("정상출근")){
-                        continue;
-                      }else{
+                      if (attendancevo.getState() != null){
+                        if (attendancevo.getState().equals("정상출근")){
+                          continue;
+                        }else{
                   %>
                   <option value="<%=attendancevo.getAttendance_no()%>">|<%=attendancevo.getEmp_no()%>| <%=attendancevo.getWork_date()%> | <%=attendancevo.getState()%></option>
                   <%
+                        }
                       }
                     }
                   %>

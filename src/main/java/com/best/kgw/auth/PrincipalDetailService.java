@@ -25,7 +25,7 @@ public class PrincipalDetailService implements UserDetailsService {
         try {
             empVO = loginDaoImpl.login(emp_no);
             logger.info("empVO : " + empVO);
-            if (empVO != null) {
+            if (empVO != null && empVO.getEmp_state().equals("1")) {
                 logger.info("입력 받은 값과 일치하는 DB 찾음 > PrincipalDetails 이동 ");
                 return new PrincipalDetails(empVO);
             }

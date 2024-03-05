@@ -64,17 +64,20 @@
 
     // 세션 시간 연장 요청 함수
     function extendSessionTime(callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/extendSessionTime", true); // 세션 시간 연장을 처리하는 서버 엔드포인트
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
+        $.ajax({
+            url: '/extendSessionTime',
+            method: 'GET',
+            success: function (response) {
                 // 세션 시간을 성공적으로 연장한 경우
-                var newSessionTimeout = parseInt(xhr.responseText);
+                var newSessionTimeout = parseInt(response);
                 // 새로운 세션 시간을 콜백 함수에 전달
                 callback(newSessionTimeout);
+            },
+            error: function (xhr, status, error) {
+                // 오류 처리
+                console.error('세션 시간을 연장하는 동안 오류가 발생했습니다:', error);
             }
-        };
-        xhr.send();
+        });
     }
 
     // 페이지 로드 후 실행

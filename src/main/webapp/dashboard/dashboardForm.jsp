@@ -27,6 +27,28 @@
   <!-- 부트스트랩 라이브러리 -->
   <%@include file="/common/bootstrap_common.jsp" %>
   <link rel="stylesheet" href="/css/mainCalendar.css">
+  <script>
+    const draft = () =>{
+        location.href = "/approval/docu";
+    }
+
+    const waitApproval = () =>{
+        location.href = "/approval/documentList";
+    }
+
+    const processApproval = () =>{
+        location.href = "/approval/documentList";
+    }
+
+    const completeApproval = () =>{
+        location.href = "/approval/documentList";
+    }
+
+    const companionApproval = () =>{
+        location.href = "/approval/documentList";
+    }
+
+  </script>
 
   <title>메인페이지</title>
 </head>
@@ -187,42 +209,34 @@
         </div>
 
         <div class="col-10">
-          <div class="row " >
-
+          <div class="row">
             <div class="col mainbox">
               <div class="mainbox-header d-flex align-items-center pb-0">
                 <div class="d-flex align-items-center">
                   <span style="font-weight: bold; margin-left: 1.5rem" >전자결재 진행 현황</span>
-                </div>
-                <div style="margin-left: auto; margin-right: 1.5rem">
-                  <a href="#" class="btn btn-danger" style="border-radius:30px">more</a>
                 </div>
               </div>
               <hr/>
 
                 <div class="row mb-3">
                   <div class="custom-col" >
-<%--                    <i class="bi bi-pause-fill custom-i"></i>--%>
-                    <button id="btn_approval_wait" class="approval btn btn-danger">결재대기 [0]</button>
+                    <button type="button" id="btn_approval_wait" class="approval btn btn-danger" onclick="waitApproval()">결재대기 [0]</button>
                   </div>
 
                   <div class="custom-col" >
-<%--                    <i class="bi bi-play-fill custom-i"></i>--%>
-                    <button id="btn_approval_progress" class="approval btn btn-danger">결재진행 [0]</button>
+                    <button type="button" id="btn_approval_progress" class="approval btn btn-danger" onclick="processApproval()">결재진행 [0]</button>
                   </div>
 
                   <div class="custom-col" >
-<%--                    <i class="bi bi-check-lg custom-i"></i>--%>
-                    <button id="btn_approval_complete" class="approval btn btn-danger">결재완료 [0]</button>
+                    <button type="button" id="btn_approval_complete" class="approval btn btn-danger" onclick="completeApproval()">결재완료 [0]</button>
                   </div>
 
                   <div class="custom-col" >
-<%--                    <i class="bi bi-repeat custom-i"></i>--%>
-                    <button id="btn_approval_companion" class="approval btn btn-danger">결재반려 [0]</button>
+                    <button type="button" id="btn_approval_companion" class="approval btn btn-danger" onclick="companionApproval()">결재반려 [0]</button>
                   </div>
 
                   <div class="custom-col">
-                    <button id="btn_approval" class="approval btn btn-danger" >기안작성</button>
+                    <button type="button" id="btn_approval" class="approval btn btn-danger" onclick="draft()">기안작성</button>
                   </div>
 
                 </div>
@@ -325,7 +339,7 @@
                 title: "출근하시겠습니까?",
                 showCancelButton: true,
                 confirmButtonColor: "#7c1512",
-                cancelButtonColor: "#868686",
+                cancelButtonColor: "#7c1512",
                 confirmButtonText: "네",
                 cancelButtonText: "아니요"
             }).then((result) => {
@@ -371,7 +385,7 @@
                 title: "퇴근하시겠습니까?",
                 showCancelButton: true,
                 confirmButtonColor: "#7c1512",
-                cancelButtonColor: "#868686",
+                cancelButtonColor: "#7c1512",
                 confirmButtonText: "네",
                 cancelButtonText: "아니요"
             }).then((result) => {
@@ -413,7 +427,7 @@
 
         function getWeather (lat, lon) {
             const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
-            fetch(git
+            fetch(
                 `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${API_KEY}&units=metric&lang=kr`
             )
                 .then((response) => {
