@@ -56,7 +56,7 @@
             b.emp_no,
             b.name
         from notice a join emp b on a.EMP_NO = b.EMP_NO
-        order by reg_date desc
+        order by a.notice_pin desc, a.notice_no desc
         fetch first 5 rows only
     </select>
 

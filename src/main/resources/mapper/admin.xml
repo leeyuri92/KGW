@@ -24,8 +24,9 @@
     </update>
 
     <insert id="regist" parameterType="com.vo.EmpVO">
-        insert into emp(emp_no,team_no,emp_access,emp_position,dayoff_yn,dayoff_cnt,emp_year,hire_date,emp_state,password,name,email,birthdate,phone_num,address,mod_date,reg_date,retire_date)
-        values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD'),NULL)
+        insert into emp(emp_no,team_no,emp_access,emp_position,dayoff_yn,dayoff_cnt,hire_date,emp_state,password,name,email,birthdate,phone_num,address,mod_date,reg_date,retire_date, emp_year)
+        values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD'),NULL,
+               #{hire_date})
     </insert>
 
     <select id="empList" parameterType="com.vo.EmpVO" resultType="com.vo.EmpVO">
