@@ -73,7 +73,16 @@
             </div>
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label>작성일</label></div>
+              <% if(attendanceModMap.get("REG_DATE")!=null){
+              %>
               <div class="col-10"><input type="text" class="form-control" value="<%=attendanceModMap.get("REG_DATE")%>" disabled></div>
+              <%
+              }else {
+              %>
+              <div class="col-10"><input type="text" class="form-control" value="-" disabled></div>
+              <%
+                }
+              %>
             </div>
             <div class="row mb-3">
               <div class="col-2" style="line-height: 37px"><label>수정요청일</label></div>
