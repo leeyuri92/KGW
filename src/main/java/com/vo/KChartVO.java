@@ -18,7 +18,7 @@ public class KChartVO {
     private String k_birth;
     private String K_PHY;
     private int k_hire;
-    private int k_war;
+    private double k_war;
     private int k_sal;
     private String k_date;
     private String k_state;
@@ -27,7 +27,7 @@ public class KChartVO {
     private String keyword;
 
     @Builder
-    public KChartVO(int k_id, int k_no, int k_ss, String k_team, String k_name, int k_num, String k_pos, String k_birth, String k_PHY, int k_hire, int k_war, int k_sal, String k_date, String k_state, int k_year, String gubun, String keyword) {
+    public KChartVO(int k_id, int k_no, int k_ss, String k_team, String k_name, int k_num, String k_pos, String k_birth, String k_PHY, int k_hire, double k_war, int k_sal, String k_date, String k_state, int k_year, String gubun, String keyword) {
         this.k_id = k_id;
         this.k_no = k_no;
         this.k_ss = k_ss;
