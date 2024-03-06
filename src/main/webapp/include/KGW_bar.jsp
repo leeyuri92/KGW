@@ -2,6 +2,7 @@
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="com.vo.EmpVO" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/bootstrap_common.jsp" %>
 <%
@@ -108,12 +109,16 @@
                     <div class="nav-link mt-1" style="font-weight: bold">자동 로그아웃 시간  <i class="bi bi-clock"></i> &nbsp; <span id="time" style="font-size: 18px">05:00</span></div>
                     <div class="info">
                         <%
-                            String profileImgUrl = sessionVO.getEmp_no()+".png";
-                            if (profileImgUrl == null || profileImgUrl.isEmpty()) {
-                                profileImgUrl = "K1.png"; // 기본 이미지 파일 경로 설정
-                            }
+                            String realFolder = "";
+                            String filePath = "/fileUpload/profile/"+sessionVO.getEmp_no()+".png"; // 파일 경로 설정
+                            ServletContext context = request.getServletContext();
+                            realFolder = context.getRealPath(filePath);
+                            File file = new File(realFolder);
+                            if (!(file.exists())) { // 파일이 존재하는지 확인
+                                filePath = "/fileUpload/profile/K1.png";
+                                }
                         %>
-                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link"><img src="/fileUpload/profile/<%=profileImgUrl%>" class="img-circle" alt="User Image">&nbsp;<%=sessionVO.getName()%></a>
+                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link"><img src="<%=filePath%>" class="img-circle" alt="User Image">&nbsp;<%=sessionVO.getName()%></a>
                     </div>
                 </div>
             </li>
