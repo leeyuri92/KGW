@@ -25,4 +25,6 @@ public interface AttendanceService {
     public Map<String, Object> adminModAttendeanceMap(AttendanceModifyVO attendancemodifyvo) throws Exception;
 
     public void attendanceModUpdate(AttendanceModifyVO attendancemodifyvo) throws Exception;
+
+    List<AttendanceVO> jsonAttendanceSelect(AttendanceVO  attendanceVO)throws Exception;
 }

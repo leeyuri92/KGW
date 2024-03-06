@@ -75,4 +75,10 @@ public class AttendanceDaoImpl implements AttendanceDao {
     public void attendanceUpdate(AttendanceModifyVO attendancemodifyvo) throws Exception {
         sqlSessionTemplate.update("attendanceUpdate", attendancemodifyvo);
     }
+
+    @Override
+    public List<AttendanceVO> jsonAttendanceSelect(AttendanceVO  attendanceVO) throws Exception {
+        List<AttendanceVO> attendanceList = sqlSessionTemplate.selectList("jsonAttendanceSelect", attendanceVO);
+        return attendanceList;
+    }
 }

@@ -73,4 +73,10 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendanceDao.attendanceModUpdate(attendancemodifyvo);
         attendanceDao.attendanceUpdate(attendancemodifyvo);
     }
+
+    @Override
+    public List<AttendanceVO> jsonAttendanceSelect(AttendanceVO  attendanceVO) throws Exception {
+        List<AttendanceVO> attendanceList = attendanceDao.jsonAttendanceSelect(attendanceVO);
+        return attendanceList;
+    }
 }

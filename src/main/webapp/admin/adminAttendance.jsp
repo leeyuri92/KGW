@@ -92,17 +92,17 @@
             <button id="btn_search" class="btn btn-danger" onclick="attendanceSearch()">검색</button>
           </div>
         </div>
-
         <div class='board-list'>
           <table class="table table-hover text-center ">
             <thead>
             <tr>
-              <th>번호</th>
-              <th>작성자</th>
-              <th>작성일</th>
-              <th>요청일</th>
-              <th>출/퇴근</th>
-              <th>상태</th>
+              <th width="20%">수정요청일시</th>
+              <th width="10%">요청자</th>
+              <th width="10%">출근시간</th>
+              <th width="10%">퇴근시간</th>
+              <th width="20%">수정 전 근태상태</th>
+              <th width="20%">수정 후 근태상태</th>
+              <th width="10%">상태</th>
             </tr>
             </thead>
             <tbody>
@@ -112,23 +112,12 @@
                 AttendanceModifyVO attendancemodifyvo = attendanceModList.get(i);
             %>
             <tr>
-              <td><%=attendancemodifyvo.getAttendancemod_no()%></td>
-              <td><a href="/attendance/adminModAttendance?attendancemod_no=<%=attendancemodifyvo.getAttendancemod_no()%>"><%=attendancemodifyvo.getName()%></a></td>
-              <td>
-                <%
-                if (attendancemodifyvo.getReg_date() != null){
-                %>
-                <%=attendancemodifyvo.getReg_date()%>
-                <%
-                  }else{
-                %>
-                -
-                <%
-                  }
-                %>
-              </td>
               <td><%=attendancemodifyvo.getMod_date()%></td>
+              <td><a href="/attendance/adminModAttendance?attendancemod_no=<%=attendancemodifyvo.getAttendancemod_no()%>"><%=attendancemodifyvo.getName()%></a></td>
+              <td><%=attendancemodifyvo.getOriginal_start_time()%></td>
+              <td><%=attendancemodifyvo.getOriginal_end_time()%></td>
               <td><%=attendancemodifyvo.getOriginal_state()%></td>
+              <td><%=attendancemodifyvo.getMod_state() %></td>
               <td><%=attendancemodifyvo.getState()%></td>
             </tr>
             <%
@@ -142,7 +131,7 @@
           <div style="display:flex; justify-content:center;">
             <ul class="pagination">
               <%
-                String pagePath = "adminAttendance";
+                String pagePath = "attendanceList?emp_no="+sessionVO.getEmp_no();
                 BSPageBar bspb = new BSPageBar(numPerPage,size,nowPage,pagePath);
                 out.print(bspb.getPageBar());
               %>
@@ -151,6 +140,7 @@
           <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
         </div>
+
       </div>
     </section>
   </div>

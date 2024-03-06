@@ -27,11 +27,13 @@
         on a.EMP_NO = b.EMP_NO
         where b.emp_no = #{emp_no}
           and a.work_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD')
+        order by work_date desc
     </select>
 
     <select id="selectOne" parameterType="int" resultType="com.vo.AttendanceVO">
         select attendance_no, emp_no, work_date, start_time, end_time, state, reg_date from attendance
         where emp_no = #{emp_no}
+        order by work_date desc
     </select>
 
     <insert id="insertAbsenteeism">
@@ -55,7 +57,8 @@
     </insert>
 
     <select id="attendaceModList" parameterType="com.vo.AttendanceVO" resultType="com.vo.AttendanceModifyVO">
-        SELECT b.ATTENDANCEMOD_NO, c.name, a.EMP_NO, b.ATTENDANCE_NO, b.REG_DATE, b.ORIGINAL_STATE, b.state, b.mod_date
+        SELECT b.ATTENDANCEMOD_NO, c.name, a.EMP_NO, b.ATTENDANCE_NO, b.REG_DATE, b.ORIGINAL_STATE, b.state, b.mod_date, b.mod_state,
+               b.original_start_time, b.original_end_time
         FROM attendance a
                  JOIN attendancemodify b ON a.ATTENDANCE_NO = b.ATTENDANCE_NO
                  JOIN emp c ON a.EMP_NO = c.EMP_NO
@@ -72,7 +75,7 @@
                 </choose>
             </if>
         </where>
-        order by c.emp_no desc
+        order by c.mod_date desc
     </select>
 
     <select id="adminModAttendeanceMap" parameterType="com.vo.AttendanceModifyVO" resultType="map">
@@ -97,6 +100,11 @@
         where attendance_no = #{attendance_no}
     </update>
 
-
+    <select id="jsonAttendanceSelect" parameterType="com.vo.AttendanceVO" resultType="com.vo.AttendanceVO">
+        select attendance_no, emp_no, work_date, start_time, end_time, state, reg_date from attendance
+        where emp_no = #{emp_no}
+        and SUBSTR(work_date, 1, 7) = #{work_date}
+        order by work_date desc
+    </select>
 
 </mapper>

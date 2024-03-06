@@ -10,7 +10,7 @@
   if(attendanceModList !=null){
     size = attendanceModList.size();
   }
-//  out.print(attendanceModList);//3
+//  out.print(attendanceModList);
   //페이지처리
   int numPerPage = 5;
   int nowPage = 0;
@@ -85,12 +85,13 @@
           <table class="table table-hover text-center ">
             <thead>
             <tr>
-              <th width="15%">번호</th>
-              <th width="15%">작성자</th>
-              <th width="15%">작성일</th>
-              <th width="20%">요청일</th>
-              <th width="20%">출/퇴근</th>
-              <th width="20%">상태</th>
+              <th width="20%">수정요청일시</th>
+              <th width="10%">요청자</th>
+              <th width="10%">출근시간</th>
+              <th width="10%">퇴근시간</th>
+              <th width="20%">수정 전 근태상태</th>
+              <th width="20%">수정 후 근태상태</th>
+              <th width="10%">상태</th>
             </tr>
             </thead>
             <tbody>
@@ -100,11 +101,12 @@
                      AttendanceModifyVO attendancemodifyvo = attendanceModList.get(i);
             %>
             <tr>
-                   <td><%=attendancemodifyvo.getAttendancemod_no() %></td>
-                   <td><%=attendancemodifyvo.getName()%></td>
-                   <td><%=attendancemodifyvo.getReg_date()%></td>
                    <td><%=attendancemodifyvo.getMod_date()%></td>
+                   <td><%=attendancemodifyvo.getName()%></td>
+                   <td><%=attendancemodifyvo.getOriginal_start_time()%></td>
+                   <td><%=attendancemodifyvo.getOriginal_end_time()%></td>
                    <td><%=attendancemodifyvo.getOriginal_state()%></td>
+                   <td><%=attendancemodifyvo.getMod_state() %></td>
                    <td><%=attendancemodifyvo.getState()%></td>
             </tr>
                   <%

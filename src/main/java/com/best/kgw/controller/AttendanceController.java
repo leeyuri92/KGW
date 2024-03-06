@@ -93,6 +93,14 @@ public class AttendanceController {
         return "redirect:./adminAttendance";
     }
 
+    @PostMapping("/jsonAttendanceSelect")
+    @ResponseBody
+    public List<AttendanceVO> jsonAttendanceSelect(@RequestBody AttendanceVO attendanceVO) throws Exception{
+        List<AttendanceVO> attendanceList = attendanceService.jsonAttendanceSelect(attendanceVO);
+        logger.info(attendanceList.toString());
+        return attendanceList;
+    }
+
     @Scheduled(cron = "59 59 23 ? * 1-5")
     public void run() throws Exception {
         try {
@@ -104,4 +112,5 @@ public class AttendanceController {
         }
 
     }
+
 }
