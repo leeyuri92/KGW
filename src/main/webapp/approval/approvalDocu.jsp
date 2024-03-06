@@ -194,7 +194,7 @@
                                             <input type="text" class="value-input" id="document_category"  name="document_category" value="휴가" >
                                         </div>
                                         <div class="item">
-                                            <span class="title">담당자:</span>
+                                            <span class="title">결재자 :</span>
                                             <input type="text" class="value-input" id="approval_name" name="approval_name" value="경영지원팀장">
                                         </div>
                                         <div class="item">
@@ -241,7 +241,7 @@
 
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="document_title3" name="document_title" value="선수관련"  >
+                                        <input type="text" class="value-input" id="document_title3" name="document_title" value="선수관련"  placeholder="제목을 자유롭게 작성하세요" >
                                     </div>
                                     <div class="item" hidden="hidden">
                                         <span class="title">문서타이틀:</span>
@@ -249,7 +249,7 @@
                                     </div>
 
                                     <div class="item">
-                                        <span class="title">담당자:</span>
+                                        <span class="title">결재자 :</span>
                                         <input type="text" class="value-input" id="approval_name3" name="approval_name" value="운영팀장">
                                     </div>
                                     <div class="item">
@@ -303,14 +303,14 @@
                                         <input type="hidden" id="draftdayRelease" name="draftday"    value="" >
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title2" name="document_title" value="선수관련"  >
+                                            <input type="text" class="value-input" id="document_title2" name="document_title" value="선수관련" placeholder="제목을 자유롭게 작성하세요"  >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
                                             <input type="text" class="value-input" id="document_category2"  name="document_category" value="방출" >
                                         </div>
                                         <div class="item">
-                                            <span class="title">담당자:</span>
+                                            <span class="title">결재자 :</span>
                                             <input type="text" class="value-input" id="approval_name2" name="approval_name" value="운영팀장">
                                         </div>
                                         <div class="item">
@@ -357,14 +357,14 @@
 
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title1" name="document_title" value="선수관련"  >
+                                            <input type="text" class="value-input" id="document_title1" name="document_title" value="선수관련" placeholder="제목을 자유롭게 작성하세요" >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
                                             <input type="text" class="value-input" id="document_category1"  name="document_category" value="영입" >
                                         </div>
                                         <div class="item">
-                                            <span class="title">담당자:</span>
+                                            <span class="title">결재자 :</span>
                                             <input type="text" class="value-input" id="approval_name1" name="approval_name" value="운영팀장">
                                         </div>
                                         <div class="item">

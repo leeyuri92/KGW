@@ -92,12 +92,7 @@
                             <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
                             <div class="row">
 
-                                <div class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button id="btn_search2" class="btn btn-danger" herf="#">기안문서 </button>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm" href="#">임시보관함</button>
-                                </div>
-
-
+<%--추가 수정 부분   --%>
 
                                 <form id="saveDocumentPost" name="saveDocumentPost" action="saveDetailUpdate" method="post">
                                     <div class="frame " id="do_vocation">
@@ -161,6 +156,7 @@
                                         </div>
                                         <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
                                             <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="saveUpdate()" >제출</button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm" href="./approval/saveList">임시보관함</button>
                                         </div>
                                     </div>
                                 </form>

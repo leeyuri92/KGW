@@ -114,9 +114,10 @@
                                     <tr>
                                         <th width="10%">문서ID</th>
                                         <th width="10%">종류</th>
-                                        <th width="15%">상태</th>
+                                        <th width="10%">제목</th>
                                         <th width="15%">기안자</th>
                                         <th width="15%">기안시간</th>
+                                        <th width="15%">상태</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -132,9 +133,10 @@
                                                 <%= approvalVO.getDocument_category()%>
                                             </a>
                                         </td>
-                                        <td><%= approvalVO.getApproval_category()%></td>
+                                        <td><%= approvalVO.getDocument_title()%></td>
                                         <td><%= approvalVO.getName()%></td>
                                         <td><%= approvalVO.getSubmission_date()%></td>
+                                        <td><%= approvalVO.getApproval_category()%></td>
                                     </tr>
                                     <%
 

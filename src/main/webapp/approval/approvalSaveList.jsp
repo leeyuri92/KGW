@@ -129,7 +129,7 @@
                                     <tr>
                                         <th width="10%" >문서문서번호</th>
                                         <th width="10%">종류</th>
-                                        <th width="15%">중간결재자 </th>
+                                        <th width="10%">제목</th>
                                         <th width="15%">저장시간</th>
                                         <th width="10%">삭제</th>
                                     </tr>
@@ -147,7 +147,7 @@
                                             </a>
                                         </td>
                                         <td><%= approvalVO.getDocument_category()%></td>
-                                        <td><%= approvalVO.getApproval_name()%></td>
+                                        <td><%= approvalVO.getDocument_title()%></td>
                                         <td><%= approvalVO.getDraftday()%></td>
                                         <td><a href="javascript:saveDelete('<%= approvalVO.getDocument_no() %>')">삭제</a></td>
                                     </tr>

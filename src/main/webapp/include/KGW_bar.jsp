@@ -9,7 +9,7 @@
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     EmpVO sessionVO = principalDetails.getEmpVO();
-    session.setMaxInactiveInterval(300);
+    session.setMaxInactiveInterval(6000);
 
 %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

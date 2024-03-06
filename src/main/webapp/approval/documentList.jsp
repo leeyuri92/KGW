@@ -96,6 +96,7 @@
                                             <tr>
                                                 <th width="10%" >문서ID</th>
                                                 <th width="10%">종류</th>
+                                                <th width="10%">제목</th>
                                                 <th width="15%">결재상태</th>
                                             </tr>
                                         </thead>
@@ -108,7 +109,8 @@
                                             <tr>
                                             <td><%= approvalVO.getDocument_no()%></td>
                                             <td><%= approvalVO.getDocument_category()%></td>
-                                            <td><%= approvalVO.getState()%></td>
+                                             <td><%= approvalVO.getDocument_title()%></td>
+                                             <td><%= approvalVO.getState()%></td>
                                             </tr>
                                             <%
                                                 }

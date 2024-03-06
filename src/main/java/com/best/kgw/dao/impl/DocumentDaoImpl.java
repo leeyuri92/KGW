@@ -81,11 +81,36 @@ public int approvalMiddleModify(ApprovalVO approvalVO) throws Exception {
     @Override
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
         if(approvalvo.getApproval_category().equals("중간결재대기")){
+            logger.info("dao"+approvalvo);
+            approvalvo.setApproval_category("최종결재대기");
             sqlSessionTemplate.update("approvalMiddleModify", approvalvo);
         }else{
+            logger.info("dao"+approvalvo);
             sqlSessionTemplate.update("approvalFinalModify", approvalvo);
         }
 
+
+
+//
+//        if ("approve".equals(actionType)) {
+//            if ("중간결재대기".equals(approvalVO.getApproval_category())) {
+//                approvalVO.setApproval_category("최종결재대기");
+//                sqlSessionTemplate.update("approvalMiddleModify", approvalVO);
+//            } else if ("최종결재대기".equals(approvalVO.getApproval_category())) {
+//                approvalVO.setApproval_category("최종결재승인");
+//                sqlSessionTemplate.update("approvalFinalModify", approvalVO);
+//            }
+//        } else if ("reject".equals(actionType)) {
+//            approvalVO.setRejection_content(rejectionContent);
+//            if ("중간결재대기".equals(approvalVO.getApproval_category())) {
+//                approvalVO.setApproval_category("중간승인반려");
+//                sqlSessionTemplate.update("approvalMiddleModify", approvalVO);
+//            } else if ("최종결재대기".equals(approvalVO.getApproval_category())) {
+//                approvalVO.setApproval_category("최종승인반려");
+//                sqlSessionTemplate.update("approvalFinalModify", approvalVO);
+//            }
+//        }
+//    }
     }
 // 임시저장 업데이트
 @Override

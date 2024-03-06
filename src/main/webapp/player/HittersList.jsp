@@ -80,7 +80,7 @@
                 <div class="ms-2">></div>
             </div>
             <div class="d-flex align-items-center">
-                <div class="text-dark fs-6">FA선수현황</div>
+                <div class="text-dark fs-6">현역 선수현황</div>
             </div>
         </div>
         <div class="d-flex align-items-center mt-2">
@@ -88,8 +88,8 @@
                 <div class="position-absolute top-0 start-0" ></div>
             </div>
             <div class="d-flex align-items-center ms-2">
-                <div class="fw-bold fs-5">FA선수현황</div>
-                <div class="text-muted ms-3">사원 정보를 검색할 수 있는 페이지입니다.</div>
+                <div class="fw-bold fs-5">현역 타자 리스트</div>
+                <div class="text-muted ms-3">현역 선수 정보를 검색할 수 있는 페이지입니다.</div>
             </div>
         </div>
     </div>
@@ -99,7 +99,7 @@
             <div class="box">
                 <div class="container">
                     <div class="box-header">
-                        <h4 style="font-weight: bold; margin-left: 1.5rem" >전략분석 차트</h4>
+                        <h4 style="font-weight: bold; margin-left: 1.5rem" >현역 타자 리스트</h4>
                         <hr />
                     </div>
 
@@ -140,9 +140,9 @@
                                 <th width="10%">홈런</th>
                                 <th width="10%">득점</th>
                                 <th width="10%">출루율</th>
-                                <th width="10%" id="war" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
-                특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">war</th>
-                                <th width="10%" id="ops" data-bs-toggle="tooltip" data-bs-placement="top" title="OPS(오피에스)는 On base Plus Slugging의 약자이며 말 그대로 출루율과 장타율의 합이다.">ops</th>
+                                <th width="10%" id="WAR" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
+                특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">WAR</th>
+                                <th width="10%" id="OPS" data-bs-toggle="tooltip" data-bs-placement="bottom" title="OPS(오피에스)는 On base Plus Slugging의 약자이며 말 그대로 출루율과 장타율의 합이다.">OPS</th>
                             </tr>
                             </thead>
                             <tbody>

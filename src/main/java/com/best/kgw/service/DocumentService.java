@@ -19,8 +19,6 @@ public interface DocumentService {
     public void documentInsert(ApprovalVO approvalVO) throws Exception;
 
 
-    @Transactional
-    void updateApprovalAndDocument(ApprovalVO approvalVO) throws Exception;
 
     void approvalUpdate(ApprovalVO approvalvo) throws Exception;
 

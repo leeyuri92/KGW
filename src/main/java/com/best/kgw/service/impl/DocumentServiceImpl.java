@@ -53,17 +53,12 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
 
-    @Transactional
-    @Override
-    public void updateApprovalAndDocument(ApprovalVO approvalVO) throws Exception {
-        documentDao.approvalMiddleModify(approvalVO);
-        documentDao.documentModify(approvalVO);
-    }
+
 
     @Override
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
-        approvalvo.setApproval_category("최종결재대기");
         documentDao.approvalUpdate(approvalvo);
+        logger.info("serviceUpdate"+approvalvo);
     }
 
 
@@ -81,6 +76,10 @@ public int saveModify(ApprovalVO approvalVO) throws Exception {
         documentDelete = documentDao.saveDocumentDelete(document_no);
         return documentDelete;
     }
+
+
+
+//    결재 업대이트 처리
 
 }
 

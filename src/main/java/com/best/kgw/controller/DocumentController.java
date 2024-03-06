@@ -121,6 +121,7 @@ public class DocumentController {
     //결재 파트 업데이트 처리
     @PostMapping("/approvalUpdate")
     public String approvalUpdate(ApprovalVO approvalvo) throws Exception {
+        logger.info("approvalUpdateController================================================"+ approvalvo);
         documentService.approvalUpdate(approvalvo);
         return "redirect:./approvalList";
     }
@@ -151,6 +152,23 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
         }
     }
 
+
+
+/* 결재 업데이트 처리 
+* @PostMapping("/updateApproval")
+public String updateApproval(ApprovalVO approvalVO) {
+    // 根据gubun的值决定调用哪个服务方法
+    if ("true".equals(approvalVO.getGubun())) {
+        // 调用执行“同意”操作的服务方法
+        approvalService.approve(approvalVO);
+    } else if ("false".equals(approvalVO.getGubun())) {
+        // 调用执行“驳回”操作的服务方法
+        approvalService.reject(approvalVO);
+    }
+    return "redirect:/somePage"; // 重定向到某个页面
+}
+
+* */
 
 }
 

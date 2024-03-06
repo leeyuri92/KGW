@@ -86,7 +86,7 @@
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">전체 선수현황</div>
+                    <div class="text-dark fs-6">현역 선수현황</div>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-2">
@@ -94,8 +94,8 @@
                     <div class="position-absolute top-0 start-0" ></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">전체선수현황</div>
-                    <div class="text-muted ms-3">선수 정보를 검색할 수 있는 페이지입니다.</div>
+                    <div class="fw-bold fs-5">현역 투수 리스트</div>
+                    <div class="text-muted ms-3">현역 선수 정보를 검색할 수 있는 페이지입니다.</div>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
                 <div class="box">
                     <div class="container">
                         <div class="box-header">
-                            <h4 style="font-weight: bold; margin-left: 1.5rem" >전략분석 차트</h4>
+                            <h4 style="font-weight: bold; margin-left: 1.5rem" >현역 투수 리스트</h4>
                             <hr />
                         </div>
 
@@ -145,10 +145,10 @@
                                     <th width="10%">세이브</th>
                                     <th width="10%">피안타율</th>
                                     <th width="10%">피출루율</th>
-                                    <th width="10%" id="war" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
-                    특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">war</th>
-                                    <th width="10%" id="whip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WHIP(Walks Plus Hits Divided by Innings Pitched,
-                    이닝당 안타 및 볼넷 허용률)는 야구에서 투수의 성적 평가 항목 중 하나로서 피안타 수와 볼넷 수의 합을 투구 이닝으로 나눈 수치이다.">whip</th>
+                                    <th width="10%" id="WAR" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
+                    특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">WAR</th>
+                                    <th width="10%" id="WHIP" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WHIP(Walks Plus Hits Divided by Innings Pitched,
+                    이닝당 안타 및 볼넷 허용률)는 야구에서 투수의 성적 평가 항목 중 하나로서 피안타 수와 볼넷 수의 합을 투구 이닝으로 나눈 수치이다.">WHIP</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tableBody">
