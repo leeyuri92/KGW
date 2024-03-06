@@ -113,13 +113,25 @@
 
             <div class="row">
               <div class="col-2">
-                <div class="signImg" style="border: 2px solid grey; width: 200px; height: 200px">
+                <div class="signImg" data-bs-toggle="modal" data-bs-target="#signSelect" style="border: 2px solid grey; width: 200px; height: 200px;  display: flex;  justify-content: center;  align-items: center; ">
+                  <%
+
+                    if (file.exists()) { // 파일이 존재하는지 확인
+                  %>
+
                   <img id="signImage" src="/fileUpload/sign/<%=empDetail.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
+                  <%
+                    }else{
+                  %>
+                  <div>서명하세요</div>
+                  <%
+                    }
+                  %>
                 </div>
               </div>
               <div class="col-8">
                 <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
-                  <img src="/fileUpload/profile/<%=empDetail.getProfile_img()%>" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
+                  <img src=<%=filePath%> id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
                 </div>
               </div>
             </div>

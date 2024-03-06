@@ -88,7 +88,7 @@
               <div class="row" style="margin: auto;">
                 <div class="user-panel">
                   <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>">
-                    <img src="/fileUpload/profile/<%=profileImgUrl%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
+                    <img src=<%=filePath%> class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
                   </a>
                 </div>
               </div>

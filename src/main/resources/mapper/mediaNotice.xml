@@ -42,7 +42,7 @@
                 </choose>
             </if>
         </where>
-        order by board_no desc
+        order by reg_date desc
     </select>
 
     <delete id="mediaNoticeDelete" parameterType="int">

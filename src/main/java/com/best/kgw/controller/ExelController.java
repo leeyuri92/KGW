@@ -39,7 +39,7 @@ public class ExelController {
 
         Connection con = DriverManager.getConnection("jdbc:oracle:thin:@(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=ga45479ea3c71df_l4hrfixp1sgbh0pd_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))","ADMIN","Abcd12345678");
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select e.emp_no,t.team_name,t.team_no, e.emp_access, e.emp_position, e.sign_no, e.dayoff_cnt, e.emp_year,e.hire_date, e.emp_state, e.reg_date, e.mod_date, e.password, e.name, e.email,e.phone_num,e.address,e.birthdate\n" +
+        ResultSet rs = stmt.executeQuery("select e.emp_no,t.team_name,t.team_no, e.emp_access, e.emp_position, e.dayoff_cnt, e.emp_year,e.hire_date, e.emp_state, e.reg_date, e.mod_date, e.password, e.name, e.email,e.phone_num,e.address,e.birthdate\n" +
                 "        from emp e JOIN team t ON e.team_no = t.team_no");
 
         Workbook workbook = new HSSFWorkbook();

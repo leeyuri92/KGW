@@ -169,7 +169,23 @@
 
                                         <td> <input type="checkbox" class="form-check-input" id="check" name="checkboxName" onclick="check() "></td>
                                         <td><%=empVO.getEmp_no()%></td>
-                                        <td><a href="javascript:empDetail('<%=empVO.getEmp_no()%>')"><%=empVO.getName() %></a></td>
+                                        <td>
+                                            <%
+                                                String profileImgSrc = "/fileUpload/profile/" + empVO.getEmp_no() + ".png";
+                                                if (empVO.getEmp_no() != 0 && new java.io.File(application.getRealPath(profileImgSrc)).exists()) {
+                                            %>
+                                            <a href="javascript:empDetail('<%=empVO.getEmp_no()%>')">
+                                            <img src="<%=profileImgSrc%>" class="img-circle m-1" alt='' style="width: 30px; height: 30px; cursor: pointer;">
+                                            <%
+                                            } else {
+                                            %>
+                                            <a href="javascript:empDetail('<%=empVO.getEmp_no()%>')">
+                                            <img src="/fileUpload/profile/K1.png" class="img-circle m-1" alt='' style="width: 30px; height: 30px; cursor: pointer;">
+                                            <%
+                                                }
+                                            %>
+                                            <%=empVO.getName()%>
+                                        </td>
                                         <td><%=empVO.getTeam_name()%></td>
                                         <td><%=empVO.getEmp_position()%></td>
                                         <% if (empVO.getEmp_state().equals("0")){ %>

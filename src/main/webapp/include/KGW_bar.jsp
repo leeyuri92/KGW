@@ -2,6 +2,7 @@
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="com.vo.EmpVO" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/bootstrap_common.jsp" %>
 <%
@@ -21,6 +22,7 @@
 <link rel="stylesheet" href="/css/common.css">
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -71,7 +73,9 @@
                 // 세션 시간을 성공적으로 연장한 경우
                 var newSessionTimeout = parseInt(response);
                 // 새로운 세션 시간을 콜백 함수에 전달
-                callback(newSessionTimeout);
+                if (typeof callback === 'function') { // 콜백 함수가 유효한지 확인
+                    callback(newSessionTimeout);
+                }
             },
             error: function (xhr, status, error) {
                 // 오류 처리
@@ -85,6 +89,25 @@
         var sessionTimeout = <%= session.getMaxInactiveInterval() %>;
         var display = document.querySelector('#time');
         startCountdown(sessionTimeout, display);
+    };
+
+    extendLoginTime = () => {
+        Swal.fire({
+            title: '로그인 연장',
+            text: '로그인을 연장하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '연장',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 확인을 눌렀을 때의 동작
+                location.href = "/";
+            } else {
+                // 취소를 눌렀을 때의 동작
+                console.log("연장 취소");
+            }
+        });
     };
 </script>
     <!-- Navbar -->
@@ -106,14 +129,19 @@
             <li class="nav-item">
                 <div class="user-panel d-flex" >
                     <div class="nav-link mt-1" style="font-weight: bold">자동 로그아웃 시간  <i class="bi bi-clock"></i> &nbsp; <span id="time" style="font-size: 18px">05:00</span></div>
+                    <button type="button" id="sessionBtn" class="btn btn-secondary btn-sm mt-2" style="font-weight:bold; height: 35px;" onclick="extendLoginTime()">로그인 연장</button>
                     <div class="info">
                         <%
-                            String profileImgUrl = sessionVO.getEmp_no()+".png";
-                            if (profileImgUrl == null || profileImgUrl.isEmpty()) {
-                                profileImgUrl = "K1.png"; // 기본 이미지 파일 경로 설정
-                            }
+                            String realFolder = "";
+                            String filePath = "/fileUpload/profile/"+sessionVO.getEmp_no()+".png"; // 파일 경로 설정
+                            ServletContext context = request.getServletContext();
+                            realFolder = context.getRealPath(filePath);
+                            File file = new File(realFolder);
+                            if (!(file.exists())) { // 파일이 존재하는지 확인
+                                filePath = "/fileUpload/profile/K1.png";
+                                }
                         %>
-                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link"><img src="/fileUpload/profile/<%=profileImgUrl%>" class="img-circle" alt="User Image">&nbsp;<%=sessionVO.getName()%></a>
+                        <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link"><img src="<%=filePath%>" class="img-circle" alt="User Image">&nbsp;<%=sessionVO.getName()%></a>
                     </div>
                 </div>
             </li>
@@ -147,7 +175,7 @@
                         <a href="/empInfo" class="nav-link">
                             <i class="nav-icon bi bi-person-heart"></i>
                             <p>
-                                인사정보
+                                사원정보
                             </p>
                         </a>
                     </li>

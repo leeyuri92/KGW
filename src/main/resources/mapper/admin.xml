@@ -8,7 +8,7 @@
           ,emp_access = #{emp_access}
           ,emp_position = #{emp_position}
           ,dayoff_cnt = #{dayoff_cnt}
-          ,emp_year = 0
+          ,emp_year = #{hire_date}
           ,hire_date = #{hire_date}
           ,emp_state = #{emp_state}
           ,password = #{password}
@@ -24,12 +24,13 @@
     </update>
 
     <insert id="regist" parameterType="com.vo.EmpVO">
-        insert into emp(emp_no,team_no,emp_access,emp_position,dayoff_yn,dayoff_cnt,emp_year,hire_date,emp_state,password,name,email,birthdate,phone_num,address,mod_date,reg_date,retire_date)
-        values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD'),NULL)
+        insert into emp(emp_no,team_no,emp_access,emp_position,dayoff_yn,dayoff_cnt,hire_date,emp_state,password,name,email,birthdate,phone_num,address,mod_date,reg_date,retire_date, emp_year)
+        values(emp_pk_seq.nextval,#{team_no},#{emp_access},#{emp_position},0,0,#{hire_date},#{emp_state},#{password},#{name},#{email},#{birthdate},#{phone_num},#{address},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),to_char(sysdate,'YYYY-MM-DD'),NULL,
+               #{hire_date})
     </insert>
 
     <select id="empList" parameterType="com.vo.EmpVO" resultType="com.vo.EmpVO">
-        select e.emp_no,t.team_name,e.team_no, e.emp_access, e.emp_position, e.dayoff_yn, e.dayoff_cnt, e.emp_year,e.hire_date, e.emp_state, e.reg_date, e.mod_date, e.password, e.name, e.email,e.phone_num,e.address,e.birthdate,e.retire_date
+        select e.emp_no,t.team_name,e.team_no, e.emp_access, e.emp_position, e.dayoff_yn, e.dayoff_cnt, e.emp_year,e.hire_date, e.emp_state, e.reg_date, e.mod_date, e.password, e.name, e.email,e.phone_num,e.address,e.birthdate,e.retire_date,e.profile_img
         from emp e JOIN team t ON e.team_no = t.team_no
         <where>
             <if test="emp_no!=0">AND e.emp_no=#{emp_no}</if>
