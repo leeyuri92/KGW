@@ -117,12 +117,43 @@
 
                     <div class="col-2">
                         <div class="signImg" style="border: 2px solid grey; width: 200px; height: 200px">
+                            <%
+                                String realFolderq = "";
+                                String filePathq = "/fileUpload/sign/"+rmap.getEmp_no()+".png"; // 파일 경로 설정
+                                ServletContext contextq = request.getServletContext();
+                                realFolder = context.getRealPath(filePathq);
+                                File fileq = new File(realFolder);
+                                if (fileq.exists()) { // 파일이 존재하는지 확인
+                            %>
                             <img id="signImage" src="/fileUpload/sign/<%=rmap.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
+                            <%
+                            }else{
+                            %>
+                            <div><img id="signImage" src="/fileUpload/sign/sign.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect"></div>
+                            <%
+                                }
+                            %>
                         </div>
                     </div>
                     <div class="col-8">
                         <div class="box-header" style="display: flex; align-items: center; justify-content: center;">
+                            <%
+                                String realFolderd = "";
+                                String filePathd = "/fileUpload/profile/"+rmap.getEmp_no()+".png"; // 파일 경로 설정
+                                ServletContext contextd = request.getServletContext();
+                                realFolderd = contextd.getRealPath(filePathd);
+                                File filed = new File(realFolderd);
+                                if (filed.exists()) { // 파일이 존재하는지 확인
+                            %>
                             <img src="/fileUpload/profile/<%=rmap.getEmp_no()%>.png" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
+                            <%
+                            }else{
+                            %>
+                            <img src="/fileUpload/profile/K1.png" id="previewImage" class="img-circle m-5" alt='' style="width: 200px; height: 200px; cursor: pointer;" onclick="handleImgClick()">
+                            <%
+                                }
+                            %>
+
                         </div>
                     </div>
                 </div>
@@ -317,6 +348,9 @@
         // 주소 정규식표현
         const expAddressText = /^[가-힣a-zA-Z0-9-.,\s]{1,60}$/;
 
+        // 연차 정규식표현
+        const expCntText = /^[0-9]{1,2}$/;
+
         // 각 입력 필드의 유효성을 검사하는 함수
         const validateForm = () => {
             // 각 입력 필드에 대한 유효성 검사 함수 호출
@@ -509,15 +543,15 @@
 
         // 연차 유효성 검사 함수
         const validateCnt  = () => {
-            const stateSpan = document.getElementById('dayoff_cnt_'); // 오류 메시지를 표시할 span 요소 가져오기
-            const mbrNmInput = document.getElementById('dayoff_cnt'); // 상태 입력 필드 가져오기
-            const isValid = expTeamText.test(mbrNmInput.value); // 정규식 패턴을 사용하여 입력값을 검사
+            const cntSpan = document.getElementById('dayoff_cnt_'); // 오류 메시지를 표시할 span 요소 가져오기
+            const cntInput = document.getElementById('dayoff_cnt'); // 상태 입력 필드 가져오기
+            const isValid = expCntText.test(cntInput.value); // 정규식 패턴을 사용하여 입력값을 검사
 
             // 유효한 경우 오류 메시지를 숨기고, 그렇지 않은 경우 표시
             if (isValid) {
-                stateSpan.style.display = 'none';
+                cntSpan.style.display = 'none';
             } else {
-                stateSpan.style.display = 'inline';
+                cntSpan.style.display = 'inline';
             }
             return isValid; // 유효성 여부 반환
         }

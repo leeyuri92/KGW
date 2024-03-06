@@ -152,7 +152,7 @@
                         <a href="/empInfo" class="nav-link">
                             <i class="nav-icon bi bi-person-heart"></i>
                             <p>
-                                인사정보
+                                사원정보
                             </p>
                         </a>
                     </li>
