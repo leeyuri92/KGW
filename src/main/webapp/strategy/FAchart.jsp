@@ -55,6 +55,7 @@
                     console.log("FA_NO : " + FA_NO);
                     let btn = document.querySelector('#btn_' + FA_NO);
                     (btn.innerHTML === "방출") ? btn.innerHTML = "등록" : btn.innerHTML = "방출";
+                    btn.style.backgroundColor = (btn.innerHTML === "방출") ? "#be7f7d" : "#7c1512";
                 },
                 error: function () {
                     alert('Error occurred while updating data.');
@@ -344,7 +345,7 @@
                                                 <th width="15%">팀</th>
                                                 <th width="15%">선수명</th>
                                                 <th width="15%">포지션</th>
-                                                <th width="15%">상태</th>
+                                                <th width="15%"> </th>
                                             </tr>
                                             </thead>
                                             <tbody id="faTable">
@@ -367,7 +368,7 @@
                                                     <%
                                                         if (rmap.get("FA_STATE").equals("TRUE")) {
                                                     %>
-                                                    <button id="btn_<%=rmap.get("FA_NO")%>" class="btn btn-danger" type="submit" onclick="faUpdate('<%=rmap.get("FA_NO")%>')">방출</button>
+                                                    <button id="btn_<%=rmap.get("FA_NO")%>" class="btn btn-danger" type="submit" style="background-color: #be7f7d" onclick="faUpdate('<%=rmap.get("FA_NO")%>')">방출</button>
                                                     <%
                                                     } else {
                                                     %>
