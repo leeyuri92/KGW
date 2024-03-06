@@ -77,10 +77,20 @@
                                                     <div class="card-body">
                                                         <p class="card-text fs-5" >  NO  : <%= kmap.getK_num() %></p>
                                                         <p class="card-text fs-1">  <%= kmap.getK_name() %></p>
-                                                        <hr style="width: 600px;">
+                                                        <hr style="width: 300px;">
                                                         <p class="card-text fs-5"> 생년월일  : <%= kmap.getK_birth() %></p>
                                                         <p class="card-text fs-5"> 신장/체중 : <%= kmap.getK_PHY() %></p>
-                                                        <p class="card-text fs-5"> 연봉  : <%= kmap.getK_sal() %></p>
+                                                        <%
+                                                        if( kmap.getK_sal() == 0){
+                                                        %>
+                                                        <p class="card-text fs-5"> 연봉  : 3000만원</p>
+                                                        <%
+                                                        }else{
+                                                        %>
+                                                        <p class="card-text fs-5"> 연봉  : <%= kmap.getK_sal() %>만원</p>
+                                                        <%
+                                                            }
+                                                        %>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 d-flex align-items-end" >
@@ -88,6 +98,7 @@
                                                         <p class="card-text fs-5"> 포지션  : <%= kmap.getK_pos() %></p>
                                                         <p class="card-text fs-5"> 데뷔년도  : <%= kmap.getK_hire() %>년</p>
                                                         <p class="card-text fs-5"> 연차  :  <%= kmap.getK_year() %>년차</p>
+                                                        <p class="card-text fs-5"> WAR  :  <%= kmap.getK_war() %></p>
                                                     </div>
                                                 </div>
 
