@@ -10,7 +10,7 @@
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     EmpVO sessionVO = principalDetails.getEmpVO();
-    session.setMaxInactiveInterval(6000);
+    session.setMaxInactiveInterval(1800);
 
 %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -271,13 +271,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../approval/documentList" class="nav-link">
+                                <a href="../approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>기안문서함</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../approval/saveList" class="nav-link">
+                                <a href="../approval/saveList?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>임시문서함 </p>
                                 </a>

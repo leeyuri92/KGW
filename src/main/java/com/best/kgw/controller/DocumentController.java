@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -77,14 +78,20 @@ public class DocumentController {
 
     // 문서 작성
     @PostMapping("documentInsert")
-    public String  documentInsert( ApprovalVO approvalVO) throws Exception {
+    public String  documentInsert( ApprovalVO approvalVO, RedirectAttributes redirectAttributes) throws Exception {
         logger.info("DocumentController :  documentInsert");
+        int result = 0;
         documentService.documentInsert(approvalVO);
-        return "redirect:documentList";
+        redirectAttributes.addAttribute("emp_no", approvalVO.getEmp_no());
+        if (approvalVO.getState().equals("임시저장")){
+            return "redirect:saveList";
+        }else{
+            return "redirect:documentList";
+        }
     }
 //임시보관함 조회
     @GetMapping("/saveList")
-    public String SaveList(Model model, ApprovalVO approvalVO) throws  Exception{
+    public String SaveList(Model model, ApprovalVO approvalVO, @RequestParam(required = false) Integer emp_no) throws  Exception{
         approvalVO.setGubun("true");
         List<ApprovalVO> list3 = documentService.DocumentList(approvalVO);
         logger.info("saveLIst"+list3);

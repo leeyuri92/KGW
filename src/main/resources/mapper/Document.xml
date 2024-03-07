@@ -8,6 +8,7 @@
         FROM document LEFT JOIN approval
             ON document.document_no = approval.document_no
             <where>
+                <if test="emp_no != null"> AND document.emp_no = ${emp_no}</if>
                 <if test="gubun !=null">
                     <choose>
                         <when test='gubun == "true"'>
@@ -22,8 +23,6 @@
             </where>
             order by document.document_no desc
         </select>
-
-
 
         <!--   결재자 select -->
     <select id="approvalDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">

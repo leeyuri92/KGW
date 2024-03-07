@@ -23,14 +23,10 @@
     <title>전자결재  기안자문서함</title>
     <%@include file="/common/bootstrap_common.jsp" %>
 
-
     <script>
         function boardSearch(){
             location.href='/approval/docu';
         }
-
-
-
     </script>
 </head>
 
