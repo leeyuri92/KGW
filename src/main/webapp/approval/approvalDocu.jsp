@@ -192,7 +192,7 @@
 
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title" name="document_title" value="휴가관련"  >
+                                            <input type="text" class="value-input" id="document_title" name="document_title" value=""  >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
@@ -246,7 +246,7 @@
 
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="document_title3" name="document_title" value="선수관련"  placeholder="제목을 자유롭게 작성하세요" >
+                                        <input type="text" class="value-input" id="document_title3" name="document_title" value=""   >
                                     </div>
                                     <div class="item" hidden="hidden">
                                         <span class="title">문서타이틀:</span>
@@ -308,7 +308,7 @@
                                         <input type="hidden" id="draftdayRelease" name="draftday"    value="" >
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title2" name="document_title" value="선수관련" placeholder="제목을 자유롭게 작성하세요"  >
+                                            <input type="text" class="value-input" id="document_title2" name="document_title" value=""  >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
@@ -362,7 +362,7 @@
 
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title1" name="document_title" value="선수관련" placeholder="제목을 자유롭게 작성하세요" >
+                                            <input type="text" class="value-input" id="document_title1" name="document_title" value=""  >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
@@ -381,7 +381,7 @@
                                             <select id="playersList1" name="k_name">
                                                 <% for (int i = 0; i < faList.size(); i++) {
                                                     ApprovalVO faVO = faList.get(i);
-                                                    if(faVO != null && faVO.getFa_agent() !=null){
+                                                    if (faVO != null && faVO.getFa_agent() != null && !"키움".equals(faVO.getFa_team())) {
                                                 %>
                                                 <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
                                                 <%

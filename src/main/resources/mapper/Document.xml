@@ -7,19 +7,44 @@
         SELECT *
         FROM document LEFT JOIN approval
             ON document.document_no = approval.document_no
-            <where>
-                <if test="gubun !=null">
-                    <choose>
-                        <when test='gubun == "true"'>
-                            AND document.state = '임시저장'
-                            <if test="document_no != null"> AND document.document_no = ${document_no}</if>
-                        </when>
-                        <when test='gubun=="false"'>
-                            AND document.state != '임시저장'
-                        </when>
-                    </choose>
-                </if>
-            </where>
+        <where>
+            <if test="storage != null">
+                <choose>
+                    <when test='storage == "true"'>
+                        AND document.state = '임시저장'
+                        <if test="document_no != null">
+                            AND document.document_no = #{document_no}
+                        </if>
+                        <!-- 임시저장시 구분 검색 -->
+                        <if test="gubun != null">
+                            <choose>
+                                <when test='gubun.equals("document_title")'>
+                                    AND  document.document_title LIKE '%' || #{keyword} || '%'
+                                </when>
+                                <when test='gubun.equals("document_category")'>
+                                    AND document.document_category LIKE '%' || #{keyword} || '%'
+                                </when>
+                            </choose>
+                        </if>
+                    </when>
+
+                    <when test='storage == "false"'>
+                        AND document.state != '임시저장'
+                        <!--기안문서함시 구분검색 -->
+                        <if test="gubun != null">
+                            <choose>
+                                <when test='gubun.equals("document_title")'>
+                                    AND document.document_title LIKE '%' || #{keyword} || '%'
+                                </when>
+                                <when test='gubun.equals("document_category")'>
+                                    AND document.document_category LIKE '%' || #{keyword} || '%'
+                                </when>
+                            </choose>
+                        </if>
+                    </when>
+                </choose>
+            </if>
+        </where>
             order by document.document_no desc
         </select>
 
@@ -38,6 +63,18 @@
                                    ON e.team_no = t.team_no
         <where>
             <if test="document_no !=null"> AND d.document_no = #{document_no}</if>
+
+<!--            <if test="gubun != null">-->
+<!--                <choose>-->
+<!--                    <when test='gubun.equals("document_title")'>-->
+<!--                        AND document.document_title LIKE '%' || #{keyword} || '%'-->
+<!--                    </when>-->
+<!--                    <when test='gubun.equals("document_category")'>-->
+<!--                        AND document.document_category LIKE '%' || #{keyword} || '%'-->
+<!--                    </when>-->
+<!--                </choose>-->
+<!--            </if>-->
+
         </where>
         order by a.document_no desc
     </select>
@@ -204,3 +241,27 @@
 
 </mapper>
 
+
+
+
+<!--
+<select id="selectDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
+        SELECT *
+        FROM document LEFT JOIN approval
+            ON document.document_no = approval.document_no
+            <where>
+                <if test="storage !=null">
+                    <choose>
+                        <when test='storage == "true"'>
+                            AND document.state = '임시저장'
+                            <if test="document_no != null"> AND document.document_no = ${document_no}</if>
+                        </when>
+                        <when test='storage=="false"'>
+                            AND document.state != '임시저장'
+                        </when>
+                    </choose>
+                </if>
+            </where>
+            order by document.document_no desc
+        </select>
+        -->
