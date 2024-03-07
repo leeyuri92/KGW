@@ -76,7 +76,7 @@
 
                                 if (item['state'] !== '정상출근') {
                                     var buttonCell = $('<td>');
-                                    var button = $('<button>').attr('id', 'bb').attr('class', 'btn btn-danger').attr('style', 'width: 100%;').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modAttendance').text('근태수정요청');
+                                    var button = $('<button>').attr('id', 'bb').attr('class', 'btn btn-danger').attr('style', 'width: 70%;').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modAttendance').text('근태수정요청');
                                     buttonCell.append(button);
                                     row.append(buttonCell);
                                 }
