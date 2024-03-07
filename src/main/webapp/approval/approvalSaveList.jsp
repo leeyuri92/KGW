@@ -4,6 +4,7 @@
 <%@  page import="com.vo.ApprovalVO" %>
 <%
     List<ApprovalVO>list3=(List)request.getAttribute("list3");
+//    out.print(list3);
     int size=0;
     if(list3!=null){
         size=list3.size();
@@ -78,7 +79,7 @@
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">결재함</div>
+                    <div class="text-dark fs-6">임시문서함</div>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-2">
@@ -86,7 +87,7 @@
                     <div class="position-absolute top-0 start-0" ></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">임시보관함</div>
+                    <div class="fw-bold fs-5">임시문서함</div>
                     <div class="text-muted ms-3">임시보관문서  정보 조회할수 있는 페이지입니다.</div>
                 </div>
             </div>
@@ -101,7 +102,7 @@
                     <div class="box">
                         <div class="container">
                             <div class="box-header">
-                                <h4 style="font-weight: bold; margin-left: 1.5rem" >임시보관 문서함</h4>
+                                <h4 style="font-weight: bold; margin-left: 1.5rem" >임시문서함</h4>
                                 <hr />
                             </div>
 
@@ -127,11 +128,11 @@
                                 <table class="table table-hover text-center ">
                                     <thead>
                                     <tr>
-                                        <th width="10%" >문서문서번호</th>
-                                        <th width="10%">종류</th>
-                                        <th width="10%">제목</th>
-                                        <th width="15%">저장시간</th>
-                                        <th width="10%">삭제</th>
+                                        <th width="10%" >문서번호</th>
+                                        <th width="10%">문서종류</th>
+                                        <th width="30%">문서제목</th>
+                                        <th width="15%">임시보관날짜</th>
+                                        <th width="10%"></th>
                                     </tr>
                                     </thead>
                                     <tbody>

@@ -279,13 +279,13 @@
                             <li class="nav-item">
                                 <a href="../approval/saveList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>임시저장함 </p>
+                                    <p>임시문서함 </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="../approval/approvalList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>결재자문서함</p>
+                                    <p>결재문서함</p>
                                 </a>
                             </li>
                         </ul>
