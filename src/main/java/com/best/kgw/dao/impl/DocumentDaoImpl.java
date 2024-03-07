@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class DocumentDaoImpl implements DocumentDao {
@@ -39,9 +38,9 @@ public class DocumentDaoImpl implements DocumentDao {
 
     //    기안하기필요한 정보
      @Override
-      public List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo){
-         List<Map<String,Object>> kiwoomList =sqlSessionTemplate.selectList("k_List", approvalvo);
-        return kiwoomList;
+      public List<ApprovalVO> DocumentInfo(ApprovalVO approvalvo){
+         List<ApprovalVO> faTeam =sqlSessionTemplate.selectList("faTeam", approvalvo);
+        return faTeam;
     }
     
 //    영입 문서 작성
@@ -132,6 +131,14 @@ public int saveDocumentDelete(int document_no) throws Exception {
     return documentDelete;
 }
 
+
+
+
+    //결재문서 부분 업데이트 처리 로직
+    @Override
+    public void updateApprovalStatus(ApprovalVO approvalVO) {
+        sqlSessionTemplate.update("updateApprovalStatus", approvalVO);
+    }
 
 
 

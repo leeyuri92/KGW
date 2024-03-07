@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.DocumentMapper">
+
+ <mapper namespace="com.example.mapper.DocumentMapper">
 
     <select id="selectDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
         SELECT *
@@ -19,7 +20,7 @@
                     </choose>
                 </if>
             </where>
-            order by document.document_no asc
+            order by document.document_no desc
         </select>
 
 
@@ -38,22 +39,28 @@
         <where>
             <if test="document_no !=null"> AND d.document_no = #{document_no}</if>
         </where>
+        order by a.document_no desc
     </select>
 
 
 
 
 <!--영입 계약필요한 데이터 -->
-    <select id="faTeam">
-        select * from fa where fa_team !='키움';
+    <select id="faTeam" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
+        SELECT fa_no,
+               fa_team,
+               fa_name ,
+               fa_state,
+               fa_agent
+                FROM fa
     </select>
 
 
 
-    <select id="k_List" parameterType="com.vo.ApprovalVO" resultType="map">
-        SELECT k_no, k_name
-        FROM kiwoom
-    </select>
+<!--    <select id="k_List" parameterType="com.vo.ApprovalVO" resultType="map">-->
+<!--        SELECT k_no, k_name-->
+<!--        FROM kiwoom-->
+<!--    </select>-->
 
 
 
@@ -160,31 +167,31 @@
 
 
 <!--    kjh test update qury      action 는임의 추가하는 값이다  like gubun  true 는 승인 false 는 반려로 정함-->
-    <update id="updateDocumentStatus" parameterType="com.vo.ApprovalVO">
+    <update id="updateApprovalStatus" parameterType="com.vo.ApprovalVO">
         UPDATE approval
         <set>
             <!-- 현재 상태가 "중간결재대기"이고, 동작이 "동의"일 때 -->
-            <if test="APPROVAL_CATEGORY == '중간결재대기' and action == 'true'">
-                SET APPROVAL_CATEGORY = '최종결재대기',
+            <if test="approval_category == '중간결재대기' and action == 'true'">
+                SET approval_category = '최종결재대기',
                 middle_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
                 middlesign_name = #{middlesign_name}
             </if>
             <!-- 현재 상태가 "중간결재대기"이고, 동작이 "반려"일 때 -->
-            <if test="APPROVAL_CATEGORY == '중간결재대기' and action == 'false'">
-                SET APPROVAL_CATEGORY = '중간반려',
-                rejectionReason = #{rejectionReason},
+            <if test="approval_category == '중간결재대기' and action == 'false'">
+                SET approval_category = '중간반려',
+                rejection_content = #{rejection_content},
                 middle_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
             </if>
             <!-- 현재 상태가 "최종결재대기"이고, 동작이 "동의"일 때 -->
-            <if test="APPROVAL_CATEGORY == '최종결재대기' and action == 'true'">
-                SET APPROVAL_CATEGORY = '최종결재완성',
+            <if test="approval_category == '최종결재대기' and action == 'true'">
+                SET approval_category = '최종결재완성',
                 final_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
                 finalsign_name = #{finalsign_name}
             </if>
             <!-- 현재 상태가 "최종결재대기"이고, 동작이 "반려"일 때 -->
-            <if test="APPROVAL_CATEGORY == '최종결재대기' and action == 'false'">
-                SET APPROVAL_CATEGORY = '최종반려',
-                rejectionReason = #{rejectionReason},
+            <if test="approval_category == '최종결재대기' and action == 'false'">
+                SET approval_category = '최종반려',
+                rejection_content = #{rejection_content},
                 final_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
             </if>
         </set>

@@ -97,6 +97,7 @@ public class DocumentController {
     public String SaveDetail(Model model, ApprovalVO approvalVO) throws  Exception{
         approvalVO.setGubun("true");
         List<ApprovalVO> saveDetail = documentService.DocumentList(approvalVO);
+        logger.info("DetailSaveINFO");
         model.addAttribute("saveDetail", saveDetail);
         return "forward:approvalSaveListDetail.jsp";
     }
@@ -108,14 +109,12 @@ public class DocumentController {
     //  기안문서 할떄   값을 select 하기
     @GetMapping("/docu")
     public String DocumentInfo(Model model, ApprovalVO approvalvo) throws  Exception {
-        List<Map<String,Object>> kiwoomList = documentService.DocumentInfo(approvalvo);
-        model.addAttribute("kiwoomList", kiwoomList);
+        List<ApprovalVO> faList = documentService.DocumentInfo(approvalvo);
+        logger.info("controller!!!!!!!!!1");
+        model.addAttribute("faList", faList);
         return "forward:approvalDocu.jsp";
 
     }
-
-
-
 
 
     //결재 파트 업데이트 처리
@@ -139,7 +138,7 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
     }
 
 }
-//delete부분 
+//delete부분 임시저장
     @DeleteMapping("/saveList/{document_no}")
     //게시글 삭제
     public String saveDelete(@PathVariable("document_no") Integer document_no) throws Exception {
@@ -152,23 +151,24 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
         }
     }
 
+    @PostMapping("/updateApproval")
+    public String updateApproval(ApprovalVO approvalVO, String fruitCondition) {
+        if ("중간결재대기".equals(approvalVO.getApproval_category()) && "true".equals(approvalVO.getAction())) {
+           documentService.updateApprovalStatus(approvalVO);
+            logger.info("controller 중간결재 성공");
+        } else  if  ("중간려재대기".equals(approvalVO.getApproval_category()) && "false".equals(approvalVO.getAction())) {
+            documentService.updateApprovalStatus(approvalVO);
+            logger.info("controller 중간결재반려");
+        } if ("최종결대기;".equals(approvalVO.getApproval_category()) && "true".equals(approvalVO.getAction())) {
+            documentService.updateApprovalStatus(approvalVO);
+            logger.info("controller 최종결재 성공");
+        } if ("최종결재대기".equals(approvalVO.getApproval_category()) && "false".equals(approvalVO.getAction())) {
+            documentService.updateApprovalStatus(approvalVO);
+            logger.info("최종결재 반려");
+        }
 
-
-/* 결재 업데이트 처리 
-* @PostMapping("/updateApproval")
-public String updateApproval(ApprovalVO approvalVO) {
-    // 根据gubun的值决定调用哪个服务方法
-    if ("true".equals(approvalVO.getGubun())) {
-        // 调用执行“同意”操作的服务方法
-        approvalService.approve(approvalVO);
-    } else if ("false".equals(approvalVO.getGubun())) {
-        // 调用执行“驳回”操作的服务方法
-        approvalService.reject(approvalVO);
+        return "redirect:approvalList";
     }
-    return "redirect:/somePage"; // 重定向到某个页面
-}
-
-* */
 
 }
 

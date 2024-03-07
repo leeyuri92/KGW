@@ -16,28 +16,32 @@
 
     <script>
         const saveUpdate=()=>{
+            // not null 공통값
             let document_no=document.getElementById('document_no').value;
             let document_category=document.getElementById('document_category').value;
             let document_title=document.getElementById('document_title').value;
-            let salary = document.getElementById('salary').value;
-            let contract_term = document.getElementById('contract_term').value;
-            let start_date=document.getElementById('start_date').value;
-            let end_date=document.getElementById('end_date').value;
-            let k_name=document.getElementById('k_name').value;
             let state=document.getElementById('state').value;
+            let approval_name = document.getElementById('vacation_name').value;
+            let name = document.getElementById('name').value;
 
-
-            $('#document_no').val(document_no);
-            $('#document_category').val(document_category);
-            $('#document_title').val(document_title);
-            $('#salary').val(salary);
-            $('#contract_term').val(contract_term);
-            $('#start_date').val(start_date);
-            $('#end_date').val(end_date);
-            $('#k_name').val(k_name);
-            $('#state').val(state);
-
+            // 휴가 제외 임지분서 제출 불가  추가 로직처리
+            if (document_category === '휴가') {
+                start_date = document.getElementById('start_date').value;
+                end_date = document.getElementById('end_date').value;
+                dayoff_content=document.getElementById('dayoff_content').value;
+            } else if (document_category === '계약') {
+                extension_name = document.getElementById('extension_name').value;
+                salary = document.getElementById('salary').value;
+               contract_term = document.getElementById('contract_term').value;
+            }
+            else if (document_category === '영입') {
+                scout_name_name = document.getElementById('scout_name_name').value;
+            }
+            else if (document_category === '방출') {
+                release_name = document.getElementById('release_name').value;
+            }
             $('#saveDocumentPost').submit();
+
         }
     </script>
 
@@ -115,18 +119,22 @@
                                                 <span class="title">문서제목:</span>
                                                 <input type="text" class="value-input" id="document_title" name="document_title" value="<%=approvalVO.getDocument_title()%>"  >
                                             </div>
-                                            <div class="item" >
+                                            <div class="item" hidden="hidden" >
                                                 <span class="title">문서타이틀:</span>
                                                 <input type="text" class="value-input" id="document_category"  name="document_category" value="<%=approvalVO.getDocument_category()%>" >
                                             </div>
-                                            <div class="item">
-                                                <span class="title">담당자:</span>
-                                                <input type="text" class="value-input" id="approval_name" name="approval_name" value="<%=approvalVO.getApproval_name()%>">
-                                            </div>
-                                            <div class="item">
-                                                <span class="title">신청자:</span>
-                                                <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%> " >
-                                            </div>
+                                        <div class="item">
+                                            <span class="title">신청자:</span>
+                                            <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%> " >
+                                        </div>
+                                        <div class="item"  >
+                                            <span class="title">담당자:</span>
+                                            <input type="text" class="value-input" id="vacation_name" name="approval_name" value="<%=approvalVO.getApproval_name()%>">
+                                        </div>
+                                        <%
+                                            if ("휴가".equals(approvalVO.getDocument_category())) {
+                                        %>
+
                                             <div class="item">
                                                 <span class="title">휴가 사유:</span>
                                                 <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="<%=approvalVO.getDayoff_content()%>" >
@@ -139,9 +147,13 @@
                                                 <span class="title">휴가만료일：</span>
                                                 <input type="date" id="end_date" name="end_date"  value="<%=approvalVO.getEnd_date()%>">
                                             </div>
+
+                                        <%
+                                        }else if("계약".equals(approvalVO.getDocument_category())){
+                                        %>
                                             <div class="item">
-                                                <span class="title">선수</span>
-                                                <input type="text" id="k_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                                <span class="title">계약 희망 선수</span>
+                                                <input type="text" id="extension_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
                                             </div>
 
                                             <div class="item">
@@ -152,7 +164,22 @@
                                                 <span class="title">계약년수 </span>
                                                 <input type="text" id="contract_term"  name="contract_term"  value="<%=approvalVO.getContract_term()%>">
                                             </div>
-                                            <%}%>
+
+
+                                            <%}else if ("영입".equals(approvalVO.getDocument_category())){  %>
+
+                                        <div class="item">
+                                            <span class="title">영입 희망 선수</span>
+                                            <input type="text" id="scout_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                        </div>
+
+
+                                        <%}else if ("방출".equals(approvalVO.getDocument_category())){  %>
+                                        <div class="item" >
+                                            <span class="title">방출 의망 선수</span>
+                                            <input type="text" id="release_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                        </div>
+                                        <%}}%>
                                         </div>
                                         <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
                                             <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="saveUpdate()" >제출</button>

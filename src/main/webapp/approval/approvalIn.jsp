@@ -153,99 +153,99 @@
 <%
   if (approvalVO.getApproval_category().equals("중간결재대기")){
 %>
-<div class="modal" id="middleSignSelect">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content rounded-4 shadow">
-      <div class="modal-header p-5 pb-0 border-bottom-0" style="margin-bottom: -20px;">
-        <h1 class="fw-bold  fs-2" >전자서명변경</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-5 pt-0">
-        <form id="middleSignInsert" method="post" action="/approvalSignSave" enctype="multipart/form-data">
-          <canvas id="middleSign-pad" width=400 height=200 style="margin-bottom: 20px; border: 2px solid black"></canvas>
-          <input type="hidden" id="emp_no1" name="emp_no" value="">
-          <div>
-            <button type="button" id="middleSignClear" class="btn btn-danger">초기화</button>
-            <button type="button" id="middleSignSave" class="btn btn-danger">저장</button>
-            <button type="button" class="btn btn-danger button save" data-action="middleSignSave-png">내 pc에 저장</button>
-          </div>
-          <script>
-              let canvas = document.getElementById('middleSign-pad');
-              let signaturePad = new SignaturePad(canvas);
+<%--<div class="modal" id="middleSignSelect">--%>
+<%--  <div class="modal-dialog modal-dialog-centered" role="document">--%>
+<%--    <div class="modal-content rounded-4 shadow">--%>
+<%--      <div class="modal-header p-5 pb-0 border-bottom-0" style="margin-bottom: -20px;">--%>
+<%--        <h1 class="fw-bold  fs-2" >전자서명변경</h1>--%>
+<%--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
+<%--      </div>--%>
+<%--      <div class="modal-body p-5 pt-0">--%>
+<%--        <form id="middleSignInsert" method="post" action="/approvalSignSave" enctype="multipart/form-data">--%>
+<%--          <canvas id="middleSign-pad" width=400 height=200 style="margin-bottom: 20px; border: 2px solid black"></canvas>--%>
+<%--          <input type="hidden" id="emp_no1" name="emp_no" value="">--%>
+<%--          <div>--%>
+<%--            <button type="button" id="middleSignClear" class="btn btn-danger">초기화</button>--%>
+<%--            <button type="button" id="middleSignSave" class="btn btn-danger">저장</button>--%>
+<%--            <button type="button" class="btn btn-danger button save" data-action="middleSignSave-png">내 pc에 저장</button>--%>
+<%--          </div>--%>
+<%--          <script>--%>
+<%--              let canvas = document.getElementById('middleSign-pad');--%>
+<%--              let signaturePad = new SignaturePad(canvas);--%>
 
 
-              //button clear
-              document.getElementById('middleSignClear').addEventListener('click', function () {
-                  signaturePad.clear();
-              });
+<%--              //button clear--%>
+<%--              document.getElementById('middleSignClear').addEventListener('click', function () {--%>
+<%--                  signaturePad.clear();--%>
+<%--              });--%>
 
-              // button action save-png  Event부여
-              document.querySelector('[data-action="middleSignSave-png"]').addEventListener('click', function () {
+<%--              // button action save-png  Event부여--%>
+<%--              document.querySelector('[data-action="middleSignSave-png"]').addEventListener('click', function () {--%>
 
-                  let dataURL = signaturePad.toDataURL();
+<%--                  let dataURL = signaturePad.toDataURL();--%>
 
-                  let downloadLink = document.createElement('a');
-                  downloadLink.href = dataURL;
-                  downloadLink.download = 'middleSignImage.png';
-                  //다운로드 처리
-                  document.body.appendChild(downloadLink);
-                  downloadLink.click();
-                  document.body.removeChild(downloadLink);
-              });
+<%--                  let downloadLink = document.createElement('a');--%>
+<%--                  downloadLink.href = dataURL;--%>
+<%--                  downloadLink.download = 'middleSignImage.png';--%>
+<%--                  //다운로드 처리--%>
+<%--                  document.body.appendChild(downloadLink);--%>
+<%--                  downloadLink.click();--%>
+<%--                  document.body.removeChild(downloadLink);--%>
+<%--              });--%>
 
-              // button save
-              document.getElementById('middleSignSave').addEventListener('click', function () {
-                  let canvas = document.getElementById('middleSign-pad');
-                  let dataURL = canvas.toDataURL('image/png'); // 캔버스 내용을 데이터 URL로 가져옴
-                  // 데이터 URL을 Blob 객체로 변환
-                  let blob = dataURItoBlob(dataURL);
+<%--              // button save--%>
+<%--              document.getElementById('middleSignSave').addEventListener('click', function () {--%>
+<%--                  let canvas = document.getElementById('middleSign-pad');--%>
+<%--                  let dataURL = canvas.toDataURL('image/png'); // 캔버스 내용을 데이터 URL로 가져옴--%>
+<%--                  // 데이터 URL을 Blob 객체로 변환--%>
+<%--                  let blob = dataURItoBlob(dataURL);--%>
 
-                  // FormData 객체 생성
-                  let formData = new FormData();
-                  formData.append('image', blob, '<%=approvalVO.getApproval_no()%>_middleSign.png');
+<%--                  // FormData 객체 생성--%>
+<%--                  let formData = new FormData();--%>
+<%--                  formData.append('image', blob, '<%=approvalVO.getApproval_no()%>_middleSign.png');--%>
 
-                  $.ajax({
-                      type: 'POST',
-                      url: '/approvalSignSave',
-                      data: formData,
-                      processData: false, // FormData를 처리하지 않도록 설정
-                      contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 컨텐츠 타입을 설정하지 않도록 함
-                      success: function (response) {
-                          console.log('파일 전송 성공');
-                          $('.modal').modal('hide');
-                          document.querySelector("#middleSignImage").src = "/fileUpload/approvalSign/<%=approvalVO.getApproval_no()%>_middleSign.png";
-                          signaturePad.clear();
-                      },
-                      error: function (xhr, status, error) {
-                          console.error('파일 전송 실패:', error);
-                          // 실패한 경우 처리할 내용 추가
-                      }
-                  });
+<%--                  $.ajax({--%>
+<%--                      type: 'POST',--%>
+<%--                      url: '/approvalSignSave',--%>
+<%--                      data: formData,--%>
+<%--                      processData: false, // FormData를 처리하지 않도록 설정--%>
+<%--                      contentType: false, // 컨텐츠 타입을 false로 설정하여 jQuery가 컨텐츠 타입을 설정하지 않도록 함--%>
+<%--                      success: function (response) {--%>
+<%--                          console.log('파일 전송 성공');--%>
+<%--                          $('.modal').modal('hide');--%>
+<%--                          document.querySelector("#middleSignImage").src = "/fileUpload/approvalSign/<%=approvalVO.getApproval_no()%>_middleSign.png";--%>
+<%--                          signaturePad.clear();--%>
+<%--                      },--%>
+<%--                      error: function (xhr, status, error) {--%>
+<%--                          console.error('파일 전송 실패:', error);--%>
+<%--                          // 실패한 경우 처리할 내용 추가--%>
+<%--                      }--%>
+<%--                  });--%>
 
-                  // 데이터 URL을 Blob 객체로 변환하는 함수
-                  function dataURItoBlob(dataURI) {
-                      // Base64 데이터 부분 분리
-                      let byteString = atob(dataURI.split(',')[1]);
-                      let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-                      // Blob 객체 생성
-                      let arrayBuffer = new ArrayBuffer(byteString.length);
-                      let intArray = new Uint8Array(arrayBuffer);
-                      for (let i = 0; i < byteString.length; i++) {
-                          intArray[i] = byteString.charCodeAt(i);
-                      }
-                      return new Blob([arrayBuffer], {type: mimeString});
-                  }
-              })
-          </script>
-        </form>
+<%--                  // 데이터 URL을 Blob 객체로 변환하는 함수--%>
+<%--                  function dataURItoBlob(dataURI) {--%>
+<%--                      // Base64 데이터 부분 분리--%>
+<%--                      let byteString = atob(dataURI.split(',')[1]);--%>
+<%--                      let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];--%>
+<%--                      // Blob 객체 생성--%>
+<%--                      let arrayBuffer = new ArrayBuffer(byteString.length);--%>
+<%--                      let intArray = new Uint8Array(arrayBuffer);--%>
+<%--                      for (let i = 0; i < byteString.length; i++) {--%>
+<%--                          intArray[i] = byteString.charCodeAt(i);--%>
+<%--                      }--%>
+<%--                      return new Blob([arrayBuffer], {type: mimeString});--%>
+<%--                  }--%>
+<%--              })--%>
+<%--          </script>--%>
+<%--        </form>--%>
 
-      </div>
-    </div>
-  </div>
-</div>
-<%
-  }else{
-%>
+<%--      </div>--%>
+<%--    </div>--%>
+<%--  </div>--%>
+<%--</div>--%>
+<%--<%--%>
+<%--  }else{--%>
+<%--%>--%>
 <div class="modal" id="finalSignSelect">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content rounded-4 shadow">
