@@ -28,13 +28,22 @@
 
       <script type="text/javascript">
 
-    <%--	const searchEnter = (event)=> {--%>
-    <%--		console.log('searchEnter')--%>
-    <%--		console.log(window.event.keyCode); // 13--%>
-    <%--		if(window.event.keyCode==13){--%>
-    <%--			boardSearch(); // 재사용성 ---%>
-    <%--		}--%>
-    <%--	}--%>
+          // function searchEnter(event){
+          //     if(event.keyCode === 13){
+          //         boardSearch();
+          //     }
+          // }
+          //
+          // function boardSearch(){
+          //     const gubun = document.getElementById('gubun').value;
+          //     const keyword = document.getElementById('keyword').value;
+          //     console.log(gubun+keyword);
+          //     if(gubun !== 'none' && keyword.trim() !== ''){
+          //         location.href="/approval/approvalList?gubun="+gubun+"&keyword="+keyword;
+          //     } else {
+          //         alert('원한시는 검색어를 입력하세요');
+          //     }
+          // }
 
     const ApprovalDetail = (document_no, document_category) => {
         let url = "";
@@ -98,13 +107,20 @@
 
                             <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
                             <div class="row">
-                                <div class="col-3">
-                                    <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
-                                           aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
-                                </div>
-                                <div class="col-1 ">
-                                    <button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>
-                                </div>
+<%--                                <div class="col-2">--%>
+<%--                                    <select id="gubun" class="form-select" aria-label="분류선택">--%>
+<%--                                        <option value="none">분류선택</option>--%>
+<%--                                        <option value="document_category">종류</option>--%>
+<%--                                        <option value="document_title">제목</option>--%>
+<%--                                    </select>--%>
+<%--                                </div>--%>
+<%--                                <div class="col-3">--%>
+<%--                                    <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"--%>
+<%--                                           aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>--%>
+<%--                                </div>--%>
+<%--                                <div class="col-1 ">--%>
+<%--                                    <button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>--%>
+<%--                                </div>--%>
                             </div>
                             <!-- 검색기 끝 -->
                             <!-- 회원목록 시작 -->
@@ -128,12 +144,12 @@
                                     %>
                                     <tr>
                                         <td><%= approvalVO.getDocument_no()%></td>
+                                        <td><%= approvalVO.getDocument_category()%></td>
                                         <td>
                                             <a href="javascript:ApprovalDetail('<%= approvalVO.getDocument_no() %>', '<%= approvalVO.getDocument_category() %>')">
-                                                <%= approvalVO.getDocument_category()%>
+                                            <%= approvalVO.getDocument_title()%>
                                             </a>
                                         </td>
-                                        <td><%= approvalVO.getDocument_title()%></td>
                                         <td><%= approvalVO.getName()%></td>
                                         <td><%= approvalVO.getSubmission_date()%></td>
                                         <td><%= approvalVO.getApproval_category()%></td>

@@ -34,7 +34,7 @@ public class DocumentController {
     //    문서함
     @GetMapping("/documentList")
     public String DocumentList(Model model, ApprovalVO approvalVO) {
-        approvalVO.setGubun("false");
+        approvalVO.setStorage("false");
         List<ApprovalVO> list = documentService.DocumentList(approvalVO);
         model.addAttribute("list", list);
         return "forward:documentList.jsp";
@@ -91,8 +91,13 @@ public class DocumentController {
     }
 //임시보관함 조회
     @GetMapping("/saveList")
+<<<<<<< HEAD
     public String SaveList(Model model, ApprovalVO approvalVO, @RequestParam(required = false) Integer emp_no) throws  Exception{
         approvalVO.setGubun("true");
+=======
+    public String SaveList(Model model, ApprovalVO approvalVO) throws  Exception{
+        approvalVO.setStorage("true");
+>>>>>>> kjh
         List<ApprovalVO> list3 = documentService.DocumentList(approvalVO);
         logger.info("saveLIst"+list3);
         model.addAttribute("list3", list3);
@@ -102,16 +107,16 @@ public class DocumentController {
 //임시저장함 상세
     @GetMapping("/saveDetail")
     public String SaveDetail(Model model, ApprovalVO approvalVO) throws  Exception{
-        approvalVO.setGubun("true");
+        approvalVO.setStorage("true");
         List<ApprovalVO> saveDetail = documentService.DocumentList(approvalVO);
         logger.info("DetailSaveINFO");
         model.addAttribute("saveDetail", saveDetail);
         return "forward:approvalSaveListDetail.jsp";
     }
 
-//    추후 insert 임시저장  기능 있음
 
 
+//   select 구분
 
     //  기안문서 할떄   값을 select 하기
     @GetMapping("/docu")
