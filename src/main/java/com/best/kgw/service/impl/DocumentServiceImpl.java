@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -36,9 +35,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     //기안하기필요한 문서 정보
     @Override
-    public List<Map<String, Object>> DocumentInfo(ApprovalVO approvalvo) {
-        List<Map<String, Object>> kiwoomList = documentDao.DocumentInfo(approvalvo);
-        return kiwoomList;
+    public List<ApprovalVO> DocumentInfo(ApprovalVO approvalvo) {
+        List<ApprovalVO> faTeam = documentDao.DocumentInfo(approvalvo);
+        return faTeam;
     }
 
     @Transactional
@@ -80,6 +79,11 @@ public int saveModify(ApprovalVO approvalVO) throws Exception {
 
 
 //    결재 업대이트 처리
+@Override
+public void updateApprovalStatus(ApprovalVO approvalVO) {
+    documentDao.updateApprovalStatus(approvalVO);
+}
+
 
 }
 

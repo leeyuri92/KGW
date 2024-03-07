@@ -4,7 +4,9 @@
 <%@ page import="com.vo.DocumentVO,com.vo.ApprovalVO" %>
 <%@ page import="com.google.gson.Gson" %>
 <%
-    List<Map<String,Object>> kiwoomList = (List) request.getAttribute("kiwoomList");
+//    List<Map<String,Object>> kiwoomList = (List) request.getAttribute("kiwoomList")
+    List<ApprovalVO> faList = (List) request.getAttribute("faList");
+
 %>
 
 <html lang="ko">
@@ -36,6 +38,7 @@
 
 
         function docSubmitScout() {
+            let  k_name= document.getElementById('playersList1.name').value
             $('#r_documentScout').submit();
         }
         function docSaveSubmitScout() {//영입 문서 임시저장
@@ -260,11 +263,11 @@
                                     <div class="item">
                                         <span class="title">계약연장  선수:</span>
                                         <select id="playersList3" name="k_name">
-                                                 <% for (int i = 0; i < kiwoomList.size(); i++) {
-                                                   Map<String,Object> KiwoomMap = kiwoomList.get(i);
-                                                   if(KiwoomMap != null) {
-                                                   %>
-                                                   <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                            <% for (int i = 0; i < faList.size(); i++) {
+                                                ApprovalVO faVO = faList.get(i);
+                                                if(faVO != null && faVO.getFa_agent() == null){
+                                            %>
+                                                   <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
                                                    <%
                                                        }
                                                      }
@@ -320,11 +323,11 @@
                                         <div class="item">
                                             <span class="title">영입 선수:</span>
                                             <select id="playersList2" name="k_name">
-                                                <% for (int i = 0; i < kiwoomList.size(); i++) {
-                                                    Map<String,Object> KiwoomMap = kiwoomList.get(i);
-                                                    if(KiwoomMap != null) {
+                                                <% for (int i = 0; i < faList.size(); i++) {
+                                                    ApprovalVO faVO = faList.get(i);
+                                                    if(faVO != null && faVO.getFa_agent() == null){
                                                 %>
-                                                <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                                <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
                                                 <%
                                                         }
                                                     }
@@ -374,11 +377,11 @@
                                         <div class="item">
                                             <span class="title">영입 선수:</span>
                                             <select id="playersList1" name="k_name">
-                                                <% for (int i = 0; i < kiwoomList.size(); i++) {
-                                                    Map<String,Object> KiwoomMap = kiwoomList.get(i);
-                                                    if(KiwoomMap != null) {
+                                                <% for (int i = 0; i < faList.size(); i++) {
+                                                    ApprovalVO faVO = faList.get(i);
+                                                    if(faVO != null && faVO.getFa_agent() !=null){
                                                 %>
-                                                <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                                <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
                                                 <%
                                                         }
                                                     }

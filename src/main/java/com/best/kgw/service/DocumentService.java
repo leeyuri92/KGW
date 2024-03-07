@@ -1,10 +1,8 @@
 package com.best.kgw.service;
 
 import com.vo.ApprovalVO;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 public interface DocumentService {
     List<ApprovalVO> DocumentList(ApprovalVO approvalVO);
@@ -14,7 +12,7 @@ public interface DocumentService {
     List<ApprovalVO > ApprovalList(ApprovalVO approvalVO);
 
     //기안하기 문서 정보
-    List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo);
+    List<ApprovalVO> DocumentInfo(ApprovalVO approvalvo);
 
     public void documentInsert(ApprovalVO approvalVO) throws Exception;
 
@@ -26,4 +24,9 @@ public interface DocumentService {
     int saveModify(ApprovalVO approvalVO) throws Exception;
 
     int saveDelete(int document_no) throws Exception;
+
+    //    결재 업대이트 처리
+    void updateApprovalStatus(ApprovalVO approvalVO);
+
+    //    결재 업대이트 처리
 }
