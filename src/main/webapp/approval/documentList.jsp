@@ -4,6 +4,7 @@
 <%@  page import="com.vo.ApprovalVO" %>
 <%
     List<ApprovalVO>list=(List)request.getAttribute("list");
+//    out.print(list);
     int size=0;
     if(list!=null){
         size=list.size();
@@ -46,7 +47,7 @@
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">문서함</div>
+                    <div class="text-dark fs-6">기안문서함</div>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-2">
@@ -54,7 +55,7 @@
                     <div class="position-absolute top-0 start-0" ></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">문서함</div>
+                    <div class="fw-bold fs-5">기안문서함</div>
                     <div class="text-muted ms-3">결재문서 정보 조회할수 있는 페이지입니다.</div>
                 </div>
             </div>
@@ -69,7 +70,7 @@
                     <div class="box">
                         <div class="container">
                             <div class="box-header">
-                                <h4 style="font-weight: bold; margin-left: 1.5rem" >기안자 문서함</h4>
+                                <h4 style="font-weight: bold; margin-left: 1.5rem" >기안문서함</h4>
                                 <hr />
                             </div>
 
@@ -94,9 +95,9 @@
                                     <table class="table table-hover text-center ">
                                         <thead>
                                             <tr>
-                                                <th width="10%" >문서ID</th>
-                                                <th width="10%">종류</th>
-                                                <th width="10%">제목</th>
+                                                <th width="10%" >문서번호</th>
+                                                <th width="10%">문서종류</th>
+                                                <th width="30%">문서제목</th>
                                                 <th width="15%">결재상태</th>
                                             </tr>
                                         </thead>
