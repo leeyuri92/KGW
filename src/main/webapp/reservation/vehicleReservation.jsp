@@ -31,429 +31,254 @@
 <div class="wrapper">
     <%@include file="/include/KGW_bar.jsp"%>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let calendarEl = document.getElementById('calendar1');
-        let calendar;
-        if (calendarEl) {
-            calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'resourceTimelineDay',
-                resourceAreaWidth: '92px',
-                expandRows: false,
-                aspectRatio: 1,
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,listWeek',
-                },
-                navLinks: true,
-                editable: true,
-                selectable: true,
-                nowIndicator: true,
-                resourceAreaHeaderContent: '',
-                height: 'auto',
-                locale: 'ko',
-
-                // 타임라인 드래그 이벤트
-                select: function(arg) {
-                    if (detailStart && detailEnd == !null) {
-                        let modal = document.getElementById('detailModal');
-                        modal.style.display = 'block';
-
-                        let startInput = document.getElementById('detailStart');
-                        let endInput = document.getElementById('detailEnd');
-                        let resourceIdInput = document.getElementById('detailResourceId');
-                        let detailAssetNoInput = document.getElementById('detailAssetNo');
-
-                        let startTime = moment(arg.start, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
-                        let endTime = moment(arg.end, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
-
-                        startInput.value = startTime;
-                        endInput.value = endTime;
-                        resourceIdInput.value = arg.resource.id;
-                        detailAssetNoInput.value = arg.id;
-                        console.log(arg.id);
-                    } else {
-                        let modal = document.getElementById('insertModal');
-                        modal.style.display = 'block';
-
-                        let startInput = document.getElementById('insertStart');
-                        let endInput = document.getElementById('insertEnd');
-                        let resourceIdInput = document.getElementById('insertResourceId');
-
-                        let startTime = moment(arg.start, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
-                        let endTime = moment(arg.end, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
-
-                        startInput.value = startTime;
-                        endInput.value = endTime;
-                        resourceIdInput.value = arg.resource.id;
-                    }
-                },
-
-
-                eventClick: function(info) {
-                    if(detailStart && detailEnd != null) {
-                        let modal = document.getElementById('detailModal');
-                        modal.style.display = 'block';
-
-                        let detailTitleInput = document.getElementById('detailTitle');
-                        let detailStartInput = document.getElementById('detailStart');
-                        let detailEndInput = document.getElementById('detailEnd');
-                        let detailResourceIdInput = document.getElementById('detailResourceId');
-                        let detailAssetNoInput = document.getElementById('detailAssetNo');
-                        let detailReservationNoInput = document.getElementById('detailReservationNo');
-
-                        // FullCalendar의 함수를 사용하여 정보 가져오기
-                        let event = info.event;
-                        detailTitleInput.value = event.title;
-                        detailAssetNoInput.value = event.id;
-
-                        detailReservationNoInput.value = event.extendedProps.reservationNo;
-
-
-                        // 이벤트의 리소스 가져오기
-                        let resource = event.getResources()[0]; // 이벤트가 하나의 리소스에만 할당되었다고 가정합니다.
-
-                        if (resource) {
-                            detailResourceIdInput.value = resource.id;
-                        } else {
-                            console.error('Resource not found.');
-                            detailResourceIdInput.value = '';
-                        }
-                        // moment.js를 사용하여 시간 형식 맞추기
-                        detailStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
-                        detailEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
-                    }else{
-                        let modal = document.getElementById('insertModal');
-                        modal.style.display = 'block';
-
-                        let insertTitleInput = document.getElementById('insertTitle');
-                        let insertStartInput = document.getElementById('insertStart');
-                        let insertEndInput = document.getElementById('insertEnd');
-                        let insertResourceIdInput = document.getElementById('insertResourceId');
-                        let insertAssetNoInput = document.getElementById('insertAssetNo');
-                        let insertReservationNoInput = document.getElementById('insertReservationNo');
-
-                        // FullCalendar의 함수를 사용하여 정보 가져오기
-                        let event = info.event;
-                        insertTitleInput.value = event.title;
-                        insertAssetNoInput.value = event.id;
-
-                        insertReservationNoInput.value = event.extendedProps.reservationNo;
-
-
-                        // 이벤트의 리소스 가져오기
-                        let resource = event.getResources()[0]; // 이벤트가 하나의 리소스에만 할당되었다고 가정합니다.
-
-                        if (resource) {
-                            insertResourceIdInput.value = resource.id;
-                        } else {
-                            console.error('Resource not found.');
-                            insertResourceIdInput.value = '';
-                        }
-                        // moment.js를 사용하여 시간 형식 맞추기
-                        insertStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
-                        insertEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
-                    }
-                },
-
-                resources: [
-                    <%  List<CalendarVO> vehicleList = (List<CalendarVO>) request.getAttribute("vehicleList");
-                        if (vehicleList != null) {
-                            for (CalendarVO vo : vehicleList) {
-                                if (vo != null) {
-                    %>
-                    {
-                        id: '<%= vo.getAsset_id()%>',
-                        title : '<%= vo.getAsset_name() %>',
-                        eventColor: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let calendarEl = document.getElementById('calendar1');
+            let calendar;
+            if (calendarEl) {
+                calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'resourceTimelineDay',
+                    resourceAreaWidth: '92px',
+                    expandRows: false,
+                    aspectRatio: 1,
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,listWeek',
                     },
-                    <% }}} %>
-                ],
-                events: [
-                    <%  List<CalendarVO> vehicleReservationList = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
-                        if (vehicleReservationList != null) {
-                            for (CalendarVO vo1 : vehicleReservationList) {
-                                %>
-                    {
-                        id: '<%= vo1.getAsset_no() %>', // 이벤트의 고유 ID
-                        extendedProps: { reservationNo: '<%= vo1.getReservation_no() %>' }, // 예약 정보를 사용자 정의 속성 extendedProps에 포함 (events 배열에서 각 이벤트 객체의 extendedProps를 설정하여 확장 속성을 추가)
-                        resourceId: '<%= vo1.getAsset_id() %>',
-                        title: '<%= vo1.getReservation_title() %>',
-                        start: '<%= vo1.getReservation_start() %>',
-                        end: '<%= vo1.getReservation_end() %>',
-                        color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+                    navLinks: true,
+                    editable: true,
+                    selectable: true,
+                    nowIndicator: true,
+                    resourceAreaHeaderContent: '',
+                    height: 'auto',
+                    locale: 'ko',
+
+                    // 타임라인 드래그 이벤트
+                    select: function(arg) {
+                        if (detailStart && detailEnd == !null) {
+                            let modal = document.getElementById('detailModal');
+                            modal.style.display = 'block';
+
+                            let startInput = document.getElementById('detailStart');
+                            let endInput = document.getElementById('detailEnd');
+                            let resourceIdInput = document.getElementById('detailResourceId');
+                            let detailAssetNoInput = document.getElementById('detailAssetNo');
+
+                            let startTime = moment(arg.start, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
+                            let endTime = moment(arg.end, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
+
+                            startInput.value = startTime;
+                            endInput.value = endTime;
+                            resourceIdInput.value = arg.resource.id;
+                            detailAssetNoInput.value = arg.id;
+                            console.log(arg.id);
+                        } else {
+                            let modal = document.getElementById('insertModal');
+                            modal.style.display = 'block';
+
+                            let startInput = document.getElementById('insertStart');
+                            let endInput = document.getElementById('insertEnd');
+                            let resourceIdInput = document.getElementById('insertResourceId');
+
+                            let startTime = moment(arg.start, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
+                            let endTime = moment(arg.end, 'Asia/Seoul').format('YYYY-MM-DDTHH:mm');
+
+                            startInput.value = startTime;
+                            endInput.value = endTime;
+                            resourceIdInput.value = arg.resource.id;
+                        }
                     },
-                    <% }} %>
-                ]
 
-            });
-            calendar.render();
-        } else {
-            console.error('calendarEl = NULL');
-        }
 
-        // 예약 취소 모달 관련 스크립트
-        const modal = document.getElementById('detailModal');
-        const span = document.getElementsByClassName("close")[0];
+                    eventClick: function(info) {
+                        if(detailStart && detailEnd != null) {
+                            let modal = document.getElementById('detailModal');
+                            modal.style.display = 'block';
 
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
+                            let detailTitleInput = document.getElementById('detailTitle');
+                            let detailStartInput = document.getElementById('detailStart');
+                            let detailEndInput = document.getElementById('detailEnd');
+                            let detailResourceIdInput = document.getElementById('detailResourceId');
+                            let detailAssetNoInput = document.getElementById('detailAssetNo');
+                            let detailReservationNoInput = document.getElementById('detailReservationNo');
 
-        window.onclick = function (event) {
-            if (event.target === modal) {
+                            // FullCalendar의 함수를 사용하여 정보 가져오기
+                            let event = info.event;
+                            detailTitleInput.value = event.title;
+                            detailAssetNoInput.value = event.id;
+
+                            detailReservationNoInput.value = event.extendedProps.reservationNo;
+
+
+                            // 이벤트의 리소스 가져오기
+                            let resource = event.getResources()[0]; // 이벤트가 하나의 리소스에만 할당되었다고 가정합니다.
+
+                            if (resource) {
+                                detailResourceIdInput.value = resource.id;
+                            } else {
+                                console.error('Resource not found.');
+                                detailResourceIdInput.value = '';
+                            }
+                            // moment.js를 사용하여 시간 형식 맞추기
+                            detailStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
+                            detailEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
+                        }else{
+                            let modal = document.getElementById('insertModal');
+                            modal.style.display = 'block';
+
+                            let insertTitleInput = document.getElementById('insertTitle');
+                            let insertStartInput = document.getElementById('insertStart');
+                            let insertEndInput = document.getElementById('insertEnd');
+                            let insertResourceIdInput = document.getElementById('insertResourceId');
+                            let insertAssetNoInput = document.getElementById('insertAssetNo');
+                            let insertReservationNoInput = document.getElementById('insertReservationNo');
+
+                            // FullCalendar의 함수를 사용하여 정보 가져오기
+                            let event = info.event;
+                            insertTitleInput.value = event.title;
+                            insertAssetNoInput.value = event.id;
+
+                            insertReservationNoInput.value = event.extendedProps.reservationNo;
+
+
+                            // 이벤트의 리소스 가져오기
+                            let resource = event.getResources()[0]; // 이벤트가 하나의 리소스에만 할당되었다고 가정합니다.
+
+                            if (resource) {
+                                insertResourceIdInput.value = resource.id;
+                            } else {
+                                console.error('Resource not found.');
+                                insertResourceIdInput.value = '';
+                            }
+                            // moment.js를 사용하여 시간 형식 맞추기
+                            insertStartInput.value = moment(event.start).format('YYYY-MM-DDTHH:mm');
+                            insertEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
+                        }
+                    },
+
+                    resources: [
+                        <%  List<CalendarVO> vehicleList = (List<CalendarVO>) request.getAttribute("vehicleList");
+                            if (vehicleList != null) {
+                                for (CalendarVO vo : vehicleList) {
+                                    if (vo != null) {
+                        %>
+                        {
+                            id: '<%= vo.getAsset_id()%>',
+                            title : '<%= vo.getAsset_name() %>',
+                            eventColor: '<%= vo.getAsset_color() %>'
+                        },
+                        <% }}} %>
+                    ],
+                    events: [
+                        <%  List<CalendarVO> vehicleReservationList = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
+                            if (vehicleReservationList != null) {
+                                for (CalendarVO vo1 : vehicleReservationList) {
+                                    %>
+                        {
+                            id: '<%= vo1.getAsset_no() %>', // 이벤트의 고유 ID
+                            extendedProps: { reservationNo: '<%= vo1.getReservation_no() %>' }, // 예약 정보를 사용자 정의 속성 extendedProps에 포함 (events 배열에서 각 이벤트 객체의 extendedProps를 설정하여 확장 속성을 추가)
+                            resourceId: '<%= vo1.getAsset_id() %>',
+                            title: '<%= vo1.getReservation_title() %>',
+                            start: '<%= vo1.getReservation_start() %>',
+                            end: '<%= vo1.getReservation_end() %>',
+                            color: '<%= vo1.getAsset_color() %>'
+                        },
+                        <% }} %>
+                    ]
+
+                });
+                calendar.render();
+            } else {
+                console.error('calendarEl = NULL');
+            }
+
+            // 예약 취소 모달 관련 스크립트
+            const modal = document.getElementById('detailModal');
+            const span = document.getElementsByClassName("close")[0];
+
+            span.onclick = function () {
                 modal.style.display = "none";
             }
-        }
 
-        // 이벤트 핸들러 등록
-        let submitBtn = document.getElementById('submitEvent');
-        let searchBtn = document.getElementById('searchEvent');
-        let exitBtn = document.getElementById('exitEvent');
-        let deleteBtn = document.getElementById('deleteEvent');
-        let updateBtn = document.getElementById('updateEvent');
-        let addEventBtn = document.getElementById('addEvent');
-        let closeBtnList = document.querySelectorAll('.modal-content .close');
-
-        submitBtn.addEventListener('click', handleEventSubmit);
-        submitBtn.addEventListener('click', handleEventUpdate);
-        searchBtn.addEventListener('click', reservationSearch);
-        exitBtn.addEventListener('click', handleEventSubmit);
-        exitBtn.addEventListener('click', handleEventUpdate);
-        deleteBtn.addEventListener('click', handleEventDelete);
-        updateBtn.addEventListener('click', handleEventUpdate);
-        addEventBtn.addEventListener('click', function() {
-            let insertModal = document.getElementById('insertModal');
-            insertModal.style.display = 'block';
-        });
-        closeBtnList.forEach(function(closeBtn) {
-            closeBtn.addEventListener('click', handleModalClose);
-            closeBtn.addEventListener('click', handleEventUpdate);
-        });
-
-        function handleEventSubmit() {
-            let titleInput = document.getElementById('insertTitle');
-            let startInput = document.getElementById('insertStart');
-            let endInput = document.getElementById('insertEnd');
-            let resourceIdInput = document.getElementById('insertResourceId');
-            let assetNoInput = document.getElementById('insertAssetNo');
-
-            let reservation_title = titleInput.value;
-            let reservation_start = startInput.value;
-            let reservation_end = endInput.value;
-            let emp_no = <%= sessionVO.getEmp_no() %>;
-            let asset_id = resourceIdInput.value;
-            let asset_no = assetNoInput.value;
-            let url = '/vehicleReservation/insertVehicleList';
-
-            if (reservation_title && reservation_start && reservation_end && emp_no && asset_id && asset_no) {
-                // SweetAlert로 등록 여부 확인
-                Swal.fire({
-                    title: "일정을 등록하시겠습니까?",
-                    icon: "question",
-                    showCancelButton: true,
-                    confirmButtonColor: '#7c1512',
-                    cancelButtonColor: '#7c1512',
-                    confirmButtonText: '등록',
-                    cancelButtonText: '취소'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: {
-                                reservation_title: reservation_title,
-                                reservation_start: reservation_start,
-                                reservation_end: reservation_end,
-                                emp_no: emp_no,
-                                asset_id: asset_id,
-                                asset_no: asset_no
-                            },
-                            success: function(response) {
-                                console.log(response);
-                                if (response > 0) {
-                                    if (window.opener) window.opener.location.reload(true);
-                                    window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
-
-                                    Swal.fire({
-                                        title: "일정이 등록되었습니다.",
-                                        icon: "success",
-                                    });
-                                }
-                            },
-                            error: function(request, status, error) {
-                                console.error("오류 발생 >> " + error);
-                            }
-                        });
-                    }
-                });
-            } else {
-                // 필수 항목이 입력되지 않은 경우 알림 표시
-                Swal.fire({
-                    title: "필수 항목을 모두 입력해주세요",
-                    icon: "warning",
-                });
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
             }
 
-            // 모달 숨기기
-            let modal = document.getElementById('insertModal');
-            modal.style.display = 'none';
-            closeModalAndClearInputs();
-        }
+            // 이벤트 핸들러 등록
+            let submitBtn = document.getElementById('submitEvent');
+            let searchBtn = document.getElementById('searchEvent');
+            let exitBtn = document.getElementById('exitEvent');
+            let deleteBtn = document.getElementById('deleteEvent');
+            let updateBtn = document.getElementById('updateEvent');
+            let addEventBtn = document.getElementById('addEvent');
+            let closeBtnList = document.querySelectorAll('.modal-content .close');
 
-        function handleEventDelete() {
-            let reservationNoInput = document.getElementById('detailReservationNo');
-            let reservation_no = reservationNoInput.value;
-            let url = '<%=request.getContextPath()%>/vehicleReservation/deleteVehicleList';
+            submitBtn.addEventListener('click', handleEventSubmit);
+            submitBtn.addEventListener('click', handleEventUpdate);
+            searchBtn.addEventListener('click', reservationSearch);
+            exitBtn.addEventListener('click', handleEventSubmit);
+            exitBtn.addEventListener('click', handleEventUpdate);
+            deleteBtn.addEventListener('click', handleEventDelete);
+            updateBtn.addEventListener('click', handleEventUpdate);
+            addEventBtn.addEventListener('click', function() {
+                let insertModal = document.getElementById('insertModal');
+                insertModal.style.display = 'block';
+            });
+            closeBtnList.forEach(function(closeBtn) {
+                closeBtn.addEventListener('click', handleModalClose);
+                closeBtn.addEventListener('click', handleEventUpdate);
+            });
 
-            if (reservation_no) {
-                // SweetAlert로 삭제 여부 확인
-                Swal.fire({
-                    title: "일정을 삭제하시겠습니까?",
-                    icon: "question",
-                    showCancelButton: true,
-                    confirmButtonColor: '#7c1512',
-                    cancelButtonColor: '#7c1512',
-                    confirmButtonText: '삭제',
-                    cancelButtonText: '취소'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: {
-                                reservation_no: reservation_no,
-                                // asset_no: asset_no
-                            },
-                            success: function(response) {
-                                console.log(response);
-                                if (response > 0) {
-                                    if (window.opener) window.opener.location.reload(true);
-                                    window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+            function handleEventSubmit() {
+                let titleInput = document.getElementById('insertTitle');
+                let startInput = document.getElementById('insertStart');
+                let endInput = document.getElementById('insertEnd');
+                let resourceIdInput = document.getElementById('insertResourceId');
+                let assetNoInput = document.getElementById('insertAssetNo');
 
-                                    Swal.fire({
-                                        title: "일정이 삭제되었습니다.",
-                                        icon: "success",
-                                    });
-                                }
-                            },
-                            error: function(request, status, error) {
-                                console.error("오류 발생 >> " + error);
-                            }
-                        });
-                    }
-                });
-            }
-            closeModalAndClearInputs();
-            // 모달 숨기기
-            let modal = document.getElementById('detailModal');
-            modal.style.display = 'none';
-        }
+                let reservation_title = titleInput.value;
+                let reservation_start = startInput.value;
+                let reservation_end = endInput.value;
+                let emp_no = <%= sessionVO.getEmp_no() %>;
+                let asset_id = resourceIdInput.value;
+                let asset_no = assetNoInput.value;
+                let url = '/vehicleReservation/insertVehicleList';
 
-
-        function handleEventUpdate() {
-            let titleInput = document.getElementById('detailTitle');
-            let startInput = document.getElementById('detailStart');
-            let endInput = document.getElementById('detailEnd');
-            let assetNoInput = document.getElementById('detailAssetNo');
-            let reservationNoInput = document.getElementById('detailReservationNo');
-
-            let reservation_title = titleInput.value;
-            let reservation_start = startInput.value;
-            let reservation_end = endInput.value;
-            let emp_no = <%= sessionVO.getEmp_no() %>;
-            let asset_no = assetNoInput.value;
-            let reservation_no = reservationNoInput.value;
-            let url = "/vehicleReservation/updateVehicleList";
-
-            if (reservation_title && reservation_start && reservation_end && emp_no && asset_no && reservation_no) {
-                // SweetAlert로 수정 여부 확인
-                Swal.fire({
-                    title: "일정을 수정하시겠습니까?",
-                    icon: "question",
-                    showCancelButton: true,
-                    confirmButtonColor: '#7c1512',
-                    cancelButtonColor: '#7c1512',
-                    confirmButtonText: '수정',
-                    cancelButtonText: '취소'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: {
-                                reservation_title: reservation_title,
-                                reservation_start: reservation_start,
-                                reservation_end: reservation_end,
-                                emp_no: emp_no,
-                                asset_no: asset_no,
-                                reservation_no: reservation_no
-                            },
-                            success: function(response) {
-                                console.log(response);
-                                if (response > 0) {
-                                    if (window.opener) window.opener.location.reload(true);
-                                    window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
-
-                                    // 업데이트된 내용이 성공적으로 처리된 후 기존 일정 제거
-                                    // 기존 일정 요소를 선택하여 삭제
-                                    let existingEventElement = document.getElementById('existingEvent');
-                                    existingEventElement.remove();
-
-                                    Swal.fire({
-                                        title: "일정이 수정되었습니다.",
-                                        icon: "success",
-                                    });
-                                }
-                            },
-                            error: function(request, status, error) {
-                                console.error("오류 발생 >> " + error);
-                            }
-                        });
-                    }
-                });
-            }
-            closeModalAndClearInputs();
-            // 모달 숨기기
-            let modal = document.getElementById('detailModal');
-            modal.style.display = 'none';
-        }
-
-        let cancelTodayButton = document.querySelectorAll('.cancel-button');
-
-        cancelTodayButton.forEach(function(cancelButton) {
-            cancelButton.addEventListener('click', function() {
-                let reservationNoInput = document.getElementById('reservNo');
-                if (reservationNoInput !== null) {
-                    let reservation_no = reservationNoInput.textContent;
-
-                    if (reservation_no) {
-                        // SweetAlert로 삭제 여부 확인
+                if (reservation_title && reservation_start && reservation_end && emp_no && asset_id && asset_no) {
+                    if(reservation_title && reservation_end != null)
+                        // SweetAlert로 등록 여부 확인
                         Swal.fire({
-                            title: "일정을 삭제하시겠습니까?",
-                            icon: "warning",
+                            title: "일정을 등록하시겠습니까?",
+                            icon: "question",
                             showCancelButton: true,
                             confirmButtonColor: '#7c1512',
                             cancelButtonColor: '#7c1512',
-                            confirmButtonText: '삭제',
+                            confirmButtonText: '등록',
                             cancelButtonText: '취소'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // 사용자가 삭제를 선택한 경우, AJAX를 통해 삭제 요청
-                                let url = "<%=request.getContextPath()%>/vehicleReservation/deleteTodayReservation";
-
                                 $.ajax({
                                     type: "POST",
                                     url: url,
-                                    data: { calendar_no: calendar_no },
+                                    data: {
+                                        reservation_title: reservation_title,
+                                        reservation_start: reservation_start,
+                                        reservation_end: reservation_end,
+                                        emp_no: emp_no,
+                                        asset_id: asset_id,
+                                        asset_no: asset_no
+                                    },
                                     success: function(response) {
                                         console.log(response);
                                         if (response > 0) {
                                             if (window.opener) window.opener.location.reload(true);
-                                            window.location.href = '${pageContext.request.contextPath}' +'/vehicleReservation/vehicleReservationList';                                     
+                                            window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+
                                             Swal.fire({
-                                                title: "일정이 삭제되었습니다.",
+                                                title: "일정이 등록되었습니다.",
                                                 icon: "success",
                                             });
                                         }
@@ -464,85 +289,261 @@
                                 });
                             }
                         });
+                } else {
+                    // 필수 항목이 입력되지 않은 경우 알림 표시
+                    Swal.fire({
+                        title: "필수 항목을 모두 입력해주세요",
+                        icon: "warning",
+                    });
+                }
+
+                // 모달 숨기기
+                let modal = document.getElementById('insertModal');
+                modal.style.display = 'none';
+                closeModalAndClearInputs();
+            }
+
+            function handleEventDelete() {
+                let reservationNoInput = document.getElementById('detailReservationNo');
+                let reservation_no = reservationNoInput.value;
+                let url = '<%=request.getContextPath()%>/vehicleReservation/deleteVehicleList';
+
+                if (reservation_no) {
+                    // SweetAlert로 삭제 여부 확인
+                    Swal.fire({
+                        title: "일정을 삭제하시겠습니까?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonColor: '#7c1512',
+                        cancelButtonColor: '#7c1512',
+                        confirmButtonText: '삭제',
+                        cancelButtonText: '취소'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: {
+                                    reservation_no: reservation_no,
+                                    // asset_no: asset_no
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    if (response > 0) {
+                                        if (window.opener) window.opener.location.reload(true);
+                                        window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+
+                                        Swal.fire({
+                                            title: "일정이 삭제되었습니다.",
+                                            icon: "success",
+                                        });
+                                    }
+                                },
+                                error: function(request, status, error) {
+                                    console.error("오류 발생 >> " + error);
+                                }
+                            });
+                        }
+                    });
+                }
+                closeModalAndClearInputs();
+                // 모달 숨기기
+                let modal = document.getElementById('detailModal');
+                modal.style.display = 'none';
+            }
+
+
+            function handleEventUpdate() {
+                let titleInput = document.getElementById('detailTitle');
+                let startInput = document.getElementById('detailStart');
+                let endInput = document.getElementById('detailEnd');
+                let assetNoInput = document.getElementById('detailAssetNo');
+                let reservationNoInput = document.getElementById('detailReservationNo');
+
+                let reservation_title = titleInput.value;
+                let reservation_start = startInput.value;
+                let reservation_end = endInput.value;
+                let emp_no = <%= sessionVO.getEmp_no() %>;
+                let asset_no = assetNoInput.value;
+                let reservation_no = reservationNoInput.value;
+                let url = "/vehicleReservation/updateVehicleList";
+
+                if (reservation_title && reservation_start && reservation_end && emp_no && asset_no && reservation_no) {
+                    // SweetAlert로 수정 여부 확인
+                    Swal.fire({
+                        title: "일정을 수정하시겠습니까?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonColor: '#7c1512',
+                        cancelButtonColor: '#7c1512',
+                        confirmButtonText: '수정',
+                        cancelButtonText: '취소'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: {
+                                    reservation_title: reservation_title,
+                                    reservation_start: reservation_start,
+                                    reservation_end: reservation_end,
+                                    emp_no: emp_no,
+                                    asset_no: asset_no,
+                                    reservation_no: reservation_no
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    if (response > 0) {
+                                        if (window.opener) window.opener.location.reload(true);
+                                        window.location.href = '${pageContext.request.contextPath}' + '/vehicleReservation/vehicleReservationList';
+
+                                        // 업데이트된 내용이 성공적으로 처리된 후 기존 일정 제거
+                                        // 기존 일정 요소를 선택하여 삭제
+                                        let existingEventElement = document.getElementById('existingEvent');
+                                        existingEventElement.remove();
+
+                                        Swal.fire({
+                                            title: "일정이 수정되었습니다.",
+                                            icon: "success",
+                                        });
+                                    }
+                                },
+                                error: function(request, status, error) {
+                                    console.error("오류 발생 >> " + error);
+                                }
+                            });
+                        }
+                    });
+                }
+                closeModalAndClearInputs();
+                // 모달 숨기기
+                let modal = document.getElementById('detailModal');
+                modal.style.display = 'none';
+            }
+
+            let cancelTodayButton = document.querySelectorAll('.cancel-button');
+
+            cancelTodayButton.forEach(function(cancelButton) {
+                cancelButton.addEventListener('click', function() {
+                    let reservationNoInput = document.getElementById('reservNo');
+                    if (reservationNoInput !== null) {
+                        let reservation_no = reservationNoInput.textContent;
+
+                        if (reservation_no) {
+                            // SweetAlert로 삭제 여부 확인
+                            Swal.fire({
+                                title: "일정을 삭제하시겠습니까?",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: '#7c1512',
+                                cancelButtonColor: '#7c1512',
+                                confirmButtonText: '삭제',
+                                cancelButtonText: '취소'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // 사용자가 삭제를 선택한 경우, AJAX를 통해 삭제 요청
+                                    let url = "<%=request.getContextPath()%>/vehicleReservation/deleteTodayVReservation";
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url,
+                                        data: { reservation_no: reservation_no },
+                                        success: function(response) {
+                                            console.log(response);
+                                            if (response > 0) {
+                                                if (window.opener) window.opener.location.reload(true);
+                                                window.location.href = '${pageContext.request.contextPath}' +'/vehicleReservation/vehicleReservationList';
+                                                Swal.fire({
+                                                    title: "일정이 삭제되었습니다.",
+                                                    icon: "success",
+                                                });
+                                            }
+                                        },
+                                        error: function(request, status, error) {
+                                            console.error("오류 발생 >> " + error);
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     }
+                });
+            });
+
+            // 자산 예약 체크박스 클릭 시 링크로 이동
+            document.getElementById('assetReserv').addEventListener('change', function() {
+                if (this.checked) {
+                    window.location.href = '../assetReservation/assetReservationList';
                 }
             });
-        });
 
-        // 차량 예약 체크박스 클릭 시 링크로 이동
-        document.getElementById('vehicleReserv').addEventListener('change', function() {
-            if (this.checked) {
-                window.location.href = '../vehicleReservation/vehicleReservationList';
+            // 모달 닫기 및 입력 값 초기화 함수
+            function closeModalAndClearInputs() {
+                let modal = document.getElementById('insertModal');
+                modal.style.display = 'none';
+                clearModalInputs();
+            }
+
+            // 모달 닫기 처리 함수
+            function handleModalClose() {
+                let modal1 = document.getElementById('insertModal');
+                let modal2 = document.getElementById('detailModal');
+                modal1.style.display = 'none';
+                modal2.style.display = 'none';
+                clearModalInputs();
+            }
+
+            // 모달 입력값 초기화 함수
+            function clearModalInputs() {
+                document.getElementById('insertTitle').value = '';
+                document.getElementById('detailTitle').value = '';
+                document.getElementById('insertStart').value = '';
+                document.getElementById('detailStart').value = '';
+                document.getElementById('insertEnd').value = '';
+                document.getElementById('detailEnd').value = '';
+                document.getElementById('detailReservationNo').value = '';
             }
         });
 
-        // 모달 닫기 및 입력 값 초기화 함수
-        function closeModalAndClearInputs() {
-            let modal = document.getElementById('insertModal');
-            modal.style.display = 'none';
-            clearModalInputs();
-        }
-
-        // 모달 닫기 처리 함수
-        function handleModalClose() {
+        // 모달 외부 클릭 시 모달 닫기
+        window.onclick = function(event) {
             let modal1 = document.getElementById('insertModal');
             let modal2 = document.getElementById('detailModal');
-            modal1.style.display = 'none';
-            modal2.style.display = 'none';
-            clearModalInputs();
+            if (event.target === modal1) {
+                modal1.style.display = 'none';
+            } else if (event.target === modal2) {
+                modal2.style.display = 'none';
+            }
         }
 
-        // 모달 입력값 초기화 함수
-        function clearModalInputs() {
-            document.getElementById('insertTitle').value = '';
-            document.getElementById('detailTitle').value = '';
-            document.getElementById('insertStart').value = '';
-            document.getElementById('detailStart').value = '';
-            document.getElementById('insertEnd').value = '';
-            document.getElementById('detailEnd').value = '';
-            document.getElementById('detailReservationNo').value = '';
+        function searchEnter(event){
+            if(window.event.keyCode == 13){
+                reservationSearch()
+            }
         }
-    });
 
-    // 모달 외부 클릭 시 모달 닫기
-    window.onclick = function(event) {
-        let modal1 = document.getElementById('insertModal');
-        let modal2 = document.getElementById('detailModal');
-        if (event.target === modal1) {
-            modal1.style.display = 'none';
-        } else if (event.target === modal2) {
-            modal2.style.display = 'none';
+        function reservationSearch() {
+            console.log('reservationSearch');
+            const gubun = document.querySelector("#gubun").value;
+            const keyword = document.querySelector("#keyword").value;
+
+            console.log(`${gubun} , ${keyword}`);
+
+            let searchURL = "/vehicleReservation/vehicleReservationList?gubun=" + gubun;
+
+            if (keyword.trim() === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '검색어를 입력하세요',
+                    text: '검색어를 입력하지 않으면 검색할 수 없습니다.',
+                    confirmButtonText: '확인'
+                });
+            } else {
+                searchURL += "&keyword=" + keyword;
+                location.href = searchURL;
+            }
         }
-    }
-
-    function searchEnter(event){
-        if(window.event.keyCode == 13){
-            reservationSearch()
-        }
-    }
-
-    function reservationSearch() {
-        console.log('reservationSearch');
-        const gubun = document.querySelector("#gubun").value;
-        const keyword = document.querySelector("#keyword").value;
-
-        console.log(`${gubun} , ${keyword}`);
-
-        let searchURL = "/vehicleReservation/vehicleReservationList?gubun=" + gubun;
-
-        if (keyword.trim() === '') {
-            Swal.fire({
-                icon: 'warning',
-                title: '검색어를 입력하세요',
-                text: '검색어를 입력하지 않으면 검색할 수 없습니다.',
-                confirmButtonText: '확인'
-            });
-        } else {
-            searchURL += "&keyword=" + keyword;
-            location.href = searchURL;
-        }
-    }
-</script>
+    </script>
     <div class="content-wrapper">
 
         <div class="box-header p-4">
@@ -572,13 +573,13 @@
                     <div class="box">
                         <%-- 내 예약 현황 태그 --%>
                         <div class="container-fluid1"></div>
-                            <h4 class="cal_title">차량 주의사항</h4><br>
-                            <hr /><br><br>
-                            <h5>1 .  사용 신청 이후 경영지원팀에게 차키와 운행일지를 수령, 사용 후 반납</h5><br>
-                            <h5>2 .  차량 반납 시 차량내부의 쓰레기 등을 반드시 수거하여 차량 청결에 유의</h5><br>
-                            <h5>3 .  차량이용자는 운전 전 차량의 상태 (안전사항 및 청결도)를 확인하며, 이상이 있을 경우 즉시 운영관리자에게 연락함</h5><br>
-                            <h5>4 .  차량 내부에서는 절대 금연함</h5><br>
-                            <h5>◎    운영관리자   :   경영지원팀   (  ☎ 7777  )</h5><br><br>
+                        <h4 class="cal_title">차량 주의사항</h4><br>
+                        <hr /><br><br>
+                        <h5>1 .  사용 신청 이후 경영지원팀에게 차키와 운행일지를 수령, 사용 후 반납</h5><br>
+                        <h5>2 .  차량 반납 시 차량내부의 쓰레기 등을 반드시 수거하여 차량 청결에 유의</h5><br>
+                        <h5>3 .  차량이용자는 운전 전 차량의 상태 (안전사항 및 청결도)를 확인하며, 이상이 있을 경우 즉시 운영관리자에게 연락함</h5><br>
+                        <h5>4 .  차량 내부에서는 절대 금연함</h5><br>
+                        <h5>◎    운영관리자   :   경영지원팀   (  ☎ 7777  )</h5><br><br>
                     </div>
                 </div>
             </div>
@@ -597,14 +598,14 @@
                         <%-- 캘린더 태그 --%>
                         <div id="calendar1"></div>
                         <div class="checkbox-container">
-                        <div>
-                            <input type="checkbox" class="form-check-input" id="vehicleReserv" name="vehicleReserv" value="vehicleReserv">
-                            <label for="vehicleReserv">자산 예약</label>
+                            <div>
+                                <input type="checkbox" class="form-check-input" id="assetReserv" name="assetReserv" value="assetReserv">
+                                <label for="assetReserv">자산 예약</label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </section>
 
         <%
@@ -641,44 +642,44 @@
                             </div>
                         </div>
 
-                            <div class="container-fluid">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">예약차량</th>
-                                        <th scope="col">예약자</th>
-                                        <th scope="col">예약명</th>
-                                        <th scope="col">시작시간</th>
-                                        <th scope="col">종료시간</th>
-                                        <th scope="col">취소</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="reservationTableBody">
-                                        <% List<CalendarVO> vehicleReservationList1 = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
+                        <div class="container-fluid">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">예약차량</th>
+                                    <th scope="col">예약자</th>
+                                    <th scope="col">예약명</th>
+                                    <th scope="col">시작시간</th>
+                                    <th scope="col">종료시간</th>
+                                    <th scope="col">취소</th>
+                                </tr>
+                                </thead>
+                                <tbody id="reservationTableBody">
+                                <% List<CalendarVO> vehicleReservationList1 = (List<CalendarVO>) request.getAttribute("vehicleReservationList");
                                     if (vehicleReservationList1 != null) {
                                         int count = 0; // 예약 카운터 변수 추가
                                         for (CalendarVO vo : vehicleReservationList1) {
                                             if (Objects.equals(sessionVO.getName(), vo.getName())) {
-                                            String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
-                                            String endDateCheck = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
-                                            String startDate = vo.getReservation_start().replace("T", "&nbsp;"); // T를 공백으로 대체
-                                            String endDate = vo.getReservation_end().replace("T", "&nbsp;"); // T를 공백으로 대체
-                                            if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
+                                                String startDateCheck = vo.getReservation_start().split("T")[0]; // 예약 시작일자만 추출
+                                                String endDateCheck = vo.getReservation_end().split("T")[0]; // 예약 종료일자만 추출
+                                                String startDate = vo.getReservation_start().replace("T", "&nbsp;"); // T를 공백으로 대체
+                                                String endDate = vo.getReservation_end().replace("T", "&nbsp;"); // T를 공백으로 대체
+                                                if (startDateCheck.equals(todayDate) || endDateCheck.equals(todayDate) || (startDateCheck.compareTo(todayDate) < 0 && endDateCheck.compareTo(todayDate) > 0)) { // 오늘 날짜와 시작일 또는 종료일이 일치하거나 오늘 날짜가 시작일과 종료일 사이에 있는 경우에만 출력
                                 %>
-                                    <tr>
-                                        <th scope="row"><%= ++count %></th>
-                                        <%-- 화면엔 필요없지만 서버에 전송할 데이터 --%>
-                                        <td class="reservNo" id="reservNo" style="display: none;"><%= vo.getReservation_no() %></td>
-                                        <td><%= vo.getAsset_no() %></td>
-                                        <td><%= vo.getName() %></td>
-                                        <td><%= vo.getReservation_title() %></td>
-                                        <td><%= startDate%></td>
-                                        <td><%= endDate %></td>
-                                        <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" value="취소"/></td>
-                                    </tr>
+                                <tr>
+                                    <th scope="row"><%= ++count %></th>
+                                    <%-- 화면엔 필요없지만 서버에 전송할 데이터 --%>
+                                    <td class="reservNo" id="reservNo" style="display: none;"><%= vo.getReservation_no() %></td>
+                                    <td><%= vo.getAsset_no() %></td>
+                                    <td><%= vo.getName() %></td>
+                                    <td><%= vo.getReservation_title() %></td>
+                                    <td><%= startDate%></td>
+                                    <td><%= endDate %></td>
+                                    <td><input type="button" class="btn btn-danger cancel-button" id="cancel-button" value="취소"/></td>
+                                </tr>
                                 <%
-                                }}}}
+                                                }}}}
                                 %>
                                 </tbody>
                             </table>

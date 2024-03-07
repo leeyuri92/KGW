@@ -115,8 +115,8 @@
                         title: '<%= vo.getCalendar_title() %>',
                         start: '<%= vo.getCalendar_start() %>',
                         end: '<%= vo.getCalendar_end() %>',
-                        color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-                    },
+                        color: '#93DAFF'
+        },
                     <% }} %>
                 ]
             });

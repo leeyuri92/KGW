@@ -23,6 +23,7 @@
         b.asset_id,
         b.asset_no,
         b.asset_name,
+        b.asset_color,
         b.team_no,
         c.name
         FROM asset_reservation a

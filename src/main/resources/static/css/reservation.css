@@ -119,6 +119,9 @@
     margin: 0px 20px 0px 20px;
 }
 
+.fc-event-title {
+    color: black; !important;
+}
 
 /* 헤더툴바 버튼 색상 */
 .fc-toolbar .fc-resourceTimelineMonth-button,
