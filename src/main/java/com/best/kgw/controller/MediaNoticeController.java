@@ -70,6 +70,7 @@ public class MediaNoticeController {
         logger.info("=======================fileUpload :"+ file.getBytes());
         logger.info("mediaNoticeInsert : mediaNoticeInsert");
         //fileService에서 fileUpload 메소드를 호출하여 파일 업로드를 처리. "media"를 매개변수로 전달
+
         fileService.fileUpload("media", file, req);
         int result = 0;
         String path = "";
@@ -94,7 +95,9 @@ public class MediaNoticeController {
         fileService.fileUpload("media", file, req);
         int result = 0;
         String path = "";
-        mediaNoticeVO.setFilename(file.getOriginalFilename());
+        if (!(file.getOriginalFilename().equals("")) || file.getOriginalFilename() == null){
+            mediaNoticeVO.setFilename(file.getOriginalFilename());
+        }
         logger.info(mediaNoticeVO.getFilename());
         result = mediaNoticeService.mediaNoticeModify(mediaNoticeVO);
         logger.info("Modify2");
