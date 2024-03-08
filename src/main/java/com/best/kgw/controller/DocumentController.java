@@ -23,7 +23,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("approval")
-public class DocumentController {
+public class    DocumentController {
     Logger logger = LoggerFactory.getLogger("DocumentController".getClass());
 
     @Autowired
