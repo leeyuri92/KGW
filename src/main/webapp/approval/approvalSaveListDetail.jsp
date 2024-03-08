@@ -198,20 +198,21 @@
                                             <%}else if ("영입".equals(approvalVO.getDocument_category())){  %>
                                             <div class="row">
                                                 <div class="col-2 mb-3 mt-3">
-                                                    <span class="title">영입 희망 선수 </span>
+                                                    <span class="title">영입 선수 </span>
                                                 </div>
-                                                <div lass="col-4 mb-3 mt-3">
-                                                        <input type="text"  class="value-input" id="scout_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
+                                                <div class="col-4 mb-3 mt-3">
+                                                    <input type="text"  class="value-input" id="scout_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
+
                                                 </div>
                                                 <div class="col-2 mb-3 mt-3">
                                                 </div>
-                                                <div lass="col-4 mb-3 mt-3">
+                                                <div class="col-4 mb-3 mt-3">
                                                 </div>
                                             </div>
                                             <%}else if ("방출".equals(approvalVO.getDocument_category())){  %>
                                                 <div class="row">
                                                 <div class="col-2 mb-3 mt-3">
-                                                    <span class="title">방출 의망 선수 </span>
+                                                    <span class="title">방출  선수 </span>
                                                 </div>
                                                 <div  class="col-4 mb-3 mt-3">
                                                     <input type="text" id="release_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">

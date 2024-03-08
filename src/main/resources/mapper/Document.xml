@@ -61,18 +61,22 @@
                                    ON e.team_no = t.team_no
         <where>
             <if test="document_no !=null"> AND d.document_no = #{document_no}</if>
-
-<!--            <if test="gubun != null">-->
-<!--                <choose>-->
-<!--                    <when test='gubun.equals("document_title")'>-->
-<!--                        AND document.document_title LIKE '%' || #{keyword} || '%'-->
-<!--                    </when>-->
-<!--                    <when test='gubun.equals("document_category")'>-->
-<!--                        AND document.document_category LIKE '%' || #{keyword} || '%'-->
-<!--                    </when>-->
-<!--                </choose>-->
-<!--            </if>-->
-
+            <if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("document_title")'>
+                        AND d.document_title LIKE '%' || #{keyword} || '%'
+                    </when>
+                    <when test='gubun.equals("document_category")'>
+                        AND d.document_category LIKE '%' || #{keyword} || '%'
+                    </when>
+                    <when test='gubun.equals("approval_category")'>
+                        AND a.approval_category LIKE '%' || #{keyword} || '%'
+                    </when>
+                    <when test='gubun.equals("name")'>
+                        AND a.approval_category LIKE '%' || #{keyword} || '%'
+                    </when>
+                </choose>
+            </if>
         </where>
         order by a.document_no desc
     </select>

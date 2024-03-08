@@ -109,6 +109,17 @@
             console.log("임시저장성공");
         }
     </script>
+    <style>
+        input[type="text"],
+        input[type="date"] {
+            margin: 0;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            height: 32px;
+            /*input type data,text 규격 통일  */
+        }
+
+    </style>
     <link  rel="stylesheet " href="../css/approvalDocu.css">
 </head>
 
@@ -175,43 +186,73 @@
                             <%--휴가문서--%>
                             <form id="r_documentVacation" name="r_documentVacation" action="documentInsert" method="post">
                                 <div class="frame " id="do_vocation">
-                                    <div class="document-section">
-                                        <div class="item">
-                                            <span class="title">사원번호:</span>
+                                    <div class="row">
+                                        <div class="col-2 mb-3 mt-3 ">
+                                            <span class="title">사원번호 </span>
+                                        </div>
+                                        <div class="col-4 mb-3 mt-3 ">
                                             <input type="text" class="value-input" id="emp_no"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                         </div>
-                                         <input type="hidden" id="stateVacation" name="state"    value="대기" >
-                                         <input type="hidden" id="draftdayVacation" name="draftday"    value="" >
-
-                                        <div class="item">
-                                            <span class="title">문서제목:</span>
+                                        <div class="col-2 mb-3 mt-3 ">
+                                            <span class="title">문서제목 </span>
+                                        </div>
+                                        <div class="col-4 mb-3 mt-3 ">
                                             <input type="text" class="value-input" id="document_title" name="document_title" value=""  >
                                         </div>
-                                        <div class="item" hidden="hidden">
-                                            <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="document_category"  name="document_category" value="휴가" >
+                                    </div>
+                                    <div class="document-section">
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">결재자  </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="approval_name" name="approval_name" value="경영지원팀장">
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">신청자 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" >
+                                            </div>
                                         </div>
-                                        <div class="item">
-                                            <span class="title">결재자 :</span>
-                                            <input type="text" class="value-input" id="approval_name" name="approval_name" value="경영지원팀장">
+
+
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">휴가 사유 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="연차" >
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">휴가시작일 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="date" id="start_date" name="start_date"   value="2024-03-03">
+                                            </div>
                                         </div>
-                                        <div class="item">
-                                            <span class="title">신청자:</span>
-                                            <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" >
+
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">휴가만료일 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="date" id="end_date" name="end_date"  value="2024-03-04">
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 ">
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                            </div>
                                         </div>
-                                        <div class="item">
-                                            <span class="title">휴가 사유:</span>
-                                            <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">휴가시작일:</span>
-                                            <input type="date" id="start_date" name="start_date"   value="2024-03-03">
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">휴가만료일：</span>
-                                            <input type="date" id="end_date" name="end_date"  value="2024-03-04">
-                                        </div>
-                                        <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
+
+                                            <div class="row justify-content-center">
+                                                <div class="col-auto mb-3 mt-3">
+                                                    <div class="text-wrapper-2">상기와 같이 휴가 희망함</div>
+                                                </div>
+                                            </div>
+                                        <input type="hidden" class="value-input" id="document_category"  name="document_category" value="휴가" >
+                                        <input type="hidden" id="stateVacation" name="state"    value="대기" >
+                                        <input type="hidden" id="draftdayVacation" name="draftday"    value="" >
                                     </div>
                                     <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
                                         <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitVacation()" >제출</button>
@@ -219,106 +260,155 @@
                                     </div>
                                 </div>
                             </form>
+
                             <form id="r_documentOffer" name="r_documentOffer" action="documentInsert" method="post">
                             <div class="frame" id="do_pla_a"> <%--계약연장 문서--%>
-                                <div class="document-section">
-                                    <div class="item">
-                                        <span class="title">사원번호:</span>
+                                <div class="row">
+                                    <div class="col-2 mb-3 mt-3 ">
+                                        <span class="title">사원번호 </span>
+                                    </div>
+                                    <div class="col-4 mb-3 mt-3 ">
                                         <input type="text" class="value-input" id="emp_no3"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
                                     </div>
-                                    <input type="hidden" id="stateOffer" name="state"    value="대기" >
-                                    <input type="hidden" id="draftdayOffer" name="draftday"    value="" >
-
-                                    <div class="item">
-                                        <span class="title">문서제목:</span>
+                                    <div class="col-2 mb-3 mt-3 ">
+                                        <span class="title">문서제목 </span>
+                                    </div>
+                                    <div class="col-4 mb-3 mt-3 ">
                                         <input type="text" class="value-input" id="document_title3" name="document_title" value=""   >
                                     </div>
-                                    <div class="item" hidden="hidden">
-                                        <span class="title">문서타이틀:</span>
-                                        <input type="text" class="value-input" id="document_category3"  name="document_category" value="계약" >
+                                </div>
+                                <div class="row">
+                                    <div class="col-2 mb-3 mt-3 ">
+                                        <span class="title">결재자  </span>
                                     </div>
-
-                                    <div class="item">
-                                        <span class="title">결재자 :</span>
+                                    <div class="col-4 mb-3 mt-3 ">
                                         <input type="text" class="value-input" id="approval_name3" name="approval_name" value="운영팀장">
+
                                     </div>
-                                    <div class="item">
-                                        <span class="title">신청자:</span>
+                                    <div class="col-2 mb-3 mt-3 ">
+                                        <span class="title">신청자 </span>
+                                    </div>
+                                    <div class="col-4 mb-3 mt-3 ">
                                         <input type="text" class="value-input" id="name3" name="name" value="<%=sessionVO.getName()%>" >
                                     </div>
+                                </div>
 
-                                    <div class="item">
-                                        <span class="title">계약연장  선수:</span>
+                                <div class="row">
+                                    <div class="col-2 mb-3 mt-3 ">
+                                        <span class="title">계약연장  선수 </span>
+
+                                    </div>
+                                    <div class="col-4 mb-3 mt-3 ">
                                         <select id="playersList3" name="fa_name">
                                             <% for (int i = 0; i < faList.size(); i++) {
                                                 ApprovalVO faVO = faList.get(i);
                                                 if (faVO != null && "키움".equals(faVO.getFa_team()) && "FA자유계약".equals(faVO.getFa_agent())){
                                             %>
-                                                   <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
-                                                   <%
-                                                       }
-                                                     }
-                                                   %>
+                                            <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
+                                            <%
+                                                    }
+                                                }
+                                            %>
                                         </select>
                                     </div>
-                                    <div class="item flex-row">
-                                        <div class="flex-item">
-                                            <span class="title">연봉:</span>
-                                            <input type="text" class="value-input short-input" id="salary" name="salary" placeholder="연봉 입력" value=""　>
-                                        </div>
-                                        <div class="flex-item">
-                                            <span class="title">계약년수:</span>
-                                            <input type="text" class="value-input short-input" id="contract_term"  name="contract_term" placeholder="계약년수 입력" value="">
-                                        </div>
+                                    <div class="col-2 mb-3 mt-3 ">
+                                        <span class="title">연봉 </span>
                                     </div>
-                                    <div class="text-wrapper-2">상기와 같이 계약연장 희망함</div>
+                                    <div class="col-4 mb-3 mt-3 ">
+                                        <input type="text" class="value-input short-input" id="salary" name="salary" placeholder="연봉 입력" value=""　>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-2 mb-3 mt-3 ">
+                                        <span class="title">계약년수 </span>
+                                    </div>
+                                    <div class="col-4 mb-3 mt-3 ">
+                                        <input type="text" class="value-input short-input" id="contract_term"  name="contract_term" placeholder="계약년수 입력" value="">
+                                    </div>
+
+                                    <div class="col-2 mb-3 mt-3 ">
+                                    </div>
+                                    <div class="col-4 mb-3 mt-3 ">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-auto mb-3 mt-3">
+                                        <div class="text-wrapper-2">상기와 같이 계약연장 희망함</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="stateOffer" name="state"    value="대기" >
+                                <input type="hidden" id="draftdayOffer" name="draftday"    value="" >
+
                                 <div id ="documentButton1 " class="col-md-6 d-flex justify-content-end gap-2">
                                     <button type="button"  id="btn_docSubmit3" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitOffer()" >제출</button>
                                     <button type="button" id="btn_search3" class="btn btn-danger" onclick="docSaveSubmitOffer()">임시보관 </button>
+                                    <input type="hidden" class="value-input" id="document_category3"  name="document_category" value="계약" >
                                 </div>
                             </div>
                             </form>
+
                             <form id="r_documentRelease" name="r_documentRelease" action="documentInsert" method="post">
                                 <div class="frame" id="do_pla_b"> <%--방출 문서--%>
                                     <div class="document-section">
-                                        <div class="item">
-                                            <span class="title">사원번호:</span>
-                                            <input type="text" class="value-input" id="emp_no2"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+
+
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">사원번호 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="emp_no2"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">문서제목 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="document_title2" name="document_title" value=""  >
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">결재자  </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="approval_name2" name="approval_name" value="운영팀장">
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">신청자 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="name2" name="name" value="<%=sessionVO.getName()%>" >
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">방출 선수 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <select id="playersList2" name="fa_name">
+                                                    <% for (int i = 0; i < faList.size(); i++) {
+                                                        ApprovalVO faVO = faList.get(i);
+                                                        if (faVO != null && "키움".equals(faVO.getFa_team()) && "FA자유계약".equals(faVO.getFa_agent())){
+                                                    %>
+                                                    <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 "></div>
+                                            <div class="col-4 mb-3 mt-3 "> </div>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                            <div class="col-auto mb-3 mt-3">
+                                            <div class="text-wrapper-2">상기와 같이 방출 희망함 </div>
+                                            </div>
                                         </div>
                                         <input type="hidden" id="stateRelease" name="state"    value="대기" >
                                         <input type="hidden" id="draftdayRelease" name="draftday"    value="" >
-                                        <div class="item">
-                                            <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title2" name="document_title" value=""  >
-                                        </div>
-                                        <div class="item" hidden="hidden">
-                                            <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="document_category2"  name="document_category" value="방출" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">결재자 :</span>
-                                            <input type="text" class="value-input" id="approval_name2" name="approval_name" value="운영팀장">
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">신청자:</span>
-                                            <input type="text" class="value-input" id="name2" name="name" value="<%=sessionVO.getName()%>" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">방출 선수:</span>
-                                            <select id="playersList2" name="fa_name">
-                                                <% for (int i = 0; i < faList.size(); i++) {
-                                                    ApprovalVO faVO = faList.get(i);
-                                                    if (faVO != null && "키움".equals(faVO.getFa_team()) && "FA자유계약".equals(faVO.getFa_agent())){
-                                                %>
-                                                <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
-                                                <%
-                                                        }
-                                                    }
-                                                %>
-                                            </select>
-                                        </div>
-                                        <div class="text-wrapper-2">상기와 같이 방출 희망함 </div>
+                                        <input type="hidden" class="value-input" id="document_category2"  name="document_category" value="방출" >
                                     </div>
                                     <div id ="documentButton2 " class="col-md-6 d-flex justify-content-end gap-2">
                                         <button type="button"  id="btn_docSubmit2" class="btn btn-danger"   onclick="docSubmitRelease()" >제출</button>
@@ -327,49 +417,74 @@
                                 </div>
                             </form>
 
+
+
                             <%-- (r_document)Recruitment document : 영입문서                   --%>
                             <form id="r_documentScout" name="r_documentScout" action="documentInsert" method="post">
                                 <div class="frame" id="do_pla_c"> <%--영입 문서--%>
                                     <div class="document-section">
-                                        <div class="item">
-                                            <span class="title">사원번호:</span>
-                                            <input type="text" class="value-input" id="emp_no1"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">사원번호 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="emp_no1"  name="emp_no" value="<%=sessionVO.getEmp_no()%>">
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">문서제목 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="document_title1" name="document_title" value=""  >
+                                            </div>
                                         </div>
-                                        <input type="hidden" id="stateScout" name="state"    value="대기" >
-                                        <input type="hidden" id="draftdayScout" name="draftday"    value="" >
 
-                                        <div class="item">
-                                            <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title1" name="document_title" value=""  >
+
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">결재자  </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="approval_name1" name="approval_name" value="운영팀장">
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">신청자 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="value-input" id="name1" name="name" value="<%=sessionVO.getName()%>" >
+                                            </div>
                                         </div>
-                                        <div class="item" hidden="hidden">
-                                            <span class="title">문서타이틀:</span>
-                                            <input type="text" class="value-input" id="document_category1"  name="document_category" value="영입" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">결재자 :</span>
-                                            <input type="text" class="value-input" id="approval_name1" name="approval_name" value="운영팀장">
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">신청자:</span>
-                                            <input type="text" class="value-input" id="name1" name="name" value="<%=sessionVO.getName()%>" >
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">영입 선수:</span>
-                                            <select id="playersList1" name="fa_name">
-                                                <% for (int i = 0; i < faList.size(); i++) {
-                                                    ApprovalVO faVO = faList.get(i);
-                                                    if (faVO != null && faVO.getFa_agent() != null && !"키움".equals(faVO.getFa_team())) {
-                                                %>
-                                                <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
-                                                <%
+
+
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">영입 선수 </span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <select id="playersList1" name="fa_name">
+                                                    <% for (int i = 0; i < faList.size(); i++) {
+                                                        ApprovalVO faVO = faList.get(i);
+                                                        if (faVO != null && faVO.getFa_agent() != null && !"키움".equals(faVO.getFa_team())) {
+                                                    %>
+                                                    <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
+                                                    <%
+                                                            }
                                                         }
-                                                    }
-                                                %>
-                                            </select>
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="col-2 mb-3 mt-3 "></div>
+                                            <div class="col-4 mb-3 mt-3 "> </div>
                                         </div>
-                                        <div class="text-wrapper-2">상기와 같이 영입 희망함 </div>
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-auto mb-3 mt-3">
+                                            <div class="text-wrapper-2">상기와 같이 영입 희망함 </div>
+                                        </div>
                                     </div>
+                                    </div>
+                                    <input type="hidden" id="stateScout" name="state"    value="대기" >
+                                    <input type="hidden" id="draftdayScout" name="draftday"    value="" >
+                                    <input type="hidden" class="value-input" id="document_category1"  name="document_category" value="영입" >
                                     <div id ="documentButton1" class="col-md-6 d-flex justify-content-end gap-2">
                                         <button type="button"  id="btn_docSubmit1" class="btn btn-danger"  onclick="docSubmitScout()" >제출</button>
                                         <button type="button" id="btn_search1" class="btn btn-danger" onclick="docSaveSubmitScout()">임시보관 </button>
