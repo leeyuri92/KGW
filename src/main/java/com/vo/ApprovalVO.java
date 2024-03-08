@@ -17,7 +17,7 @@ public class ApprovalVO {
         private String start_date;
         private String end_date;
         private String dayoff_content;
-        private  int salary;
+        private String salary;
         private  int k_no;
         private String contract_term;
         private String team_name;
@@ -40,7 +40,7 @@ public class ApprovalVO {
         private  int fa_no; // fa no
         private  String  fa_name; //fa 이름
         private  String  fa_team;// fa team
-        private  String  fa_sate;// true 시  키움 false 시 자유
+        private  String  fa_state;// true 시  키움 false 시 자유
         private  String  fa_agent;
 
         private String storage;//  value true 시 임시저장
@@ -52,10 +52,10 @@ public class ApprovalVO {
 //        select 받아논 데이터 끝
     @Builder
     public  ApprovalVO(Integer document_no,int emp_no,String document_title,String  document_category, String  submission_date,String state,
-                       String start_date,String  end_date,String  draftday,String  dayoff_content,int  k_no, int salary ,String contract_term, String team_name,
+                       String start_date,String  end_date,String  draftday,String  dayoff_content,int  k_no, String salary ,String contract_term, String team_name,
                        int approval_no,String approval_name,String  approval_category, String  rejection_content, String  middle_approval_date,
                        String  final_approval_date , String middlesign_name, String finalsign_name, String name,int dayoff_cnt,String emp_position,
-                       int team_no, String k_name, String k_team, int fa_no,String fa_name,String fa_team ,String fa_sate ,String fa_agent  ,String keyword ,String storage,String gubun){
+                       int team_no, String k_name, String k_team, int fa_no,String fa_name,String fa_team ,String fa_state ,String fa_agent  ,String keyword ,String storage,String gubun){
         super();
         this.document_no=document_no;
         this.emp_no=emp_no;
@@ -88,7 +88,7 @@ public class ApprovalVO {
         this.fa_no = fa_no;
         this.fa_name = fa_name;
         this.fa_team=fa_team;
-        this.fa_sate=fa_sate;
+        this.fa_state=fa_state;
         this.fa_agent=fa_agent;
         this.keyword=keyword;
         this.storage=storage;

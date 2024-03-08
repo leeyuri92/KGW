@@ -58,12 +58,14 @@ public class DocumentServiceImpl implements DocumentService {
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
         logger.info(approvalvo.toString());
         documentDao.approvalUpdate(approvalvo);
+        logger.info("=+++++++++++++++++++++++++++++++++++++"+approvalvo.toString());
         if (approvalvo.getAction().equals("승인")){
             if (approvalvo.getApproval_category().equals("최종결재승인")){
                 approvalvo.setState("완료");
-                if (approvalvo.getApproval_category().equals("휴가")){
+                if (approvalvo.getDocument_category().equals("휴가")){
                     documentDao.vacation(approvalvo);
                 }else {
+
                     documentDao.updateFA(approvalvo);
                 }
             }else{
