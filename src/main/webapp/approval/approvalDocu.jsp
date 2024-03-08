@@ -38,11 +38,11 @@
 
 
         function docSubmitScout() {
-            let k_name = document.getElementById('playersList1').value;
+            let fa_name = document.getElementById('playersList1').value;
             $('#r_documentScout').submit();
         }
         function docSaveSubmitScout() {//영입 문서 임시저장
-            let k_name = document.getElementById('playersList1').value;
+            let fa_name = document.getElementById('playersList1').value;
             let state = document.getElementById('stateScout');
             state.value = '임시저장';
             let now = new Date();
@@ -54,11 +54,11 @@
 
 
         function docSubmitRelease() {
-            let k_name = document.getElementById('playersList2').value;
+            let fa_name = document.getElementById('playersList2').value;
             $('#r_documentRelease').submit();
         }
         function docSaveSubmitRelease() {//방출 문서 임시저장
-            let k_name = document.getElementById('playersList2').value;
+            let fa_name = document.getElementById('playersList2').value;
             let state = document.getElementById('stateRelease');
             state.value = '임시저장';
             let now = new Date();
@@ -70,7 +70,7 @@
 
 
         function docSubmitOffer() {
-            let k_name = document.getElementById('playersList3').value;
+            let fa_name = document.getElementById('playersList3').value;
             let salaryValue = document.getElementById('salary').value;
             let contract_term = document.getElementById('contract_term').value;
             $('#salary').val(salaryValue);
@@ -78,7 +78,7 @@
             $('#r_documentOffer').submit();
         }
         function docSaveSubmitOffer() {
-            let k_name = document.getElementById('playersList3').value;
+            let fa_name = document.getElementById('playersList3').value;
             $('#stateOffer').val('임시저장');
 
             let salaryValue = document.getElementById('salary').value;
@@ -249,7 +249,7 @@
 
                                     <div class="item">
                                         <span class="title">계약연장  선수:</span>
-                                        <select id="playersList3" name="k_name">
+                                        <select id="playersList3" name="fa_name">
                                             <% for (int i = 0; i < faList.size(); i++) {
                                                 ApprovalVO faVO = faList.get(i);
                                                 if (faVO != null && "키움".equals(faVO.getFa_team()) && "FA자유계약".equals(faVO.getFa_agent())){
@@ -306,7 +306,7 @@
                                         </div>
                                         <div class="item">
                                             <span class="title">방출 선수:</span>
-                                            <select id="playersList2" name="k_name">
+                                            <select id="playersList2" name="fa_name">
                                                 <% for (int i = 0; i < faList.size(); i++) {
                                                     ApprovalVO faVO = faList.get(i);
                                                     if (faVO != null && "키움".equals(faVO.getFa_team()) && "FA자유계약".equals(faVO.getFa_agent())){
@@ -356,7 +356,7 @@
                                         </div>
                                         <div class="item">
                                             <span class="title">영입 선수:</span>
-                                            <select id="playersList1" name="k_name">
+                                            <select id="playersList1" name="fa_name">
                                                 <% for (int i = 0; i < faList.size(); i++) {
                                                     ApprovalVO faVO = faList.get(i);
                                                     if (faVO != null && faVO.getFa_agent() != null && !"키움".equals(faVO.getFa_team())) {

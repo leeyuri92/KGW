@@ -82,7 +82,7 @@
 
                                     <div class="item">
                                         <span class="title">방출 희망선수:</span>
-                                        <span class="value"><%=selected.getK_name()%></span>
+                                        <span class="value"><%=selected.getFa_name()%></span>
                                     </div>
                                     <div class="text-wrapper-2">상기와 같이 해당선수 방출  희망함</div>
                                 </div>
