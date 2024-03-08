@@ -3,7 +3,6 @@ package com.best.kgw.dao;
 import com.vo.ApprovalVO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface DocumentDao {
 //    기안문서 select
@@ -14,7 +13,7 @@ public interface DocumentDao {
     List<ApprovalVO >ApprovalList(ApprovalVO approvalVO);
 
     //    기안하기위한 정보들
-    List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo);
+    List<ApprovalVO> DocumentInfo(ApprovalVO approvalvo);
 
 
 // 기안문서 정보 insert
@@ -23,11 +22,6 @@ public interface DocumentDao {
 // 결재문서 정보 insert
     void  approvalInsert(ApprovalVO approvalVO) throws  Exception;
 
-    //    중간결재
-    int approvalMiddleModify(ApprovalVO approvalVO) throws Exception;
-
-    //    문서 업데이트처리
-    int documentModify(ApprovalVO approvalVO) throws Exception;
 
     void approvalUpdate(ApprovalVO approvalvo) throws Exception;
 
@@ -37,4 +31,9 @@ public interface DocumentDao {
     //임시저장 삭제
     int saveDocumentDelete(int document_no) throws Exception;
 
+    void documentStateModify(ApprovalVO approvalvo) throws Exception;
+
+    void vacation(ApprovalVO approvalvo)throws Exception;
+
+    void updateFA(ApprovalVO approvalvo)throws Exception;
 }

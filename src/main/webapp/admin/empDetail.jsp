@@ -121,8 +121,8 @@
                                 String realFolderq = "";
                                 String filePathq = "/fileUpload/sign/"+rmap.getEmp_no()+".png"; // 파일 경로 설정
                                 ServletContext contextq = request.getServletContext();
-                                realFolder = context.getRealPath(filePathq);
-                                File fileq = new File(realFolder);
+                                realFolderq = contextq.getRealPath(filePathq);
+                                File fileq = new File(realFolderq);
                                 if (fileq.exists()) { // 파일이 존재하는지 확인
                             %>
                             <img id="signImage" src="/fileUpload/sign/<%=rmap.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">

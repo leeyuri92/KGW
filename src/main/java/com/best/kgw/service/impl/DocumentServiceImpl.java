@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -36,9 +35,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     //기안하기필요한 문서 정보
     @Override
-    public List<Map<String, Object>> DocumentInfo(ApprovalVO approvalvo) {
-        List<Map<String, Object>> kiwoomList = documentDao.DocumentInfo(approvalvo);
-        return kiwoomList;
+    public List<ApprovalVO> DocumentInfo(ApprovalVO approvalvo) {
+        List<ApprovalVO> faTeam = documentDao.DocumentInfo(approvalvo);
+        return faTeam;
     }
 
     @Transactional
@@ -54,11 +53,26 @@ public class DocumentServiceImpl implements DocumentService {
 
 
 
-
+    @Transactional
     @Override
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
+        logger.info(approvalvo.toString());
         documentDao.approvalUpdate(approvalvo);
-        logger.info("serviceUpdate"+approvalvo);
+        if (approvalvo.getAction().equals("승인")){
+            if (approvalvo.getApproval_category().equals("최종결재승인")){
+                approvalvo.setState("완료");
+                if (approvalvo.getApproval_category().equals("휴가")){
+                    documentDao.vacation(approvalvo);
+                }else {
+                    documentDao.updateFA(approvalvo);
+                }
+            }else{
+                approvalvo.setState("진행");
+            }
+        }else{
+            approvalvo.setState("반려");
+        }
+        documentDao.documentStateModify(approvalvo);
     }
 
 
@@ -76,11 +90,6 @@ public int saveModify(ApprovalVO approvalVO) throws Exception {
         documentDelete = documentDao.saveDocumentDelete(document_no);
         return documentDelete;
     }
-
-
-
-//    결재 업대이트 처리
-
 }
 
 

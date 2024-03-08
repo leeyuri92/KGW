@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AdminServiceImpl implements AdminSevice {
@@ -44,7 +42,7 @@ public class AdminServiceImpl implements AdminSevice {
      **********************************************************************************/
     @Override
     public List<EmpVO> empList(EmpVO empVO) throws Exception {
-        logger.info("Service Detail");
+        logger.info("Service empList");
         List<EmpVO> empList = adminDao.empList(empVO);
         logger.info(empList.toString());
         return empList;
@@ -63,18 +61,9 @@ public class AdminServiceImpl implements AdminSevice {
         return result;
     }
 
-    /**********************************************************************************
-     작성자 : 이동건
-     작성일자 : 24.02.23
-     기능 : 사원검색 서비스
-     **********************************************************************************/
-    @Override
-    public List<EmpVO> empSerach(EmpVO empVO) {
-        logger.info("Service Detail");
-        List<EmpVO> empList = adminDao.empSerach(empVO);
-        logger.info(empList.toString());
-        return empList;
-    }
+
+
+
 
 
 }

@@ -4,7 +4,9 @@
 <%@ page import="com.vo.DocumentVO,com.vo.ApprovalVO" %>
 <%@ page import="com.google.gson.Gson" %>
 <%
-    List<Map<String,Object>> kiwoomList = (List) request.getAttribute("kiwoomList");
+//    List<Map<String,Object>> kiwoomList = (List) request.getAttribute("kiwoomList")
+    List<ApprovalVO> faList = (List) request.getAttribute("faList");
+
 %>
 
 <html lang="ko">
@@ -36,9 +38,11 @@
 
 
         function docSubmitScout() {
+            let fa_name = document.getElementById('playersList1').value;
             $('#r_documentScout').submit();
         }
         function docSaveSubmitScout() {//영입 문서 임시저장
+            let fa_name = document.getElementById('playersList1').value;
             let state = document.getElementById('stateScout');
             state.value = '임시저장';
             let now = new Date();
@@ -50,9 +54,11 @@
 
 
         function docSubmitRelease() {
+            let fa_name = document.getElementById('playersList2').value;
             $('#r_documentRelease').submit();
         }
         function docSaveSubmitRelease() {//방출 문서 임시저장
+            let fa_name = document.getElementById('playersList2').value;
             let state = document.getElementById('stateRelease');
             state.value = '임시저장';
             let now = new Date();
@@ -64,6 +70,7 @@
 
 
         function docSubmitOffer() {
+            let fa_name = document.getElementById('playersList3').value;
             let salaryValue = document.getElementById('salary').value;
             let contract_term = document.getElementById('contract_term').value;
             $('#salary').val(salaryValue);
@@ -71,10 +78,9 @@
             $('#r_documentOffer').submit();
         }
         function docSaveSubmitOffer() {
-
+            let fa_name = document.getElementById('playersList3').value;
             $('#stateOffer').val('임시저장');
 
-          // value =" "경우  jquery 사용
             let salaryValue = document.getElementById('salary').value;
             let contract_term = document.getElementById('contract_term').value;
             $('#salary').val(salaryValue);
@@ -88,9 +94,6 @@
 
         }
 
-
-
-        // 수정됨
         function docSubmitVacation() {
             $('#r_documentVacation').submit();
         }
@@ -105,11 +108,6 @@
             $('#r_documentVacation').submit();
             console.log("임시저장성공");
         }
-
-
-
-
-
     </script>
     <link  rel="stylesheet " href="../css/approvalDocu.css">
 </head>
@@ -131,7 +129,7 @@
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">문서기안하기</div>
+                    <div class="text-dark fs-6">기안문서</div>
                 </div>
 
             </div>
@@ -187,7 +185,7 @@
 
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title" name="document_title" value="휴가관련"  >
+                                            <input type="text" class="value-input" id="document_title" name="document_title" value=""  >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
@@ -201,18 +199,18 @@
                                             <span class="title">신청자:</span>
                                             <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" >
                                         </div>
-                                                                            <div class="item">
-                                                                                <span class="title">휴가 사유:</span>
-                                                                                <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >
-                                                                            </div>
-                                                                            <div class="item">
-                                                                                <span class="title">휴가시작일:</span>
-                                                                                <input type="date" id="start_date" name="start_date"   value="2024-03-03">
-                                                                            </div>
-                                                                            <div class="item">
-                                                                                <span class="title">휴가만료일：</span>
-                                                                                <input type="date" id="end_date" name="end_date"  value="2024-03-04">
-                                                                            </div>
+                                        <div class="item">
+                                            <span class="title">휴가 사유:</span>
+                                            <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="월차" >
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">휴가시작일:</span>
+                                            <input type="date" id="start_date" name="start_date"   value="2024-03-03">
+                                        </div>
+                                        <div class="item">
+                                            <span class="title">휴가만료일：</span>
+                                            <input type="date" id="end_date" name="end_date"  value="2024-03-04">
+                                        </div>
                                         <div class="text-wrapper-2">상기와 같이 휴가  희망함</div>
                                     </div>
                                     <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
@@ -221,14 +219,6 @@
                                     </div>
                                 </div>
                             </form>
-
-
-
-
-
-
-
-
                             <form id="r_documentOffer" name="r_documentOffer" action="documentInsert" method="post">
                             <div class="frame" id="do_pla_a"> <%--계약연장 문서--%>
                                 <div class="document-section">
@@ -241,7 +231,7 @@
 
                                     <div class="item">
                                         <span class="title">문서제목:</span>
-                                        <input type="text" class="value-input" id="document_title3" name="document_title" value="선수관련"  placeholder="제목을 자유롭게 작성하세요" >
+                                        <input type="text" class="value-input" id="document_title3" name="document_title" value=""   >
                                     </div>
                                     <div class="item" hidden="hidden">
                                         <span class="title">문서타이틀:</span>
@@ -259,12 +249,12 @@
 
                                     <div class="item">
                                         <span class="title">계약연장  선수:</span>
-                                        <select id="playersList3" name="k_name">
-                                                 <% for (int i = 0; i < kiwoomList.size(); i++) {
-                                                   Map<String,Object> KiwoomMap = kiwoomList.get(i);
-                                                   if(KiwoomMap != null) {
-                                                   %>
-                                                   <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                        <select id="playersList3" name="fa_name">
+                                            <% for (int i = 0; i < faList.size(); i++) {
+                                                ApprovalVO faVO = faList.get(i);
+                                                if (faVO != null && "키움".equals(faVO.getFa_team()) && "FA자유계약".equals(faVO.getFa_agent())){
+                                            %>
+                                                   <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
                                                    <%
                                                        }
                                                      }
@@ -289,9 +279,6 @@
                                 </div>
                             </div>
                             </form>
-
-
-
                             <form id="r_documentRelease" name="r_documentRelease" action="documentInsert" method="post">
                                 <div class="frame" id="do_pla_b"> <%--방출 문서--%>
                                     <div class="document-section">
@@ -303,7 +290,7 @@
                                         <input type="hidden" id="draftdayRelease" name="draftday"    value="" >
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title2" name="document_title" value="선수관련" placeholder="제목을 자유롭게 작성하세요"  >
+                                            <input type="text" class="value-input" id="document_title2" name="document_title" value=""  >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
@@ -318,13 +305,13 @@
                                             <input type="text" class="value-input" id="name2" name="name" value="<%=sessionVO.getName()%>" >
                                         </div>
                                         <div class="item">
-                                            <span class="title">영입 선수:</span>
-                                            <select id="playersList2" name="k_name">
-                                                <% for (int i = 0; i < kiwoomList.size(); i++) {
-                                                    Map<String,Object> KiwoomMap = kiwoomList.get(i);
-                                                    if(KiwoomMap != null) {
+                                            <span class="title">방출 선수:</span>
+                                            <select id="playersList2" name="fa_name">
+                                                <% for (int i = 0; i < faList.size(); i++) {
+                                                    ApprovalVO faVO = faList.get(i);
+                                                    if (faVO != null && "키움".equals(faVO.getFa_team()) && "FA자유계약".equals(faVO.getFa_agent())){
                                                 %>
-                                                <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                                <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
                                                 <%
                                                         }
                                                     }
@@ -334,15 +321,11 @@
                                         <div class="text-wrapper-2">상기와 같이 방출 희망함 </div>
                                     </div>
                                     <div id ="documentButton2 " class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitRelease()" >제출</button>
+                                        <button type="button"  id="btn_docSubmit2" class="btn btn-danger"   onclick="docSubmitRelease()" >제출</button>
                                         <button type="button" id="btn_search2" class="btn btn-danger" onclick="docSaveSubmitRelease()">임시보관 </button>
                                     </div>
                                 </div>
                             </form>
-
-
-
-
 
                             <%-- (r_document)Recruitment document : 영입문서                   --%>
                             <form id="r_documentScout" name="r_documentScout" action="documentInsert" method="post">
@@ -357,7 +340,7 @@
 
                                         <div class="item">
                                             <span class="title">문서제목:</span>
-                                            <input type="text" class="value-input" id="document_title1" name="document_title" value="선수관련" placeholder="제목을 자유롭게 작성하세요" >
+                                            <input type="text" class="value-input" id="document_title1" name="document_title" value=""  >
                                         </div>
                                         <div class="item" hidden="hidden">
                                             <span class="title">문서타이틀:</span>
@@ -373,12 +356,12 @@
                                         </div>
                                         <div class="item">
                                             <span class="title">영입 선수:</span>
-                                            <select id="playersList1" name="k_name">
-                                                <% for (int i = 0; i < kiwoomList.size(); i++) {
-                                                    Map<String,Object> KiwoomMap = kiwoomList.get(i);
-                                                    if(KiwoomMap != null) {
+                                            <select id="playersList1" name="fa_name">
+                                                <% for (int i = 0; i < faList.size(); i++) {
+                                                    ApprovalVO faVO = faList.get(i);
+                                                    if (faVO != null && faVO.getFa_agent() != null && !"키움".equals(faVO.getFa_team())) {
                                                 %>
-                                                <option value="<%= KiwoomMap.get("K_NAME") %>"><%= KiwoomMap.get("K_NAME") %></option>
+                                                <option value="<%= faVO.getFa_name() %>"><%= faVO.getFa_name() %></option>
                                                 <%
                                                         }
                                                     }
@@ -388,11 +371,12 @@
                                         <div class="text-wrapper-2">상기와 같이 영입 희망함 </div>
                                     </div>
                                     <div id ="documentButton1" class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitScout()" >제출</button>
+                                        <button type="button"  id="btn_docSubmit1" class="btn btn-danger"  onclick="docSubmitScout()" >제출</button>
                                         <button type="button" id="btn_search1" class="btn btn-danger" onclick="docSaveSubmitScout()">임시보관 </button>
                                     </div>
                                 </div>
                             </form>
+<%--                            data-bs-toggle="modal" data-bs-target="#boardForm" --%>
                         </div>
                     </div>
                 </div>

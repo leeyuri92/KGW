@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-//    List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
-
-//  out.print(attendanceCalendar);
+    String jspFileName = new java.io.File(request.getServletPath()).getName();
+//    out.print(jspFileName);
 %>
 
     <!-- calendar 태그 -->
@@ -54,6 +53,9 @@
                         emp_no: <%=attendanceCalendar.get(0).getEmp_no()%> // 이 부분은 서버 사이드 템플릿 코드로 처리되므로 클라이언트에서는 그대로 두세요.
                     };
 
+                    <%
+                    if (jspFileName.equals("attendanceCalendar.jsp")){
+                    %>
                     $.ajax({
                         url: 'jsonAttendanceSelect',
                         method: 'POST',
@@ -76,7 +78,7 @@
 
                                 if (item['state'] !== '정상출근') {
                                     var buttonCell = $('<td>');
-                                    var button = $('<button>').attr('id', 'bb').attr('class', 'btn btn-danger').attr('style', 'width: 100%;').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modAttendance').text('근태수정요청');
+                                    var button = $('<button>').attr('id', 'bb').attr('class', 'btn btn-danger').attr('style', 'width: 70%;').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modAttendance').text('근태수정요청');
                                     buttonCell.append(button);
                                     row.append(buttonCell);
                                 }
@@ -88,6 +90,9 @@
                             // 에러 처리
                         }
                     });
+                    <%
+                    }
+                    %>
                 },
 
                 eventMouseEnter: function(info) {

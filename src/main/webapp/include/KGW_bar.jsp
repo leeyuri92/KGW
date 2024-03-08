@@ -10,7 +10,7 @@
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     EmpVO sessionVO = principalDetails.getEmpVO();
-    session.setMaxInactiveInterval(6000);
+    session.setMaxInactiveInterval(1800);
 
 %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -102,7 +102,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // 확인을 눌렀을 때의 동작
-                location.href = "/";
+                location.reload();
             } else {
                 // 취소를 눌렀을 때의 동작
                 console.log("연장 취소");
@@ -128,7 +128,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <div class="user-panel d-flex" >
-                    <div class="nav-link mt-1" style="font-weight: bold">자동 로그아웃 시간  <i class="bi bi-clock"></i> &nbsp; <span id="time" style="font-size: 18px">05:00</span></div>
+                    <div class="nav-link mt-1" style="font-weight: bold">자동 로그아웃 시간  <i class="bi bi-clock"></i> &nbsp; <span id="time" style="font-size: 18px">30:00</span></div>
                     <button type="button" id="sessionBtn" class="btn btn-secondary btn-sm mt-2" style="font-weight:bold; height: 35px;" onclick="extendLoginTime()">로그인 연장</button>
                     <div class="info">
                         <%
@@ -271,21 +271,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../approval/documentList" class="nav-link">
+                                <a href="../approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>기안문서함</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../approval/saveList" class="nav-link">
+                                <a href="../approval/saveList?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>임시저장함 </p>
+                                    <p>임시문서함 </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="../approval/approvalList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
-                                    <p>결재자문서함</p>
+                                    <p>결재문서함</p>
                                 </a>
                             </li>
                         </ul>

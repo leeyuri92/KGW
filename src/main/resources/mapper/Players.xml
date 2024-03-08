@@ -56,13 +56,28 @@
         P_WHIP
         FROM PITCHER
         <where>
-            <if test="p_ip != 'all'">
-                AND P_IP > 50
-            </if>
+          <if test="gubun!=null">
+              <choose>
+                  <when test='gubun.equals("p_ip")'>
+                      AND p_ip>50 like
+                  </when>
+              </choose>
+          </if>
         </where>
         order by  P_NO asc
 
     </select>
 
+<!--if test="gubun != null">
+                <choose>
+                    <when test='gubun.equals("notice_title")'>
+                        AND a.notice_title LIKE '%'||#{keyword}||'%'
+                    </when>
+                    <when test='gubun.equals("emp_no")'>
+                        AND b.name LIKE '%'||#{keyword}||'%'
+                    </when>
+                </choose>
 
+
+            </if>-->
 </mapper>

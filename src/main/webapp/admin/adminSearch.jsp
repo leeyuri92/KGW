@@ -175,16 +175,16 @@
                                                 if (empVO.getEmp_no() != 0 && new java.io.File(application.getRealPath(profileImgSrc)).exists()) {
                                             %>
                                             <a href="javascript:empDetail('<%=empVO.getEmp_no()%>')">
-                                            <img src="<%=profileImgSrc%>" class="img-circle m-1" alt='' style="width: 30px; height: 30px; cursor: pointer;">
-                                            <%
+                                                <img src="<%=profileImgSrc%>" class="img-circle m-1" alt='' style="width: 30px; height: 30px; cursor: pointer;">
+                                                    <%
                                             } else {
                                             %>
-                                            <a href="javascript:empDetail('<%=empVO.getEmp_no()%>')">
-                                            <img src="/fileUpload/profile/K1.png" class="img-circle m-1" alt='' style="width: 30px; height: 30px; cursor: pointer;">
-                                            <%
+                                                <a href="javascript:empDetail('<%=empVO.getEmp_no()%>')">
+                                                    <img src="/fileUpload/profile/K1.png" class="img-circle m-1" alt='' style="width: 30px; height: 30px; cursor: pointer;">
+                                                        <%
                                                 }
                                             %>
-                                            <%=empVO.getName()%>
+                                                        <%=empVO.getName()%>
                                         </td>
                                         <td><%=empVO.getTeam_name()%></td>
                                         <td><%=empVO.getEmp_position()%></td>

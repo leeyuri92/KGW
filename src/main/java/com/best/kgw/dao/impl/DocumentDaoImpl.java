@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class DocumentDaoImpl implements DocumentDao {
@@ -39,9 +38,9 @@ public class DocumentDaoImpl implements DocumentDao {
 
     //    기안하기필요한 정보
      @Override
-      public List<Map<String,Object>> DocumentInfo(ApprovalVO approvalvo){
-         List<Map<String,Object>> kiwoomList =sqlSessionTemplate.selectList("k_List", approvalvo);
-        return kiwoomList;
+      public List<ApprovalVO> DocumentInfo(ApprovalVO approvalvo){
+         List<ApprovalVO> faTeam =sqlSessionTemplate.selectList("faTeam", approvalvo);
+        return faTeam;
     }
     
 //    영입 문서 작성
@@ -55,86 +54,48 @@ public class DocumentDaoImpl implements DocumentDao {
         logger.info("==================ApprovalInsert");
        sqlSessionTemplate.insert("approvalInsert",approvalVO);
     }
-//    중간결재
-@Override
-public int approvalMiddleModify(ApprovalVO approvalVO) throws Exception {
-    int middleModify=0;
-    middleModify=sqlSessionTemplate.update("approvalMiddleModify",approvalVO);
-    return middleModify;
-}
-
-//    최종결재
-    public int approvalFinalModify(ApprovalVO approvalVO) throws Exception {
-        int finalModify=0;
-        finalModify=sqlSessionTemplate.update("approvalFinalModify",approvalVO);
-        return finalModify;
-    }
-
-//    문서 업데이트처리
-    @Override
-    public int documentModify(ApprovalVO approvalVO) throws Exception {
-        int documentModify=0;
-        documentModify=sqlSessionTemplate.update("documentStateModify",approvalVO);
-        return documentModify;
-    }
 
     @Override
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
         if(approvalvo.getApproval_category().equals("중간결재대기")){
-            logger.info("dao"+approvalvo);
-            approvalvo.setApproval_category("최종결재대기");
             sqlSessionTemplate.update("approvalMiddleModify", approvalvo);
         }else{
             logger.info("dao"+approvalvo);
             sqlSessionTemplate.update("approvalFinalModify", approvalvo);
         }
-
-
-
-//
-//        if ("approve".equals(actionType)) {
-//            if ("중간결재대기".equals(approvalVO.getApproval_category())) {
-//                approvalVO.setApproval_category("최종결재대기");
-//                sqlSessionTemplate.update("approvalMiddleModify", approvalVO);
-//            } else if ("최종결재대기".equals(approvalVO.getApproval_category())) {
-//                approvalVO.setApproval_category("최종결재승인");
-//                sqlSessionTemplate.update("approvalFinalModify", approvalVO);
-//            }
-//        } else if ("reject".equals(actionType)) {
-//            approvalVO.setRejection_content(rejectionContent);
-//            if ("중간결재대기".equals(approvalVO.getApproval_category())) {
-//                approvalVO.setApproval_category("중간승인반려");
-//                sqlSessionTemplate.update("approvalMiddleModify", approvalVO);
-//            } else if ("최종결재대기".equals(approvalVO.getApproval_category())) {
-//                approvalVO.setApproval_category("최종승인반려");
-//                sqlSessionTemplate.update("approvalFinalModify", approvalVO);
-//            }
-//        }
-//    }
     }
-// 임시저장 업데이트
-@Override
-public int saveModify(ApprovalVO approvalVO) throws Exception {
-    logger.info("saveModify");
-    int saveModify=0;
-   saveModify=sqlSessionTemplate.update("saveModify",approvalVO);
-    return saveModify;
-}
 
-
-
-
-//임시저장 삭제
+    // 임시저장 업데이트
     @Override
-public int saveDocumentDelete(int document_no) throws Exception {
-    int documentDelete=0;
-   documentDelete=sqlSessionTemplate.delete("documentDelete",document_no);
-    return documentDelete;
-}
+    public int saveModify(ApprovalVO approvalVO) throws Exception {
+        logger.info("saveModify");
+        int saveModify=0;
+       saveModify=sqlSessionTemplate.update("saveModify",approvalVO);
+        return saveModify;
+    }
 
+    //임시저장 삭제
+    @Override
+    public int saveDocumentDelete(int document_no) throws Exception {
+        int documentDelete=0;
+       documentDelete=sqlSessionTemplate.delete("documentDelete",document_no);
+        return documentDelete;
+    }
 
+    @Override
+    public void documentStateModify(ApprovalVO approvalvo) throws Exception {
+        logger.info("documentStateModify======="+approvalvo.toString());
+        sqlSessionTemplate.update("documentStateModify",approvalvo);
+    }
 
+    @Override
+    public void vacation(ApprovalVO approvalvo) throws Exception {
 
+    }
 
+    @Override
+    public void updateFA(ApprovalVO approvalvo) throws Exception {
+        sqlSessionTemplate.update("updateFA", approvalvo);
+    }
 }
 

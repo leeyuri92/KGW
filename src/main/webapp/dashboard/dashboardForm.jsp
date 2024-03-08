@@ -27,28 +27,8 @@
   <!-- 부트스트랩 라이브러리 -->
   <%@include file="/common/bootstrap_common.jsp" %>
   <link rel="stylesheet" href="/css/mainCalendar.css">
-  <script>
-    const draft = () =>{
-        location.href = "/approval/docu";
-    }
 
-    const waitApproval = () =>{
-        location.href = "/approval/documentList";
-    }
-
-    const processApproval = () =>{
-        location.href = "/approval/documentList";
-    }
-
-    const completeApproval = () =>{
-        location.href = "/approval/documentList";
-    }
-
-    const companionApproval = () =>{
-        location.href = "/approval/documentList";
-    }
-  </script>
-
+  
   <title>메인페이지</title>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
@@ -87,7 +67,7 @@
               <div class="row" style="margin: auto;">
                 <div class="user-panel">
                   <a href="/mypage?emp_no=<%=sessionVO.getEmp_no()%>">
-                    <img src=<%=filePath%> class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
+                    <img src="<%=filePath%>" class="img-circle m-4 img-responsive" alt="User Image" style=" margin: auto; width: 70%; height: auto;">
                   </a>
                 </div>
               </div>
@@ -317,23 +297,44 @@
   </div>
 </div>
     <script>
-        $("#btn_top").click(function() {  // 버튼 클릭 시
-            $('html,body').scrollTop(0);  // 스크롤탑이 '0'이 된다는 - 스크롤이 제일 위로 올라간다는 의미
-        });
-
-        const updateTime = () => {
-            let timeString = moment().format('HH:mm:ss');
-            document.querySelector("#clock").textContent = timeString;
+            const draft = () =>{
+            location.href = "/approval/docu";
         }
 
-        // 매 초마다 시간을 업데이트
-        setInterval(updateTime, 1000);
+            const waitApproval = () =>{
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+        }
 
-        const workStart = () =>{
-            let timeString = moment().format('HH:mm:ss');
-            const data = {
-                "start_time" : timeString,
-                "emp_no" : <%=sessionVO.getEmp_no()%>
+            const processApproval = () =>{
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+        }
+
+            const completeApproval = () =>{
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+        }
+
+            const companionApproval = () =>{
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+        }
+
+
+    $("#btn_top").click(function() { // 버튼 클릭 시
+    $('html,body').scrollTop(0); // 스크롤탑이 '0'이 된다는 - 스크롤이 제일 위로 올라간다는 의미
+    });
+
+    const updateTime = () => {
+    let timeString = moment().format('HH:mm:ss');
+    document.querySelector("#clock").textContent = timeString;
+    }
+
+    // 매 초마다 시간을 업데이트
+    setInterval(updateTime, 1000);
+
+    const workStart = () =>{
+    let timeString = moment().format('HH:mm:ss');
+    const data = {
+    "start_time" : timeString,
+    "emp_no" : <%=sessionVO.getEmp_no()%>
             }
             Swal.fire({
                 title: "출근하시겠습니까?",

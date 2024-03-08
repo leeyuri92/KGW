@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("approval")
-public class DocumentController {
+public class    DocumentController {
     Logger logger = LoggerFactory.getLogger("DocumentController".getClass());
 
     @Autowired
@@ -33,7 +34,7 @@ public class DocumentController {
     //    문서함
     @GetMapping("/documentList")
     public String DocumentList(Model model, ApprovalVO approvalVO) {
-        approvalVO.setGubun("false");
+        approvalVO.setStorage("false");
         List<ApprovalVO> list = documentService.DocumentList(approvalVO);
         model.addAttribute("list", list);
         return "forward:documentList.jsp";
@@ -77,15 +78,22 @@ public class DocumentController {
 
     // 문서 작성
     @PostMapping("documentInsert")
-    public String  documentInsert( ApprovalVO approvalVO) throws Exception {
+    public String  documentInsert( ApprovalVO approvalVO, RedirectAttributes redirectAttributes) throws Exception {
         logger.info("DocumentController :  documentInsert");
+        int result = 0;
         documentService.documentInsert(approvalVO);
-        return "redirect:documentList";
+        redirectAttributes.addAttribute("emp_no", approvalVO.getEmp_no());
+        if (approvalVO.getState().equals("임시저장")){
+            return "redirect:saveList";
+        }else{
+            return "redirect:documentList";
+        }
     }
 //임시보관함 조회
     @GetMapping("/saveList")
-    public String SaveList(Model model, ApprovalVO approvalVO) throws  Exception{
-        approvalVO.setGubun("true");
+
+        public String SaveList(Model model, ApprovalVO approvalVO, @RequestParam(required = false) Integer emp_no) throws  Exception{
+        approvalVO.setStorage("true");
         List<ApprovalVO> list3 = documentService.DocumentList(approvalVO);
         logger.info("saveLIst"+list3);
         model.addAttribute("list3", list3);
@@ -95,27 +103,26 @@ public class DocumentController {
 //임시저장함 상세
     @GetMapping("/saveDetail")
     public String SaveDetail(Model model, ApprovalVO approvalVO) throws  Exception{
-        approvalVO.setGubun("true");
+        approvalVO.setStorage("true");
         List<ApprovalVO> saveDetail = documentService.DocumentList(approvalVO);
+        logger.info("DetailSaveINFO");
         model.addAttribute("saveDetail", saveDetail);
         return "forward:approvalSaveListDetail.jsp";
     }
 
-//    추후 insert 임시저장  기능 있음
 
 
+//   select 구분
 
     //  기안문서 할떄   값을 select 하기
     @GetMapping("/docu")
     public String DocumentInfo(Model model, ApprovalVO approvalvo) throws  Exception {
-        List<Map<String,Object>> kiwoomList = documentService.DocumentInfo(approvalvo);
-        model.addAttribute("kiwoomList", kiwoomList);
+        List<ApprovalVO> faList = documentService.DocumentInfo(approvalvo);
+        logger.info("controller!!!!!!!!!1");
+        model.addAttribute("faList", faList);
         return "forward:approvalDocu.jsp";
 
     }
-
-
-
 
 
     //결재 파트 업데이트 처리
@@ -139,7 +146,7 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
     }
 
 }
-//delete부분 
+//delete부분 임시저장
     @DeleteMapping("/saveList/{document_no}")
     //게시글 삭제
     public String saveDelete(@PathVariable("document_no") Integer document_no) throws Exception {
@@ -151,24 +158,6 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
             return "error";
         }
     }
-
-
-
-/* 결재 업데이트 처리 
-* @PostMapping("/updateApproval")
-public String updateApproval(ApprovalVO approvalVO) {
-    // 根据gubun的值决定调用哪个服务方法
-    if ("true".equals(approvalVO.getGubun())) {
-        // 调用执行“同意”操作的服务方法
-        approvalService.approve(approvalVO);
-    } else if ("false".equals(approvalVO.getGubun())) {
-        // 调用执行“驳回”操作的服务方法
-        approvalService.reject(approvalVO);
-    }
-    return "redirect:/somePage"; // 重定向到某个页面
-}
-
-* */
 
 }
 

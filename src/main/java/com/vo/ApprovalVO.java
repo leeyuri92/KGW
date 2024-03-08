@@ -39,8 +39,15 @@ public class ApprovalVO {
         private  String  k_name; // 우리구단 선수명
         private  int fa_no; // fa no
         private  String  fa_name; //fa 이름
+        private  String  fa_team;// fa team
+        private  String  fa_sate;// true 시  키움 false 시 자유
+        private  String  fa_agent;
 
-        private String gubun;  //임시저장 select 사용 컬럼
+        private String storage;//  value true 시 임시저장
+        private String gubun;  //검색위한사용 컬럼
+        private String action; //결재 바트 업데이트 처리 컬럼
+
+        private String keyword;
         
 //        select 받아논 데이터 끝
     @Builder
@@ -48,7 +55,7 @@ public class ApprovalVO {
                        String start_date,String  end_date,String  draftday,String  dayoff_content,int  k_no, int salary ,String contract_term, String team_name,
                        int approval_no,String approval_name,String  approval_category, String  rejection_content, String  middle_approval_date,
                        String  final_approval_date , String middlesign_name, String finalsign_name, String name,int dayoff_cnt,String emp_position,
-                       int team_no, String k_name, String k_team, int fa_no,String fa_name ){
+                       int team_no, String k_name, String k_team, int fa_no,String fa_name,String fa_team ,String fa_sate ,String fa_agent  ,String keyword ,String storage,String gubun){
         super();
         this.document_no=document_no;
         this.emp_no=emp_no;
@@ -80,5 +87,11 @@ public class ApprovalVO {
         this.k_team = k_team;
         this.fa_no = fa_no;
         this.fa_name = fa_name;
+        this.fa_team=fa_team;
+        this.fa_sate=fa_sate;
+        this.fa_agent=fa_agent;
+        this.keyword=keyword;
+        this.storage=storage;
+        this.gubun=gubun;
     }
 }

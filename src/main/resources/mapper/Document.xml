@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.DocumentMapper">
+
+ <mapper namespace="com.example.mapper.DocumentMapper">
 
     <select id="selectDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
         SELECT *
         FROM document LEFT JOIN approval
             ON document.document_no = approval.document_no
-            <where>
-                <if test="gubun !=null">
-                    <choose>
-                        <when test='gubun == "true"'>
-                            AND document.state = '임시저장'
-                            <if test="document_no != null"> AND document.document_no = ${document_no}</if>
-                        </when>
-                        <when test='gubun=="false"'>
-                            AND document.state != '임시저장'
-                        </when>
-                    </choose>
-                </if>
-            </where>
-            order by document.document_no asc
+        <where>
+            <if test="storage != null">
+                <choose>
+                    <when test='storage == "true"'>
+                        AND document.state = '임시저장'
+                        <if test="document_no != null">
+                            AND document.document_no = #{document_no}
+                        </if>
+                        <!-- 임시저장시 구분 검색 -->
+                        <if test="gubun != null">
+                            <choose>
+                                <when test='gubun.equals("document_title")'>
+                                    AND  document.document_title LIKE '%' || #{keyword} || '%'
+                                </when>
+                                <when test='gubun.equals("document_category")'>
+                                    AND document.document_category LIKE '%' || #{keyword} || '%'
+                                </when>
+                            </choose>
+                        </if>
+                    </when>
+
+                    <when test='storage == "false"'>
+                        AND document.state != '임시저장'
+                        <!--기안문서함시 구분검색 -->
+                        <if test="gubun != null">
+                            <choose>
+                                <when test='gubun.equals("document_title")'>
+                                    AND document.document_title LIKE '%' || #{keyword} || '%'
+                                </when>
+                                <when test='gubun.equals("document_category")'>
+                                    AND document.document_category LIKE '%' || #{keyword} || '%'
+                                </when>
+                            </choose>
+                        </if>
+                    </when>
+                </choose>
+            </if>
+        </where>
+            order by document.document_no desc
         </select>
-
-
 
         <!--   결재자 select -->
     <select id="approvalDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
@@ -37,23 +61,41 @@
                                    ON e.team_no = t.team_no
         <where>
             <if test="document_no !=null"> AND d.document_no = #{document_no}</if>
+
+<!--            <if test="gubun != null">-->
+<!--                <choose>-->
+<!--                    <when test='gubun.equals("document_title")'>-->
+<!--                        AND document.document_title LIKE '%' || #{keyword} || '%'-->
+<!--                    </when>-->
+<!--                    <when test='gubun.equals("document_category")'>-->
+<!--                        AND document.document_category LIKE '%' || #{keyword} || '%'-->
+<!--                    </when>-->
+<!--                </choose>-->
+<!--            </if>-->
+
         </where>
+        order by a.document_no desc
     </select>
 
 
 
 
 <!--영입 계약필요한 데이터 -->
-    <select id="faTeam">
-        select * from fa where fa_team !='키움';
+    <select id="faTeam" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
+        SELECT fa_no,
+               fa_team,
+               fa_name ,
+               fa_state,
+               fa_agent
+                FROM fa
     </select>
 
 
 
-    <select id="k_List" parameterType="com.vo.ApprovalVO" resultType="map">
-        SELECT k_no, k_name
-        FROM kiwoom
-    </select>
+<!--    <select id="k_List" parameterType="com.vo.ApprovalVO" resultType="map">-->
+<!--        SELECT k_no, fa_name-->
+<!--        FROM kiwoom-->
+<!--    </select>-->
 
 
 
@@ -65,7 +107,7 @@
             emp_no,
             document_title,
             document_category,
-            k_name,
+            fa_name,
             start_date,
             end_date,
             dayoff_content,
@@ -79,7 +121,7 @@
                #{emp_no},
                #{document_title},
                #{document_category},
-               #{k_name,jdbcType=VARCHAR},
+               #{fa_name,jdbcType=VARCHAR},
                #{start_date,jdbcType=VARCHAR},
                #{end_date,jdbcType=VARCHAR},
                #{dayoff_content,jdbcType=VARCHAR},
@@ -106,21 +148,31 @@
     <update id="approvalMiddleModify" parameterType="com.vo.ApprovalVO">
         update approval
         set
-           approval_category = #{approval_category},
-            rejection_content = #{rejection_content,jdbcType=VARCHAR},
-            middle_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-            middlesign_name=#{middlesign_name}
+        <if test="action == '승인'">
+            approval_category = '최종결재대기',
+            middlesign_name=#{middlesign_name},
+        </if>
+        <if test="action == '반려'">
+            approval_category = '중간결재반려',
+            rejection_content = #{rejection_content},
+        </if>
+        middle_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
         where approval_no = #{approval_no}
     </update>
 
 
-    <update id="approvalFinalModify" parameterType="com.vo.ApprovalVO">
+    <update id="approvalFinalModify" parameterType="com.vo.ApprovalVO" >
         UPDATE approval
         SET
-            approval_category = #{approval_category},
-            rejection_content = #{rejection_content, jdbcType=VARCHAR},
-            final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS'),
-            finalsign_name=#{finalsign_name}
+        <if test="action == '승인'">
+            approval_category = '최종결재승인',
+            finalsign_name=#{finalsign_name},
+        </if>
+        <if test="action == '반려'">
+            approval_category = '최종결재반려',
+            rejection_content = #{rejection_content},
+        </if>
+        final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS')
         WHERE approval_no = #{approval_no}
     </update>
 
@@ -128,13 +180,13 @@
     <update id="documentStateModify" parameterType="com.vo.ApprovalVO">
         UPDATE document
         SET state = #{state}
-        WHERE document_no = #{document_No}
+        WHERE document_no = #{document_no}
     </update>
 
 
 
 
-<!--    임시정장부분   -->
+        <!--    임시정장부분   -->
     <update id="saveModify" parameterType="com.vo.ApprovalVO">
     update document
     set
@@ -143,57 +195,37 @@
         start_date = #{start_date,jdbcType=VARCHAR},
         end_date = #{end_date,jdbcType=VARCHAR},
         dayoff_content = #{dayoff_content,jdbcType=VARCHAR},
-        k_name = #{k_name,jdbcType=VARCHAR},
+        fa_name = #{fa_name,jdbcType=VARCHAR},
         salary = #{salary,jdbcType=INTEGER},
         contract_term = #{contract_term,jdbcType=VARCHAR},
         state =  #{state}
     where document_no = #{document_no}
-</update>
+    </update>
 
-<!--임시저장 삭제  걸재+문서동시   approval delete가 먼전이다  fk 의존성으로 생성됐슴으로 -->
+        <!--임시저장 삭제  걸재+문서동시   approval delete가 먼전이다  fk 의존성으로 생성됐슴으로 -->
 
     <delete id="documentDelete" parameterType="int">
         delete from document
                where document_no= #{document_no}
     </delete>
 
-
-
-<!--    kjh test update qury      action 는임의 추가하는 값이다  like gubun  true 는 승인 false 는 반려로 정함-->
-    <update id="updateDocumentStatus" parameterType="com.vo.ApprovalVO">
-        UPDATE approval
-        <set>
-            <!-- 현재 상태가 "중간결재대기"이고, 동작이 "동의"일 때 -->
-            <if test="APPROVAL_CATEGORY == '중간결재대기' and action == 'true'">
-                SET APPROVAL_CATEGORY = '최종결재대기',
-                middle_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-                middlesign_name = #{middlesign_name}
-            </if>
-            <!-- 현재 상태가 "중간결재대기"이고, 동작이 "반려"일 때 -->
-            <if test="APPROVAL_CATEGORY == '중간결재대기' and action == 'false'">
-                SET APPROVAL_CATEGORY = '중간반려',
-                rejectionReason = #{rejectionReason},
-                middle_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
-            </if>
-            <!-- 현재 상태가 "최종결재대기"이고, 동작이 "동의"일 때 -->
-            <if test="APPROVAL_CATEGORY == '최종결재대기' and action == 'true'">
-                SET APPROVAL_CATEGORY = '최종결재완성',
-                final_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-                finalsign_name = #{finalsign_name}
-            </if>
-            <!-- 현재 상태가 "최종결재대기"이고, 동작이 "반려"일 때 -->
-            <if test="APPROVAL_CATEGORY == '최종결재대기' and action == 'false'">
-                SET APPROVAL_CATEGORY = '최종반려',
-                rejectionReason = #{rejectionReason},
-                final_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
-            </if>
-        </set>
-        WHERE  approval_no = #{approval_no}
+    <update id="updateFA" parameterType="com.vo.ApprovalVO">
+        UPDATE FA
+        SET
+        <if test="document_category == '영입'">
+            fa_state = 'TRUE',
+            fa_team = '키움',
+        </if>
+        <if test="document_category == '방출'">
+            fa_state = 'FALSE',
+            fa_team = 'FA',
+        </if>
+        <if test="document_category == '계약'">
+            fa_sal = #{fa_sal},
+            fa_agent = 'null',
+        </if>
+            fa_ss = 2024
+        WHERE fa_name = #{fa_name}
     </update>
 
-
-
-
-
 </mapper>
-

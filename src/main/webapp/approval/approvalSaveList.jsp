@@ -4,11 +4,12 @@
 <%@  page import="com.vo.ApprovalVO" %>
 <%
     List<ApprovalVO>list3=(List)request.getAttribute("list3");
+//    out.print(list3);
     int size=0;
     if(list3!=null){
         size=list3.size();
     }
-    int numPerPage=5;
+    int numPerPage=10;
     int nowPage=0;
     if(request.getParameter("nowPage")!=null){
         nowPage=Integer.parseInt(request.getParameter("nowPage"));
@@ -50,13 +51,22 @@
           }
 
 
-          <%--	const boardSearch = () => {--%>
-    <%--		console.log('boardSearch');--%>
-    <%--		const gubun = document.querySelector("#gubun").value;--%>
-    <%--		const keyword = document.querySelector("#keyword").value;--%>
-    <%--		console.log(`${gubun} , ${keyword}`);--%>
-    <%--		location.href="/board/boardList?gubun="+gubun+"&keyword="+keyword;--%>
-    <%--	}--%>
+          function searchEnter(event){
+              if(event.keyCode === 13){
+                  boardSearch();
+              }
+          }
+
+          function boardSearch(){
+              const gubun = document.getElementById('gubun').value;
+              const keyword = document.getElementById('keyword').value;
+              console.log(gubun+keyword);
+              if(gubun !== 'none' && keyword.trim() !== ''){
+                  location.href="/approval/saveList?gubun="+gubun+"&keyword="+keyword;
+              } else {
+                  alert('원한시는 검색어를 입력하세요');
+              }
+          }
 
       </script>
 </head>
@@ -78,7 +88,7 @@
                     <div class="ms-2">></div>
                 </div>
                 <div class="d-flex align-items-center">
-                    <div class="text-dark fs-6">결재함</div>
+                    <div class="text-dark fs-6">임시문서함</div>
                 </div>
             </div>
             <div class="d-flex align-items-center mt-2">
@@ -86,7 +96,7 @@
                     <div class="position-absolute top-0 start-0" ></div>
                 </div>
                 <div class="d-flex align-items-center ms-2">
-                    <div class="fw-bold fs-5">임시보관함</div>
+                    <div class="fw-bold fs-5">임시문서함</div>
                     <div class="text-muted ms-3">임시보관문서  정보 조회할수 있는 페이지입니다.</div>
                 </div>
             </div>
@@ -101,24 +111,28 @@
                     <div class="box">
                         <div class="container">
                             <div class="box-header">
-                                <h4 style="font-weight: bold; margin-left: 1.5rem" >임시보관 문서함</h4>
+                                <h4 style="font-weight: bold; margin-left: 1.5rem" >임시문서함</h4>
                                 <hr />
                             </div>
 
                             <!-- 검색기 시작 !! div 안에 있는 태그 건들지마시오!! -->
                             <div class="row">
-
+                                <div class="col-2">
+                                    <select id="gubun" class="form-select" aria-label="분류선택">
+                                        <option value="none">분류선택</option>
+                                        <option value="document_category">종류</option>
+                                        <option value="document_title">제목</option>
+                                    </select>
+                                </div>
                                 <div class="col-3">
                                     <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
-                                           aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
+                                           aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter(event)"/>
                                 </div>
                                 <div class="col-1 ">
                                     <button id="btn_search" class="btn btn-danger" onclick="boardSearch()">검색</button>
 
                                 </div>
-                                <div class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button id="btn_search2" class="btn btn-danger" onclick="boardSearch()">기안서 작성 </button>
-                                </div>
+
 
                             <!-- 검색기 끝 -->
 
@@ -127,11 +141,11 @@
                                 <table class="table table-hover text-center ">
                                     <thead>
                                     <tr>
-                                        <th width="10%" >문서문서번호</th>
-                                        <th width="10%">종류</th>
-                                        <th width="10%">제목</th>
-                                        <th width="15%">저장시간</th>
-                                        <th width="10%">삭제</th>
+                                        <th width="10%" >문서번호</th>
+                                        <th width="10%">문서종류</th>
+                                        <th width="30%">문서제목</th>
+                                        <th width="15%">임시보관날짜</th>
+                                        <th width="10%"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -141,13 +155,11 @@
                                             ApprovalVO approvalVO=list3.get(i);
                                     %>
                                     <tr>
-                                        <td>
-                                            <a href="javascript:saveDetail('<%=approvalVO.getDocument_no()%>')">
-                                                <%= approvalVO.getDocument_no()%>
-                                            </a>
-                                        </td>
+                                        <td><%= approvalVO.getDocument_no()%></td>
                                         <td><%= approvalVO.getDocument_category()%></td>
-                                        <td><%= approvalVO.getDocument_title()%></td>
+                                        <td> <a href="javascript:saveDetail('<%=approvalVO.getDocument_no()%>')">
+                                            <%= approvalVO.getDocument_title()%></a>
+                                        </td>
                                         <td><%= approvalVO.getDraftday()%></td>
                                         <td><a href="javascript:saveDelete('<%= approvalVO.getDocument_no() %>')">삭제</a></td>
                                     </tr>

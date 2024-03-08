@@ -226,6 +226,7 @@
                         <input type="text" class="form-control mb-3" id="board_title" name="board_title" placeholder="제목을 입력해주세요." value="<%=mediaVO.getBoard_title()%>">
                     </div>
                     <textarea id="summernote" name="board_content"><%=mediaVO.getBoard_content()%></textarea>
+                    <input type="hidden" id="filename" name="filename" value="<%=mediaVO.getFilename()%>">
                     <div class="d-flex justify-content-end mt-3">
                         <button type="button" class="btn btn-primary" onclick="mediaNoticeModify()">수정</button>
                     </div>
