@@ -91,13 +91,9 @@ public class DocumentController {
     }
 //임시보관함 조회
     @GetMapping("/saveList")
-<<<<<<< HEAD
-    public String SaveList(Model model, ApprovalVO approvalVO, @RequestParam(required = false) Integer emp_no) throws  Exception{
-        approvalVO.setGubun("true");
-=======
-    public String SaveList(Model model, ApprovalVO approvalVO) throws  Exception{
+
+        public String SaveList(Model model, ApprovalVO approvalVO, @RequestParam(required = false) Integer emp_no) throws  Exception{
         approvalVO.setStorage("true");
->>>>>>> kjh
         List<ApprovalVO> list3 = documentService.DocumentList(approvalVO);
         logger.info("saveLIst"+list3);
         model.addAttribute("list3", list3);
