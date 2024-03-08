@@ -165,21 +165,31 @@
     <update id="approvalMiddleModify" parameterType="com.vo.ApprovalVO">
         update approval
         set
-           approval_category = #{approval_category},
-            rejection_content = #{rejection_content,jdbcType=VARCHAR},
-            middle_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-            middlesign_name=#{middlesign_name}
+        <if test="action == '승인'">
+            approval_category = '최종결재대기',
+            middlesign_name=#{middlesign_name},
+        </if>
+        <if test="action == '반려'">
+            approval_category = '중간결재반려',
+            rejection_content = #{rejection_content},
+        </if>
+        middle_approval_date= to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
         where approval_no = #{approval_no}
     </update>
 
 
-    <update id="approvalFinalModify" parameterType="com.vo.ApprovalVO">
+    <update id="approvalFinalModify" parameterType="com.vo.ApprovalVO" >
         UPDATE approval
         SET
-            approval_category = #{approval_category},
-            rejection_content = #{rejection_content, jdbcType=VARCHAR},
-            final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS'),
-            finalsign_name=#{finalsign_name}
+        <if test="action == '승인'">
+            approval_category = '최종결재승인',
+            finalsign_name=#{finalsign_name},
+        </if>
+        <if test="action == '반려'">
+            approval_category = '최종결재반려',
+            rejection_content = #{rejection_content},
+        </if>
+        final_approval_date = TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS')
         WHERE approval_no = #{approval_no}
     </update>
 
@@ -187,7 +197,7 @@
     <update id="documentStateModify" parameterType="com.vo.ApprovalVO">
         UPDATE document
         SET state = #{state}
-        WHERE document_no = #{document_No}
+        WHERE document_no = #{document_no}
     </update>
 
 
@@ -215,44 +225,6 @@
         delete from document
                where document_no= #{document_no}
     </delete>
-
-
-
-<!--    kjh test update qury      action 는임의 추가하는 값이다  like gubun  true 는 승인 false 는 반려로 정함-->
-    <update id="updateApprovalStatus" parameterType="com.vo.ApprovalVO">
-        UPDATE approval
-        <set>
-            <!-- 현재 상태가 "중간결재대기"이고, 동작이 "동의"일 때 -->
-            <if test="approval_category == '중간결재대기' and action == 'true'">
-                SET approval_category = '최종결재대기',
-                middle_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-                middlesign_name = #{middlesign_name}
-            </if>
-            <!-- 현재 상태가 "중간결재대기"이고, 동작이 "반려"일 때 -->
-            <if test="approval_category == '중간결재대기' and action == 'false'">
-                SET approval_category = '중간반려',
-                rejection_content = #{rejection_content},
-                middle_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
-            </if>
-            <!-- 현재 상태가 "최종결재대기"이고, 동작이 "동의"일 때 -->
-            <if test="approval_category == '최종결재대기' and action == 'true'">
-                SET approval_category = '최종결재완성',
-                final_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS'),
-                finalsign_name = #{finalsign_name}
-            </if>
-            <!-- 현재 상태가 "최종결재대기"이고, 동작이 "반려"일 때 -->
-            <if test="approval_category == '최종결재대기' and action == 'false'">
-                SET approval_category = '최종반려',
-                rejection_content = #{rejection_content},
-                final_approval_date = to_char(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD HH24:MI:SS')
-            </if>
-        </set>
-        WHERE  approval_no = #{approval_no}
-    </update>
-
-
-
-
 
 </mapper>
 
