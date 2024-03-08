@@ -162,7 +162,7 @@
                                         %>
                                         <div class="comment">
                                             <input type="hidden" class="board_no" value="<%=mediaVO.getBoard_no()%>">
-                                            <img src="/fileUpload/profile/<%=commendVO.getProfile_img()%>" class="user-avatar" alt="user-avatar">
+                                            <img src="/fileUpload/profile/<%=commendVO.getEmp_no()%>.png" class="user-avatar" alt="user-avatar">
                                             <div class="comment-content">
                                                 <p class="user-name"><%=commendVO.getName()%></p>
                                                 <p class="comment-text"><%=commendVO.getCommend_content()%></p>
