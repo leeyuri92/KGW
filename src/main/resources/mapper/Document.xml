@@ -213,11 +213,11 @@
         UPDATE FA
         SET
         <if test="document_category == '영입'">
-            fa_state = 'true',
+            fa_state = 'TRUE',
             fa_team = '키움',
         </if>
         <if test="document_category == '방출'">
-            fa_state = 'false',
+            fa_state = 'FALSE',
             fa_team = 'FA',
         </if>
         <if test="document_category == '계약'">
