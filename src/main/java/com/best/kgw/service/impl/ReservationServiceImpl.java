@@ -57,10 +57,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void insertReservation(CalendarVO calendarVO) {
+    public int insertReservation(CalendarVO calendarVO) {
         logger.info("Service : insertReservation 호출");
         try {
-            reservationDao.insertReservation(calendarVO);
+            return reservationDao.insertReservation(calendarVO);
         } catch (Exception e) {
             throw new RuntimeException("일정 등록 중 오류가 발생했습니다.", e);
         }

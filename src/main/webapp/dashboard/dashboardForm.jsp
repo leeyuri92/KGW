@@ -47,7 +47,6 @@
     const companionApproval = () =>{
         location.href = "/approval/documentList";
     }
-
   </script>
 
   <title>메인페이지</title>

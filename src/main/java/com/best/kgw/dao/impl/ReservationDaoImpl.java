@@ -51,10 +51,10 @@ public class ReservationDaoImpl implements ReservationDao {
     }
 
     @Override
-    public void insertReservation(CalendarVO calendarVO) throws Exception {
+    public int insertReservation(CalendarVO calendarVO) throws Exception {
         logger.info("Dao : insertReservation 호출");
         try {
-            sqlSessionTemplate.insert("insertReservation", calendarVO);
+            return sqlSessionTemplate.insert("insertReservation", calendarVO);
         } catch (Exception e) {
             throw new Exception("일정 등록 중 오류가 발생했습니다.", e);
         }

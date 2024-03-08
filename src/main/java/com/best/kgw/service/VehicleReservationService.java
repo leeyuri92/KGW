@@ -13,7 +13,7 @@ public interface VehicleReservationService {
 
     void deleteVehicleList(CalendarVO calendarVO);
 
-    void insertVehicleList(CalendarVO calendarVO);
+    int insertVehicleList(CalendarVO calendarVO);
 
     void updateVehicleList(CalendarVO calendarVO);
 
