@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class AdminDaoImpl implements AdminDao {
@@ -63,18 +62,8 @@ public class AdminDaoImpl implements AdminDao {
         return result;
     }
 
-    /**********************************************************************************
-     작성자 : 이동건
-     작성일자 : 24.02.23
-     기능 : 사원검색 레포지토리
-     **********************************************************************************/
-    @Override
-    public List<EmpVO> empSerach(EmpVO empVO) {
-        logger.info("Repository : empSerach 호출" + empVO);
-        List<EmpVO> empList = sqlSessionTemplate.selectList("empSerach", empVO);
-        logger.info(empList.toString());
-        return empList;
-    }
+
+
 
 
 }
