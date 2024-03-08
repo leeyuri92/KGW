@@ -286,7 +286,7 @@
             <%@include file="/include/icFAchart.jsp"%>
             </div>
           </div>
-          <div class="col" style="text-align: center; ">
+          <div class="col" style="text-align: center;">
             <div id="btn_top" title="위로">
                 <img src='/images/btn_png/btn_top.png' alt='top' style="cursor: pointer"/>
             </div>

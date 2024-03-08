@@ -68,6 +68,7 @@ public class DashboardController{
      **********************************************************************************/
     @GetMapping("/")
     public String DashboardForm(Model model,Map<String, Object> fmap, Map<String, Object> wmap, Map<String, Object> pmap, NoticeBoardVO noticeboardVO, MediaNoticeVO mediaNoticeVO) throws Exception {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         EmpVO empVO = principalDetails.getEmpVO();
