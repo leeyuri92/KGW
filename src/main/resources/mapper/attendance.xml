@@ -75,7 +75,7 @@
                 </choose>
             </if>
         </where>
-        order by batten.mod_date desc
+        order by b.mod_date desc
     </select>
 
     <select id="adminModAttendeanceMap" parameterType="com.vo.AttendanceModifyVO" resultType="map">

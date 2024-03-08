@@ -25,8 +25,4 @@ public interface DocumentService {
 
     int saveDelete(int document_no) throws Exception;
 
-    //    결재 업대이트 처리
-    void updateApprovalStatus(ApprovalVO approvalVO);
-
-    //    결재 업대이트 처리
 }

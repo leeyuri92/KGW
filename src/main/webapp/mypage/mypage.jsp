@@ -115,18 +115,16 @@
               <div class="col-2">
                 <div class="signImg" data-bs-toggle="modal" data-bs-target="#signSelect" style="border: 2px solid grey; width: 200px; height: 200px;  display: flex;  justify-content: center;  align-items: center; ">
                   <%
-
-                    if (file.exists()) { // 파일이 존재하는지 확인
-                  %>
-
-                  <img id="signImage" src="/fileUpload/sign/<%=empDetail.getEmp_no()%>.png" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
-                  <%
-                    }else{
-                  %>
-                  <div>서명하세요</div>
-                  <%
+                    String realFol = "";
+                    String fileP = "/fileUpload/sign/"+empDetail.getEmp_no()+".png"; // 파일 경로 설정
+                    ServletContext cont = request.getServletContext();
+                    realFol = cont.getRealPath(fileP);
+                    File fi = new File(realFol);
+                    if (!(fi.exists())) { // 파일이 존재하는지 확인
+                      fileP = "/fileUpload/sign/sign.png";
                     }
                   %>
+                  <img id="signImage" src="<%=fileP%>" style="width: 190px; height: 190px" class="sign" alt="sign" data-bs-toggle="modal" data-bs-target="#signSelect">
                 </div>
               </div>
               <div class="col-8">

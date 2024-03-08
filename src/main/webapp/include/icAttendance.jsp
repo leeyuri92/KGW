@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-//    List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
-
-//  out.print(attendanceCalendar);
+    String jspFileName = new java.io.File(request.getServletPath()).getName();
+//    out.print(jspFileName);
 %>
 
     <!-- calendar 태그 -->
@@ -54,6 +53,9 @@
                         emp_no: <%=attendanceCalendar.get(0).getEmp_no()%> // 이 부분은 서버 사이드 템플릿 코드로 처리되므로 클라이언트에서는 그대로 두세요.
                     };
 
+                    <%
+                    if (jspFileName.equals("attendanceCalendar.jsp")){
+                    %>
                     $.ajax({
                         url: 'jsonAttendanceSelect',
                         method: 'POST',
@@ -88,6 +90,9 @@
                             // 에러 처리
                         }
                     });
+                    <%
+                    }
+                    %>
                 },
 
                 eventMouseEnter: function(info) {

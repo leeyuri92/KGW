@@ -85,13 +85,13 @@
           <table class="table table-hover text-center ">
             <thead>
             <tr>
-              <th width="20%">수정요청일시</th>
-              <th width="10%">요청자</th>
+              <th width="13%">수정요청일시</th>
+              <th width="13%">요청자</th>
               <th width="10%">출근시간</th>
               <th width="10%">퇴근시간</th>
-              <th width="20%">수정 전 근태상태</th>
-              <th width="20%">수정 후 근태상태</th>
-              <th width="10%">상태</th>
+              <th width="13%">수정 전 근태상태</th>
+              <th width="13%">수정 후 근태상태</th>
+              <th width="13%">상태</th>
             </tr>
             </thead>
             <tbody>

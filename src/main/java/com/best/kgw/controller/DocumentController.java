@@ -159,25 +159,6 @@ public String saveModify (ApprovalVO approvalVO) throws Exception {
         }
     }
 
-    @PostMapping("/updateApproval")
-    public String updateApproval(ApprovalVO approvalVO, String fruitCondition) {
-        if ("중간결재대기".equals(approvalVO.getApproval_category()) && "true".equals(approvalVO.getAction())) {
-           documentService.updateApprovalStatus(approvalVO);
-            logger.info("controller 중간결재 성공");
-        } else  if  ("중간려재대기".equals(approvalVO.getApproval_category()) && "false".equals(approvalVO.getAction())) {
-            documentService.updateApprovalStatus(approvalVO);
-            logger.info("controller 중간결재반려");
-        } if ("최종결대기;".equals(approvalVO.getApproval_category()) && "true".equals(approvalVO.getAction())) {
-            documentService.updateApprovalStatus(approvalVO);
-            logger.info("controller 최종결재 성공");
-        } if ("최종결재대기".equals(approvalVO.getApproval_category()) && "false".equals(approvalVO.getAction())) {
-            documentService.updateApprovalStatus(approvalVO);
-            logger.info("최종결재 반려");
-        }
-
-        return "redirect:approvalList";
-    }
-
 }
 
 
