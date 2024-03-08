@@ -73,7 +73,7 @@
                         AND a.approval_category LIKE '%' || #{keyword} || '%'
                     </when>
                     <when test='gubun.equals("name")'>
-                        AND a.approval_category LIKE '%' || #{keyword} || '%'
+                        AND e.name LIKE '%' || #{keyword} || '%'
                     </when>
                 </choose>
             </if>
