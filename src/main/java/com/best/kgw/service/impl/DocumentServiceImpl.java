@@ -53,11 +53,22 @@ public class DocumentServiceImpl implements DocumentService {
 
 
 
-
+    @Transactional
     @Override
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
+        logger.info(approvalvo.toString());
         documentDao.approvalUpdate(approvalvo);
-        logger.info("serviceUpdate"+approvalvo);
+        if (approvalvo.getAction().equals("승인")){
+            if (approvalvo.getApproval_category().equals("최종결재승인")){
+                approvalvo.setState("완료");
+
+            }else{
+                approvalvo.setState("진행");
+            }
+        }else{
+            approvalvo.setState("반려");
+        }
+        documentDao.documentStateModify(approvalvo);
     }
 
 
@@ -75,16 +86,6 @@ public int saveModify(ApprovalVO approvalVO) throws Exception {
         documentDelete = documentDao.saveDocumentDelete(document_no);
         return documentDelete;
     }
-
-
-
-//    결재 업대이트 처리
-@Override
-public void updateApprovalStatus(ApprovalVO approvalVO) {
-    documentDao.updateApprovalStatus(approvalVO);
-}
-
-
 }
 
 

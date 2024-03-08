@@ -22,11 +22,6 @@ public interface DocumentDao {
 // 결재문서 정보 insert
     void  approvalInsert(ApprovalVO approvalVO) throws  Exception;
 
-    //    중간결재
-    int approvalMiddleModify(ApprovalVO approvalVO) throws Exception;
-
-    //    문서 업데이트처리
-    int documentModify(ApprovalVO approvalVO) throws Exception;
 
     void approvalUpdate(ApprovalVO approvalvo) throws Exception;
 
@@ -36,11 +31,5 @@ public interface DocumentDao {
     //임시저장 삭제
     int saveDocumentDelete(int document_no) throws Exception;
 
-    //결재문서 부분 업데이트 처리 로직
-    void updateApprovalStatus(ApprovalVO approvalVO);
-
-
-    //결재문서 부분 업데이트 처리
-
-
+    void documentStateModify(ApprovalVO approvalvo) throws Exception;
 }
