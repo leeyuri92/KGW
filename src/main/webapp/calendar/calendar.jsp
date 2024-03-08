@@ -104,6 +104,33 @@
                         insertEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
                     }
                 },
+
+                eventMouseEnter: function(info) {
+                    // 이벤트가 호버될 때 툴팁 생성
+                    var tooltip = document.createElement('div');
+                    tooltip.className = 'data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover"';
+                    tooltip.style.backgroundColor = '#f7eced';
+                    tooltip.style.border = '1px solid #ccc';
+                    tooltip.style.padding = '10px';
+                    tooltip.style.zIndex = '1000';
+
+                    // 시작 시간과 종료 시간에서 시간 정보를 추출하여 툴팁으로 표시
+                    tooltip.innerHTML = info.event.title + info.event.start + info.event.end;
+
+                    // 마우스 위치에 툴팁을 표시
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.top = (info.jsEvent.pageY - 60) + 'px'; // 마우스 위치에서 약간 위로 이동
+                    tooltip.style.left = (info.jsEvent.pageX - 50) + 'px';
+
+                    // 툴팁을 body에 추가
+                    document.body.appendChild(tooltip);
+
+                    // 마우스가 이벤트 바깥으로 나갈 때 툴팁 제거
+                    info.el.addEventListener('mouseleave', function() {
+                        tooltip.remove();
+                    });
+                },
+
                 events: [
                     <%  List<CalendarVO> myCalendarList = (List<CalendarVO>) request.getAttribute("myCalendarList");
                         if (myCalendarList != null) {

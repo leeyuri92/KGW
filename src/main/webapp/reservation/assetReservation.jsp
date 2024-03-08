@@ -154,6 +154,33 @@
                             insertEndInput.value = moment(event.end).format('YYYY-MM-DDTHH:mm');
                         }
                     },
+
+                    eventMouseEnter: function(info) {
+                        // 이벤트가 호버될 때 툴팁 생성
+                        var tooltip = document.createElement('div');
+                        tooltip.className = 'data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover"';
+                        tooltip.style.backgroundColor = '#f7eced';
+                        tooltip.style.border = '1px solid #ccc';
+                        tooltip.style.padding = '10px';
+                        tooltip.style.zIndex = '1000';
+
+                        // 시작 시간과 종료 시간에서 시간 정보를 추출하여 툴팁으로 표시
+                        tooltip.innerHTML = info.event.title + info.event.start + info.event.end;
+
+                        // 마우스 위치에 툴팁을 표시
+                        tooltip.style.position = 'absolute';
+                        tooltip.style.top = (info.jsEvent.pageY - 60) + 'px'; // 마우스 위치에서 약간 위로 이동
+                        tooltip.style.left = (info.jsEvent.pageX - 50) + 'px';
+
+                        // 툴팁을 body에 추가
+                        document.body.appendChild(tooltip);
+
+                        // 마우스가 이벤트 바깥으로 나갈 때 툴팁 제거
+                        info.el.addEventListener('mouseleave', function() {
+                            tooltip.remove();
+                        });
+                    },
+
                     resources: [
                         <%
                             int team_no_value = sessionVO.getTeam_no(); // 기존에 선언된 변수를 사용하도록 수정
@@ -252,7 +279,6 @@
                 let endInput = document.getElementById('insertEnd');
                 let resourceIdInput = document.getElementById('insertResourceId');
                 let assetNoInput = document.getElementById('insertAssetNo');
-
                 let reservation_title = titleInput.value;
                 let reservation_start = startInput.value;
                 let reservation_end = endInput.value;
@@ -260,16 +286,14 @@
                 let asset_id = resourceIdInput.value;
                 let asset_no = assetNoInput.value;
                 let url = '/assetReservation/insertReservation';
-
-                // 필수 값이 모두 입력되었는지 확인
                 if (reservation_title && reservation_start && reservation_end && emp_no && asset_id && asset_no) {
                     // SweetAlert로 등록 여부 확인
                     Swal.fire({
-                        title: "예약을 등록하시겠습니까?",
+                        title: "일정을 등록하시겠습니까?",
                         icon: "question",
                         showCancelButton: true,
-                        confirmButtonColor: '#7c1512',
-                        cancelButtonColor: '#7c1512',
+                        confirmButtonColor: '#7C1512',
+                        cancelButtonColor: '#7C1512',
                         confirmButtonText: '등록',
                         cancelButtonText: '취소'
                     }).then((result) => {
@@ -287,13 +311,18 @@
                                 },
                                 success: function(response) {
                                     console.log(response);
-                                    if (response > 0) {
+                                    if (response === "1") {
                                         if (window.opener) window.opener.location.reload(true);
                                         window.location.href = '${pageContext.request.contextPath}' + '/assetReservation/assetReservationList';
-
                                         Swal.fire({
-                                            title: "예약이 등록되었습니다.",
+                                            title: "일정이 등록되었습니다.",
                                             icon: "success",
+                                        });
+                                    } else if (response === "0") {
+                                        // 이미 예약이 있는 경우
+                                        Swal.fire({
+                                            title: "동일 시간대에 이미 예약이 존재합니다.",
+                                            icon: "error",
                                         });
                                     }
                                 },
@@ -304,13 +333,12 @@
                         }
                     });
                 } else {
-                    // 필수 값이 입력되지 않은 경우 알림 표시
+                    // 필수 항목이 입력되지 않은 경우 알림 표시
                     Swal.fire({
-                        title: "필수 항목을 모두 입력해주세요.",
+                        title: "필수 항목을 모두 입력해주세요",
                         icon: "warning",
                     });
                 }
-
                 // 모달 숨기기
                 let modal = document.getElementById('insertModal');
                 modal.style.display = 'none';

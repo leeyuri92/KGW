@@ -28,7 +28,7 @@
   <%@include file="/common/bootstrap_common.jsp" %>
   <link rel="stylesheet" href="/css/mainCalendar.css">
 
-
+  
   <title>메인페이지</title>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">

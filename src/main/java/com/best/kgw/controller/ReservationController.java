@@ -45,13 +45,14 @@ public class ReservationController {
     @ResponseBody
     public ResponseEntity<String> insertReservation(CalendarVO calendarVO) {
         logger.info("등록 컨트롤러 호출");
-
         ResponseEntity<String> entity = null;
-
         try {
-            reservationService.insertReservation(calendarVO);
-            logger.info("등록 DB 연결 시도");
-            entity = new ResponseEntity<>("1", HttpStatus.OK);
+            int result = reservationService.insertReservation(calendarVO);
+            if (result > 0) {
+                entity = new ResponseEntity<>("1", HttpStatus.OK); // 성공적으로 예약이 되었을 때
+            } else {
+                entity = new ResponseEntity<>("0", HttpStatus.OK); // 이미 예약이 있는 경우
+            }
         } catch (Exception e) {
             logger.info("예외 발생 등록 DB 처리 못함");
             e.printStackTrace();

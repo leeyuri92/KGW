@@ -64,12 +64,12 @@ public class VehicleReservationServiceImpl implements VehicleReservationService 
     }
 
     @Override
-    public void insertVehicleList(CalendarVO calendarVO) {
+    public int insertVehicleList(CalendarVO calendarVO) {
         logger.info("Service : insertVehicleList 호출");
         try {
-            vehicleReservationDao.insertVehicleList(calendarVO);
+            return vehicleReservationDao.insertVehicleList(calendarVO);
         } catch (Exception e) {
-            throw new RuntimeException("일정 삭제 중 오류가 발생했습니다.", e);
+            throw new RuntimeException("일정 등록 중 오류가 발생했습니다.", e);
         }
     }
 

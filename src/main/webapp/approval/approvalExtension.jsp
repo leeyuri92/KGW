@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="com.vo.ApprovalVO" %>
+<%
+  List<ApprovalVO> list = (List<ApprovalVO>)request.getAttribute("approvalDetail");
+  ApprovalVO approvalVO = list.get(0);
+//    out.print(approvalVO.getApproval_category());
+
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -49,20 +56,16 @@
                                     <div class="document-section">
                                         <div class="item">
                                             <span class="title">부서:</span>
-                                            <span class="value">자동불러옴</span>
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">담당자:</span>
-                                            <span class="value">자동불러옴</span>
+                                            <span class="value"><%=approvalVO.getTeam_name()%></span>
                                         </div>
                                         <div class="item">
                                             <span class="title">신청자:</span>
-                                            <span class="value">자동불러옴</span>
+                                            <span class="value"><%=approvalVO.getName()%></span>
                                         </div>
 
                                         <div class="item">
                                             <span class="title">계약연장 선수:</span>
-                                            <span class="value">[여기에 동적으로 해당선수 표시]</span>
+                                            <span class="value"><%=approvalVO.getFa_name()%></span>
                                         </div>
                                         <div class="item">
                                             <span class="title">계약기간:</span>

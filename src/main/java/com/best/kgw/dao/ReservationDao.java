@@ -16,7 +16,7 @@ public interface ReservationDao {
 
     void deleteReservation(CalendarVO calendarVO) throws Exception;
 
-    void insertReservation(CalendarVO calendarVO) throws Exception;
+    int insertReservation(CalendarVO calendarVO) throws Exception;
 
     void updateReservation(CalendarVO calendarVO) throws Exception;
 

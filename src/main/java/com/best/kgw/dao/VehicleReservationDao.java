@@ -14,7 +14,7 @@ public interface VehicleReservationDao {
 
     void deleteVehicleList(CalendarVO calendarVO)throws Exception;
 
-    void insertVehicleList(CalendarVO calendarVO)throws Exception;
+    int insertVehicleList(CalendarVO calendarVO)throws Exception;
 
     void updateVehicleList(CalendarVO calendarVO)throws Exception;
 

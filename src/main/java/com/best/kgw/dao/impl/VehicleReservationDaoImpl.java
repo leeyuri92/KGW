@@ -40,12 +40,15 @@ public class VehicleReservationDaoImpl implements VehicleReservationDao {
     }
 
     @Override
-    public void insertVehicleList(CalendarVO calendarVO)throws Exception {
+    public int insertVehicleList(CalendarVO calendarVO)throws Exception {
         logger.info("Dao : insertVehicleList 호출");
-        List<Map<String,Object>> list = null;
-        list = sqlSessionTemplate.selectList("insertVehicleList", calendarVO);
-        logger.info(list.toString());
+        try {
+            return sqlSessionTemplate.insert("insertVehicleList", calendarVO);
+        } catch (Exception e) {
+            throw new Exception("일정 등록 중 오류가 발생했습니다.", e);
+        }
     }
+
     @Override
     public void deleteVehicleList(CalendarVO calendarVO)throws Exception {
         logger.info("Dao : deleteVehicleList 호출");

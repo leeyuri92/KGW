@@ -56,9 +56,22 @@
 
 
     <insert id="insertVehicleList" parameterType="com.vo.CalendarVO">
+<![CDATA[
         INSERT INTO ASSET_RESERVATION (RESERVATION_NO, EMP_NO, ASSET_NO, RESERVATION_TITLE, RESERVATION_CONTENT, RESERVATION_START, RESERVATION_END)
-        VALUES (reservation_pk_seq.nextval, '${emp_no}', '${asset_no}', '${reservation_title}', '예약', '${reservation_start}', '${reservation_end}')
-    </insert>
+        SELECT reservation_pk_seq.nextval, '${emp_no}', '${asset_no}', '${reservation_title}', '예약', '${reservation_start}', '${reservation_end}'
+        FROM dual
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM ASSET_RESERVATION
+            WHERE asset_no = '${asset_no}'
+              AND (
+                (reservation_start >= '${reservation_start}' AND reservation_start < '${reservation_end}')
+                    OR (reservation_end >= '${reservation_start}' AND reservation_end < '${reservation_end}')
+                    OR (reservation_start <= '${reservation_start}' AND reservation_end >= '${reservation_end}')
+                )
+        )
+        ]]>
+</insert>
 
     <update id="updateVehicleList" parameterType="com.vo.CalendarVO">
         UPDATE ASSET_RESERVATION

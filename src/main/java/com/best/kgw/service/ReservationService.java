@@ -16,7 +16,7 @@ public interface ReservationService {
 
     public void deleteReservation(CalendarVO calendarVO);
 
-    public void insertReservation(CalendarVO calendarVO);
+    public int insertReservation(CalendarVO calendarVO);
 
     public void updateReservation(CalendarVO calendarVO);
 
