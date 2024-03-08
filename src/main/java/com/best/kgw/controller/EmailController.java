@@ -24,7 +24,7 @@ public class EmailController {
      **********************************************************************************/
     @PostMapping("/sendPassword")
     @ResponseBody
-    public ResponseEntity sendPasswoardMail(String email) throws Exception {
+    public ResponseEntity sendPasswordEmail (String email) throws Exception {
         logger.info("입력받은 email : " + email);
 
         EmailMessage emailMessage = EmailMessage.builder()

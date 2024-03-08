@@ -38,10 +38,10 @@ public class EmailServiceImpl implements EmailService {
         String mailCon = "임시비밀번호의 값은 " + authNum + " 입니다.";
         emailMessage.setEncPW(authNum);
 
-        logger.info("authNum : " + authNum);
-        logger.info("emailMessage.getMessage : " + mailCon);
-        logger.info("emailMessage.getSubject : " + emailMessage.getSubject());
-        logger.info("emailMessage.getTo : " + emailMessage.getTo());
+//        logger.info("authNum : " + authNum);
+//        logger.info("emailMessage.getMessage : " + mailCon);
+//        logger.info("emailMessage.getSubject : " + emailMessage.getSubject());
+//        logger.info("emailMessage.getTo : " + emailMessage.getTo());
         logger.info("emailMessage.getEncPW : " + emailMessage.getEncPW());
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -53,7 +53,6 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setSubject(emailMessage.getSubject()); // 메일 제목
             mimeMessageHelper.setText(mailCon, false); // 메일 본문 내용, HTML 여부
             javaMailSender.send(mimeMessage);
-            logger.info("mimeMessage : " + mimeMessage);
 
             logger.info("Success");
 
