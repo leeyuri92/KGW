@@ -19,11 +19,13 @@
 
   <script>
     const approvalExSubmit = () =>{
-
+        document.querySelector('#approvalForm').submit();
     }
 
     const approvalExReject = () =>{
-
+        let  rejection_content = prompt("반려 사유를 입력하세요:", "여기에 사유를 입력");
+        $('#rejection_content').val(rejection_content);
+        $('#approval_reject').submit();
     }
   </script>
 </head>
@@ -63,31 +65,61 @@
                             </div>
                             <!-- Document Sections -->
                                 <div class="frame" id="frame_tool">
+                                  <form id="approvalForm" name="approvalForm" method="POST" action="approvalUpdate">
                                     <div class="document-section">
                                         <div class="item">
                                             <span class="title">부서:</span>
-                                            <span class="value"><%=approvalVO.getTeam_name()%></span>
+                                            <input type="text"  value="<%=approvalVO.getTeam_name()%>" disabled>
                                         </div>
                                         <div class="item">
                                             <span class="title">신청자:</span>
-                                            <span class="value"><%=approvalVO.getName()%></span>
+                                          <input type="text"  value="<%=approvalVO.getName()%>" disabled>
                                         </div>
 
                                         <div class="item">
                                             <span class="title">계약연장 선수:</span>
-                                            <span class="value"><%=approvalVO.getFa_name()%></span>
+                                          <input type="text"  value="<%=approvalVO.getFa_name()%>" disabled/>
                                         </div>
                                         <div class="item">
                                             <span class="title">계약기간:</span>
-                                            <span class="value"><%=approvalVO.getContract_term()%></span>
+                                          <input type="text" value="<%=approvalVO.getContract_term()%>" disabled>
                                         </div>
                                         <div class="item">
                                             <span class="title">계약연봉:</span>
-                                            <span class="value"><%=approvalVO.getSalary()%></span>
+                                          <input type="text"   value="<%=approvalVO.getSalary()%>" disabled>
                                         </div>
                                             <hr>
                                         <div class="text-wrapper-2">상기와 같이 선수 연장계약  희망함</div>
                                     </div>
+                                    <input type="hidden" id="fa_name" name="fa_name" value="<%=approvalVO.getFa_name()%>">
+                                    <input type="hidden" id="salary" name="salary" value="<%=approvalVO.getSalary()%>">
+                                    <input type="hidden" id="contract_term" name="contract_term" value="<%=approvalVO.getContract_term()%>">
+                                    <input type="hidden" id="approval_no" name="approval_no" value="<%=approvalVO.getApproval_no()%>">
+                                    <input type="hidden" id="action" name="action" value="승인">
+                                    <input type="hidden" id="document_no" name="document_no" value="<%=approvalVO.getDocument_no()%>">
+                                    <input type="hidden" id="document_category" name="document_category" value="<%=approvalVO.getDocument_category()%>">
+
+                                    <%
+                                      if (approvalVO.getApproval_category().equals("중간결재대기")){
+                                    %>
+                                    <input type="hidden" id="middlesign_name" name="middlesign_name" value="<%=approvalVO.getApproval_no()%>_middleSign.png">
+                                    <input type="hidden" id="approval_category" name="approval_category" value="<%=approvalVO.getApproval_category()%>">
+                                    <%
+                                    }else if (approvalVO.getApproval_category().equals("최종결재대기")){
+                                    %>
+                                    <input type="hidden" id="finalsign_name" name="finalsign_name" value="<%=approvalVO.getApproval_no()%>_finalSign.png">
+                                    <input type="hidden" id="approval_category" name="approval_category" value="최종결재승인">
+                                    <%
+                                      }
+                                    %>
+                                  </form>
+                                  <form id="approval_reject" method="post" action="approvalUpdate">
+                                    <input type="hidden" id="approvalno" name="approval_no" value="<%=approvalVO.getApproval_no()%>">
+                                    <input type="hidden" id="action2" name="action" value="반려">
+                                    <input type="hidden" id="rejection_content" name="rejection_content" value="">
+                                    <input type="hidden" id="approvalcategory2" name="approval_category" value="<%=approvalVO.getApproval_category()%>">
+                                    <input type="hidden" id="documentno" name="document_no" value="<%=approvalVO.getDocument_no()%>">
+                                  </form>
                                   <div class="signature-section">
                                     <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
                                       <img id="" src="/fileUpload/sign/<%=approvalVO.getEmp_no()%>.png" style="width: 98px; height: 98px;" class="sign">

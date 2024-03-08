@@ -25,6 +25,12 @@
     const approvalSubmit = () =>{
         document.querySelector('#approvalForm').submit();
     }
+
+    function approvalReject() {
+        let  rejection_content = prompt("반려 사유를 입력하세요:", "여기에 사유를 입력");
+        $('#rejection_content').val(rejection_content);
+        $('#approval_reject').submit();
+    }
   </script>
 
 </head>
@@ -154,13 +160,6 @@
         </section>
     </div>
 </div>
-        <script>
-            function approvalReject() {
-                let  rejection_content = prompt("반려 사유를 입력하세요:", "여기에 사유를 입력");
-                $('#rejection_content').val(rejection_content);
-                $('#approval_reject').submit();
-            }
-        </script><%--반려 알럿창--%>
 <%
   if (approvalVO.getApproval_category().equals("중간결재대기")){
 %>

@@ -219,10 +219,12 @@
         <if test="document_category == '방출'">
             fa_state = 'FALSE',
             fa_team = 'FA',
+            fa_agent = 'null',
         </if>
         <if test="document_category == '계약'">
-            fa_sal = #{fa_sal},
-            fa_agent = 'null',
+            fa_sal = #{salary},
+            fa_date = #{contract_term},
+            fa_agent = NULL,
         </if>
             fa_ss = 2024
         WHERE fa_name = #{fa_name}

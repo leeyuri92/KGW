@@ -95,6 +95,7 @@ public class DocumentDaoImpl implements DocumentDao {
 
     @Override
     public void updateFA(ApprovalVO approvalvo) throws Exception {
+        logger.info("=+++++++++++++++++++++++++++++++++++++"+approvalvo.toString());
         sqlSessionTemplate.update("updateFA", approvalvo);
     }
 }
