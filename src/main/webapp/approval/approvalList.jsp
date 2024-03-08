@@ -9,7 +9,7 @@
     if(list2!=null){
         size=list2.size();
     }
-    int numPerPage=5;
+    int numPerPage=15;
     int nowPage=0;
     if(request.getParameter("nowPage")!=null){
         nowPage=Integer.parseInt(request.getParameter("nowPage"));
@@ -178,8 +178,6 @@
                     </div>
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>
