@@ -58,7 +58,19 @@
             if (--timer < 0) {
                 clearInterval(countdownInterval);
                 display.textContent = "00:00";
-                location.href='/logout';
+                Swal.fire({
+                    title: '세션시간이 만료되어 <br> 로그아웃 되었습니다.',
+                    icon: 'success',
+                    confirmButtonColor: '#800000',
+                    customClass:{
+                        popup : 'swal2-small'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 확인 버튼을 클릭한 경우 다음 화면으로 이동
+                        window.location.href = '/logout';
+                    }
+                })
             }
         }
         const countdownInterval = setInterval(countdown, 1000); // 타이머 시작

@@ -5,6 +5,7 @@ import com.best.kgw.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
     Logger logger = LoggerFactory.getLogger(EmailController.class);
 
-    private final EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
     /**********************************************************************************
      작성자 : 이유리

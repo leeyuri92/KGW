@@ -20,6 +20,7 @@ import java.util.Random;
 public class EmailServiceImpl implements EmailService {
     Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
+    @Autowired
     private final JavaMailSender javaMailSender;
 
     @Autowired
@@ -38,14 +39,13 @@ public class EmailServiceImpl implements EmailService {
         String mailCon = "임시비밀번호의 값은 " + authNum + " 입니다.";
         emailMessage.setEncPW(authNum);
 
-//        logger.info("authNum : " + authNum);
+        logger.info("authNum : " + authNum);
 //        logger.info("emailMessage.getMessage : " + mailCon);
 //        logger.info("emailMessage.getSubject : " + emailMessage.getSubject());
 //        logger.info("emailMessage.getTo : " + emailMessage.getTo());
-        logger.info("emailMessage.getEncPW : " + emailMessage.getEncPW());
+//        logger.info("emailMessage.getEncPW : " + emailMessage.getEncPW());
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        logger.info("mimeMessage : " + mimeMessage);
 
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");

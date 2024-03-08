@@ -173,3 +173,7 @@ hr{
   background-color: rgba(101, 44, 44, 0.71) !important;
   border-color: #652C2C;
 }
+
+.swal2-small {
+  font-size: 12px;
+}
