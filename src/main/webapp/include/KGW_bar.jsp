@@ -10,7 +10,9 @@
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
     EmpVO sessionVO = principalDetails.getEmpVO();
-    session.setMaxInactiveInterval(1800);
+
+    // 세션 시간 설정
+    session.setMaxInactiveInterval(300);
 
 %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -22,19 +24,18 @@
 <link rel="stylesheet" href="/css/common.css">
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script type="text/javascript">
     // 카운트 다운 함수
     function startCountdown(duration, display) {
-        var timer = duration, minutes, seconds;
+        let timer = duration;
 
         // 타이머 호출 함수
         function countdown() {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+            let minutes = parseInt(timer / 60, 10);
+            let seconds = parseInt(timer % 60, 10);
 
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
@@ -43,7 +44,7 @@
 
             // 1분 남았을 때 연장 여부 확인
             if (timer === 60) {
-                var extend = confirm("1분 남았습니다. 연장하시겠습니까?");
+                const extend = confirm("1분 남았습니다. 연장하시겠습니까?");
                 if (extend) {
                     // 세션 시간 연장 요청
                     extendSessionTime(function(newSessionTimeout) {
@@ -60,8 +61,7 @@
                 location.href='/logout';
             }
         }
-
-        var countdownInterval = setInterval(countdown, 1000); // 타이머 시작
+        const countdownInterval = setInterval(countdown, 1000); // 타이머 시작
     }
 
     // 세션 시간 연장 요청 함수
@@ -71,7 +71,7 @@
             method: 'GET',
             success: function (response) {
                 // 세션 시간을 성공적으로 연장한 경우
-                var newSessionTimeout = parseInt(response);
+                const newSessionTimeout = parseInt(response);
                 // 새로운 세션 시간을 콜백 함수에 전달
                 if (typeof callback === 'function') { // 콜백 함수가 유효한지 확인
                     callback(newSessionTimeout);
@@ -84,12 +84,11 @@
         });
     }
 
-    // 페이지 로드 후 실행
-    window.onload = function () {
-        var sessionTimeout = <%= session.getMaxInactiveInterval() %>;
-        var display = document.querySelector('#time');
+    document.addEventListener('DOMContentLoaded', function() {
+        const sessionTimeout = <%= session.getMaxInactiveInterval() %>;
+        const display = document.querySelector('#time');
         startCountdown(sessionTimeout, display);
-    };
+    });
 
     extendLoginTime = () => {
         Swal.fire({
@@ -102,7 +101,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // 확인을 눌렀을 때의 동작
-                location.href = "/";
+                location.reload();
             } else {
                 // 취소를 눌렀을 때의 동작
                 console.log("연장 취소");
@@ -129,7 +128,7 @@
             <li class="nav-item">
                 <div class="user-panel d-flex" >
                     <div class="nav-link mt-1" style="font-weight: bold">자동 로그아웃 시간  <i class="bi bi-clock"></i> &nbsp; <span id="time" style="font-size: 18px">05:00</span></div>
-                    <button type="button" id="sessionBtn" class="btn btn-secondary btn-sm mt-2" style="font-weight:bold; height: 35px;" onclick="extendLoginTime()">로그인 연장</button>
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" id="sessionBtn"  style="font-weight:bold; height: 35px;" onclick="extendLoginTime()">로그인 연장</button>
                     <div class="info">
                         <%
                             String realFolder = "";
@@ -162,7 +161,6 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="../notice/noticeList" class="nav-link">
                             <i class="nav-icon bi bi-bell-fill"></i>
@@ -181,7 +179,6 @@
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-<%--                            <i class="nav-icon fas fa-copy"></i>--%>
                             <i class="nav-icon bi bi-emoji-smile-fill"></i>
                             <p>
                                 우리구단
@@ -355,7 +352,6 @@
                     <%
                         }
                     %>
-
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
