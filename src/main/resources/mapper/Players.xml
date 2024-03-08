@@ -55,15 +55,6 @@
         P_WAR,
         P_WHIP
         FROM PITCHER
-        <where>
-          <if test="gubun!=null">
-              <choose>
-                  <when test='gubun.equals("p_ip")'>
-                      AND p_ip>50 like
-                  </when>
-              </choose>
-          </if>
-        </where>
         order by  P_NO asc
 
     </select>
