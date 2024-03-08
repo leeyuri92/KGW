@@ -76,7 +76,7 @@
                                     </div>
                                  <div class="item">
                                         <span class="title">영입 희망선수:</span>
-                                        <span class="value"><%=approvalVO.getK_name()%></span>
+                                        <span class="value"><%=approvalVO.getFa_name()%></span>
                                     </div>
                                     <div class="text-wrapper-2">상기와 같이 영입 희망함</div>
                                 </div>
@@ -285,6 +285,9 @@
                               <input type="hidden" id="approval_no" name="approval_no" value="<%=approvalVO.getApproval_no()%>">
                               <input type="hidden" id="action" name="action" value="승인">
                               <input type="hidden" id="document_no" name="document_no" value="<%=approvalVO.getDocument_no()%>">
+                              <input type="hidden" id="document_category" name="document_category" value="<%=approvalVO.getDocument_category()%>">
+                              <input type="hidden" id="fa_name" name="fa_name" value="<%=approvalVO.getFa_name()%>">
+
                               <%
                                 if (approvalVO.getApproval_category().equals("중간결재대기")){
                               %>

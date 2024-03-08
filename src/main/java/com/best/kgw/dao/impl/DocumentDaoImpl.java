@@ -87,5 +87,15 @@ public class DocumentDaoImpl implements DocumentDao {
         logger.info("documentStateModify======="+approvalvo.toString());
         sqlSessionTemplate.update("documentStateModify",approvalvo);
     }
+
+    @Override
+    public void vacation(ApprovalVO approvalvo) throws Exception {
+
+    }
+
+    @Override
+    public void updateFA(ApprovalVO approvalvo) throws Exception {
+        sqlSessionTemplate.update("updateFA", approvalvo);
+    }
 }
 

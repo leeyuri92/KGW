@@ -61,7 +61,11 @@ public class DocumentServiceImpl implements DocumentService {
         if (approvalvo.getAction().equals("승인")){
             if (approvalvo.getApproval_category().equals("최종결재승인")){
                 approvalvo.setState("완료");
-
+                if (approvalvo.getApproval_category().equals("휴가")){
+                    documentDao.vacation(approvalvo);
+                }else {
+                    documentDao.updateFA(approvalvo);
+                }
             }else{
                 approvalvo.setState("진행");
             }

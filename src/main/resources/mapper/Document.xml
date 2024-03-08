@@ -93,7 +93,7 @@
 
 
 <!--    <select id="k_List" parameterType="com.vo.ApprovalVO" resultType="map">-->
-<!--        SELECT k_no, k_name-->
+<!--        SELECT k_no, fa_name-->
 <!--        FROM kiwoom-->
 <!--    </select>-->
 
@@ -107,7 +107,7 @@
             emp_no,
             document_title,
             document_category,
-            k_name,
+            fa_name,
             start_date,
             end_date,
             dayoff_content,
@@ -121,7 +121,7 @@
                #{emp_no},
                #{document_title},
                #{document_category},
-               #{k_name,jdbcType=VARCHAR},
+               #{fa_name,jdbcType=VARCHAR},
                #{start_date,jdbcType=VARCHAR},
                #{end_date,jdbcType=VARCHAR},
                #{dayoff_content,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
         start_date = #{start_date,jdbcType=VARCHAR},
         end_date = #{end_date,jdbcType=VARCHAR},
         dayoff_content = #{dayoff_content,jdbcType=VARCHAR},
-        k_name = #{k_name,jdbcType=VARCHAR},
+        fa_name = #{fa_name,jdbcType=VARCHAR},
         salary = #{salary,jdbcType=INTEGER},
         contract_term = #{contract_term,jdbcType=VARCHAR},
         state =  #{state}
@@ -208,5 +208,24 @@
         delete from document
                where document_no= #{document_no}
     </delete>
+
+    <update id="updateFA" parameterType="com.vo.ApprovalVO">
+        UPDATE FA
+        SET
+        <if test="document_category == '영입'">
+            fa_state = 'true',
+            fa_team = '키움',
+        </if>
+        <if test="document_category == '방출'">
+            fa_state = 'false',
+            fa_team = 'FA',
+        </if>
+        <if test="document_category == '계약'">
+            fa_sal = #{fa_sal},
+            fa_agent = 'null',
+        </if>
+            fa_ss = 2024
+        WHERE fa_name = #{fa_name}
+    </update>
 
 </mapper>

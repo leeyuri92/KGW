@@ -174,7 +174,7 @@
                                                         <span class="title">계약 희망 선수 </span>
                                                     </div>
                                                     <div class="col-4 mb-3 mt-3">
-                                                        <input type="text"  id="extension_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                                        <input type="text"  id="extension_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
                                                     </div>
                                                     <div class="col-2 mb-3 mt-3">
                                                         <span class="title">계약금액 </span>
@@ -201,7 +201,7 @@
                                                     <span class="title">영입 희망 선수 </span>
                                                 </div>
                                                 <div lass="col-4 mb-3 mt-3">
-                                                        <input type="text"  class="value-input" id="scout_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                                        <input type="text"  class="value-input" id="scout_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
                                                 </div>
                                                 <div class="col-2 mb-3 mt-3">
                                                 </div>
@@ -214,7 +214,7 @@
                                                     <span class="title">방출 의망 선수 </span>
                                                 </div>
                                                 <div  class="col-4 mb-3 mt-3">
-                                                    <input type="text" id="release_name"  name="k_name"  value="<%=approvalVO.getK_name()%>">
+                                                    <input type="text" id="release_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
                                                 </div>
                                                     <div class="col-2 mb-3 mt-3">
                                                     </div>

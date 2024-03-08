@@ -32,4 +32,8 @@ public interface DocumentDao {
     int saveDocumentDelete(int document_no) throws Exception;
 
     void documentStateModify(ApprovalVO approvalvo) throws Exception;
+
+    void vacation(ApprovalVO approvalvo)throws Exception;
+
+    void updateFA(ApprovalVO approvalvo)throws Exception;
 }
