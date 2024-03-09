@@ -44,7 +44,9 @@
                         </if>
                     </when>
                 </choose>
+                  <if test="emp_no!=null">AND document.emp_no=#{emp_no}</if>
               </where>
+
             order by document.document_no desc
         </select>
 
