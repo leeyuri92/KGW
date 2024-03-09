@@ -176,9 +176,15 @@
                                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                         <div class="navbar-nav">
                                             <a class="nav-link " href="#" data-target="do_vocation">휴가문서</a>
+                                            <%
+                                                if (sessionVO.getTeam_no() == 2){
+                                            %>
                                             <a class="nav-link" href="#" data-target="do_pla_a">계약문서</a>
                                             <a class="nav-link" href="#" data-target="do_pla_b">방출문서</a>
                                             <a class="nav-link" href="#" data-target="do_pla_c">영입문서</a>
+                                            <%
+                                                }
+                                            %>
                                         </div>
                                     </div>
                                 </div>

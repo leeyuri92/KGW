@@ -291,12 +291,18 @@
                                     <p>임시문서함 </p>
                                 </a>
                             </li>
+                            <%
+                                if (!(sessionVO.getEmp_position().equals("사원"))){
+                            %>
                             <li class="nav-item">
                                 <a href="../approval/approvalList" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>결재문서함</p>
                                 </a>
                             </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </li>
                     <li class="nav-item">
