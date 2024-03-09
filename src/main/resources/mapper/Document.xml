@@ -8,6 +8,8 @@
         FROM document LEFT JOIN approval
             ON document.document_no = approval.document_no
               <where>
+
+
                 <choose>
                     <when test="storage == 'true'">
                         AND document.state = '임시저장'
