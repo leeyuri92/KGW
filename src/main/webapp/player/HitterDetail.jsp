@@ -91,26 +91,36 @@
                                         </dl>
                                         <dl>
                                             <dt>타수</dt>
-                                            <dd><%= selectedHitter.getH_ab()%></dd>                                        </dl>
+                                            <dd><%= selectedHitter.getH_ab()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>안타</dt>
-                                            <dd><%= selectedHitter.getH_h()%></dd>                                        </dl>
+                                            <dd><%= selectedHitter.getH_h()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>홈련</dt>
-                                            <dd><%= selectedHitter.getH_hr()%></dd>                                        </dl>
+                                            <dd><%= selectedHitter.getH_hr()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>득점</dt>
-                                            <dd><%= selectedHitter.getH_r()%></dd>                                        </dl>
-                                        <dt>삼진</dt>
-                                        <dd><%= selectedHitter.getH_so()%></dd>
-                                        <dt>장타율</dt>
-                                        <dd><%= selectedHitter.getH_slg()%></dd>
+                                            <dd><%= selectedHitter.getH_r()%></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>삼진</dt>
+                                            <dd><%= selectedHitter.getH_so()%></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>장타율</dt>
+                                            <dd><%= selectedHitter.getH_slg()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>출루율</dt>
-                                            <dd><%= selectedHitter.getH_obp()%></dd>                                        </dl>
+                                            <dd><%= selectedHitter.getH_obp()%></dd>
+                                        </dl>
                                         <dl>
-                                            <dt>승이리여도</dt>
-                                            <dd><%= selectedHitter.getH_war()%></dd>                                        </dl>
+                                            <dt>승리기여도</dt>
+                                            <dd><%= selectedHitter.getH_war()%></dd>
+                                        </dl>
                                     </div>
                                 </div>
                                 <% } %>
