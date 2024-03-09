@@ -70,11 +70,9 @@ public class LoginDaoImpl implements LoginDao {
   @Override
   public int updatePw(EmailMessage emailMessage) throws Exception {
     logger.info("updatePw");
-    logger.info("emailMessage : " + emailMessage);
-
+    // 임시비밀번호 암호화
     String rowNum = emailMessage.getEncPW();
     String encNum =bCryptPasswordEncoder.encode(rowNum);
-    logger.info("encNum : " + encNum);
     emailMessage.setEncPW(encNum);
     int result = sqlSessionTemplate.update("updatePw", emailMessage);
     logger.info("result : " + result);

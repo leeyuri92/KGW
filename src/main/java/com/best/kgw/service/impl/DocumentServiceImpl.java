@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -58,12 +59,16 @@ public class DocumentServiceImpl implements DocumentService {
     public void approvalUpdate(ApprovalVO approvalvo) throws Exception {
         logger.info(approvalvo.toString());
         documentDao.approvalUpdate(approvalvo);
+        logger.info("=+++++++++++++++++++++++++++++++++++++"+approvalvo);
         if (approvalvo.getAction().equals("승인")){
             if (approvalvo.getApproval_category().equals("최종결재승인")){
                 approvalvo.setState("완료");
-                if (approvalvo.getApproval_category().equals("휴가")){
+                if (approvalvo.getDocument_category().equals("휴가")){
+                    logger.info("====휴가=====");
                     documentDao.vacation(approvalvo);
+                    documentDao.updateDayoffCnt(approvalvo);
                 }else {
+                    logger.info("====선수=====");
                     documentDao.updateFA(approvalvo);
                 }
             }else{
@@ -89,6 +94,12 @@ public int saveModify(ApprovalVO approvalVO) throws Exception {
         int  documentDelete =0;
         documentDelete = documentDao.saveDocumentDelete(document_no);
         return documentDelete;
+    }
+
+    @Override
+    public List<Map<String, Object>> stateCnt(int empNo) throws Exception {
+        List<Map<String, Object>> stateCnt = documentDao.stateCnt(empNo);
+        return stateCnt;
     }
 }
 

@@ -46,6 +46,17 @@
     </script>
 
     <link  rel="stylesheet " href="../css/approvalDocu.css">
+    <style>
+        input[type="text"],
+        input[type="date"] {
+            margin: 0;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            height: 32px;
+            /*input type data,text 규격 통일  */
+        }
+
+    </style>
 
 </head>
 
@@ -120,8 +131,6 @@
                                                 <div class="col-4 mb-3 mt-3">
                                                     <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%> " >
                                                 </div>
-
-                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-2 mb-3 mt-3">
@@ -131,8 +140,10 @@
                                                     <input type="text" class="value-input" id="vacation_name" name="approval_name" value="<%=approvalVO.getApproval_name()%>">
                                                 </div>
                                                 <div class="col-2 mb-3 mt-3">
+                                                    <span class="title">제목</span>
                                                 </div>
                                                 <div class="col-4 mb-3 mt-3">
+                                                    <input type="text" class="value-input" id="document_title" name="document_title" value="<%=approvalVO.getDocument_title()%>">
                                                 </div>
                                             </div>
                                             <%--  공통부분 끝  --%>
@@ -171,16 +182,16 @@
                                             %>
                                             <div class="row">
                                                     <div class="col-2 mb-3 mt-3">
-                                                        <span class="title">계약 희망 선수 </span>
+                                                        <span class="title">계약 선수 </span>
                                                     </div>
                                                     <div class="col-4 mb-3 mt-3">
-                                                        <input type="text"  id="extension_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
+                                                        <input type="text" class="value-input"  id="extension_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
                                                     </div>
                                                     <div class="col-2 mb-3 mt-3">
                                                         <span class="title">계약금액 </span>
                                                     </div>
                                                     <div class="col-4 mb-3 mt-3" >
-                                                        <input type="text" id="salary"  name="salary"  value="<%=approvalVO.getSalary()%>">
+                                                        <input type="text"class="value-input"  id="salary"  name="salary"  value="<%=approvalVO.getSalary()%>">
                                                     </div>
                                             </div>
                                             <div class="row">
@@ -188,7 +199,7 @@
                                                     <span class="title">계약년수 </span>
                                                 </div>
                                                 <div class="col-4 mb-3 mt-3">
-                                                    <input type="text" id="contract_term"  name="contract_term"  value="<%=approvalVO.getContract_term()%>">
+                                                    <input type="text" class="value-input" id="contract_term"  name="contract_term"  value="<%=approvalVO.getContract_term()%>">
                                                 </div>
                                                 <div class="col-2 mb-3 mt-3">
                                                 </div>
@@ -198,23 +209,24 @@
                                             <%}else if ("영입".equals(approvalVO.getDocument_category())){  %>
                                             <div class="row">
                                                 <div class="col-2 mb-3 mt-3">
-                                                    <span class="title">영입 희망 선수 </span>
+                                                    <span class="title">영입 선수 </span>
                                                 </div>
-                                                <div lass="col-4 mb-3 mt-3">
-                                                        <input type="text"  class="value-input" id="scout_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
+                                                <div class="col-4 mb-3 mt-3">
+                                                    <input type="text"  class="value-input" id="scout_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
+
                                                 </div>
                                                 <div class="col-2 mb-3 mt-3">
                                                 </div>
-                                                <div lass="col-4 mb-3 mt-3">
+                                                <div class="col-4 mb-3 mt-3">
                                                 </div>
                                             </div>
                                             <%}else if ("방출".equals(approvalVO.getDocument_category())){  %>
                                                 <div class="row">
                                                 <div class="col-2 mb-3 mt-3">
-                                                    <span class="title">방출 의망 선수 </span>
+                                                    <span class="title">방출  선수 </span>
                                                 </div>
                                                 <div  class="col-4 mb-3 mt-3">
-                                                    <input type="text" id="release_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
+                                                    <input type="text" class="value-input"  id="release_name"  name="fa_name"  value="<%=approvalVO.getFa_name()%>">
                                                 </div>
                                                     <div class="col-2 mb-3 mt-3">
                                                     </div>
@@ -236,10 +248,14 @@
                                         </div>
 
                                         <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
-                                            <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="saveUpdate()" >제출</button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm" href="./approval/saveList">임시보관함</button>
+                                            <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal"  onclick="saveUpdate()" >제출</button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"   href="./approval/saveList">임시보관함</button>
+
+<%--                                            <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="saveUpdate()" >제출</button>--%>
+<%--                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm" href="./approval/saveList">임시보관함</button>--%>
                                         </div>
                                     </div>
+                            </div>
                             </form>
                                 </div>
                     </div>

@@ -17,19 +17,19 @@
         size = list2.size();
     }
 
-    int numPerPage = 10;
+    int numPerPage = 20;
     int nowPage = 0;
     if(request.getParameter("nowPage")!=null){
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
     }
 %>
 
-<html>
-
+<!DOCTYPE html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>전략분석패이지</title>
+    <title>현역선수현황</title>
 
     <script type="text/javascript">
         // window.onload = function() {
@@ -61,13 +61,9 @@
             }
         }
 
-
         let  PitcherDetail= (p_no) => {
             location.href= "/player/PitcherDetail?p_no="+p_no;
         }
-
-
-
     </script>
 
 </head>
@@ -78,7 +74,6 @@
     <!-- body start    -->
     <div class="content-wrapper">
         <!-- 페이지 path start    -->
-        <%--		<div class="card" >--%>
         <div class="box-header p-4" >
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-2">
@@ -100,6 +95,7 @@
             </div>
         </div>
         <!-- 페이지 path end -->
+        <section class="content">
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
@@ -126,28 +122,33 @@
                             <div class="col-1 ">
                                 <button id="btn_search" class="btn btn-danger" onclick="PlayersSearch()">검색</button>
                             </div>
+                            <div class="col-md-7 d-flex justify-content-end">
+                                <label class="mt-1" style="color: grey; font-weight: bold">[출처] KBO (업데이트 날짜 24.02.18)</label>
+                            </div>
 
                         </div>
                         <!-- 검색기 끝 -->
 
 
                         <div class='board-list'>
-                            <%--                        table  ----pitcherList  컬럼--%>
-
                             <table class="table table-hover text-center " id="pitcherTable">
                                 <thead>
                                 <tr>
-                                    <th width="10%" >#</th>
-                                    <th width="10%" >선수명</th>
-                                    <th width="10%">소속</th>
-                                    <th width="10%">승</th>
-                                    <th width="10%">페</th>
-                                    <th width="10%">세이브</th>
-                                    <th width="10%">피안타율</th>
-                                    <th width="10%">피출루율</th>
-                                    <th width="10%" id="WAR" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
-                    특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">WAR</th>
-                                    <th width="10%" id="WHIP" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WHIP(Walks Plus Hits Divided by Innings Pitched,
+                                    <th width="5%" >#</th>
+                                    <th width="10%">선수명</th>
+                                    <th width="8%">소속</th>
+                                    <th width="8%">평균자책</th>
+                                    <th width="8%">이닝</th>
+                                    <th width="6%">승</th>
+                                    <th width="6%">패</th>
+                                    <th width="6%">세이브</th>
+                                    <th width="6%">홀드</th>
+                                    <th width="8%">피안타율</th>
+                                    <th width="8%">피장타율</th>
+                                    <th width="8%">피출루율</th>
+                                    <th width="8%" id="WAR" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR(Wins Above Replacement,대체 선수 대비 승리 기여도)
+                    특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타낸다. ">WAR</th>
+                                    <th width="5%" id="WHIP" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WHIP(Walks Plus Hits Divided by Innings Pitched,
                     이닝당 안타 및 볼넷 허용률)는 야구에서 투수의 성적 평가 항목 중 하나로서 피안타 수와 볼넷 수의 합을 투구 이닝으로 나눈 수치이다.">WHIP</th>
                                 </tr>
                                 </thead>
@@ -157,42 +158,47 @@
                                         if(i== size) break;
                                         PitchersVO pitchersVO=list2.get(i);
                                 %>
-                                <tr>
-                                    <td><%= pitchersVO.getP_no()%></td>
-                                    <td>
-                                        <a href="javascript:PitcherDetail('<%=pitchersVO.getP_no()%>')">
-                                            <%= pitchersVO.getP_name()%>
-                                        </a>
-                                    </td>
-                                    <td><%= pitchersVO.getP_team()%></td>
-                                    <td><%= pitchersVO.getP_win()%></td>
-                                    <td><%= pitchersVO.getP_lose()%></td>
-                                    <td><%= pitchersVO.getP_save()%></td>
-                                    <td><%= pitchersVO.getP_h()%></td>
-                                    <td><%= pitchersVO.getP_ob()%></td>
-                                    <td><%= pitchersVO.getP_war()%></td>
-                                    <td><%= pitchersVO.getP_whip()%></td>
-                                </tr>
-                                <%}%>
-                                </tbody>
-                            </table>
-                            <hr />
+                                    <tr>
+                                        <td><%= pitchersVO.getP_no()%></td>
+                                        <td>
+                                            <a href="javascript:PitcherDetail('<%=pitchersVO.getP_no()%>')">
+                                                <%= pitchersVO.getP_name()%>
+                                            </a>
+                                        </td>
+                                        <td><%= pitchersVO.getP_team()%></td>
+                                        <td><%= pitchersVO.getP_era()%></td>
+                                        <td><%= pitchersVO.getP_ip()%></td>
+                                        <td><%= pitchersVO.getP_win()%></td>
+                                        <td><%= pitchersVO.getP_lose()%></td>
+                                        <td><%= pitchersVO.getP_save()%></td>
+                                        <td><%= pitchersVO.getP_hold()%></td>
+                                        <td><%= pitchersVO.getP_h()%></td>
+                                        <td><%= pitchersVO.getP_ob()%></td>
+                                        <td><%= pitchersVO.getP_bh()%></td>
+                                        <td><%= pitchersVO.getP_war()%></td>
+                                        <td><%= pitchersVO.getP_whip()%></td>
+                                    </tr>
+                                    <%}%>
+                                    </tbody>
+                                </table>
+                                <hr />
 
-                            <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
+                               <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
-                            <ul class="pagination">
-                                <%
-                                    String pagePath="PitchersList";
-                                    BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
-                                    out.print(bsbp.getPageBar());
-                                %>
-                            </ul>
-                            <!-- [[ Bootstrap 페이징 처리  구간  end ]] -->
+                                <ul class="pagination">
+                                    <%
+                                        String pagePath="PitchersList";
+                                        BSPageBar bsbp=new BSPageBar(numPerPage,size,nowPage,pagePath);
+                                        out.print(bsbp.getPageBar());
+                                    %>
+                                </ul>
+                                <!-- [[ Bootstrap 페이징 처리  구간  end ]] -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </div>
     <script>  <%-- toolTips function 사용--%>

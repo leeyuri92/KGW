@@ -22,13 +22,13 @@ public class HittersVO {
     private Double h_slg; //  H_장타율
     private Double h_war; //  H_WAR
     private Double h_ops; //  H_OPS
-
+    private Integer h_bb;
 
 
     @Builder
     public HittersVO( int h_no, String h_name, String h_team, Double h_avg, Integer h_ab, Integer h_h,
                      Integer h_hr, Integer h_r, Integer h_rbi, Integer h_so, Integer h_sb,
-                     Double h_obp, Double h_slg, Double h_war, Double h_ops) {
+                     Double h_obp, Double h_slg, Double h_war, Double h_ops, Integer h_bb) {
         super();
         this.h_no=h_no;
         this.h_name = h_name;
@@ -45,6 +45,8 @@ public class HittersVO {
         this.h_slg = h_slg;
         this.h_war = h_war;
         this.h_ops = h_ops;
+        this.h_bb = h_bb;
+
     }
 
 

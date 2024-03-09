@@ -3,6 +3,7 @@ package com.best.kgw.dao;
 import com.vo.ApprovalVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DocumentDao {
 //    기안문서 select
@@ -36,4 +37,8 @@ public interface DocumentDao {
     void vacation(ApprovalVO approvalvo)throws Exception;
 
     void updateFA(ApprovalVO approvalvo)throws Exception;
+
+    void updateDayoffCnt(ApprovalVO approvalvo) throws Exception;
+
+    List<Map<String, Object>> stateCnt(int empNo)throws Exception;
 }

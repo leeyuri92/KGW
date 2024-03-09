@@ -91,24 +91,32 @@
                                         </dl>
                                         <dl>
                                             <dt>이닝 IP</dt>
-                                            <dd><%=selectedPitcher.getP_ip()%></dd>                                        </dl>
+                                            <dd><%=selectedPitcher.getP_ip()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>승 WIN</dt>
-                                            <dd><%=selectedPitcher.getP_win()%></dd>                                        </dl>
+                                            <dd><%=selectedPitcher.getP_win()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>패</dt>
-                                            <dd><%=selectedPitcher.getP_lose()%></dd>                                        </dl>
+                                            <dd><%=selectedPitcher.getP_lose()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>세이브</dt>
-                                            <dd><%=selectedPitcher.getP_save()%></dd>                                        </dl>
-                                        <dt>피안타율 </dt>
-                                        <dd><%=selectedPitcher.getP_h()%></dd>                                        </dl>
+                                            <dd><%=selectedPitcher.getP_save()%></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>피안타율 </dt>
+                                            <dd><%=selectedPitcher.getP_h()%></dd>
+                                        </dl>
                                         <dl>
                                             <dt>피출루율 OB</dt>
-                                            <dd><%=selectedPitcher.getP_ob()%></dd>                                        </dl>
+                                            <dd><%=selectedPitcher.getP_ob()%></dd>
+                                        </dl>
                                         <dl>
-                                            <dt>승이리여도 WAR</dt>
-                                            <dd><%=selectedPitcher.getP_war()%></dd>                                        </dl>
+                                            <dt>승리기여도 WAR</dt>
+                                            <dd><%=selectedPitcher.getP_war()%></dd>
+                                        </dl>
                                     </div>
                                 </div>
                                 <% } %>
