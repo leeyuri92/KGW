@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DocumentVO {
 
-        private Integer document_No;
-        private Integer emp_No;
+        private Integer document_no;
+        private Integer emp_no;
         private String document_Title;
         private String document_Category;
         private String submission_Date;
@@ -25,12 +25,12 @@ public class DocumentVO {
 
 
         @Builder
-    public DocumentVO(Integer document_No, Integer emp_No, String document_Title, String document_Category,
+    public DocumentVO(Integer document_no, Integer emp_no, String document_Title, String document_Category,
                       String submission_Date, String state, String draftDay, String start_Date, String end_Date,
                       String dayoff_Content, Integer k_id, Integer SALARY, String contract_Term){
             super();
-            this.document_No=document_No;
-            this.emp_No=emp_No;
+            this.document_no=document_no;
+            this.emp_no=emp_no;
             this.document_Title=document_Title;
             this.document_Category=document_Category;
             this.submission_Date=submission_Date;
