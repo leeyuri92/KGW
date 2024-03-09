@@ -202,19 +202,19 @@
 
                 <div class="row mb-3">
                   <div class="custom-col" >
-                    <button type="button" id="btn_approval_wait" class="approval btn btn-danger" onclick="waitApproval()">결재대기 [<%=stateCnt.get(2).get("state")%>]</button>
+                    <button type="button" id="btn_approval_wait" class="approval btn btn-danger" onclick="waitApproval()">결재대기 [<%=stateCnt.get(0).get("COUNT")%>]</button>
                   </div>
 
                   <div class="custom-col" >
-                    <button type="button" id="btn_approval_progress" class="approval btn btn-danger" onclick="processApproval()">결재진행 [0]</button>
+                    <button type="button" id="btn_approval_progress" class="approval btn btn-danger" onclick="processApproval()">결재진행 [<%=stateCnt.get(3).get("COUNT")%>]</button>
                   </div>
 
                   <div class="custom-col" >
-                    <button type="button" id="btn_approval_complete" class="approval btn btn-danger" onclick="completeApproval()">결재완료 [<%=stateCnt.get(1).get("state")%>]</button>
+                    <button type="button" id="btn_approval_complete" class="approval btn btn-danger" onclick="completeApproval()">결재완료 [<%=stateCnt.get(2).get("COUNT")%>]</button>
                   </div>
 
                   <div class="custom-col" >
-                    <button type="button" id="btn_approval_companion" class="approval btn btn-danger" onclick="companionApproval()">결재반려 [0]</button>
+                    <button type="button" id="btn_approval_companion" class="approval btn btn-danger" onclick="companionApproval()">결재반려 [<%=stateCnt.get(1).get("COUNT")%>]</button>
                   </div>
 
                   <div class="custom-col">

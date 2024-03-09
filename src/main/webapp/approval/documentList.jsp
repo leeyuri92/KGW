@@ -9,7 +9,7 @@
     if(list!=null){
         size=list.size();
     }
-    int numPerPage=5;
+    int numPerPage=10;
     int nowPage=0;
     if(request.getParameter("nowPage")!=null){
         nowPage=Integer.parseInt(request.getParameter("nowPage"));

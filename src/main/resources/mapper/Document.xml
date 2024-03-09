@@ -249,11 +249,21 @@
     </update>
 
     <select id="stateCnt" parameterType="int" resultType="Map">
-        SELECT state, COUNT(*)
-        FROM document
-        WHERE
-            emp_no = 1018
-        GROUP BY  state;
+        SELECT
+            states.state,
+            COUNT(document.emp_no) AS count
+        FROM
+            (SELECT '대기' AS state FROM DUAL
+            UNION ALL SELECT '진행' FROM DUAL
+            UNION ALL SELECT '완료' FROM DUAL
+            UNION ALL SELECT '반려' FROM DUAL) states
+            LEFT JOIN
+            document ON document.state = states.state AND document.emp_no = #{emp_no}
+        GROUP BY
+            states.state
+        ORDER BY
+            states.state
+
     </select>
 
 </mapper>
