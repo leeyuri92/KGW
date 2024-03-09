@@ -17,7 +17,7 @@
         size = list2.size();
     }
 
-    int numPerPage = 10;
+    int numPerPage = 20;
     int nowPage = 0;
     if(request.getParameter("nowPage")!=null){
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
@@ -137,17 +137,21 @@
                             <table class="table table-hover text-center " id="pitcherTable">
                                 <thead>
                                 <tr>
-                                    <th width="10%" >#</th>
-                                    <th width="10%" >선수명</th>
-                                    <th width="10%">소속</th>
-                                    <th width="10%">승</th>
-                                    <th width="10%">페</th>
-                                    <th width="10%">세이브</th>
-                                    <th width="10%">피안타율</th>
-                                    <th width="10%">피출루율</th>
-                                    <th width="10%" id="WAR" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
+                                    <th width="5%" >#</th>
+                                    <th width="5%" >선수명</th>
+                                    <th width="5%">소속</th>
+                                    <th width="5%">평균자첵</th>
+                                    <th width="5%">이닝</th>
+                                    <th width="5%">승</th>
+                                    <th width="5%">페</th>
+                                    <th width="5%">세이브</th>
+                                    <th width="5%">홀드</th>
+                                    <th width="5%">피안타율</th>
+                                    <th width="5%">피장타율</th>
+                                    <th width="5%">피출루율</th>
+                                    <th width="5%" id="WAR" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
                     특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">WAR</th>
-                                    <th width="10%" id="WHIP" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WHIP(Walks Plus Hits Divided by Innings Pitched,
+                                    <th width="5%" id="WHIP" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WHIP(Walks Plus Hits Divided by Innings Pitched,
                     이닝당 안타 및 볼넷 허용률)는 야구에서 투수의 성적 평가 항목 중 하나로서 피안타 수와 볼넷 수의 합을 투구 이닝으로 나눈 수치이다.">WHIP</th>
                                 </tr>
                                 </thead>
@@ -165,11 +169,15 @@
                                         </a>
                                     </td>
                                     <td><%= pitchersVO.getP_team()%></td>
+                                    <td><%= pitchersVO.getP_era()%></td>
+                                    <td><%= pitchersVO.getP_ip()%></td>
                                     <td><%= pitchersVO.getP_win()%></td>
                                     <td><%= pitchersVO.getP_lose()%></td>
                                     <td><%= pitchersVO.getP_save()%></td>
+                                    <td><%= pitchersVO.getP_hold()%></td>
                                     <td><%= pitchersVO.getP_h()%></td>
                                     <td><%= pitchersVO.getP_ob()%></td>
+                                    <td><%= pitchersVO.getP_bh()%></td>
                                     <td><%= pitchersVO.getP_war()%></td>
                                     <td><%= pitchersVO.getP_whip()%></td>
                                 </tr>

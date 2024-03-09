@@ -15,17 +15,16 @@ public class PitchersVO {
     private Integer p_win;
     private Integer p_lose;
     private Integer p_save;
-    private Integer p_h;
-    private Integer p_ob;
-    private Integer p_bh;
+    private Double p_h;
+    private Double p_ob;
+    private Double p_bh;
     private Double p_war;
     private Double p_whip;
-    private String gubun;
-
+    private Integer p_hold;
     @Builder
     public PitchersVO(  int p_no,String p_name, String p_team, Double p_era, Double p_ip, Integer p_win,
-                      Integer p_lose, Integer p_save, Integer p_h, Integer p_ob, Integer p_bh,
-                      Double p_war, Double p_whip, String gubun) {
+                      Integer p_lose, Integer p_save, Double p_h, Double p_ob, Double p_bh,
+                      Double p_war, Double p_whip , Integer p_hold) {
         super();
         this.p_no=p_no;
         this.p_name = p_name;
@@ -40,6 +39,6 @@ public class PitchersVO {
         this.p_bh = p_bh;
         this.p_war = p_war;
         this.p_whip = p_whip;
-        this.gubun = gubun;
+        this.p_hold=p_hold;
     }
 }
