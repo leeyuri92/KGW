@@ -10,6 +10,12 @@
 
 
 
+#### 실행 전 준비
+
+
+호스트번호：`localhost:9000`
+데이터 베이스 Oracle 연결 `  여기에 추가  `
+
 ### 전채 목차
 
 + 인트로1
@@ -28,13 +34,13 @@
 
 ## 개발자  소개
 
-{여기느 팀원 사진+ 담당 } 여기는 이미지
-
+[{여기느 팀원 사진+ 담당 } 여기는 이미지
+](https://github.com/Uari/KGW/blob/develop/src/main/resources/static/images/team.png)
 ## Flow chart
 이미지
 
-##diagram
-이미지
+## ERD
+![image](https://github.com/Uari/KGW/blob/develop/src/main/resources/static/images/erd.png)
 
 ## 기능 요약
 
@@ -47,6 +53,27 @@
 4. 전력  분석: 선수와 팀의 성과를 분석하여, 전략적인 의사 결정을 지원하는 다양한 분석 도구를 제공합니다.
 
 
+---
+#### HTML codes sample
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <mate charest="utf-8" />
+        <meta name="keywords" content="Editor.md, Markdown, Editor" />
+        <title>Hello world!</title>
+        <style type="text/css">
+            body{font-size:14px;color:#444;font-family: "Microsoft Yahei", Tahoma, "Hiragino Sans GB", Arial;background:#fff;}
+            ul{list-style: none;}
+            img{border:none;vertical-align: middle;}
+        </style>
+    </head>
+    <body>
+        <h1 class="text-xxl">Hello world!</h1>
+        <p class="text-green">Plain text</p>
+    </body>
+</html>
+```
 
 
 
