@@ -12,6 +12,8 @@
   List<AttendanceVO> attendanceCalendar = (List) request.getAttribute("attendanceCalendar");
   List<NoticeBoardVO> noticeList = (List)request.getAttribute("noticeList");
   List<MediaNoticeVO> mediaNoticeList = (List)request.getAttribute("mediaNoticeList");
+  List<Map<String,Object>> stateCnt = (List)request.getAttribute("stateCnt");
+//  Map<String,Object> stateMap = stateCnt.get(0);
   //out.print(faList);
 %>
 
@@ -200,7 +202,7 @@
 
                 <div class="row mb-3">
                   <div class="custom-col" >
-                    <button type="button" id="btn_approval_wait" class="approval btn btn-danger" onclick="waitApproval()">결재대기 [0]</button>
+                    <button type="button" id="btn_approval_wait" class="approval btn btn-danger" onclick="waitApproval()">결재대기 [<%=stateCnt.get(2).get("state")%>]</button>
                   </div>
 
                   <div class="custom-col" >
@@ -208,7 +210,7 @@
                   </div>
 
                   <div class="custom-col" >
-                    <button type="button" id="btn_approval_complete" class="approval btn btn-danger" onclick="completeApproval()">결재완료 [0]</button>
+                    <button type="button" id="btn_approval_complete" class="approval btn btn-danger" onclick="completeApproval()">결재완료 [<%=stateCnt.get(1).get("state")%>]</button>
                   </div>
 
                   <div class="custom-col" >
@@ -298,23 +300,23 @@
 </div>
     <script>
             const draft = () =>{
-            location.href = "/approval/docu";
+            location.href = "/approval/docu?emp_no=<%=sessionVO.getEmp_no()%>";
         }
 
             const waitApproval = () =>{
-            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>&gubun=state&keyword=대기";
         }
 
             const processApproval = () =>{
-            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>&gubun=state&keyword=진행";
         }
 
             const completeApproval = () =>{
-            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>&gubun=state&keyword=완료";
         }
 
             const companionApproval = () =>{
-            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>";
+            location.href = "/approval/documentList?emp_no=<%=sessionVO.getEmp_no()%>&gubun=state&keyword=반려";
         }
 
 

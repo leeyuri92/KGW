@@ -7,15 +7,13 @@
         SELECT *
         FROM document LEFT JOIN approval
             ON document.document_no = approval.document_no
-        <where>
-            <if test="storage != null">
+              <where>
                 <choose>
-                    <when test='storage == "true"'>
+                    <when test="storage == 'true'">
                         AND document.state = '임시저장'
                         <if test="document_no != null">
                             AND document.document_no = #{document_no}
                         </if>
-                        <!-- 임시저장시 구분 검색 -->
                         <if test="gubun != null">
                             <choose>
                                 <when test='gubun.equals("document_title")'>
@@ -27,10 +25,10 @@
                             </choose>
                         </if>
                     </when>
-
+                </choose>
+                <choose>
                     <when test='storage == "false"'>
                         AND document.state != '임시저장'
-                        <!--기안문서함시 구분검색 -->
                         <if test="gubun != null">
                             <choose>
                                 <when test='gubun.equals("document_title")'>
@@ -39,19 +37,28 @@
                                 <when test='gubun.equals("document_category")'>
                                     AND document.document_category LIKE '%' || #{keyword} || '%'
                                 </when>
+                                <when test='gubun.equals("state")'>
+                                    AND document.state LIKE '%' || #{keyword} || '%'
+                                </when>
                             </choose>
                         </if>
                     </when>
                 </choose>
-            </if>
-        </where>
+              </where>
             order by document.document_no desc
         </select>
+
+
+
+
+
+
+
 
         <!--   결재자 select -->
     <select id="approvalDocument" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
         SELECT
-            e.name, t.team_name , d.*, a.*
+            e.dayoff_cnt, e.name, t.team_name , d.*, a.*
         FROM
             document d INNER JOIN approval a
                                   ON d.document_no = a.document_no
@@ -81,9 +88,6 @@
         order by a.document_no desc
     </select>
 
-
-
-
 <!--영입 계약필요한 데이터 -->
     <select id="faTeam" parameterType="com.vo.ApprovalVO" resultType="com.vo.ApprovalVO">
         SELECT fa_no,
@@ -93,15 +97,6 @@
                fa_agent
                 FROM fa
     </select>
-
-
-
-<!--    <select id="k_List" parameterType="com.vo.ApprovalVO" resultType="map">-->
-<!--        SELECT k_no, fa_name-->
-<!--        FROM kiwoom-->
-<!--    </select>-->
-
-
 
 
 <!--영입 문서만 insert-->
@@ -170,7 +165,7 @@
         SET
         <if test="action == '승인'">
             approval_category = '최종결재승인',
-            finalsign_name=#{finalsign_name},
+            finalsign_name = #{finalsign_name},
         </if>
         <if test="action == '반려'">
             approval_category = '최종결재반려',
@@ -233,5 +228,32 @@
             fa_ss = 2024
         WHERE fa_name = #{fa_name}
     </update>
+
+    <insert id="updateDayoff" parameterType="com.vo.ApprovalVO">
+        INSERT INTO EMP_DAYOFF( DAYOFF_NO, EMP_NO, DAYOFF_STATE, START_DATE, END_DATE, REG_DATE)
+        VALUES (DAYOFF_PK_SEQ.nextval, #{emp_no},
+                <if test="action == '승인'">
+                    '승인'
+                </if>
+                <if test="action == '반려'">
+                    '반려'
+                </if>
+        ,#{start_date}, #{end_date}, TO_CHAR(SYSTIMESTAMP AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI:SS') )
+    </insert>
+
+    <update id="updateDayoffCnt" parameterType="com.vo.ApprovalVO">
+        UPDATE EMP
+        SET
+            dayoff_cnt = #{dayoff_cnt} -1
+        WHERE emp_no = #{emp_no}
+    </update>
+
+    <select id="stateCnt" parameterType="int" resultType="Map">
+        SELECT state, COUNT(*)
+        FROM document
+        WHERE
+            emp_no = 1018
+        GROUP BY  state;
+    </select>
 
 </mapper>

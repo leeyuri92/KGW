@@ -274,7 +274,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../approval/docu" class="nav-link">
+                                <a href="/approval/docu?emp_no=<%=sessionVO.getEmp_no()%>" class="nav-link">
                                     <i class="bi bi-record nav-icon"></i>
                                     <p>기안문서작성</p>
                                 </a>

@@ -102,6 +102,7 @@
                                         <option value="none">분류선택</option>
                                         <option value="document_category">종류</option>
                                         <option value="document_title">제목</option>
+                                        <option value="state">결재상태</option>
                                     </select>
                                 </div>
                                 <div class="col-3">

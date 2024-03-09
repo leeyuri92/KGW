@@ -6,7 +6,8 @@
 <%
 //    List<Map<String,Object>> kiwoomList = (List) request.getAttribute("kiwoomList")
     List<ApprovalVO> faList = (List) request.getAttribute("faList");
-
+    List<EmpVO> empList = (List) request.getAttribute("empList");
+    EmpVO empVO = empList.get(0);
 %>
 
 <html lang="ko">
@@ -225,38 +226,46 @@
                                                 <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="연차" >
                                             </div>
                                             <div class="col-2 mb-3 mt-3 ">
+                                                <span class="title">잔여휴가</span>
+                                            </div>
+                                            <div class="col-4 mb-3 mt-3 ">
+                                                <input type="text" class="dayoff_cnt" id="dayoff_cnt" name="dayoff_cnt" value="<%=empVO.getDayoff_cnt()%>" disabled/>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-2 mb-3 mt-3 ">
                                                 <span class="title">휴가시작일 </span>
                                             </div>
                                             <div class="col-4 mb-3 mt-3 ">
                                                 <input type="date" id="start_date" name="start_date"   value="2024-03-03">
                                             </div>
-                                        </div>
-
-                                        <div class="row">
                                             <div class="col-2 mb-3 mt-3 ">
                                                 <span class="title">휴가만료일 </span>
                                             </div>
                                             <div class="col-4 mb-3 mt-3 ">
                                                 <input type="date" id="end_date" name="end_date"  value="2024-03-04">
                                             </div>
-                                            <div class="col-2 mb-3 mt-3 ">
-                                            </div>
-                                            <div class="col-4 mb-3 mt-3 ">
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-auto mb-3 mt-3">
+                                                <div class="text-wrapper-2">상기와 같이 휴가 희망함</div>
                                             </div>
                                         </div>
+                                        <input type="hidden" class="value-input" id="document_category"  name="document_category" value="휴가" >
+                                        <input type="hidden" id="stateVacation" name="state" value="대기" >
+                                        <input type="hidden" id="draftdayVacation" name="draftday" value="" >
 
-                                            <div class="row justify-content-center">
-                                                <div class="col-auto mb-3 mt-3">
-                                                    <div class="text-wrapper-2">상기와 같이 휴가 희망함</div>
+                                        <div class="row">
+                                            <div class="col-7 mb-3 mt-3 ">
+                                            </div>
+                                            <div class="col-5 mb-3 mt-3 ">
+                                                <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
+                                                    <button type="button"  id="btn_docSubmit" class="btn btn-danger" onclick="docSubmitVacation()" >제출</button>
+                                                    <button type="button" id="btn_search" class="btn btn-danger" onclick="docSaveSubmitVacation()">임시보관 </button>
                                                 </div>
                                             </div>
-                                        <input type="hidden" class="value-input" id="document_category"  name="document_category" value="휴가" >
-                                        <input type="hidden" id="stateVacation" name="state"    value="대기" >
-                                        <input type="hidden" id="draftdayVacation" name="draftday"    value="" >
-                                    </div>
-                                    <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitVacation()" >제출</button>
-                                        <button type="button" id="btn_search" class="btn btn-danger" onclick="docSaveSubmitVacation()">임시보관 </button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -339,10 +348,16 @@
                                 <input type="hidden" id="stateOffer" name="state"    value="대기" >
                                 <input type="hidden" id="draftdayOffer" name="draftday"    value="" >
 
-                                <div id ="documentButton1 " class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button"  id="btn_docSubmit3" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#boardForm"  onclick="docSubmitOffer()" >제출</button>
-                                    <button type="button" id="btn_search3" class="btn btn-danger" onclick="docSaveSubmitOffer()">임시보관 </button>
-                                    <input type="hidden" class="value-input" id="document_category3"  name="document_category" value="계약" >
+
+                                <div class="row">
+                                    <div class="col-7 mb-3 mt-3 ">
+                                    </div>
+                                    <div class="col-5 mb-3 mt-3 ">
+                                        <div id ="documentButton1 " class="col-md-6 d-flex justify-content-end gap-2">
+                                            <button type="button"  id="btn_docSubmit3" class="btn btn-danger" onclick="docSubmitOffer()" >제출</button>
+                                            <button type="button" id="btn_search3" class="btn btn-danger" onclick="docSaveSubmitOffer()">임시보관 </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             </form>
@@ -410,9 +425,16 @@
                                         <input type="hidden" id="draftdayRelease" name="draftday"    value="" >
                                         <input type="hidden" class="value-input" id="document_category2"  name="document_category" value="방출" >
                                     </div>
-                                    <div id ="documentButton2 " class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit2" class="btn btn-danger"   onclick="docSubmitRelease()" >제출</button>
-                                        <button type="button" id="btn_search2" class="btn btn-danger" onclick="docSaveSubmitRelease()">임시보관 </button>
+
+                                    <div class="row">
+                                        <div class="col-7 mb-3 mt-3 ">
+                                        </div>
+                                        <div class="col-5 mb-3 mt-3 ">
+                                            <div id ="documentButton2 " class="col-md-6 d-flex justify-content-end gap-2">
+                                                <button type="button"  id="btn_docSubmit2" class="btn btn-danger" onclick="docSubmitRelease()" >제출</button>
+                                                <button type="button" id="btn_search2" class="btn btn-danger" onclick="docSaveSubmitRelease()">임시보관 </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -485,9 +507,15 @@
                                     <input type="hidden" id="stateScout" name="state"    value="대기" >
                                     <input type="hidden" id="draftdayScout" name="draftday"    value="" >
                                     <input type="hidden" class="value-input" id="document_category1"  name="document_category" value="영입" >
-                                    <div id ="documentButton1" class="col-md-6 d-flex justify-content-end gap-2">
-                                        <button type="button"  id="btn_docSubmit1" class="btn btn-danger"  onclick="docSubmitScout()" >제출</button>
-                                        <button type="button" id="btn_search1" class="btn btn-danger" onclick="docSaveSubmitScout()">임시보관 </button>
+                                    <div class="row">
+                                        <div class="col-7 mb-3 mt-3 ">
+                                        </div>
+                                        <div class="col-5 mb-3 mt-3 ">
+                                            <div id ="documentButton5 " class="col-md-6 d-flex justify-content-end gap-2">
+                                                <button type="button"  id="btn_docSubmit1" class="btn btn-danger" onclick="docSubmitScout()" >제출</button>
+                                                <button type="button" id="btn_search1" class="btn btn-danger" onclick="docSaveSubmitScout()">임시보관 </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>

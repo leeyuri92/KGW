@@ -1,8 +1,11 @@
 package com.best.kgw.controller;
 
+import com.best.kgw.service.AdminSevice;
 import com.best.kgw.service.DocumentService;
+import com.best.kgw.service.EmpService;
 import com.best.kgw.service.FileService;
 import com.vo.ApprovalVO;
+import com.vo.EmpVO;
 import com.vo.MediaNoticeVO;
 import com.vo.NoticeBoardVO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +31,8 @@ public class    DocumentController {
 
     @Autowired
     private DocumentService documentService;
-    private FileService fileService;
+    @Autowired
+    private AdminSevice adminSevice;
 
 
     //    문서함
@@ -116,10 +120,13 @@ public class    DocumentController {
 
     //  기안문서 할떄   값을 select 하기
     @GetMapping("/docu")
-    public String DocumentInfo(Model model, ApprovalVO approvalvo) throws  Exception {
+    public String DocumentInfo(Model model, ApprovalVO approvalvo, EmpVO empVO) throws  Exception {
+        logger.info("controller!!!!!!!!!" + approvalvo);
         List<ApprovalVO> faList = documentService.DocumentInfo(approvalvo);
-        logger.info("controller!!!!!!!!!1");
         model.addAttribute("faList", faList);
+        empVO.setEmp_no(approvalvo.getEmp_no());
+        List<EmpVO> empList = adminSevice.empList(empVO);
+        model.addAttribute("empList", empList);
         return "forward:approvalDocu.jsp";
 
     }

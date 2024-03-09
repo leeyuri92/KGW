@@ -16,6 +16,17 @@
     <title>기안 문서</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
     <link  rel="stylesheet " href="../css/approval.css">
+
+  <script>
+    const approvalVaSubmit = () =>{
+        document.querySelector('#approvalForm').submit();
+    }
+    const approvalVaReject = () =>{
+        let  rejection_content = prompt("반려 사유를 입력하세요:", "여기에 사유를 입력");
+        $('#rejection_content').val(rejection_content);
+        $('#approval_reject').submit();
+    }
+  </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -51,83 +62,152 @@
                                 <h4 style="font-weight: bold; margin-left: 1.5rem">결재문서</h4>
                                 <hr />
                             </div>
+                          <div class="row">
                             <!-- Document Sections -->
-                                <div class="frame" id="frame_tool">
-                                    <div class="document-section">
-                                        <div class="item">
-                                            <span class="title">부서:</span>
-                                            <span class="value"><%=approvalVO.getTeam_name()%></span>
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">신청자:</span>
-                                            <span class="value"><%=approvalVO.getName()%></span>
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">휴가 사유:</span>
-                                            <span class="value"><%=approvalVO.getDayoff_content()%></span> <!-- 동적 데이터 표시 예 -->
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">휴가시작일:</span>
-                                            <span class="value"><%=approvalVO.getStart_date()%></span> <!-- 예시 날짜, 실제 데이터로 대체 가능 -->
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">휴가만료일:</span>
-                                            <span class="value"><%=approvalVO.getEnd_date()%></span> <!-- 예시 날짜, 실제 데이터로 대체 가능 -->
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">잔여휴가:</span>
-                                            <span class="value">[여기에 동적으로 잔여휴가 표시]</span>
-                                        </div>
-                                        <div class="text-wrapper-2">상기와 같이 휴가 희망함</div>
+                            <div class="col-6">
+                              <form id="approvalForm" method="POST" action="approvalUpdate">
+                                  <div class="row ">
+                                    <div class="col-3 mb-3 mt-3">
+                                      <label for="empNo">사원번호 </label>
                                     </div>
-                                    <div class="signature-section">
-                                      <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
-                                        <img id="" src="/fileUpload/sign/<%=approvalVO.getEmp_no()%>.png" style="width: 98px; height: 98px;" class="sign">
-                                      </div>
-                                      <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
-                                        <%
-                                          String realFolder2 = "";
-                                          String realFolder3 = "";
-                                          String filePath2 = "/fileUpload/approvalSign/"+approvalVO.getApproval_no()+"_middleSign.png"; // 파일 경로 설정
-                                          String filePath3 = "/fileUpload/approvalSign/"+approvalVO.getApproval_no()+"_finalSign.png"; // 파일 경로 설정
-                                          ServletContext context2 = request.getServletContext();
-                                          ServletContext context3 = request.getServletContext();
-                                          realFolder2 = context2.getRealPath(filePath2);
-                                          realFolder3 = context3.getRealPath(filePath3);
-                                          File file2 = new File(realFolder2);
-                                          File file3 = new File(realFolder3);
-                                          if (!(file2.exists())) { // 파일이 존재하는지 확인
-                                            filePath2 = "/fileUpload/approvalSign/leader.png";
-                                          }
-                                          if (!(file3.exists())) { // 파일이 존재하는지 확인
-                                            filePath3 = "/fileUpload/approvalSign/master.png";
-                                          }
-                                        %>
-                                        <img id="middleSignImage" src="<%=filePath2%>" style="width: 100px; height: 100px;" class="sign" alt="팀장" data-bs-toggle="modal" data-bs-target="#middleSignSelect">
-                                      </div>
-                                      <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
-                                        <img id="finalSignImage" src="<%=filePath3%>" style="width: 100px; height: 100px; " class="sign" alt="구단장" data-bs-toggle="modal" data-bs-target="#finalSignSelect">
-                                      </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" class="value-input" id="empNo"  name="emp_no" value="<%=approvalVO.getEmp_no()%>" readonly >
                                     </div>
-                                </div>
+                                  </div>
+                                  <div class="row ">
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <label for="document_title">문서제목 </label>
+                                    </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" class="value-input" id="document_title" name="document_title" value="<%=approvalVO.getDocument_title()%>"  readonly >
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <label for="approval_name">결재자 </label>
+                                    </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" class="value-input" id="approval_name" name="approval_name" value="경영지원팀장" readonly>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <label for="name">신청자 </label>
+                                    </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" class="value-input" id="name"  name="name" value="<%=sessionVO.getName()%>" readonly>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <label for="dayoff_content">휴가사유 </label>
+                                    </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" class="value-input" id="dayoff_content" name="dayoff_content" value="연차" readonly>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <label for="dayoff_cnt">잔여휴가 </label>
+                                    </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" class="dayoff_cnt" id="dayoff_cnt" name="dayoff_cnt" value="<%=approvalVO.getDayoff_cnt()%>" readonly/>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <label for="start_date">휴가시작일 </label>
+                                    </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" id="start_date" name="start_date"   value="<%=approvalVO.getStart_date()%>" readonly>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <label for="end_date">휴가만료일 </label>
+                                    </div>
+                                    <div class="col-3 mb-3 mt-3 ">
+                                      <input type="text" id="end_date" name="end_date"  value="<%=approvalVO.getEnd_date()%>" readonly>
+                                    </div>
+                                  </div>
+                                <input type="hidden" id="approval_no" name="approval_no" value="<%=approvalVO.getApproval_no()%>">
+                                <input type="hidden" id="action" name="action" value="승인">
+                                <input type="hidden" id="document_no" name="document_no" value="<%=approvalVO.getDocument_no()%>">
+                                <input type="hidden" id="document_category" name="document_category" value="<%=approvalVO.getDocument_category()%>">
+                                <%
+                                  if (approvalVO.getApproval_category().equals("중간결재대기")){
+                                %>
+                                <input type="hidden" id="middlesign_name" name="middlesign_name" value="<%=approvalVO.getApproval_no()%>_middleSign.png">
+                                <input type="hidden" id="approval_category" name="approval_category" value="<%=approvalVO.getApproval_category()%>">
+                                <%
+                                }else if (approvalVO.getApproval_category().equals("최종결재대기")){
+                                %>
+                                <input type="hidden" id="finalsign_name" name="finalsign_name" value="<%=approvalVO.getApproval_no()%>_finalSign.png">
+                                <input type="hidden" id="approval_category" name="approval_category" value="최종결재승인">
+                                <%
+                                  }
+                                %>
+                              </form>
                             </div>
-
-
-                            <div>
-                                <div id="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
-                                    <button type="button" class="btn btn-danger">승인</button>
-                                    <button class="btn btn-danger">반려</button>
+                            <div class="col-6">
+                              <div class="signature-section" style="border: 1px solid red; float: right;">
+                                <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
+                                  <img id="" src="/fileUpload/sign/<%=approvalVO.getEmp_no()%>.png" style="width: 98px; height: 98px;" class="sign">
                                 </div>
+                                <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
+                                  <%
+                                    String realFolder2 = "";
+                                    String realFolder3 = "";
+                                    String filePath2 = "/fileUpload/approvalSign/"+approvalVO.getApproval_no()+"_middleSign.png"; // 파일 경로 설정
+                                    String filePath3 = "/fileUpload/approvalSign/"+approvalVO.getApproval_no()+"_finalSign.png"; // 파일 경로 설정
+                                    ServletContext context2 = request.getServletContext();
+                                    ServletContext context3 = request.getServletContext();
+                                    realFolder2 = context2.getRealPath(filePath2);
+                                    realFolder3 = context3.getRealPath(filePath3);
+                                    File file2 = new File(realFolder2);
+                                    File file3 = new File(realFolder3);
+                                    if (!(file2.exists())) { // 파일이 존재하는지 확인
+                                      filePath2 = "/fileUpload/approvalSign/leader.png";
+                                    }
+                                    if (!(file3.exists())) { // 파일이 존재하는지 확인
+                                      filePath3 = "/fileUpload/approvalSign/master.png";
+                                    }
+                                  %>
+                                  <img id="middleSignImage" src="<%=filePath2%>" style="width: 100px; height: 100px;" class="sign" alt="팀장" data-bs-toggle="modal" data-bs-target="#middleSignSelect">
+                                </div>
+                                <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
+                                  <img id="finalSignImage" src="<%=filePath3%>" style="width: 100px; height: 100px; " class="sign" alt="구단장" data-bs-toggle="modal" data-bs-target="#finalSignSelect">
+                                </div>
+                              </div>
                             </div>
+                            <div class="row justify-content-center">
+                              <div class="col-auto mb-3 mt-3">
+                                <div class="text-wrapper-2">상기와 같이 휴가 희망함</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <form id="approval_reject" method="post" action="approvalUpdate">
+                          <input type="hidden" id="approvalno" name="approval_no" value="<%=approvalVO.getApproval_no()%>">
+                          <input type="hidden" id="action2" name="action" value="반려">
+                          <input type="hidden" id="rejection_content" name="rejection_content" value="">
+                          <input type="hidden" id="approvalCategory4" name="approval_category" value="<%=approvalVO.getApproval_category()%>">
+                          <input type="hidden" id="documentno" name="document_no" value="<%=approvalVO.getDocument_no()%>">
+                        </form>
+                        <input type="hidden" id="approvalCategory" name="approval_category" value="">
+                        <div>
+                          <div id="documentButton" class="col-md-6 d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-danger" onclick="approvalVaSubmit()">승인</button>
+                            <button type="button" id="rejectButton" class="btn btn-danger"  onclick="approvalVaReject()">반려</button>
+                          </div>
                         </div>
                     </div>
                 </div>
-        </section>
             </div>
-
+        </section>
+    </div>
 </div>
-<script src="../build/js/as.js"></script>
-
 <%
   if (approvalVO.getApproval_category().equals("중간결재대기")){
 %>

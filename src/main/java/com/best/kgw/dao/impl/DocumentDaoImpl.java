@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class DocumentDaoImpl implements DocumentDao {
@@ -90,13 +91,24 @@ public class DocumentDaoImpl implements DocumentDao {
 
     @Override
     public void vacation(ApprovalVO approvalvo) throws Exception {
-
+        sqlSessionTemplate.insert("updateDayoff", approvalvo);
     }
 
     @Override
     public void updateFA(ApprovalVO approvalvo) throws Exception {
         logger.info("=+++++++++++++++++++++++++++++++++++++"+approvalvo.toString());
         sqlSessionTemplate.update("updateFA", approvalvo);
+    }
+
+    @Override
+    public void updateDayoffCnt(ApprovalVO approvalvo) throws Exception {
+        sqlSessionTemplate.update("updateDayoffCnt", approvalvo);
+    }
+
+    @Override
+    public List<Map<String, Object>> stateCnt(int empNo) throws Exception {
+        List<Map<String, Object>> stateCnt = sqlSessionTemplate.selectList("stateCnt", empNo);
+        return stateCnt;
     }
 }
 

@@ -3,6 +3,7 @@ package com.best.kgw.service;
 import com.vo.ApprovalVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DocumentService {
     List<ApprovalVO> DocumentList(ApprovalVO approvalVO);
@@ -25,4 +26,5 @@ public interface DocumentService {
 
     int saveDelete(int document_no) throws Exception;
 
+    List<Map<String, Object>> stateCnt(int empNo)throws Exception;
 }

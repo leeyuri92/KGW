@@ -60,6 +60,8 @@ public class DashboardController{
     private NoticeBoardService noticeBoardService;
     @Autowired
     private MediaNoticeService mediaNoticeService;
+    @Autowired
+    private DocumentService documentService;
 
     /**********************************************************************************
      작성자 : 박병현
@@ -122,6 +124,9 @@ public class DashboardController{
 
         List<MediaNoticeVO> mediaNoticeList = mediaNoticeService.mediaNoticeList(mediaNoticeVO);
         model.addAttribute("mediaNoticeList", mediaNoticeList);
+
+        List<Map<String, Object>> stateCnt = documentService.stateCnt(empVO.getEmp_no());
+        model.addAttribute("stateCnt", stateCnt);
         return "forward:/dashboard/dashboardForm.jsp";
     }
 
