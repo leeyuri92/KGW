@@ -484,7 +484,7 @@
                                     $.ajax({
                                         type: "POST",
                                         url: url,
-                                        data: { calendar_no: calendar_no },
+                                        data: { reservation_no: reservation_no },
                                         success: function(response) {
                                             console.log(response);
                                             if (response > 0) {

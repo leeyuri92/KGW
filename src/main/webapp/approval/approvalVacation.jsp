@@ -150,7 +150,7 @@
                               </form>
                             </div>
                             <div class="col-6">
-                              <div class="signature-section" style="border: 1px solid red; float: right;">
+                              <div class="signature-section" style="float: right;">
                                 <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
                                   <img id="" src="/fileUpload/sign/<%=approvalVO.getEmp_no()%>.png" style="width: 98px; height: 98px;" class="sign">
                                 </div>
@@ -215,7 +215,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content rounded-4 shadow">
       <div class="modal-header p-5 pb-0 border-bottom-0" style="margin-bottom: -20px;">
-        <h1 class="fw-bold  fs-2" >전자서명변경</h1>
+        <h1 class="fw-bold  fs-2" >결재서명</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-5 pt-0">
@@ -298,7 +298,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content rounded-4 shadow">
       <div class="modal-header p-5 pb-0 border-bottom-0" style="margin-bottom: -20px;">
-        <h1 class="fw-bold  fs-2" >전자서명변경</h1>
+        <h1 class="fw-bold  fs-2" >결재서명</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-5 pt-0">

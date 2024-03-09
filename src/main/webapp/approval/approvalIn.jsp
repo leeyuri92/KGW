@@ -167,7 +167,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content rounded-4 shadow">
       <div class="modal-header p-5 pb-0 border-bottom-0" style="margin-bottom: -20px;">
-        <h1 class="fw-bold  fs-2" >전자서명변경</h1>
+        <h1 class="fw-bold  fs-2" >결재서명</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-5 pt-0">
