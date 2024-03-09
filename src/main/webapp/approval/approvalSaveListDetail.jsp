@@ -241,7 +241,7 @@
                                                     <input type="hidden"  id="document_no" name="document_no" value="<%=approvalVO.getDocument_no()%>">
                                                 </div>
                                                 <div class="col-4 mb-3 mt-3">
-                                                    <input type="hidden"  id="state" name="state" value="<%=approvalVO.getState()%>">
+                                                    <input type="hidden"  id="state" name="state" value="중간결재대기">
                                                 </div>
                                                 <div class="col-2 mb-3 mt-3">
                                                     <input type="text"  hidden="hidden" class="value-input" id="document_category"  name="document_category" value="<%=approvalVO.getDocument_category()%>" >
