@@ -311,7 +311,7 @@
                                 <div class="row">
                                     <div class="col-2 mb-3 mt-3 ">
                                         <span class="title">계약연장  선수 </span>
-
+s
                                     </div>
                                     <div class="col-4 mb-3 mt-3 ">
                                         <select id="playersList3" name="fa_name">
@@ -353,7 +353,7 @@
                                 </div>
                                 <input type="hidden" id="stateOffer" name="state"    value="대기" >
                                 <input type="hidden" id="draftdayOffer" name="draftday"    value="" >
-
+                                <input type="hidden" class="value-input" id="document_category2"  name="document_category" value="계약" >
 
                                 <div class="row">
                                     <div class="col-7 mb-3 mt-3 ">
