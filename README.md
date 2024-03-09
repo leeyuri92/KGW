@@ -34,8 +34,7 @@
 
 ## 개발자  소개
 
-[{여기느 팀원 사진+ 담당 } 여기는 이미지
-](https://github.com/Uari/KGW/blob/develop/src/main/resources/static/images/team.png)
+![image](https://github.com/Uari/KGW/blob/develop/src/main/resources/static/images/team.png)
 ## Flow chart
 이미지
 
