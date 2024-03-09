@@ -8,8 +8,6 @@
         FROM document LEFT JOIN approval
             ON document.document_no = approval.document_no
               <where>
-
-
                 <choose>
                     <when test="storage == 'true'">
                         AND document.state = '임시저장'
@@ -46,7 +44,7 @@
                         </if>
                     </when>
                 </choose>
-                  <if test="emp_no!=null">AND document.emp_no=#{emp_no}</if>
+                  <if test="emp_no!=0">AND document.emp_no=#{emp_no}</if>
               </where>
 
             order by document.document_no desc

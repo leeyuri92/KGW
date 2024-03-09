@@ -2,7 +2,10 @@
          pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.vo.ApprovalVO" %>
-
+<%
+    List<ApprovalVO> saveDetail = (List<ApprovalVO>) request.getAttribute("saveDetail");
+//    out.print(saveDetail);
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -113,7 +116,7 @@
                             <form id="saveDocumentPost" name="saveDocumentPost" action="saveDetailUpdate" method="post">
                                 <div class="frame " id="do_vocation">
                                     <div class="document-section">
-                                        <%  List<ApprovalVO> saveDetail = (List<ApprovalVO>) request.getAttribute("saveDetail");
+                                        <%
                                             if (saveDetail != null && !saveDetail.isEmpty()) {
                                                 ApprovalVO approvalVO = saveDetail.get(0);
                                         %>
@@ -238,13 +241,14 @@
                                                     <input type="hidden"  id="document_no" name="document_no" value="<%=approvalVO.getDocument_no()%>">
                                                 </div>
                                                 <div class="col-4 mb-3 mt-3">
-                                                    <input type="hidden"  id="state" name="state"    value="대기" >
+                                                    <input type="hidden"  id="state" name="state" value="<%=approvalVO.getState()%>">
                                                 </div>
                                                 <div class="col-2 mb-3 mt-3">
                                                     <input type="text"  hidden="hidden" class="value-input" id="document_category"  name="document_category" value="<%=approvalVO.getDocument_category()%>" >
                                                 </div>
                                             <%
-                                            }%>
+                                            }
+                                            %>
                                         </div>
 
                                         <div id ="documentButton " class="col-md-6 d-flex justify-content-end gap-2">

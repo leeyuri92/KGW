@@ -108,6 +108,7 @@ public class    DocumentController {
     @GetMapping("/saveDetail")
     public String SaveDetail(Model model, ApprovalVO approvalVO) throws  Exception{
         approvalVO.setStorage("true");
+        logger.info("=============================================================="+approvalVO.toString());
         List<ApprovalVO> saveDetail = documentService.DocumentList(approvalVO);
         logger.info("DetailSaveINFO");
         model.addAttribute("saveDetail", saveDetail);
