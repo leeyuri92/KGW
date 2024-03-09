@@ -43,11 +43,9 @@ public class MediaNoticeController {
         logger.info("mediaNoticeDetail");
         List<MediaNoticeVO> mediaNoticeDetail = mediaNoticeService.mediaNoticeDetail(mediaNoticeVO);
         model.addAttribute("mediaNoticeDetail", mediaNoticeDetail);
-        logger.info("mediaNoticeDetail:" + mediaNoticeDetail);
 
         List<MediaNoticeCommendVO> commendList = mediaNoticeService.commendList(mediaNoticeCommendVO);
         model.addAttribute("commendList", commendList);
-        logger.info("commendList: " + commendList);
         return "forward:mediaDetail.jsp";
     }
 
