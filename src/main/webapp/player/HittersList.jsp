@@ -16,7 +16,7 @@
         size = list.size();
     }
 
-    int numPerPage = 10;
+    int numPerPage = 20;
     int nowPage = 0;
     if(request.getParameter("nowPage")!=null){
         nowPage = Integer.parseInt(request.getParameter("nowPage"));
@@ -139,7 +139,12 @@
                                 <th width="10%">안타</th>
                                 <th width="10%">홈런</th>
                                 <th width="10%">득점</th>
-                                <th width="10%">출루율</th>
+                                <th width="5%">타점</th>
+                                <th width="5%">볼넷</th>
+                                <th width="5%">삼진</th>
+                                <th width="5%">도루</th>
+                                <th width="5%">출루율</th>
+                                <th width="5%">장타율</th>
                                 <th width="10%" id="WAR" data-bs-toggle="tooltip" data-bs-placement="bottom" title="WAR는 Wins Above Replacement의 약어인데요,
                 특정 선수가 평범한 선수(대체선수) 대비해서 얼마나 팀의 승리에 기여하는지를 나타냅니다. ">WAR</th>
                                 <th width="10%" id="OPS" data-bs-toggle="tooltip" data-bs-placement="bottom" title="OPS(오피에스)는 On base Plus Slugging의 약자이며 말 그대로 출루율과 장타율의 합이다.">OPS</th>
@@ -164,7 +169,12 @@
                                 <td><%= hittersVO.getH_h()%></td>
                                 <td><%= hittersVO.getH_hr()%></td>
                                 <td><%= hittersVO.getH_r()%></td>
+                                <td><%= hittersVO.getH_rbi()%></td>
+                                <td><%= hittersVO.getH_bb()%></td>
+                                <td><%= hittersVO.getH_so()%></td>
+                                <td><%= hittersVO.getH_sb()%></td>
                                 <td><%= hittersVO.getH_obp()%></td>
+                                <td><%= hittersVO.getH_slg()%></td>
                                 <td><%= hittersVO.getH_war()%></td>
                                 <td><%= hittersVO.getH_ops()%></td>
                             </tr>
@@ -172,7 +182,7 @@
                             </tbody>
                         </table>
 
-
+                    </seletion>
                         <hr />
                         <!-- [[ Bootstrap 페이징 처리  구간  ]] -->
 
@@ -195,5 +205,6 @@
         new bootstrap.Tooltip(tooltipTriggerEl);
     });
     </script>
+
 </body>
 </html>
