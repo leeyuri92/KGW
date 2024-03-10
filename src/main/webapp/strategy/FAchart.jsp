@@ -54,7 +54,7 @@
                     // 버튼 다시 그려주기
                     console.log("FA_NO : " + FA_NO);
                     let btn = document.querySelector('#btn_' + FA_NO);
-                    (btn.innerHTML === "방출") ? btn.innerHTML = "등록" : btn.innerHTML = "방출";
+                    (btn.innerHTML === "방출") ? btn.innerHTML = "영입" : btn.innerHTML = "방출";
                     btn.style.backgroundColor = (btn.innerHTML === "방출") ? "#be7f7d" : "#7c1512";
                 },
                 error: function () {
@@ -153,7 +153,7 @@
                             <td>\${item.FA_TEAM}</td>
                             <td>\${item.FA_NAME}</td>
                             <td>\${item.FA_POS}</td>
-                            <td><button class="btn btn-danger" type="button" id="btn_\${item.FA_NO}" onclick="faUpdate('\${item.FA_NO}')">\${(item.FA_STATE =="TRUE") ? "방출" : "등록"}</button></td>
+                            <td><button class="btn btn-danger" type="button" id="btn_\${item.FA_NO}" style="background-color: \${(item.FA_STATE =='TRUE') ? '#be7f7d' : '#7c1512'}" onclick="faUpdate('\${item.FA_NO}')">\${(item.FA_STATE =="TRUE") ? "방출" : "영입"}</button></td>
                         </tr>`;
                     });
                     tableBody.innerHTML = html;
@@ -367,7 +367,7 @@
                                                     <%
                                                     } else {
                                                     %>
-                                                    <button type="button" class="btn btn-danger" id="btn_<%=rmap.get("FA_NO")%>" onclick="faUpdate('<%=rmap.get("FA_NO")%>')">등록</button>
+                                                    <button type="button" class="btn btn-danger" id="btn_<%=rmap.get("FA_NO")%>" onclick="faUpdate('<%=rmap.get("FA_NO")%>')">영입</button>
                                                     <%
                                                         }
                                                     %>
@@ -395,7 +395,7 @@
                                     <div class="text-center" id="table_div" style="width: 80%; height: 110px; font-weight: bold; font-size: 13px"></div>
                                 </div>
                                 <div>
-                                    <div class="text-start mt-4"  style="color:grey; font-weight: bold; font-size: 13px">[출처] KBO 홈페이지  <small>( 최종 업데이트 날짜 24.02.18 )</small></div>
+                                    <div class="text-start mt-4"  style="color:grey; font-weight: bold; font-size: 13px">[출처] KBO 홈페이지  <small>( 업데이트 날짜 24.02.18 )</small></div>
                                 </div>
                             </div>
                             <!-- /.col -->
