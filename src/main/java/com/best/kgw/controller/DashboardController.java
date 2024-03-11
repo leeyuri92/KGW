@@ -7,13 +7,7 @@ import com.vo.AttendanceVO;
 import com.vo.EmpVO;
 import com.vo.MediaNoticeVO;
 import com.vo.NoticeBoardVO;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,22 +34,29 @@ import java.util.Map;
 //@RequestMapping("/")
 public class DashboardController{
     Logger logger = LoggerFactory.getLogger(DashboardController.class);
+
+    private final DashboardService dashboardService;
+    private final FileService fileService;
+    private final AttendanceService attendanceService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ChartService chartService;
+    private final NoticeBoardService noticeBoardService;
+    private final MediaNoticeService mediaNoticeService;
+    private final DocumentService documentService;
     @Autowired
-    private DashboardService dashboardService;
-    @Autowired
-    private FileService fileService;
-    @Autowired
-    private AttendanceService attendanceService;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    private ChartService chartService;
-    @Autowired
-    private NoticeBoardService noticeBoardService;
-    @Autowired
-    private MediaNoticeService mediaNoticeService;
-    @Autowired
-    private DocumentService documentService;
+    public DashboardController(DashboardService dashboardService, FileService fileService,
+                               AttendanceService attendanceService, BCryptPasswordEncoder bCryptPasswordEncoder,
+                               ChartService chartService, NoticeBoardService noticeBoardService,
+                               MediaNoticeService mediaNoticeService, DocumentService documentService) {
+        this.dashboardService = dashboardService;
+        this.fileService = fileService;
+        this.attendanceService = attendanceService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.chartService = chartService;
+        this.noticeBoardService = noticeBoardService;
+        this.mediaNoticeService = mediaNoticeService;
+        this.documentService = documentService;
+    }
 
     /**********************************************************************************
      작성자 : 박병현

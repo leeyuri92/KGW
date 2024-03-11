@@ -13,6 +13,7 @@ import java.util.Collection;
 
 @Data
 public class PrincipalDetails implements UserDetails {
+    private static final long serialVersionUID = 1L; // 직렬화 버전 명시
     Logger logger = LoggerFactory.getLogger(PrincipalDetails.class);
 
     private EmpVO empVO;
