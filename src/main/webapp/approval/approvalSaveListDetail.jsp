@@ -38,7 +38,7 @@
                contract_term = document.getElementById('contract_term').value;
             }
             else if (document_category === '영입') {
-                scout_name_name = document.getElementById('scout_name_name').value;
+                scout_name = document.getElementById('scout_name').value;
             }
             else if (document_category === '방출') {
                 release_name = document.getElementById('release_name').value;

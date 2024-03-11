@@ -22,15 +22,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
-  <!-- fullcalendar 언어 CDN 라이선스 표시 없애기 위해 locale 사용 -->
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+  <script>
+      // FullCalendar 라이브러리 로드 함수
+      const loadFullCalendar = () => {
+          // FullCalendar 스타일이 이미 로드되었는지 확인
+          if (!document.querySelector('link[href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css"]')) {
+              // FullCalendar 스타일을 동적으로 생성하여 로드
+              const fullcalendarStyle = document.createElement('link');
+              fullcalendarStyle.rel = 'stylesheet';
+              fullcalendarStyle.href = 'https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css';
+              document.head.appendChild(fullcalendarStyle);
+          }
+
+          // FullCalendar 스크립트가 이미 로드되었는지 확인
+          if (typeof FullCalendar === 'undefined') {
+              // FullCalendar 스크립트를 동적으로 생성하여 로드
+              const fullcalendarScript = document.createElement('script');
+              fullcalendarScript.src = 'https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js';
+              document.head.appendChild(fullcalendarScript);
+          }
+
+          // FullCalendar 언어 스크립트가 이미 로드되었는지 확인
+          if (!document.querySelector('script[src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"]')) {
+              // FullCalendar 언어 스크립트를 동적으로 생성하여 로드
+              const fullcalendarLocaleScript = document.createElement('script');
+              fullcalendarLocaleScript.src = 'https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js';
+              document.head.appendChild(fullcalendarLocaleScript);
+          }
+      };
+      // FullCalendar 라이브러리 로드
+      loadFullCalendar();
+  </script>
+
   <!-- 부트스트랩 라이브러리 -->
   <%@include file="/common/bootstrap_common.jsp" %>
   <link rel="stylesheet" href="/css/mainCalendar.css">
 
-  
+
   <title>메인페이지</title>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
@@ -425,9 +453,6 @@
 
             getWeather(latitude, longitude);
         }
-
-
-
         function getWeather (lat, lon) {
             const API_KEY = '151ebeae4d0dc3a80ce3b6ba4912e175';
             fetch(

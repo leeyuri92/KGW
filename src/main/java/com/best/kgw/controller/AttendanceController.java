@@ -110,7 +110,5 @@ public class AttendanceController {
             // 예외 발생 시 로그 출력 또는 예외 처리 로직 추가
             e.printStackTrace();
         }
-
     }
-
 }
