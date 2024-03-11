@@ -98,7 +98,7 @@
                   </select>
                 </div>
 
-                <div class="col-3">
+                <div class="col-2">
                   <input type="text" id="keyword" class="form-control" placeholder="검색어를 입력하세요"
                          aria-label="검색어를 입력하세요." aria-describedby="btn_search" onkeyup="searchEnter()"/>
                 </div>
@@ -106,7 +106,9 @@
                 <div class="col-1 ">
                   <button id="btn_search" class="btn btn-danger" onclick="kiwoomSearch()">검색</button>
                 </div>
-
+                <div class="col-md-7 d-flex justify-content-end">
+                  <label class="mt-1" style="color: grey; font-weight: bold">[출처] KBO (업데이트 날짜 24.02.18)</label>
+                </div>
               </div>
               <%
                 for (int i = nowPage * numPerPage; i < (nowPage * numPerPage) + numPerPage; i++) {
