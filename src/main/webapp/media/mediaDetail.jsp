@@ -54,8 +54,8 @@
         /*댓글삭제*/
         const mediaCommendDelete =(commend_no)=> {
             Swal.fire({
-                title: '게시글 삭제',
-                text: '게시글을 삭제하시겠습니까?',
+                title: '댓글 삭제',
+                text: '댓글을 삭제하시겠습니까?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: '삭제',
