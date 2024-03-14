@@ -82,25 +82,17 @@
                                         </div>
                                         <div class="item">
                                             <span class="title">계약기간:</span>
-<<<<<<< HEAD
-                                            <span class="value"><%=approvalVO.getContract_term()%></span>
-                                        </div>
-                                        <div class="item">
-                                            <span class="title">계약연봉:</span>
-                                            <span class="value"><%=approvalVO.getSalary()%></span>
-=======
+
                                           <input type="text" value="<%=approvalVO.getContract_term()%>" disabled>
                                         </div>
                                         <div class="item">
                                             <span class="title">계약연봉:</span>
                                           <input type="text"   value="<%=approvalVO.getSalary()%>" disabled>
->>>>>>> approval
+
                                         </div>
                                             <hr>
                                         <div class="text-wrapper-2">상기와 같이 선수 연장계약  희망함</div>
                                     </div>
-<<<<<<< HEAD
-=======
                                     <input type="hidden" id="fa_name" name="fa_name" value="<%=approvalVO.getFa_name()%>">
                                     <input type="hidden" id="salary" name="salary" value="<%=approvalVO.getSalary()%>">
                                     <input type="hidden" id="contract_term" name="contract_term" value="<%=approvalVO.getContract_term()%>">
@@ -130,7 +122,7 @@
                                     <input type="hidden" id="approvalcategory2" name="approval_category" value="<%=approvalVO.getApproval_category()%>">
                                     <input type="hidden" id="documentno" name="document_no" value="<%=approvalVO.getDocument_no()%>">
                                   </form>
->>>>>>> approval
+
                                   <div class="signature-section">
                                     <div class="signImg" style="border: 2px solid grey; width: 100px; height: 100px">
                                       <img id="" src="/fileUpload/sign/<%=approvalVO.getEmp_no()%>.png" style="width: 98px; height: 98px;" class="sign">

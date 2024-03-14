@@ -10,6 +10,7 @@
     EmpVO empVO = empList.get(0);
 %>
 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -311,7 +312,7 @@
                                 <div class="row">
                                     <div class="col-2 mb-3 mt-3 ">
                                         <span class="title">계약연장  선수 </span>
-s
+
                                     </div>
                                     <div class="col-4 mb-3 mt-3 ">
                                         <select id="playersList3" name="fa_name">
@@ -429,7 +430,7 @@ s
                                         </div>
                                         <input type="hidden" id="stateRelease" name="state"    value="대기" >
                                         <input type="hidden" id="draftdayRelease" name="draftday"    value="" >
-                                        <input type="hidden" class="value-input" id="document_category2"  name="document_category" value="방출" >
+                                        <input type="hidden" class="value-input" id="document_category5"  name="document_category" value="방출" >
                                     </div>
 
                                     <div class="row">

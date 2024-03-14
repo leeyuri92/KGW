@@ -12,7 +12,7 @@
     EmpVO sessionVO = principalDetails.getEmpVO();
 
     // 세션 시간 설정
-    session.setMaxInactiveInterval(300);
+    session.setMaxInactiveInterval(3000);
 
 %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
