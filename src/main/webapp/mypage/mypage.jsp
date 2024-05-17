@@ -293,7 +293,7 @@
       const expPhoneText = /^\d{3}-\d{3,4}-\d{4}$/;
       //이메일 정규실표현
       const expEmailText = /^[a-zA-Z0-9._+=-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
-      //주소 정규식표현
+      //주소 정규식표현 
       const expAddressText = /^[가-힣a-zA-Z0-9-.,\s]{1,60}$/;
 
       // 각 입력 필드의 유효성을 검사하는 함수
